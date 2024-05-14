@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dashboard Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/CSS/dash.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .row.content {
+      height: 600px
+    }
+
+    .sidenav {
+      background-color: white;
+      height: 100%;
+    }
+
+    @media screen and (max-width: 800px) {
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav hidden-xs">
+        <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image"> ePasyar</h2>
+        <ul class="nav nav-pills nav-stacked">
+
+          <li><a href="#section1" onclick="showAdminContent()"><i class="fas fa-user"></i> Admin</a></li>
+          <li class="active"><a href="#section1" id="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
+          <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+          <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+          <li ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+          <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+          <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+          <li><a href="#section4" id="reviews"><i class="fas fa-star"></i> Reviews</a></li>
+          <li><a href="#section9" id="about"><i class="fas fa-info-circle"></i> About</a></li>
+          <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+        </ul><br>
+      </div>
+
+      <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
+
+      <div>
+        <p class="font-weight-bold" id="dash_label">DASHBOARD</p>
+      </div>
+
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well">
+              <a href="#sec1">
+                <h4 class="fas fa-users" id="users"></i> Users</h4>
+                <p>0</p>
+            </div>
+          </div>
+          
+          <div class="col-sm-3">
+            <div class="well">
+              <a href="#sec1" >
+                <h4 class="fas fa-hotel" id="hOtels"></i> Hotels</h4>
+                <p>0</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well">
+              <a href="#sec1" >
+                <h4 class="fas fa-utensils" id="resto"></i> Restaurants</h4>
+                <p>0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              <a href="#sec1">
+                <p class="fas fa-map-marked-alt" id="maps"></i> Maps</p>
+              
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="well">
+              <a href="#sec1">
+                <p class="fas fa-hotel" id="visited"></i> Most Visited</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="well">
+          <h4>Tourists List</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Address</th>
+                <th>Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>@john</td>
+                <td>john123@gmail.com</td>
+                <td>09123456789</td>
+                <td>juan st. laguna</td>
+                <td><button onclick="editTourist(1)">Edit</button></td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="module" src="/Javascript/dash.js"></script>
+
+</body>
+
+</html>

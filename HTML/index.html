@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" type="text/css" href="/CSS/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-...">
+
+    
+</head>
+
+<body>
+
+    <div class="login-container">
+        <img src="/image/ePasyar.png" alt="index" width="160" height="145" class="center-image">
+        <h1>ePasyar</h1>
+        
+        <form id="login-form">
+            <div id="vigan">Welcome, KaiVigan!</div>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"  required> 
+            <div id="forgotPass" onclick="redirectToForgotPassword()">
+                <p>Forgot Password</p>
+            </div>
+            <button id="btnLogin">Login</button>
+        </form>
+
+        <form id="forgot-password-form" style="display: none;">
+            <div id="forgot">Forgot Password</div>
+            <label for="forgot-email">Email</label>
+            <input type="text" id="forgot-email" name="forgot-email" required>
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <button type="submit">Reset Password</button>
+            <button type="button" onclick="hideForgotPasswordForm()">Cancel</button>
+        </form>
+    </div>
+    <div id="register">
+        <p>Not registered? <a id="register-button" href="register.html">Create an Account</a></p>
+    </div>
+
+<script type="module" src="/Javascript/index.js"></script>
+</body>
+</html>
