@@ -269,6 +269,13 @@ h4{
   text-transform: uppercase;
   /* margin-bottom: 10px; */
 }
+.invalid-input {
+  border: 3px solid red;
+}
+
+.valid-input {
+  border: 3px solid green;
+}
 #category{
   padding: 10px;
   margin-bottom: 10px;

@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
   <style>
     .row.content {
-      height: 600px
+      height: 400px
     }
 
     .sidenav {
@@ -21,7 +23,7 @@
       height: 100%;
     }
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 100px) {
       .row.content {
         height: auto;
       }
@@ -34,16 +36,17 @@
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav hidden-xs">
-        <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image"> ePasyar</h2>
+        <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
+          ePasyar</h2>
         <ul class="nav nav-pills nav-stacked">
 
-          <li><a href="#section1" onclick="showAdminContent()"><i class="fas fa-user"></i> Admin</a></li>
+          <li><a href="#section1"><i class="fas fa-user"></i> Admin</a></li>
           <li class="active"><a href="#section1" id="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
           <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
-          <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-          <li ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-          <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+          <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+          <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+          <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
           <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
           <li><a href="#section4" id="reviews"><i class="fas fa-star"></i> Reviews</a></li>
           <li><a href="#section9" id="about"><i class="fas fa-info-circle"></i> About</a></li>
@@ -52,90 +55,140 @@
         </ul><br>
       </div>
 
-      <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
+
 
       <div>
+        <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
         <p class="font-weight-bold" id="dash_label">DASHBOARD</p>
+
       </div>
 
       <div class="col-sm-9">
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
+        <div class="row" id="row-content">
+          <div class="column">
+            <div class="card">
               <a href="#sec1">
                 <h4 class="fas fa-users" id="users"></i> Users</h4>
-                <p>0</p>
+                <p id="userCount">0</p>
             </div>
           </div>
-          
-          <div class="col-sm-3">
-            <div class="well">
-              <a href="#sec1" >
-                <h4 class="fas fa-hotel" id="hOtels"></i> Hotels</h4>
-                <p>0</p>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="well">
-              <a href="#sec1" >
-                <h4 class="fas fa-utensils" id="resto"></i> Restaurants</h4>
-                <p>0</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="well">
+          <div class="column">
+            <div class="card">
               <a href="#sec1">
-                <p class="fas fa-map-marked-alt" id="maps"></i> Maps</p>
-              
+                <h4 class="fas fa-user-shield" id="admin"></i> Admins</h4>
+                <p id="adminCount">0</p>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div class="well">
-              <a href="#sec1">
-                <p class="fas fa-hotel" id="visited"></i> Most Visited</p>
+          <div class="row">
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-calendar-alt" id="eventS"></i> Events</h4>
+                  <p id="eventsCount">0</p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-hotel" id="hOtels"></i> Hotels</h4>
+                  <p id="hotelCount">0</p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-map-marker-alt" id="tourists"></i> Tourist Spots</h4>
+                  <p id="touristCount">0</p>
+              </div>
+            </div>
+
+
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-utensils" id="resto"></i> Restaurants</h4>
+                  <p id="restoCount">0</p>
+              </div>
+            </div>
+
+
+
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-shopping-bag" id="souvenirs"></i> Souvenir Shops</h4>
+                  <p id="souvenirCount">0</p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <a href="#sec1">
+                  <h4 class="fas fa-chart-bar" id="total"></i> Total Scans</h4>
+                  <p id="totalCount">0</p>
+              </div>
+            </div>
+
+          </div>
+         
+            <div class="col-sm-4">
+              <div class="well">
+                <a href="#sec1">
+                  <p class="fas fa-users" id="visited"></i> NUMBER OF TOURISTS</p>
+                  <canvas id="mostVisitedChart" style="width:200%;max-width:7000px;height:400px"></canvas>
+
+              </div>
             </div>
           </div>
-        </div>
 
 
-        <div class="well">
-          <h4>Tourists List</h4>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Address</th>
-                <th>Action</th>
+          <div class="well">
+            <h4>Tourists List</h4>
+            <table class="table">
+              <thead>
+                <tr>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>@john</td>
-                <td>john123@gmail.com</td>
-                <td>09123456789</td>
-                <td>juan st. laguna</td>
-                <td><button onclick="editTourist(1)">Edit</button></td>
-              </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Country</th>
+                  <th>Password</th>
+
+                </tr>
+              </thead>
+              <tbody id="touristsTableBody">
+                <!-- confirmation modal for add account -->
+                <div class="cnfrm_modal_add" id="cnfrm_add">
+                  <h1>Add Event Information?</h1>
+                  <div class="btn1">
+                    <button id="cnl3" class="cnl">Cancel</button>
+                    <button id="cnfrm3">Confirm</button>
+                  </div>
+                </div>
+
+                <!-- confirmation modal for edit account -->
+                <div class="cnfrm_modal" id="cnfrm_edit">
+                  <h1>Update Event Information?</h1>
+                  <div class="btn1">
+                    <button id="cnl" class="cnl">Cancel</button>
+                    <button id="cnfrm">Confirm</button>
+                  </div>
+                </div>
 
 
-  <script type="module" src="/Javascript/dash.js"></script>
+                <!-- confirmation modal for delete account -->
+                <div class="cnfrm_modal_delete" id="delete_acc_modal">
+                  <h1>Confirm delete this Event?</h1>
+                  <div class="btn1">
+                    <button id="cnl2">Cancel</button>
+                    <button id="cnfrm2">Confirm</button>
+                  </div>
+                </div>
+          </div>
+
+
+
+          <script type="module" src="/Javascript/dash.js"></script>
 
 </body>
 

@@ -79,27 +79,90 @@ formCreate.addEventListener('submit', (e) => {
 
   const selectedCategory = categorySelect.value;
 
-  if (selectedCategory === 'blank') {
-    alert("SELECT A CATEGORY"); // Show an alert if no category is selected
-  } else if (Name.value == '') {
-    alert("ENTER NAME")
-  } else if (Owner.value == '') {
-    alert("ENTER OWNER")
-  } else if (Number.value == '') {
-    alert("ENTER NUMBER")
-  } else if (Email.value == '') {
-    alert("ENTER EMAIL")
-  } else if (Address.value == '') {
-    alert("ENTER ADDRESS")
-  } else if (Rooms.value == '') {
-    alert("ENTER ROOMS")
-  } else if (Capacity.value == '') {
-    alert("ENTER ROOM CAPACITY")
-  } else if (Rates.value == '') {
-    alert("ENTER ROOM RATE")
-  } else {
-    addDoc(collection(db, "vigan_establishments"), {
-      Category: selectedCategory,
+if (selectedCategory.trim() === '') {
+  categorySelect.classList.add('invalid-input');
+} else {
+  categorySelect.classList.remove('invalid-input');
+  categorySelect.classList.add('valid-input');
+}
+
+if (Name.value.trim() === '') {
+  Name.classList.add('invalid-input');
+
+} else {
+  Name.classList.remove('invalid-input');
+  Name.classList.add('valid-input');
+}
+
+if (Owner.value.trim() === '') {
+  Owner.classList.add('invalid-input');
+ 
+} else {
+  Owner.classList.remove('invalid-input');
+  Owner.classList.add('valid-input');
+}
+
+if (Number.value.trim() === '') {
+  Number.classList.add('invalid-input');
+
+} else {
+  Number.classList.remove('invalid-input');
+  Number.classList.add('valid-input');
+}
+
+if (Email.value.trim() === '') {
+  Email.classList.add('invalid-input');
+
+} else {
+  Email.classList.remove('invalid-input');
+  Email.classList.add('valid-input');
+}
+
+if (Address.value.trim() === '') {
+  Address.classList.add('invalid-input');
+
+} else {
+  Address.classList.remove('invalid-input');
+  Address.classList.add('valid-input');
+}
+
+if (Rooms.value.trim() === '') {
+  Rooms.classList.add('invalid-input');
+
+} else {
+  Rooms.classList.remove('invalid-input');
+  Rooms.classList.add('valid-input');
+}
+
+if (Capacity.value.trim() === '') {
+  Capacity.classList.add('invalid-input');
+
+} else {
+  Capacity.classList.remove('invalid-input');
+  Capacity.classList.add('valid-input');
+}
+
+if (Rates.value.trim() === '') {
+  Rates.classList.add('invalid-input');
+
+} else {
+  Rates.classList.remove('invalid-input');
+  Rates.classList.add('valid-input');
+}
+
+// If all fields are valid, submit the form
+if  (Name.classList.contains('valid-input') 
+  && Owner.classList.contains('valid-input') 
+&& Number.classList.contains('valid-input')
+&& Email.classList.contains('valid-input') 
+  && Address.classList.contains('valid-input') 
+&& Rooms.classList.contains('valid-input')
+&& Capacity.classList.contains('valid-input') 
+  && Rates.classList.contains('valid-input') 
+)
+{
+  addDoc(collection(db, "vigan_establishments"), {
+    Category: selectedCategory,
       Name: Name.value,
       Owner: Owner.value,
       Number: Number.value,
@@ -109,10 +172,10 @@ formCreate.addEventListener('submit', (e) => {
       Capacity: Capacity.value,
       Rates: Rates.value,
       Status: "Available"
-    }).then(() => {
-      createPromotion.style.display = 'none';
-    }).catch((error) => {
-      console.error("Error adding document: ", error);
+  }).then(() => {
+    createPromotion.style.display = 'none';
+  }).catch((error) => {
+    console.error("Error adding document: ", error);
     });
   }
 });
@@ -160,26 +223,88 @@ formEdit.addEventListener('submit', async (e) => {
   const selectedId = localStorage.getItem('ID');
   const docRef = doc(db, "vigan_establishments", selectedId);
 
-  if (categorySelect1.value === 'blank1') {
-    alert("SELECT A CATEGORY"); // Show an alert if no category is selected
-  } else if (Name1.value == '') {
-    alert("ENTER NAME")
-  } else if (Owner1.value == '') {
-    alert("ENTER OWNER")
-  } else if (Number1.value == '') {
-    alert("ENTER NUMBER")
-  } else if (Email1.value == '') {
-    alert("ENTER EMAIL")
-  } else if (Address1.value == '') {
-    alert("ENTER ADDRESS")
-  } else if (Rooms1.value == '') {
-    alert("ENTER ROOMS")
-  } else if (Capacity1.value == '') {
-    alert("ENTER ROOM CAPACITY")
-  } else if (Rates1.value == '') {
-    alert("ENTER ROOM RATE")
-  
-  } else {
+  if (selectedCategory.trim() === '') {
+  categorySelect.classList.add('invalid-input');
+} else {
+  categorySelect.classList.remove('invalid-input');
+  categorySelect.classList.add('valid-input');
+}
+
+if (Name.value.trim() === '') {
+  Name.classList.add('invalid-input');
+
+} else {
+  Name.classList.remove('invalid-input');
+  Name.classList.add('valid-input');
+}
+
+if (Owner.value.trim() === '') {
+  Owner.classList.add('invalid-input');
+ 
+} else {
+  Owner.classList.remove('invalid-input');
+  Owner.classList.add('valid-input');
+}
+
+if (Number.value.trim() === '') {
+  Number.classList.add('invalid-input');
+
+} else {
+  Number.classList.remove('invalid-input');
+  Number.classList.add('valid-input');
+}
+
+if (Email.value.trim() === '') {
+  Email.classList.add('invalid-input');
+
+} else {
+  Email.classList.remove('invalid-input');
+  Email.classList.add('valid-input');
+}
+
+if (Address.value.trim() === '') {
+  Address.classList.add('invalid-input');
+
+} else {
+  Address.classList.remove('invalid-input');
+  Address.classList.add('valid-input');
+}
+
+if (Rooms.value.trim() === '') {
+  Rooms.classList.add('invalid-input');
+
+} else {
+  Rooms.classList.remove('invalid-input');
+  Rooms.classList.add('valid-input');
+}
+
+if (Capacity.value.trim() === '') {
+  Capacity.classList.add('invalid-input');
+
+} else {
+  Capacity.classList.remove('invalid-input');
+  Capacity.classList.add('valid-input');
+}
+
+if (Rates.value.trim() === '') {
+  Rates.classList.add('invalid-input');
+
+} else {
+  Rates.classList.remove('invalid-input');
+  Rates.classList.add('valid-input');
+}
+
+// If all fields are valid, submit the form
+if  (Name.classList.contains('valid-input') 
+  && Owner.classList.contains('valid-input') 
+&& Number.classList.contains('valid-input')
+&& Email.classList.contains('valid-input') 
+  && Address.classList.contains('valid-input') 
+&& Rooms.classList.contains('valid-input')
+&& Capacity.classList.contains('valid-input') 
+  && Rates.classList.contains('valid-input') 
+)
+{
     await updateDoc(docRef, {
       Category: categorySelect1.value,
       Name: Name1.value,

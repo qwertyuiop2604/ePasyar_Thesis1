@@ -119,11 +119,13 @@ const tbody = document.getElementById('tbody1');
 
 const querySnapshot = await getDocs(collection(db, "users", "admin", "admin_account"));
 querySnapshot.forEach((doc) => {
-  if (doc.data().status === "Active") {
-    const trow = document.createElement('tr');
-    const td1 = document.createElement('td');
-    const td2 = document.createElement('td');
-    const td3 = document.createElement('td');
+  // doc.data() is never undefined for query doc snapshots  
+
+  if (doc.data().status == "") {
+    var trow = document.createElement('tr');
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
 
     td1.textContent = doc.data().name;
     td2.textContent = doc.data().email;

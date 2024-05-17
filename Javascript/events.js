@@ -38,10 +38,6 @@ let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener('click', () =>{
   window.location = 'souvenir.html'
 })
-let restaurant = document.getElementById("restaurant");
-restaurant.addEventListener('click', () =>{
-  window.location = 'restaurants.html'
-})
 let logout = document.getElementById("logout");
 logout.addEventListener('click', () =>{
   window.location = 'index.html'
@@ -52,6 +48,8 @@ logout.addEventListener('click', () =>{
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
 const closePop = document.querySelector('.close-modal');
+
+
 
 openPop.addEventListener('click', () => {
   createAcc.style.display = 'block';
@@ -68,17 +66,34 @@ const description = document.getElementById('description');
 
 formCreate.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (name.value == '') {
-    alert("ENTER EVENT NAME")
-  } else if (date.value == '') {
-    alert("ENTER EVENT DATE")
-  } else if (description.value == '') {
-    alert("ENTER EVENT DESCRIPTION")
+  if (name.value.trim() === '') {
+    name.classList.add('invalid-input');
   } else {
+    name.classList.remove('invalid-input');
+    name.classList.add('valid-input');
+  }
+
+  if (date.value === '') {
+    date.classList.add('invalid-input');
+  } else {
+    date.classList.remove('invalid-input');
+    date.classList.add('valid-input');
+  }
+
+  if (description.value.trim() === '') {
+    description.classList.add('invalid-input');
+  } else {
+    description.classList.remove('invalid-input');
+    description.classList.add('valid-input');
+  }
+
+  if (name.classList.contains('valid-input') 
+    && date.classList.contains('valid-input') 
+  && description.classList.contains('valid-input')) {
     addDoc(collection(db, "festivals"), {
       Name: name.value,
       Date: date.value,
-      Description: description.value, // Use description.value for textarea
+      Description: description.value.trim(),
       Status: "not done"
     }).then(() => {
       createAcc.style.display = 'none';
@@ -119,19 +134,30 @@ const name1 = document.getElementById('name1');
 const date1 = document.getElementById('date1');
 const description1 = document.getElementById('description1');
 
- 
-
-
-
 formEdit.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (name1.value == '') {
-    alert("ENTER EVENT NAME")
-  } else if (date1.value == '') {
-    alert("ENTER EVENT DATE")
-  } else if (description1.value == '') {
-alert("ENTER EVENT DESCRIPTION")
+  if (name1.value.trim() === '') {
+    name1.classList.add('invalid-input');
   } else {
+    name1.classList.remove('invalid-input');
+    name1.classList.add('valid-input');
+  }
+
+  if (date1.value === '') {
+    date1.classList.add('invalid-input');
+  } else {
+    date1.classList.remove('invalid-input');
+    date1.classList.add('valid-input');
+  }
+
+  if (description1.value.trim() === '') {
+    description1.classList.add('invalid-input');
+  } else {
+    description1.classList.remove('invalid-input');
+    description1.classList.add('valid-input');
+  }
+
+  if (name1.classList.contains('valid-input') && date1.classList.contains('valid-input') && description1.classList.contains('valid-input')) {
     confirmation.style.display = 'block';
     editAcc.style.display = 'none';
   }
