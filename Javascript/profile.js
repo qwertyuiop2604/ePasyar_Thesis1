@@ -99,7 +99,7 @@ formCreate.addEventListener('submit', (e) => {
     .then((userCredential) => {
       
       const user = userCredential.user;
-      setDoc(doc(db, "users", user.uid), {
+      setDoc(doc(db, "users",  "admin", "admin_account", user.uid), {
         name: name.value,
         email: email.value,
         password: pass.value
@@ -157,7 +157,7 @@ formEdit.addEventListener('submit', (e) => {
   else{
     // Update user's information in Firestore
     const user = auth.currentUser;
-    setDoc(doc(db, "users", user.uid), {
+    setDoc(doc(db, "users",  "admin", "admin_account", user.uid), {
       name: name1.value,
       email: email1.value,
       password: pass1.value
@@ -175,11 +175,11 @@ formEdit.addEventListener('submit', (e) => {
 
 var tbody = document.getElementById('tbody1');
 
-const querySnapshot = await getDocs(collection(db, "users"));
+const querySnapshot = await getDocs(collection(db, "users", "admin", "admin_account"));
 querySnapshot.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots  
 
-  if (doc.data().status == "") {
+  if (doc.data().status == "Active") {
     var trow = document.createElement('tr');
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
@@ -194,9 +194,34 @@ querySnapshot.forEach((doc) => {
     trow.appendChild(td3);
 
     tbody.appendChild(trow);
+    localStorage.setItem('ID', doc.id)
+    console.log(doc.id)
+  
+    //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+    var table = document.getElementById("table");
+    var rows = document.getElementsByTagName('tr');
+    for(let i = 1; i < rows.length; i++){
+      var currentRow = table.rows[i];
+      currentRow.onclick = function(){
+        Array.from(this.parentElement.children).forEach(function(el){
+          el.classList.remove('selected-row');
+          
+        });
+  
+        // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+        this.classList.add('selected-row');
+  
+            document.getElementById("edit_acc").disabled = false;
+            document.getElementById("delete_acc").disabled = false;
+  
+            document.getElementById('name1').value = doc.data().name;
+            document.getElementById('email1').value = doc.data().email;
+            document.getElementById('description1').value = doc.data().password;
+           
+    }
   }
-})
-
+  }
+  });
 // Event Listener for delete account button - FINAL
 delete_acc.addEventListener('click', () => {
   document.getElementById('delete_acc_modal').style.visibility = "visible";
