@@ -191,7 +191,8 @@ const querySnapshot = await getDocs(collection(db, "festivals"));
     }
     });
   }
-})
+});
+
 const currentDateTime = new Date().toLocaleString();
 
 const querySnapshot2 = await getDocs(collection(db, "festivals"));

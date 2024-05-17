@@ -56,7 +56,7 @@
                           <th>Name</th>
                           <th>Email</th>
                           <th>Password</th>
-                     
+                          
                       </tr>
                   <tbody id="tbody1"></tbody>                                                       
                   </table>
@@ -115,23 +115,25 @@
                   
                       <label for="confirm">Confirm Password</label>
                       <input type="password" id="confirm1" name="confirm">
-      
-      
+
+                    
                       <input type="submit" id="btnEdit" value="Save" />
                   </form>
 
             </div>      
           </div> 
 
-          <!-- confirmation modal for delete account -->
-      <div class="cnfrm_modal_delete" id="delete_acc_modal">
-        <h1>Confirm delete this account?</h1>
-            <div class="btn1">
-                <button id="cnl2">Cancel</button>
-                <button id="cnfrm2">Confirm</button>
-            </div>
-      </div>
-    </div>
+
+    <!-- Delete Confirmation Modal -->
+<div id="delete_acc_modal" >
+  <p>Are you sure you want to delete this account?</p>
+  <button id="confirm_delete">Confirm</button>
+  <button id="cancel_delete">Cancel</button>
+</div>
+
+<!-- Delete Button -->
+<button id="delete_acc" disabled>Delete</button>
+
 
     <script type="text/javascript">
       function showPwrd1() {

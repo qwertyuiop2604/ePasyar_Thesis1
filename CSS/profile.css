@@ -660,6 +660,7 @@ label{
   left: 50%;
   transform: translate(-50%, -50%);
   transition: transform 0.4s, top 0.4s;
+
 }
 .cnfrm_modal{
   width: 550px;
