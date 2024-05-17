@@ -16,12 +16,33 @@ body{
 body{
     display: block;
 }
+#row-content{
+  font-size: 14px;
+  font-family: system-ui, 
+  -apple-system, BlinkMacSystemFont, 
+  'Segoe UI', Roboto, Oxygen, Ubuntu, 
+  Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
+}
 h2{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 50px;
     font-weight: bolder;
     color: #1D5D9B;
+}
+h4{
+
+  font-size: 16px;
+  font-weight: bold;
+  
+}
+
+p{
+
+  font-size: 16px;
+ 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ 
 }
 #dash-logo{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -31,7 +52,7 @@ h2{
 }
 .sidenav{
     color: black;
-    font-size: 14px;
+    font-size: 16px;
     
 }
 
@@ -100,10 +121,13 @@ button{
 .column {
   float: left;
   width: 23%;
-  padding: 0 5px;
+  padding: 0;
+  
 }
 
-  
+  .div{
+    font-size: 14px;
+  }
  
   tr th, tr th{
     background-color: gainsboro;
@@ -114,16 +138,25 @@ button{
     
  }
  #dash_label{
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     background-color: whitesmoke;
     color: #1D5D9B;
-    margin: 1%;
+    margin: 2%;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
     
  }
- 
+ .well{
+  width: 820px;
+ }
+.icon-heading {
+  font-size: 14px;
+}
+
+.count {
+  font-size: 14px;
+}
 
 *
 {
@@ -133,34 +166,14 @@ button{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
 }
-  .material-icons-outlined {
-    vertical-align: middle;
-    line-height: 1px;
-  }
+#mostVisitedChart{
+  width: 1500px;
   
-    .text-primary {
-      color: #666666;
-    }
-    
-    .text-blue {
-      color: #032d89;
-    }
-    
-    .text-red {
-      color: #cc3c43;
-    }
-    
-    .text-green {
-      color: #367952;
-    }
-    
-    .text-orange {
-      color: #f5b74f;
-    }
+}
+
   
-  .font-weight-bold {
-    font-weight: 300;
-  }
+   
+
   
   /*.grid-container {
     display: grid;
@@ -540,23 +553,7 @@ input {
   display: block;
  
 }
-#btnRegister{
-  width: 100px;
-  height: 30px;
-  display: block;
-  margin: 10px auto; 
-  padding: 5px 10px;
-  background-color: #F4D160;
-  color: #000000;
-  border: 5px;
-  border-radius: 15px;
-  font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 30px;
-}
+
 #create-txt{
   text-align: center;
   margin-bottom: 20px;
@@ -569,40 +566,10 @@ label{
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
 }
-.close-modal{
-  position: absolute;
-  top: 2%;
-  right: 3%;
-  font-size: 18px;
-  z-index: 1;
-  cursor: pointer;
-  color: #F4D160;
-}
-/* popup modal for edit account */
-.edit-container{
-  background-color: #1D5D9B;
-  width: 500px;
-  border-radius: 15px;
-  padding: 10px;
-  margin: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.4s, top 0.4s;
-  border-radius: 10px;
-  display: none;
 
-}
-.container-modal-edit{
-  background-color: #1D5D9B;
-}
-#email1{
-  text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  color: black;
-}
+/* popup modal for edit account */
+
+
 textarea {
   padding: 10px;
   margin-bottom: 10px;
@@ -642,32 +609,16 @@ input {
   display: block;
  
 }
-#btnEdit{
-  width: 100px;
-  height: 30px;
-  display: block;
-  margin: 10px auto; 
-  padding: 5px 10px;
-  background-color: #F4D160;
-  color: #000000;
-  border: 5px;
-  border-radius: 15px;
-  font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 30px;
-}
+
 #edit-txt{
   text-align: center;
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 30px;
   color: white;
   
 }
 label{
-  font-size: 12px;
+  font-size: 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
 }
@@ -715,13 +666,8 @@ label{
   align-items: center;
 }
 
-.edit{
-  font-weight: bold;
-  width: 170px;
-}
-.modal-form-edit{
-  margin-left: 20px;
-}
+
+
 .modal-input-edit{
   width: 280px;
   padding: 0 5px 0 5px;
