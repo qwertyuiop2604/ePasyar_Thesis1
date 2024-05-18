@@ -199,12 +199,9 @@ fetchTourists();
 
 // Firestore references
 const usersRef = collection(db, "users");
-const adminsRef = collection(db, "users", "admin", "admin_account");
+const adminsRef = collection(db, "users/admin/admin_account");
 const eventsRef = collection(db, "festivals");
-const hotelsRef = collection(db, "vigan_establishments");
-const touristRef = collection(db, "vigan_establishments");
-const restoRef = collection(db, "vigan_establishments");
-const souvenirRef = collection(db, "vigan_establishments");
+const establishmentsRef = collection(db, "vigan_establishments");
 const totalRef = collection(db, "total_scans");
 
 // Counters
@@ -275,51 +272,46 @@ const updateTotalCountElement = (count) => {
 };
 
 // Snapshot handlers
+const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
+  const filteredDocs = snapshot.docs.filter(doc => doc.data().Category === Category);
+  const count = filteredDocs.length;
+  updateFunction(count);
+};
+
+// Specific handlers for each category
+const handleHotelsSnapshot = (snapshot) => {
+  handleEstablishmentsSnapshot(snapshot, "Hotel", updateHotelCountElement);
+};
+
+const handleTouristSnapshot = (snapshot) => {
+  handleEstablishmentsSnapshot(snapshot, "Tourist Spot", updateTouristCountElement);
+};
+
+const handleRestoSnapshot = (snapshot) => {
+  handleEstablishmentsSnapshot(snapshot, "Restaurant", updateRestoCountElement);
+};
+
+const handleSouvenirSnapshot = (snapshot) => {
+  handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
+};
+
 const handleUsersSnapshot = (snapshot) => {
-  const users = snapshot.docs;
-  userCount = users.length;
+  userCount = snapshot.docs.length;
   updateUserCountElement(userCount);
 };
 
 const handleAdminsSnapshot = (snapshot) => {
-  const admins = snapshot.docs;
-  adminCount = admins.length;
+  adminCount = snapshot.docs.length;
   updateAdminCountElement(adminCount);
 };
 
 const handleEventsSnapshot = (snapshot) => {
-  const events = snapshot.docs;
-  eventsCount = events.length;
+  eventsCount = snapshot.docs.length;
   updateEventsCountElement(eventsCount);
 };
 
-const handleHotelsSnapshot = (snapshot) => {
-  const hotels = snapshot.docs;
-  hotelCount = hotels.length;
-  updateHotelCountElement(hotelCount);
-};
-
-const handleTouristSnapshot = (snapshot) => {
-  const tourists = snapshot.docs;
-  touristCount = tourists.length;
-  updateTouristCountElement(touristCount);
-};
-
-const handleRestoSnapshot = (snapshot) => {
-  const restos = snapshot.docs;
-  restoCount = restos.length;
-  updateRestoCountElement(restoCount);
-};
-
-const handleSouvenirSnapshot = (snapshot) => {
-  const souvenirs = snapshot.docs;
-  souvenirCount = souvenirs.length;
-  updateSouvenirCountElement(souvenirCount);
-};
-
 const handleTotalSnapshot = (snapshot) => {
-  const total = snapshot.docs;
-  totalCount = total.length;
+  totalCount = snapshot.docs.length;
   updateTotalCountElement(totalCount);
 };
 
@@ -336,20 +328,13 @@ onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
   console.error("Error fetching events:", error);
 });
 
-onSnapshot(hotelsRef, handleHotelsSnapshot, (error) => {
-  console.error("Error fetching hotels:", error);
-});
-
-onSnapshot(touristRef, handleTouristSnapshot, (error) => {
-  console.error("Error fetching tourist spots:", error);
-});
-
-onSnapshot(restoRef, handleRestoSnapshot, (error) => {
-  console.error("Error fetching restaurants:", error);
-});
-
-onSnapshot(souvenirRef, handleSouvenirSnapshot, (error) => {
-  console.error("Error fetching souvenir shops:", error);
+onSnapshot(establishmentsRef, (snapshot) => {
+  handleHotelsSnapshot(snapshot);
+  handleTouristSnapshot(snapshot);
+  handleRestoSnapshot(snapshot);
+  handleSouvenirSnapshot(snapshot);
+}, (error) => {
+  console.error("Error fetching establishments:", error);
 });
 
 onSnapshot(totalRef, handleTotalSnapshot, (error) => {

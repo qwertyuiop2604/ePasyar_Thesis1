@@ -10,45 +10,47 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<style>
-  .row.content {
-    height: 400px
-  }
-
-  .sidenav {
-    background-color: white;
-    height: 100%;
-  }
-
-  @media screen and (max-width: 100px) {
+  <style>
     .row.content {
-      height: auto;
+      height: 400px
     }
-  }
-</style>
-<body>
-    <div class="container">
-        <h2>ePasyar Profile</h2>
-        
-        <div class="container-fluid">
-          <div class="row content">
-            <div class="col-sm-3 sidenav hidden-xs">
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#section1" ><i class="fas fa-user"></i> Admin</a></li>
-                <li ><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="#section2" id= "profile" ><i class="far fa-user"></i> Account Management</a></li>
-                <li><a href="#section12" id= "events" ><i class="fas fa-calendar-alt"></i> Events</a></li>
-                <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-                <li ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-                <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-                <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-                <li><a href="#section4" id= "reviews" ><i class="fas fa-star"></i> Reviews</a></li>
-                <li><a href="#section9" id= "about" ><i class="fas fa-info-circle"></i> About</a></li>
-                <li><a href="#section11" id= "logout" ><i class="fas fa-sign-out-alt"></i> Log out</a></li>
-        
-              </ul><br>
-            </div>
+  
+    .sidenav {
+      background-color: white;
+      height: 100%;
+    }
+  
+    @media screen and (max-width: 100px) {
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+ </head> 
+ <body>
+
+
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav hidden-xs">
+        <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
+          ePasyar</h2>
+        <ul class="nav nav-pills nav-stacked">
+
+          <li><a href="#section1"><i class="fas fa-user"></i> Admin</a></li>
+          <li ><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li class="active"><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
+          <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+          <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+          <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+          <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+          <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+          <li><a href="#section4" id="reviews"><i class="fas fa-star"></i> Reviews</a></li>
+          <li><a href="#section9" id="about"><i class="fas fa-info-circle"></i> About</a></li>
+          <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+        </ul><br>
+      </div>
         
             <main class="main-container">
         
@@ -147,8 +149,6 @@
   <button id="cancel_delete">Cancel</button>
 </div>
 
-<!-- Delete Button -->
-<button id="delete_acc" disabled>Delete</button>
 
 
     <script type="text/javascript">
