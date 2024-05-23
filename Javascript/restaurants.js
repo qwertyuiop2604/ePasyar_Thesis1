@@ -50,6 +50,11 @@ let logout = document.getElementById("logout");
 logout.addEventListener("click", () => {
   window.location = "index.html";
 });
+let reviews = document.getElementById("reviewS");
+reviews.addEventListener("click", () => {
+  window.location = "reviews.html";
+});
+
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById("user-create");

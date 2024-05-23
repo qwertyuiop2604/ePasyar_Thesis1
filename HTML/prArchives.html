@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archived Accounts</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .row.content {
+      height: 100%;
+    }
+
+    .sidenav {
+      background-color: white;
+      height: 100%;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr.selected-row {
+      background-color: #e0e0e0;
+    }
+
+    @media screen and (max-width: 767px) {
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+        <h2>ePasyar Profile</h2>
+        
+        <div class="container-fluid">
+          <div class="row content">
+            <div class="col-sm-3 sidenav hidden-xs">
+              <ul class="nav nav-pills nav-stacked">
+                <li><a href="#section1" ><i class="fas fa-user"></i> Admin</a></li>
+                <li ><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="#section2" id= "profile" ><i class="far fa-user"></i> Account Management</a></li>
+                <li><a href="#section12" id= "events" ><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+                <li ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+                <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+                <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+                <li><a href="#section4" id= "reviews" ><i class="fas fa-star"></i> Reviews</a></li>
+                <li><a href="#section9" id= "about" ><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#section11" id= "logout" ><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        
+              </ul><br>
+            </div>
+        <main class="main-container col-sm-9" id="blur">
+          <div class="main2">
+            <div class="btn_useracc">
+              <button id="back_button">Back</button>
+              <button class="enable_acc" id="retrieve_acc" disabled>Retrieve Account</button>
+            </div>
+            <div class="outer-wrapper">
+              <div class="table-wrapper">
+                <table id="table" class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Password</th>
+                    </tr>
+                  </thead>
+                  <tbody id="archived-accounts"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+    import { getFirestore, getDocs, collection, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
+      authDomain: "epasyar-aa569.firebaseapp.com",
+      databaseURL: "https://epasyar-aa569-default-rtdb.firebaseio.com",
+      projectId: "epasyar-aa569",
+      storageBucket: "epasyar-aa569.appspot.com",
+      messagingSenderId: "1004550371893",
+      appId: "1:1004550371893:web:692e667675470640980f7c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let selectedUserId = null;
+
+    async function displayArchivedAccounts() {
+      const q = query(collection(db, "users", "admin", "admin_account"), where("status", "==", "Deleted"));
+      const archiveSnapshot = await getDocs(q);
+      const tbody = document.getElementById('archived-accounts');
+      tbody.innerHTML = ''; // Clear existing rows
+
+      archiveSnapshot.forEach((doc) => {
+        const data = doc.data();
+        const trow = document.createElement('tr');
+        const td1 = document.createElement('td');
+        const td2 = document.createElement('td');
+        const td3 = document.createElement('td');
+
+        td1.textContent = data.name;
+        td2.textContent = data.email;
+        td3.textContent = data.password;
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+
+        trow.addEventListener('click', () => {
+          document.querySelectorAll('tr').forEach(row => row.classList.remove('selected-row'));
+          trow.classList.add('selected-row');
+          selectedUserId = doc.id;
+          document.getElementById('retrieve_acc').disabled = false;
+        });
+
+        tbody.appendChild(trow);
+      });
+    }
+
+    async function retrieveAccount() {
+      if (selectedUserId) {
+        const userRef = doc(db, "users", "admin", "admin_account", selectedUserId);
+        await updateDoc(userRef, {
+          status: "Active",
+          retrievedBy: "ADMIN",
+          retrievedDate: new Date().toLocaleString()
+        })
+        .then(() => {
+          console.log("Account successfully retrieved!");
+          window.location.reload(); // Reload the page to reflect changes
+        })
+        .catch((error) => console.error("Error retrieving document: ", error));
+      } else {
+        console.error("No user ID selected");
+      }
+    }
+
+    document.getElementById('retrieve_acc').addEventListener('click', retrieveAccount);
+
+    displayArchivedAccounts().catch(error => console.error("Error fetching archives:", error));
+
+    document.getElementById('back_button').addEventListener('click', () => {
+      window.location = 'profile.html'; // Ensure this path is correct
+    });
+
+    const searchAppID = () => {
+      let filter = document.getElementById('srchText').value.toUpperCase();
+      let mytable = document.getElementById('archived-accounts');
+      let tr = mytable.getElementsByTagName('tr');
+
+      for (let i = 0; i < tr.length; i++) {
+        let td1 = tr[i].getElementsByTagName('td')[0];
+        let td2 = tr[i].getElementsByTagName('td')[1];
+        let td3 = tr[i].getElementsByTagName('td')[2];
+
+        if (td1 || td2 || td3) {
+          let textValue1 = td1.textContent || td1.innerText;
+          let textValue2 = td2.textContent || td2.innerText;
+          let textValue3 = td3.textContent || td3.innerText;
+
+          if (textValue1.toUpperCase().indexOf(filter) > -1 || textValue2.toUpperCase().indexOf(filter) > -1 || textValue3.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = '';
+          } else {
+            tr[i].style.display = 'none';
+          }
+        }
+      }
+    };
+  </script>
+</body>
+</html>

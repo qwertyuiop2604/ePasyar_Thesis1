@@ -20,7 +20,7 @@ const db = getFirestore(app);
 
 let bckbtn = document.getElementById("bckbtn");
 bckbtn.addEventListener('click', () => {
-    window.location = 'promotion.html'
+    window.location = 'profile.html'
 })
 let events = document.getElementById("events");
 events.addEventListener('click', () => {
@@ -42,7 +42,7 @@ reviews.addEventListener("click", () => {
 // FINAL
 var tbody = document.getElementById('tbody1');
 
-const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+const querySnapshot = await getDocs(collection(db, "users", "admin", "admin_account"));
   querySnapshot.forEach(doc => {
 
     if(doc.data().Status == "Not Available"){
@@ -52,37 +52,22 @@ const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
       let td3 = document.createElement('td');
       let td4 = document.createElement('td');
       let td5 = document.createElement('td');
-      let td6 = document.createElement('td');
-      let td7 = document.createElement('td');
-      let td8 = document.createElement('td');
-      let td9 = document.createElement('td');
-      let td10 = document.createElement('td');
-      let td11 = document.createElement('td');
+
       
     
-      td1.innerHTML = doc.data().DeletedBy;
-      td2.innerHTML = doc.data().Category;
-      td3.innerHTML = doc.data().Name;
-      td4.innerHTML = doc.data().Owner;
-      td5.innerHTML = doc.data().Number;
-      td6.innerHTML = doc.data().Email;
-      td7.innerHTML = doc.data().Address;
-      td8.innerHTML = doc.data().Rooms;
-      td9.innerHTML = doc.data().Capacity;
-      td10.innerHTML = doc.data().Rates;
-      td11.innerHTML = doc.data().DeletedDate;
+     
+      td1.innerHTML = doc.data().Name;
+      td2.innerHTML = doc.data().Email;
+      td3.innerHTML = doc.data().Password;
+      td4.innerHTML = doc.data().DeletedBy;
+      td5.innerHTML = doc.data().DeletedDate;
+      
   
       trow.appendChild(td1);
       trow.appendChild(td2);
       trow.appendChild(td3);
       trow.appendChild(td4);
       trow.appendChild(td5);
-      trow.appendChild(td6);
-      trow.appendChild(td7);
-      trow.appendChild(td8);
-      trow.appendChild(td9);
-      trow.appendChild(td10);
-      trow.appendChild(td11);
      
   
       tbody.appendChild(trow);

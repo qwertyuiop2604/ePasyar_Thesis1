@@ -35,6 +35,7 @@ restaurant.addEventListener('click', () => window.location = 'restaurants.html')
 let logout = document.getElementById("logout");
 logout.addEventListener('click', () => window.location = 'index.html');
 
+
 // Create Account Form Popup
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
@@ -152,38 +153,49 @@ querySnapshot.forEach((doc) => {
   }
 });
 
+
 const currentDateTime = new Date().toLocaleString();
 
 // Event Listener for delete account button
-const btnDelete = document.getElementById('delete_acc');
-btnDelete.addEventListener('click', () => {
-  document.getElementById('delete_acc_modal').style.display = "block";
-});
+  const btnDelete = document.getElementById('delete_acc');
+  btnDelete.addEventListener('click', () => {
+    document.getElementById('delete_acc_modal').style.display = "block";
+  });
 
-// Confirm delete account
-const cnfrm2 = document.getElementById('confirm_delete');
-cnfrm2.addEventListener('click', async () => {
-  const userId = localStorage.getItem('ID');
-  if (userId) {
-    const userRef = doc(db, "users", "admin", "admin_account", userId);
-    await updateDoc(userRef, {
-      status: "Deleted",
-      deletedBy: "ADMIN",
-      deletedDate: currentDateTime
-    })
+  // Confirm delete account
+  const cnfrm2 = document.getElementById('confirm_delete');
+  cnfrm2.addEventListener('click', async () => {
+    const userId = localStorage.getItem('ID');
+    if (userId) {
+      const userRef = doc(db, "users", "admin", "admin_account", userId);
+      await updateDoc(userRef, {
+        status: "Deleted",
+        deletedBy: "ADMIN",
+        deletedDate: currentDateTime
+      })
       .then(() => {
         console.log("Document successfully updated to Deleted!");
         document.getElementById('delete_acc_modal').style.display = "none";
         window.location.reload(); // Reload the page to reflect changes
       })
       .catch((error) => console.error("Error updating document: ", error));
-  } else {
-    console.error("No user ID found in localStorage");
-  }
-});
+    } else {
+      console.error("No user ID found in localStorage");
+    }
+  });
 
 // Cancel delete account
 const cnl2 = document.getElementById('cancel_delete');
 cnl2.addEventListener('click', () => {
   document.getElementById('delete_acc_modal').style.display = "none";
 });
+
+//Button to see archived accounts
+archived_acc.addEventListener('click', (e) => {
+  window.location = "prArchives.html"
+})
+
+
+// Initial disabling of buttons
+document.getElementById("edit_acc").disabled = true;
+document.getElementById("delete_acc").disabled = true;

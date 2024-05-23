@@ -76,6 +76,7 @@ let admin = document.getElementById("admin");
 admin.addEventListener("click", () => {
   window.location = "profile.html";
 });
+
 let event = document.getElementById("eventS");
 event.addEventListener("click", () => {
   window.location = "events.html";
@@ -110,7 +111,7 @@ const mostVisitedChart = new Chart(ctx, {
     datasets: [
       {
         label: "Number of Visitors",
-        data: [], // Initial empty data
+        data: [1,1], // Initial empty data
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,

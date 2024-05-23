@@ -16,9 +16,41 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-function redirectToDash(){
-    window.location.href = 'dash.html'
-}
+
+let dash = document.getElementById("dash");
+dash.addEventListener('click', () =>{
+  window.location = 'dash.html'
+})
+let profile = document.getElementById("profile");
+profile.addEventListener('click', () =>{
+  window.location = 'profile.html'
+})
+let promotion = document.getElementById("promotion");
+promotion.addEventListener('click', () =>{
+  window.location = 'promotion.html'
+})
+let tourist = document.getElementById("tourist");
+tourist.addEventListener('click', () =>{
+  window.location = 'tourist.html'
+})
+let souvenir = document.getElementById("souvenir");
+souvenir.addEventListener('click', () =>{
+  window.location = 'souvenir.html'
+})
+let logout = document.getElementById("logout");
+logout.addEventListener('click', () =>{
+  window.location = 'index.html'
+})
+let restaurants = document.getElementById("restaurant");
+restaurants.addEventListener("click", () => {
+  window.location = "restaurants.html";
+});
+let events= document.getElementById("events");
+events.addEventListener("click", () => {
+  window.location = "events.html";
+});
+
+
 function goBack() {
     window.history.back();
   }
