@@ -169,11 +169,11 @@ querySnapshot.forEach((doc) => {
     let td4 = document.createElement("td");
     let td5 = document.createElement("td");
 
-    td1.innerHTML = doc.data().Category;
-    td2.innerHTML = doc.data().Name;
-    td3.innerHTML = doc.data().Owner;
-    td4.innerHTML = doc.data().Number;
-    td5.innerHTML = doc.data().Location;
+    
+    td1.innerHTML = doc.data().Name;
+    td2.innerHTML = doc.data().Owner;
+    td3.innerHTML = doc.data().Number;
+    td4.innerHTML = doc.data().Location;
 
     trow.appendChild(td1);
     trow.appendChild(td2);

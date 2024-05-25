@@ -40,7 +40,7 @@
         <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
           ePasyar</h2>
         <ul class="nav nav-pills nav-stacked">
-       
+
           <li><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
           <li class="active"><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
@@ -58,7 +58,7 @@
           <div class="btn_useracc">
             <button class="add_acc" id="add_acc">Add</button>
             <button class="edit_acc" id="edit_acc">Edit</button>
-            <button id="delete_acc">Delete</button>
+            <button id="delete_acc">Archive</button>
             <div>
               <button id="archived_acc">See Archives</button>
             </div>
@@ -71,15 +71,72 @@
                   <th>Event Name</th>
                   <th>Event Date</th>
                   <th>Event Description</th>
-                
+                  <th>Event Photos</th>
+
                 </tr>
                 <tbody id="tbody1"></tbody>
+                
               </table>
+              <div class="calendar">
+              <div class="month">
+                <ul>
+                  <li class="prev"> &#10094;</li>
+                  <li class="next"> &#10095;</li>
+                  <li>August<br><span style="font-size:18px">2024</span></li>
+                </ul>
+              </div>
+              <ul class="weekdays">
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wed</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+                <li>Sun</li>
+              </ul>
+          
+              <ul class="days">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li><span class="active">10</span></li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+                <li>25</li>
+                <li>26</li>
+                <li>27</li>
+                <li>28</li>
+                <li>29</li>
+                <li>30</li>
+                <li>31</li>
+              </ul>
             </div>
           </div>
         </div>
+          
+        </div>
+        
       </main>
     </div>
+    
 
     <!--Create Account-->
     <div class="reg-container" id="user-create">
@@ -101,6 +158,7 @@
 
           <input type="submit" id="btnRegister" value="Add Event" />
         </form>
+        
       </div>
     </div>
 
@@ -148,12 +206,13 @@
 
     <!-- confirmation modal for delete account -->
     <div class="cnfrm_modal_delete" id="delete_acc_modal">
-      <h1>Confirm delete this Event?</h1>
+      <h1>Are you sure you want to archive this Event?</h1>
       <div class="btn1">
         <button id="cnl2">Cancel</button>
         <button id="cnfrm2">Confirm</button>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -180,7 +239,9 @@
         }
       }
     }
+
   </script>
+
 
   <script type="module" src="/Javascript/events.js"></script>
 </body>

@@ -29,6 +29,76 @@
     margin-bottom: 10px;
   }
 }
+/* Month header */
+.month {
+  padding: 1px;
+  width: 90%;
+  background: #1D5D9B;
+  text-align: center;
+}
+.calendar{
+  text-align: center;
+}
+
+/* Month list */
+.month ul {
+  margin: 0;
+
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Previous button inside month header */
+.month .prev, .month .next {
+  float: none;
+  display: inline;
+  padding-top: 0;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+  width: 90%;
+  padding: 5px;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13%;
+  color: #666;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* Days (1-31) */
+.days {
+  padding: 1px ;
+  background: #eee;
+  width: 90%;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13%;
+  text-align: center;
+  margin-bottom: 2px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Highlight the "current" day */
+.days li .active {
+  padding: 5px;
+  background: #F4D160;
+  color: white !important;
+}
 
   
   

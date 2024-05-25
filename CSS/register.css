@@ -2,17 +2,18 @@ body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
     background-color: #1D5D9B;
-    width: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 .reg-container{
-    width: 500px;
-    border-radius: 15px;
-    padding: 10px;
-    position: relative;
-    top: 5%;
-    left: 40%;  
+    width: 400px;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #1D5D9B; /* Add background color if needed */
+    
 }
 #email{
     text-align: start;
@@ -24,17 +25,18 @@ body{
     margin: 50px auto;
     padding: 20px;
     border-radius: 5px;
+    background-color: #FFF;
    
 }
 input {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
+    margin-bottom: 5px;
     width: 100%;
-    background-color: #FBEEAC;
+    background-color: white;
     box-sizing: border-box;
     border-radius: 10px;
     font-size: 14px;
-    
+    border: 1px solid #CCC;
 }
 #input{
     display: block;
@@ -44,19 +46,33 @@ input {
     width: 100px;
     height: 30px;
     display: block;
-    margin: 10px auto; 
-    padding: 5px 10px;
+    margin: 20px auto; 
+    padding: 10px 20px;
     background-color: #F4D160;
     color: #000000;
-    border: 5px;
+    border: none;
     border-radius: 15px;
-    font-size: 15px;
+    font-size: 12px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: bold;
     cursor: pointer;
     text-align: center;
-    margin-top: 30px;
 }
+#btnBck{
+    width: 100px;
+    height: 30px;
+    display: block;
+    margin: 20px auto; 
+    padding: 10px 20px;
+    background-color: #F4D160;
+    color: #000000;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;}
 h1 {
     text-align: center;
     margin-bottom: 20px;

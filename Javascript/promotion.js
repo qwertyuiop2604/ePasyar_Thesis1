@@ -346,15 +346,15 @@ const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
   
   
 
-    td1.innerHTML = doc.data().Category;
-    td2.innerHTML = doc.data().Name;
-    td3.innerHTML = doc.data().Owner;
-    td4.innerHTML = doc.data().Number;
-    td5.innerHTML = doc.data().Email;
-    td6.innerHTML = doc.data().Address;
-    td7.innerHTML = doc.data().Rooms;
-    td8.innerHTML = doc.data().Capacity;
-    td9.innerHTML = doc.data().Rates;
+
+    td1.innerHTML = doc.data().Name;
+    td2.innerHTML = doc.data().Owner;
+    td3.innerHTML = doc.data().Number;
+    td4.innerHTML = doc.data().Email;
+    td5.innerHTML = doc.data().Address;
+    td6.innerHTML = doc.data().Rooms;
+    td7.innerHTML = doc.data().Capacity;
+    td8.innerHTML = doc.data().Rates;
    
 
     trow.appendChild(td1);

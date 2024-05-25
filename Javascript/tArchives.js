@@ -51,10 +51,10 @@ const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
      
 
       td1.innerHTML = doc.data().DeletedBy;
-      td2.innerHTML = doc.data().Category;
-      td3.innerHTML = doc.data().Name;
-      td4.innerHTML = doc.data().Description;
-      td5.innerHTML = doc.data().DeletedDate;
+     
+      td2.innerHTML = doc.data().Name;
+      td3.innerHTML = doc.data().Description;
+      td4.innerHTML = doc.data().DeletedDate;
     
       
 

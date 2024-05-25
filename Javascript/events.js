@@ -168,6 +168,7 @@ formEdit.addEventListener('submit', (e) => {
 });
 
 
+
 // FINAL
 var tbody = document.getElementById('tbody1');
 
@@ -258,6 +259,7 @@ querySnapshot2.forEach(doc2 => {
             DeletedDate: currentDateTime
       }).then(() => {
         delete_acc_modal.style.display = 'none';
+        
       }).catch((error) => {
         console.error("Error updating document: ", error);
       });

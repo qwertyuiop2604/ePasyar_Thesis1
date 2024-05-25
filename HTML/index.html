@@ -9,7 +9,7 @@
 </head>
 <style>
     .row.content {
-      height: 400px
+      height: 4000px
     }
 
     .sidenav {
@@ -17,9 +17,9 @@
       height: 100%;
     }
 
-    @media screen and (max-width: 100px) {
+    @media screen and (max-width: 1000px) {
       .row.content {
-        height: auto;
+        height: 1000px;
       }
     }
   </style>
@@ -27,7 +27,7 @@
 <body>
 
     <div class="login-container">
-        <img src="/image/ePasyar.png" alt="index" width="160" height="145" class="center-image">
+        <img src="/image/ePasyar.png" alt="index" width="120" height="100" class="center-image">
         <h1>ePasyar</h1>
         
         <form id="login-form">
@@ -36,7 +36,7 @@
             <input type="text" id="email" name="email" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password"  required> 
-            <div id="forgotPass" onclick="redirectToForgotPassword()">
+            <div id="forgotPass" >
                 <p>Forgot Password</p>
             </div>
             <button id="btnLogin">Login</button>
@@ -51,7 +51,7 @@
             <label for="confirm-password">Confirm Password</label>
             <input type="password" id="confirm-password" name="confirm-password" required>
             <button type="submit">Reset Password</button>
-            <button type="button" onclick="hideForgotPasswordForm()">Cancel</button>
+            <button type="button" >Cancel</button>
         </form>
     </div>
     <div id="register">

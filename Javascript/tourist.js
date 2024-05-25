@@ -156,10 +156,10 @@ const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
     let td4 = document.createElement('td');
     //let td3 = document.createElement('td');
 
-    td1.innerHTML = doc.data().Category;
-    td2.innerHTML = doc.data().Name;
-    td3.innerHTML = doc.data().Description;
-    //td3.innerHTML = doc.data().Photos;
+    
+    td1.innerHTML = doc.data().Name;
+    td2.innerHTML = doc.data().Description;
+    td3.innerHTML = doc.data().Photos;
 
     trow.appendChild(td1);
     trow.appendChild(td2);

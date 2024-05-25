@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"
-
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -18,43 +17,46 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const querySnapshot = await getDocs(collection(db,"users","admin","admin_account"));
+let btnBck = document.getElementById("btnBck");
+btnBck.addEventListener('click', () => {
+    window.location = 'index.html'
+})
 
-var form = document.getElementById('register-form')
+var form = document.getElementById('register-form');
 
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', async function(event) {
   event.preventDefault();
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var name = document.getElementById('name').value;
-  var country = document.getElementById('country').value;
   
-  if (email === ''){
-    console.log("email is empty")
-  } else if (password === ''){
-    console.log("password is empty")
-  } else if (name === ''){
-    console.log("name is empty")
-  } else if (country === ''){
-    console.log("country is empty")
-  } else {
-     querySnapshot.forEach(doc => {
-      if(doc.data().email === email && doc.data().password === password){
-        window.location = "index.html";
-      }
-     });
-  } 
-});
+  var email = document.getElementById('reg-email').value;
+  var password = document.getElementById('reg-password').value;
+  var name = document.getElementById('name').value;
 
-      // document.querySelector('.login-container').style.display = 'none';
-      // document.querySelector('.home-container').style.display = 'block';
-      // document.getElementById('email-display').textContent = email;
+  var confirm = document.getElementById('confirm').value;
+
+  if (password !== confirm) {
+    console.log("Passwords do not match");
+    return;
+  }
+
+  try {
+    // Create user with email and password
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Add user data to Firestore
+    await addDoc(collection(db, "users","admin","admin_account"), {
+   
+      email: email,
+      name: name,
+      password: confirm,
+      status: "Active"
 
       
- // }
-//);
+    });
 
-//function registrationAccount() {
-  
-  // window.location.href = 'index.html';
-//}
+    console.log("User registered and data stored in Firestore");
+    window.location = 'index.html';
+  } catch (error) {
+    console.error("Error registering user:", error);
+  }
+});
