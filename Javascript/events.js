@@ -1,7 +1,7 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import { getFirestore, addDoc, collection, getDocs, updateDoc, doc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -27,6 +27,7 @@ document.getElementById("tourist").addEventListener('click', () => { window.loca
 document.getElementById("souvenir").addEventListener('click', () => { window.location = 'souvenir.html'; });
 document.getElementById("logout").addEventListener('click', () => { window.location = 'index.html'; });
 document.getElementById("reviews").addEventListener('click', () => { window.location = 'reviews.html'; });
+document.getElementById("restaurant").addEventListener('click', () => { window.location = 'restaurants.html'; });
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
@@ -45,20 +46,29 @@ const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
 const date = document.getElementById('date');
 const description = document.getElementById('description');
+const photos = document.getElementById('photos');
 
-formCreate.addEventListener('submit', (e) => {
+formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name, date, description])) {
-    addDoc(collection(db, "festivals"), {
-      Name: name.value,
-      Date: date.value,
-      Description: description.value.trim(),
-      Status: "not done"
-    }).then(() => {
+  if (validateInputs([name, date, description, photos])) {
+    try {
+      const photoFile = photos.files[0];
+      const photoRef = ref(storage, `photos/${photoFile.name}`);
+      await uploadBytes(photoRef, photoFile);
+      const photoURL = await getDownloadURL(photoRef);
+
+      await addDoc(collection(db, "festivals"), {
+        Name: name.value,
+        Date: date.value,
+        Description: description.value.trim(),
+        PhotoURL: photoURL,
+        Status: "not done"
+      });
       createAcc.style.display = 'none';
-    }).catch((error) => {
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
       console.error("Error adding document: ", error);
-    });
+    }
   }
 });
 
@@ -77,17 +87,17 @@ function validateInputs(inputs) {
 }
 
 // FOR EDIT MODAL CONFIRMATION - FINAL
-const confirmation = document.getElementById('cnfrm_edit')
-const cancel = document.querySelector('.cnl')
-const confirm = document.querySelector('.cnfrm')
+const confirmation = document.getElementById('cnfrm_edit');
+const cancel = document.querySelector('.cnl');
+const confirm = document.querySelector('.cnfrm');
 
 cancel.addEventListener('click', () => {
-    confirmation.style.display = 'none'
+    confirmation.style.display = 'none';
     modalEdit.style.display = 'block';
     confirm.style.display = 'none';
 });
 
-//Edit FORM POPUP
+// Edit FORM POPUP
 const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
@@ -104,12 +114,37 @@ const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
 const date1 = document.getElementById('date1');
 const description1 = document.getElementById('description1');
+const photos1 = document.getElementById('photos1');
 
-formEdit.addEventListener('submit', (e) => {
+formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (validateInputs([name1, date1, description1])) {
-    confirmation.style.display = 'block';
-    editAcc.style.display = 'none';
+    try {
+      const userID = localStorage.getItem("ID");
+      const photoFile = photos1.files[0];
+      let photoURL;
+      if (photoFile) {
+        const photoRef = ref(storage, `photos/${photoFile.name}`);
+        await uploadBytes(photoRef, photoFile);
+        photoURL = await getDownloadURL(photoRef);
+      }
+
+      const updateData = {
+        Name: name1.value,
+        Date: date1.value,
+        Description: description1.value
+      };
+
+      if (photoFile) {
+        updateData.PhotoURL = photoURL;
+      }
+
+      await updateDoc(doc(db, "festivals", userID), updateData);
+      confirmation.style.display = 'none';
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
   }
 });
 
@@ -117,12 +152,13 @@ formEdit.addEventListener('submit', (e) => {
 const tbody = document.getElementById('tbody1');
 const querySnapshot = await getDocs(collection(db, "festivals"));
 querySnapshot.forEach(doc => {
-  if (doc.data().Status == "not done") {
+  if (doc.data().Status === "not done") {
     const trow = document.createElement('tr');
     trow.innerHTML = `
       <td>${doc.data().Name}</td>
       <td>${doc.data().Date}</td>
       <td>${doc.data().Description}</td>
+      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
     `;
     tbody.appendChild(trow);
 
@@ -146,46 +182,41 @@ function highlightRow(row) {
 
 // Update event
 const currentDateTime = new Date().toLocaleString();
-const querySnapshot2 = await getDocs(collection(db, "festivals"));
-querySnapshot2.forEach(doc2 => {
-  document.getElementById('cnfrm').addEventListener('click', async () => {
-    const userID = localStorage.getItem("ID");
-    if (userID == doc2.id) {
-      await updateDoc(doc(db, "festivals", doc2.id), {
-        Name: name1.value,
-        Date: date1.value,
-        Description: description1.value
-      });
-      confirmation.style.display = 'none';
-    }
-  });
-
-  document.getElementById('cnfrm2').addEventListener('click', async () => {
-    const userID = localStorage.getItem("ID");
-    if (userID == doc2.id) {
-      await updateDoc(doc(db, "festivals", doc2.id), {
-        Status: "done",
-        DeletedBy: "ADMIN",
-        DeletedDate: currentDateTime
-      });
-      document.getElementById('delete_acc_modal').style.visibility = "hidden";
-    }
-  });
+document.getElementById('cnfrm').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "festivals", userID), {
+      Name: name1.value,
+      Date: date1.value,
+      Description: description1.value
+    });
+    confirmation.style.display = 'none';
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
 });
 
-// Delete event
-document.getElementById('delete_acc').addEventListener('click', () => {
-  document.getElementById('delete_acc_modal').style.visibility = "visible";
-});
-document.getElementById('cnl2').addEventListener('click', () => {
-  document.getElementById('delete_acc_modal').style.visibility = "hidden";
-  window.location = "events.html";
+// Archive event instead of deleting
+document.getElementById('delete_acc').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "festivals", userID), {
+      Status: "archived",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+      ArchivedDate: currentDateTime
+    });
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
 });
 
 // Button to see archived accounts
 document.getElementById('archived_acc').addEventListener('click', () => {
   window.location = "archives.html";
 });
+
 
 // Calendar functionality
 const monthElement = document.querySelector('.month ul li span');
