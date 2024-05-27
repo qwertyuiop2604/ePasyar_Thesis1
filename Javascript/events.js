@@ -1,8 +1,9 @@
-
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, addDoc, doc, collection, setDoc, getDocs, updateDoc, deleteDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
+import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
@@ -16,44 +17,21 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
-
-let dash = document.getElementById("dash");
-dash.addEventListener('click', () =>{
-  window.location = 'dash.html'
-})
-let profile = document.getElementById("profile");
-profile.addEventListener('click', () =>{
-  window.location = 'profile.html'
-})
-let promotion = document.getElementById("promotion");
-promotion.addEventListener('click', () =>{
-  window.location = 'promotion.html'
-})
-let tourist = document.getElementById("tourist");
-tourist.addEventListener('click', () =>{
-  window.location = 'tourist.html'
-})
-let souvenir = document.getElementById("souvenir");
-souvenir.addEventListener('click', () =>{
-  window.location = 'souvenir.html'
-})
-let logout = document.getElementById("logout");
-logout.addEventListener('click', () =>{
-  window.location = 'index.html'
-})
-let reviews = document.getElementById("reviews");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
-});
-
+// Event listeners for navigation buttons
+document.getElementById("dash").addEventListener('click', () => { window.location = 'dash.html'; });
+document.getElementById("profile").addEventListener('click', () => { window.location = 'profile.html'; });
+document.getElementById("promotion").addEventListener('click', () => { window.location = 'promotion.html'; });
+document.getElementById("tourist").addEventListener('click', () => { window.location = 'tourist.html'; });
+document.getElementById("souvenir").addEventListener('click', () => { window.location = 'souvenir.html'; });
+document.getElementById("logout").addEventListener('click', () => { window.location = 'index.html'; });
+document.getElementById("reviews").addEventListener('click', () => { window.location = 'reviews.html'; });
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
 const closePop = document.querySelector('.close-modal');
-
-
 
 openPop.addEventListener('click', () => {
   createAcc.style.display = 'block';
@@ -70,30 +48,7 @@ const description = document.getElementById('description');
 
 formCreate.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (name.value.trim() === '') {
-    name.classList.add('invalid-input');
-  } else {
-    name.classList.remove('invalid-input');
-    name.classList.add('valid-input');
-  }
-
-  if (date.value === '') {
-    date.classList.add('invalid-input');
-  } else {
-    date.classList.remove('invalid-input');
-    date.classList.add('valid-input');
-  }
-
-  if (description.value.trim() === '') {
-    description.classList.add('invalid-input');
-  } else {
-    description.classList.remove('invalid-input');
-    description.classList.add('valid-input');
-  }
-
-  if (name.classList.contains('valid-input') 
-    && date.classList.contains('valid-input') 
-  && description.classList.contains('valid-input')) {
+  if (validateInputs([name, date, description])) {
     addDoc(collection(db, "festivals"), {
       Name: name.value,
       Date: date.value,
@@ -107,6 +62,20 @@ formCreate.addEventListener('submit', (e) => {
   }
 });
 
+function validateInputs(inputs) {
+  let isValid = true;
+  inputs.forEach(input => {
+    if (input.value.trim() === '') {
+      input.classList.add('invalid-input');
+      isValid = false;
+    } else {
+      input.classList.remove('invalid-input');
+      input.classList.add('valid-input');
+    }
+  });
+  return isValid;
+}
+
 // FOR EDIT MODAL CONFIRMATION - FINAL
 const confirmation = document.getElementById('cnfrm_edit')
 const cancel = document.querySelector('.cnl')
@@ -117,8 +86,6 @@ cancel.addEventListener('click', () => {
     modalEdit.style.display = 'block';
     confirm.style.display = 'none';
 });
-
-
 
 //Edit FORM POPUP
 const editAcc = document.getElementById('user-edit');
@@ -140,149 +107,133 @@ const description1 = document.getElementById('description1');
 
 formEdit.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (name1.value.trim() === '') {
-    name1.classList.add('invalid-input');
-  } else {
-    name1.classList.remove('invalid-input');
-    name1.classList.add('valid-input');
-  }
-
-  if (date1.value === '') {
-    date1.classList.add('invalid-input');
-  } else {
-    date1.classList.remove('invalid-input');
-    date1.classList.add('valid-input');
-  }
-
-  if (description1.value.trim() === '') {
-    description1.classList.add('invalid-input');
-  } else {
-    description1.classList.remove('invalid-input');
-    description1.classList.add('valid-input');
-  }
-
-  if (name1.classList.contains('valid-input') && date1.classList.contains('valid-input') && description1.classList.contains('valid-input')) {
+  if (validateInputs([name1, date1, description1])) {
     confirmation.style.display = 'block';
     editAcc.style.display = 'none';
   }
 });
 
-
-
-// FINAL
-var tbody = document.getElementById('tbody1');
-
+// Populate table with data
+const tbody = document.getElementById('tbody1');
 const querySnapshot = await getDocs(collection(db, "festivals"));
-  querySnapshot.forEach(doc => {
-
+querySnapshot.forEach(doc => {
   if (doc.data().Status == "not done") {
-    var trow = document.createElement('tr');
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-
-    td1.innerHTML = doc.data().Name;
-    td2.innerHTML = doc.data().Date;
-    td3.innerHTML = doc.data().Description;
-
-    trow.appendChild(td1);
-    trow.appendChild(td2);
-    trow.appendChild(td3);
-
+    const trow = document.createElement('tr');
+    trow.innerHTML = `
+      <td>${doc.data().Name}</td>
+      <td>${doc.data().Date}</td>
+      <td>${doc.data().Description}</td>
+    `;
     tbody.appendChild(trow);
 
-    trow.addEventListener('click', (e) =>{
-
-      localStorage.setItem('ID', doc.id)
-      console.log(doc.id)
-    
-      //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
-      var table = document.getElementById("table");
-      var rows = document.getElementsByTagName('tr');
-      for(let i = 1; i < rows.length; i++){
-        var currentRow = table.rows[i];
-        currentRow.onclick = function(){
-          Array.from(this.parentElement.children).forEach(function(el){
-            el.classList.remove('selected-row');
-            
-          });
-    
-          // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
-          this.classList.add('selected-row');
-    
-              document.getElementById("edit_acc").disabled = false;
-              document.getElementById("delete_acc").disabled = false;
-    
-              document.getElementById('name1').value = doc.data().Name;
-              document.getElementById('date1').value = doc.data().Date;
-              document.getElementById('description1').value = doc.data().Description;
-             
-      }
-      
-    }
+    trow.addEventListener('click', (e) => {
+      localStorage.setItem('ID', doc.id);
+      document.getElementById('name1').value = doc.data().Name;
+      document.getElementById('date1').value = doc.data().Date;
+      document.getElementById('description1').value = doc.data().Description;
+      highlightRow(trow);
     });
   }
 });
 
-const currentDateTime = new Date().toLocaleString();
+function highlightRow(row) {
+  const rows = document.querySelectorAll('#tbody1 tr');
+  rows.forEach(r => r.classList.remove('selected-row'));
+  row.classList.add('selected-row');
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
+}
 
+// Update event
+const currentDateTime = new Date().toLocaleString();
 const querySnapshot2 = await getDocs(collection(db, "festivals"));
 querySnapshot2.forEach(doc2 => {
-  const btnEdit = document.getElementById('btnEdit'); // Assuming this is the edit button
-
-  cnfrm.addEventListener('click', (e) => {
-    const updateEvents = doc(db, "festivals", doc2.id);
-    var userID = localStorage.getItem("ID");
-
+  document.getElementById('cnfrm').addEventListener('click', async () => {
+    const userID = localStorage.getItem("ID");
     if (userID == doc2.id) {
-      updateDoc(updateEvents, {
+      await updateDoc(doc(db, "festivals", doc2.id), {
         Name: name1.value,
         Date: date1.value,
         Description: description1.value
-      }).then(() => {
-        confirmation.style.display = 'none';
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
       });
+      confirmation.style.display = 'none';
     }
-  }); 
+  });
 
-  
-  cnfrm2.addEventListener('click', (e) => {
-    const updateEvents = doc(db, "festivals", doc2.id)
-    var userID = localStorage.getItem("ID")
-
+  document.getElementById('cnfrm2').addEventListener('click', async () => {
+    const userID = localStorage.getItem("ID");
     if (userID == doc2.id) {
-      updateDoc(updateEvents, {
+      await updateDoc(doc(db, "festivals", doc2.id), {
         Status: "done",
-            DeletedBy: "ADMIN",
-            DeletedDate: currentDateTime
-      }).then(() => {
-        delete_acc_modal.style.display = 'none';
-        
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
+        DeletedBy: "ADMIN",
+        DeletedDate: currentDateTime
       });
+      document.getElementById('delete_acc_modal').style.visibility = "hidden";
     }
-  }); 
+  });
 });
 
-const btnDelete =  document.getElementById('delete_acc');
-const btnEdit = document.getElementById('btnEdit');
-// Event Listener for delete account button - FINAL
-btnDelete.addEventListener('click', (e) => {
+// Delete event
+document.getElementById('delete_acc').addEventListener('click', () => {
   document.getElementById('delete_acc_modal').style.visibility = "visible";
 });
-cnl2.addEventListener('click', (e) => {
+document.getElementById('cnl2').addEventListener('click', () => {
   document.getElementById('delete_acc_modal').style.visibility = "hidden";
-  window.location = "events.html"
+  window.location = "events.html";
 });
 
-//Button to see archived accounts
-archived_acc.addEventListener('click', (e) => {
-  window.location = "archives.html"
-})
+// Button to see archived accounts
+document.getElementById('archived_acc').addEventListener('click', () => {
+  window.location = "archives.html";
+});
 
+// Calendar functionality
+const monthElement = document.querySelector('.month ul li span');
+const daysElement = document.querySelector('.days');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
 
-    
-    
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+
+const months = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+function renderCalendar(month, year) {
+  monthElement.innerHTML = `${months[month]}<br><span style="font-size:18px">${year}</span>`;
+  daysElement.innerHTML = '';
+
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDayOfMonth; i++) {
+    daysElement.innerHTML += `<li></li>`;
+  }
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    daysElement.innerHTML += `<li>${i}</li>`;
+  }
+}
+
+prevButton.addEventListener('click', () => {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+nextButton.addEventListener('click', () => {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+renderCalendar(currentMonth, currentYear);
