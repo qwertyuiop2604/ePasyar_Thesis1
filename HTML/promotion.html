@@ -56,7 +56,7 @@
             <div class="btn_useracc">
               <button class="add_acc" id="add_promo" >Add</button>
               <button class="edit_acc" id="edit_acc" >Edit</button>
-              <button id="delete_acc" >Archives</button>
+              <button id="delete_acc" >Archive</button>
               <div>
                 <button id="promoArchive">See Archives</button>
               </div>
@@ -79,8 +79,7 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Rooms</th>
-                    <th>Room Capacity</th>
-                   
+                    <th>Room Capacity</th>                 
                     <th>Room Rates</th>
                    <th>Photos</th>
                     
@@ -145,10 +144,13 @@
             <label for="name">Room Rates</label>
             <input type="text" id="room2" name="room2">
 
+            <label for="name">Photos</label>
+            <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
+
            
 
 
-            <input type="submit" id="btnRegister" value="Add Promotion" />
+            <input type="submit" id="btnRegister" value="Add Hotel" />
           </form>
 
         </div>
@@ -204,6 +206,8 @@
             <label for="name">Room Rates</label>
             <input type="text" id="room21" name="room21">
 
+            <label for="name">Photos</label>
+            <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
            
 
             <input type="submit" id="btnEditPromo" value="Save" />
