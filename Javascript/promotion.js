@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
 import { getFirestore, addDoc, doc, collection, setDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+
   const firebaseConfig = {
     apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
     authDomain: "epasyar-aa569.firebaseapp.com",
@@ -18,6 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const db = getFirestore(app);
   const storage = getStorage(app);
 
+  document.addEventListener('DOMContentLoaded', () => {
+    function setNavEventListener(id, target) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('click', () => {
+          window.location = target;
+        });
+      }
+    }
   function setNavEventListener(id, target) {
     const element = document.getElementById(id);
     if (element) {
@@ -241,19 +250,14 @@ function highlightRow(row) {
   document.getElementById("delete_acc").disabled = false;
 } 
 
-
 // Update event
-const currentDateTime = new Date().toLocaleString();
-document.getElementById('cnfrm').addEventListener('click', async () => {
+document.getElementById('cnfrm_promo2').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
     await updateDoc(doc(db, "vigan_establishments", userID), {
-      Name: name1.value,
-      Date: date1.value,
-      Description: description1.value
+      // Update fields here
     });
-    confirmation.style.display = 'none';
-    window.location.reload(); // Reload to refresh the table
+    // Confirmation handling...
   } catch (error) {
     console.error("Error updating document: ", error);
   }
@@ -263,10 +267,10 @@ document.getElementById('cnfrm').addEventListener('click', async () => {
 document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
-    await updateDoc(doc(db, "festivals", userID), {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
       Status: "Not Available",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: currentDateTime
+      ArchivedDate: new Date().toISOString()
     });
     window.location.reload(); // Reload to refresh the table
   } catch (error) {
@@ -274,9 +278,7 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
   }
 });
 
-
-  // Button to see archived accounts
-  document.getElementById('promoArchive').addEventListener('click', () => {
-    window.location = "pArchives.html";
-  });
-
+// Button to see archived accounts
+document.getElementById('promoArchive').addEventListener('click', () => {
+  window.location = "pArchives.html";
+});
