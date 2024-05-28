@@ -1,7 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, addDoc, doc, collection, setDoc, getDocs, updateDoc, deleteDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
-
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const storage = getStorage(app);
 
 let dash = document.getElementById("dash");
 dash.addEventListener('click', () =>{
@@ -51,7 +51,6 @@ reviews.addEventListener("click", () => {
   window.location = "reviews.html";
 });
 
-
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
@@ -69,45 +68,46 @@ const formCreate = document.getElementById('create-form');
 const categorySelect = document.getElementById('category');
 const name = document.getElementById('name');
 const description = document.getElementById('description');
+const photos = document.getElementById('photos');
 
-formCreate.addEventListener('submit', (e) => {
+formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const selectedCategory = categorySelect.value;
+  if (validateInputs([categorySelect, name, description, photos])) {
+    try {
+      const photoFile = photos.files[0];
+      const photoRef = ref(storage, `tourist/${photoFile.name}`);
+      await uploadBytes(photoRef, photoFile);
+      const photoURL = await getDownloadURL(photoRef);
 
-  if (selectedCategory === 'blank') {
-    alert("SELECT A CATEGORY");
-  }else if (name.value == '') {
-    alert("ENTER EVENT NAME")
-  }else if (description.value == '') {
-    alert("ENTER EVENT DESCRIPTION")
-  } else {
-    addDoc(collection(db, "vigan_establishments"), {
-      Category: selectedCategory,
-      Name: name.value,
-      Description: description.value, // Use description.value for textarea
-      Status: "Open"
-    }).then(() => {
+      await addDoc(collection(db, "vigan_establishments"), {
+        Category: categorySelect.value,
+        Name: name.value,
+        Description: description.value.trim(),
+        PhotoURL: photoURL,
+        Status: "Open"
+      });
       createAcc.style.display = 'none';
-    }).catch((error) => {
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
       console.error("Error adding document: ", error);
-    });
+    }
   }
 });
 
-// FOR EDIT MODAL CONFIRMATION - FINAL
-const confirmation = document.getElementById('cnfrm_edit')
-const cancel = document.querySelector('.cnl')
-const confirm = document.querySelector('.cnfrm')
-
-cancel.addEventListener('click', () => {
-    confirmation.style.display = 'none'
-    modalEdit.style.display = 'block';
-    confirm.style.display = 'none';
-});
-
-
-
-//Edit FORM POPUP
+function validateInputs(inputs) {
+  let isValid = true;
+  inputs.forEach(input => {
+    if (input.value.trim() === '') {
+      input.classList.add('invalid-input');
+      isValid = false;
+    } else {
+      input.classList.remove('invalid-input');
+      input.classList.add('valid-input');
+    }
+  });
+  return isValid;
+}
+// Edit FORM POPUP
 const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
@@ -124,139 +124,120 @@ const formEdit = document.getElementById('edit-form');
 const categorySelect1 = document.getElementById('category1');
 const name1 = document.getElementById('name1');
 const description1 = document.getElementById('description1');
-//const photos1 = document.getElementById('photos1');
+const photos1 = document.getElementById('photos1');
 
-
-formEdit.addEventListener('submit', (e) => {
+formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (categorySelect1.value === 'blank1') {
-    alert("SELECT A CATEGORY"); // Show an alert if no category is selected
-  }else if (name1.value == '') {
-    alert("ENTER NAME")
-  } else if (description1.value == '') {
-alert("ENTER DESCRIPTION")
-  } else {
-    confirmation.style.display = 'block';
-    editAcc.style.display = 'none';
-  }
-});
-
-
-// FINAL
-var tbody = document.getElementById('tbody1');
-
-const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-  querySnapshot.forEach(doc => {
-
-  if (doc.data().Status == "Open") {
-    var trow = document.createElement('tr');
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-    let td4 = document.createElement('td');
-    //let td3 = document.createElement('td');
-
-    
-    td1.innerHTML = doc.data().Name;
-    td2.innerHTML = doc.data().Description;
-    td3.innerHTML = doc.data().Photos;
-
-    trow.appendChild(td1);
-    trow.appendChild(td2);
-    trow.appendChild(td3);
-
-    tbody.appendChild(trow);
-
-    trow.addEventListener('click', (e) =>{
-
-      localStorage.setItem('ID', doc.id)
-      console.log(doc.id)
-    
-      //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
-      var table = document.getElementById("table");
-      var rows = document.getElementsByTagName('tr');
-      for(let i = 1; i < rows.length; i++){
-        var currentRow = table.rows[i];
-        currentRow.onclick = function(){
-          Array.from(this.parentElement.children).forEach(function(el){
-            el.classList.remove('selected-row');
-            
-          });
-    
-          // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
-          this.classList.add('selected-row');
-    
-              document.getElementById("edit_acc").disabled = false;
-              document.getElementById("delete_acc").disabled = false;
-    
-              document.getElementById('category1').value = doc.data().Category;
-              document.getElementById('name1').value = doc.data().Name;
-              document.getElementById('description1').value = doc.data().Description;
-             // document.getElementById('photos').value = doc.data().Photos;
+  if (validateInputs([categorySelect1, name1, description1])) {
+    try {
+      const userID = localStorage.getItem("ID");
+      const photoFile = photos1.files[0];
+      let photoURL;
+      if (photoFile) {
+        const photoRef = ref(storage, `tourist/${photoFile.name}`);
+        await uploadBytes(photoRef, photoFile);
+        photoURL = await getDownloadURL(photoRef);
       }
-      
-    }
-    });
-  }
-})
-const currentDateTime = new Date().toLocaleString();
 
-const querySnapshot2 = await getDocs(collection(db, "vigan_establishments"));
-querySnapshot2.forEach(doc2 => {
-  const btnEdit = document.getElementById('btnEdit'); // Assuming this is the edit button
-
-  cnfrm.addEventListener('click', (e) => {
-    const updateEvents = doc(db, "vigan_establishments", doc2.id);
-    var userID = localStorage.getItem("ID");
-
-    if (userID == doc2.id) {
-      updateDoc(updateEvents, {
+      const updateData = {
         Category: categorySelect1.value,
         Name: name1.value,
-        Description: description1.value
-      }).then(() => {
-        confirmation.style.display = 'none';
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
-      });
+        Description: description1.value,
+        PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
+      };
+      
+      if (photoFile) {
+        updateData.PhotoURL = photoURL;
+      }
+
+      await updateDoc(doc(db, "vigan_establishments", userID), updateData);
+      editAcc.style.display = 'none'; // Close the edit form
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
+      console.error("Error updating document: ", error);
     }
-  }); 
-
-  
-  cnfrm2.addEventListener('click', (e) => {
-    const updateEvents = doc(db, "vigan_establishments", doc2.id)
-    var userID = localStorage.getItem("ID")
-
-    if (userID == doc2.id) {
-      updateDoc(updateEvents, {
-        Status: "Close",
-            DeletedBy: "ADMIN",
-            DeletedDate: currentDateTime
-      }).then(() => {
-        delete_acc_modal.style.display = 'none';
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
-      });
-    }
-  }); 
+  }
 });
 
-const btnDelete =  document.getElementById('delete_acc');
-const btnEdit = document.getElementById('btnEdit');
-// Event Listener for delete account button - FINAL
-btnDelete.addEventListener('click', (e) => {
-  document.getElementById('delete_acc_modal').style.visibility = "visible";
+// Update event
+document.getElementById('cnfrm').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
+      Name: name1.value,
+      Description: description1.value
+    });
+    editAcc.style.display = 'none'; // Close the edit form
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
 });
-cnl2.addEventListener('click', (e) => {
-  document.getElementById('delete_acc_modal').style.visibility = "hidden";
-  window.location = "tourist.html"
+
+
+// Populate table with data
+const tbody = document.getElementById('tbody1');
+const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+querySnapshot.forEach(doc => {
+  if (doc.data().Status === "Open") {
+    const trow = document.createElement('tr');
+    trow.innerHTML = `
+      <td>${doc.data().Name}</td>
+      <td>${doc.data().Description}</td>
+      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+    `;
+    tbody.appendChild(trow);
+
+    trow.addEventListener('click', (e) => {
+      localStorage.setItem('ID', doc.id);
+      document.getElementById('category1').value = doc.data().Category;
+      document.getElementById('name1').value = doc.data().Name;
+      document.getElementById('description1').value = doc.data().Description;
+      highlightRow(trow);
+    });
+  }
 });
 
-//Button to see archived accounts
-archived_acc.addEventListener('click', (e) => {
-  window.location = "tArchives.html"
-})
+function highlightRow(row) {
+  const rows = document.querySelectorAll('#tbody1 tr');
+  rows.forEach(r => r.classList.remove('selected-row'));
+  row.classList.add('selected-row');
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
+}
+
+// Update event
+const currentDateTime = new Date().toLocaleString();
+document.getElementById('cnfrm').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
+      Name: name1.value,
+      Description: description1.value
+    });
+    confirmation.style.display = 'none';
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+});
+// Archive event instead of deleting
+document.getElementById('delete_acc').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
+      Status: "Closed",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+      ArchivedDate: currentDateTime
+    });
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+});
 
 
-    
-    
+// Button to see archived accounts
+document.getElementById('archived_acc').addEventListener('click', () => {
+  window.location = "tArchives.html";
+});

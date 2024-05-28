@@ -34,104 +34,68 @@ let reviews = document.getElementById("reviews");
 reviews.addEventListener("click", () => {
   window.location = "reviews.html";
 });
-
 // FINAL
-var tbody = document.getElementById('tbody1');
+const archivedTbody = document.getElementById("archived-tbody");
 
-const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-  querySnapshot.forEach(doc => {
+const querySnap = await getDocs(collection(db, "vigan_establishments"));
+querySnap.forEach((doc) => {
+  if (doc.data().Status === "Closed") {
+    const trow = document.createElement("tr");
+    trow.innerHTML = `
+      <td>${doc.data().ArchivedBy}</td>
+      <td>${doc.data().Name}</td>
+      <td>${doc.data().Description}</td>
+      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>   
+      <td>${doc.data().ArchivedDate}</td>
+    `;
+    archivedTbody.appendChild(trow);
+    trow.addEventListener('click', () => {
+      localStorage.setItem('ID', doc.id);
+      highlightRow(trow);
+    });
+  }
+});
+localStorage.setItem("ID", doc.id);
+       //console.log(doc.id)
 
-    if(doc.data().Status == "Close"){
-      var trow = document.createElement('tr'); 
-      let td1 = document.createElement('td');
-      let td2 = document.createElement('td');
-      let td3 = document.createElement('td'); 
-      let td4 = document.createElement('td'); 
-      let td5 = document.createElement('td');
-     
-
-      td1.innerHTML = doc.data().DeletedBy;
-     
-      td2.innerHTML = doc.data().Name;
-      td3.innerHTML = doc.data().Description;
-      td4.innerHTML = doc.data().DeletedDate;
-    
-      
-
-      trow.appendChild(td1);
-      trow.appendChild(td2);
-      trow.appendChild(td3);
-      trow.appendChild(td4);
-      trow.appendChild(td5);
-    
-
-
-      tbody.appendChild(trow);
-
-
-      trow.addEventListener('click', (e) =>{
-
-        localStorage.setItem('ID', doc.id)
-        //console.log(doc.id)
-
-        //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
-        var table = document.getElementById("table");
-        var rows = document.getElementsByTagName('tr');
-        for( let i = 1; i < rows.length; i++){
-          var currentRow = table.rows[i];
-          currentRow.onclick = function(){
-            Array.from(this.parentElement.children).forEach(function(el){
-              el.classList.remove('selected-row');
-              
-            });
-
-            // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
-            this.classList.add('selected-row');
-
-                document.getElementById("enabledTourist").disabled = false;
-
-                
-        }
-        
-      }
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
     });
 
-    }
-  });
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
 
- 
-    
-
+    document.getElementById("enabledTourist").disabled = false;
+  };
+}
 // window.onload = GetAllDataOnce;
 
-document.getElementById("enabledTourist").disabled = true; 
-
-enabledTourist.addEventListener('click', () => {
+document.getElementById('enabledTourist').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_enable').style.display = "block";
 });
 
-cnl.addEventListener('click', (e) => {
+document.getElementById('cnl').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_enable').style.display = "none";
 });
 
-const querySnapshot2 = await getDocs(collection(db,"vigan_establishments"));
-querySnapshot2.forEach(doc2 => {   
-
-  cnfrm.addEventListener('click', (e) => {
-      const updateStats = doc(db, "vigan_establishments", doc2.id)
-      var userID = localStorage.getItem("ID")
-
-      if(userID == doc2.id){
-          updateDoc(updateStats, {
-              Status: "Open",
-              DeletedBy: "",
-              DeletedDate: ""
-          }).then(() => {
-              window.location = "tArchives.html"
-          })
-      }
-
+const querySnap2 = await getDocs(collection(db, "vigan_establishments"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('cnfrm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "Open",
+      ArchivedBy: "",
+      ArchivedDate: ""
+    }).then(() => {
+      window.location = "tArchives.html";
+      window.location.reload();
+    });
   });
-
 });
-
