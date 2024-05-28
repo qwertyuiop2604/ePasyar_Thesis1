@@ -700,7 +700,7 @@ label{
   margin-top: 20px;
   cursor: pointer;
   background-color: var(--blueButton);
-  color:white;
+  color:blue;
 }
 .btn{
     display: flex;
