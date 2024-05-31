@@ -256,7 +256,7 @@ function addEventListenersToDays(month, year) {
       const selectedDay = e.target.innerText;
       const selectedDate = `${year}-${month + 1}-${selectedDay}`;
       localStorage.setItem('selectedDate', selectedDate);
-      window.location = "dateView.html"; // Page where events are displayed for the selected date
+      window.location = "archives.html"; // Page where events are displayed for the selected date
     });
   });
 }
