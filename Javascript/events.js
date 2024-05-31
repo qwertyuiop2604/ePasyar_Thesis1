@@ -20,14 +20,22 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 // Event listeners for navigation buttons
-document.getElementById("dash").addEventListener('click', () => { window.location = 'dash.html'; });
-document.getElementById("profile").addEventListener('click', () => { window.location = 'profile.html'; });
-document.getElementById("promotion").addEventListener('click', () => { window.location = 'promotion.html'; });
-document.getElementById("tourist").addEventListener('click', () => { window.location = 'tourist.html'; });
-document.getElementById("souvenir").addEventListener('click', () => { window.location = 'souvenir.html'; });
-document.getElementById("logout").addEventListener('click', () => { window.location = 'index.html'; });
-document.getElementById("reviews").addEventListener('click', () => { window.location = 'reviews.html'; });
-document.getElementById("restaurant").addEventListener('click', () => { window.location = 'restaurants.html'; });
+const navButtons = {
+  dash: 'dash.html',
+  profile: 'profile.html',
+  promotion: 'promotion.html',
+  tourist: 'tourist.html',
+  souvenir: 'souvenir.html',
+  logout: 'index.html',
+  reviews: 'reviews.html',
+  restaurant: 'restaurants.html'
+};
+
+Object.keys(navButtons).forEach(button => {
+  document.getElementById(button).addEventListener('click', () => {
+    window.location = navButtons[button];
+  });
+});
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
@@ -64,8 +72,8 @@ formCreate.addEventListener('submit', async (e) => {
         PhotoURL: photoURL,
         Status: "not done"
       });
-      createAcc.style.display = 'none';
-      window.location.reload(); // Reload to refresh the table
+      toggleDisplay(createAcc, 'none');
+      window.location.reload();
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -86,18 +94,7 @@ function validateInputs(inputs) {
   return isValid;
 }
 
-// FOR EDIT MODAL CONFIRMATION - FINAL
-const confirmation = document.getElementById('cnfrm_edit');
-const cancel = document.querySelector('.cnl');
-const confirm = document.querySelector('.cnfrm');
-
-cancel.addEventListener('click', () => {
-    confirmation.style.display = 'none';
-    modalEdit.style.display = 'block';
-    confirm.style.display = 'none';
-});
-
-// Edit FORM POPUP
+// EDIT FORM POPUP
 const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
@@ -140,7 +137,7 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       await updateDoc(doc(db, "festivals", userID), updateData);
-      confirmation.style.display = 'none';
+      toggleDisplay(editAcc, 'none');
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -180,31 +177,33 @@ function highlightRow(row) {
   document.getElementById("delete_acc").disabled = false;
 }
 
-// Update event
-const currentDateTime = new Date().toLocaleString();
-document.getElementById('cnfrm').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "festivals", userID), {
-      Name: name1.value,
-      Date: date1.value,
-      Description: description1.value
-    });
-    confirmation.style.display = 'none';
-    window.location.reload(); // Reload to refresh the table
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
+// Auto-archive past events
+async function autoArchivePastEvents() {
+  const querySnapshot = await getDocs(collection(db, "festivals"));
+  const currentDate = new Date();
 
-// Archive event instead of deleting
+  querySnapshot.forEach(async (doc) => {
+    const eventDate = new Date(doc.data().Date);
+    if (eventDate < currentDate && doc.data().Status === "not done") {
+      await updateDoc(doc.ref, {
+        Status: "archived",
+        ArchivedBy: "AUTO_ARCHIVE",
+        ArchivedDate: currentDate.toLocaleString()
+      });
+    }
+  });
+}
+
+autoArchivePastEvents();
+
+// Archive event
 document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
     await updateDoc(doc(db, "festivals", userID), {
       Status: "archived",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: currentDateTime
+      ArchivedDate: new Date().toLocaleString()
     });
     window.location.reload(); // Reload to refresh the table
   } catch (error) {
@@ -216,7 +215,6 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
 document.getElementById('archived_acc').addEventListener('click', () => {
   window.location = "archives.html";
 });
-
 
 // Calendar functionality
 const monthElement = document.querySelector('.month ul li span');
@@ -247,77 +245,32 @@ function renderCalendar(month, year) {
   for (let i = 1; i <= daysInMonth; i++) {
     daysElement.innerHTML += `<li>${i}</li>`;
   }
+
+  addEventListenersToDays(month, year);
+}
+
+function addEventListenersToDays(month, year) {
+  const days = daysElement.querySelectorAll('li');
+  days.forEach(day => {
+    day.addEventListener('click', async (e) => {
+      const selectedDay = e.target.innerText;
+      const selectedDate = `${year}-${month + 1}-${selectedDay}`;
+      localStorage.setItem('selectedDate', selectedDate);
+      window.location = "dateView.html"; // Page where events are displayed for the selected date
+    });
+  });
 }
 
 prevButton.addEventListener('click', () => {
-  currentMonth--;
-  if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear--;
-  }
+  currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+  currentYear = (currentMonth === 11) ? currentYear - 1 : currentYear;
   renderCalendar(currentMonth, currentYear);
 });
 
 nextButton.addEventListener('click', () => {
-  currentMonth++;
-  if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear++;
-  }
+  currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
+  currentYear = (currentMonth === 0) ? currentYear + 1 : currentYear;
   renderCalendar(currentMonth, currentYear);
 });
 
 renderCalendar(currentMonth, currentYear);
-
-next.addEventListener('click', () => {
-  month++;
-  if (month > 11) {
-    month = 0;
-    year++;
-  }
-  renderCalendar();
-});
-
-todayBtn.addEventListener('click', () => {
-  today = new Date();
-  month = today.getMonth();
-  year = today.getFullYear();
-  renderCalendar();
-});
-
-gotoBtn.addEventListener('click', () => {
-  const dateArr = dateInput.value.split('/');
-  month = dateArr[0] - 1;
-  year = dateArr[1];
-  renderCalendar();
-});
-
-// Add event form submission
-document.getElementById('addEventBtn').addEventListener('click', async () => {
-  const eventName = document.getElementById('eventName').value;
-  const eventTimeFrom = document.getElementById('eventTimeFrom').value;
-  const eventTimeTo = document.getElementById('eventTimeTo').value;
-
-  if (eventName === '' || eventTimeFrom === '' || eventTimeTo === '') {
-    alert('Please fill all the fields');
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "festivals"), {
-      Name,
-      Description,
-      photoURL,
-      eventTimeFrom,
-      eventTimeTo,
-      day: activeDay,
-      month: month + 1,
-      year,
-      date: `${activeDay}/${month + 1}/${year}`
-    });
-    alert('Event added successfully');
-    renderCalendar();
-  } catch (error) {
-    console.error('Error adding event: ', error);
-  }
-});
