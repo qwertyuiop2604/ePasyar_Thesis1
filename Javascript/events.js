@@ -268,3 +268,56 @@ nextButton.addEventListener('click', () => {
 });
 
 renderCalendar(currentMonth, currentYear);
+
+next.addEventListener('click', () => {
+  month++;
+  if (month > 11) {
+    month = 0;
+    year++;
+  }
+  renderCalendar();
+});
+
+todayBtn.addEventListener('click', () => {
+  today = new Date();
+  month = today.getMonth();
+  year = today.getFullYear();
+  renderCalendar();
+});
+
+gotoBtn.addEventListener('click', () => {
+  const dateArr = dateInput.value.split('/');
+  month = dateArr[0] - 1;
+  year = dateArr[1];
+  renderCalendar();
+});
+
+// Add event form submission
+document.getElementById('addEventBtn').addEventListener('click', async () => {
+  const eventName = document.getElementById('eventName').value;
+  const eventTimeFrom = document.getElementById('eventTimeFrom').value;
+  const eventTimeTo = document.getElementById('eventTimeTo').value;
+
+  if (eventName === '' || eventTimeFrom === '' || eventTimeTo === '') {
+    alert('Please fill all the fields');
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "festivals"), {
+      Name,
+      Description,
+      photoURL,
+      eventTimeFrom,
+      eventTimeTo,
+      day: activeDay,
+      month: month + 1,
+      year,
+      date: `${activeDay}/${month + 1}/${year}`
+    });
+    alert('Event added successfully');
+    renderCalendar();
+  } catch (error) {
+    console.error('Error adding event: ', error);
+  }
+});

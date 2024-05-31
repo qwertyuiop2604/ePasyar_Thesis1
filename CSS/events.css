@@ -31,9 +31,12 @@
 }
 .month {
   text-align: center;
-  padding: 20px;
+  padding: 1px;  /* Adjusted padding */
   background: #1D5D9B;
   color: white;
+  width: 70%;
+  height: 30%; /* Adjusted width */
+  font-size: 10px; /* Adjusted font size */
 }
 .month ul {
   margin: 0;
@@ -41,9 +44,9 @@
   list-style-type: none;
 }
 .month ul li {
-  font-size: 20px;
+  font-size: 8px;  /* Adjusted font size */
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 1px;  /* Adjusted letter-spacing */
 }
 .month .prev,
 .month .next {
@@ -51,8 +54,10 @@
 }
 .weekdays {
   margin: 0;
-  padding: 10px 0;
+  padding: 0;  /* Adjusted padding */
   background-color: #ddd;
+  width: 70%;  /* Adjusted width */
+  font-size: 10px;  /* Adjusted font size */
 }
 .weekdays li {
   display: inline-block;
@@ -61,25 +66,27 @@
   text-align: center;
 }
 .days {
-  padding: 10px 0;
+  padding: 1px;  /* Adjusted padding */
   background: #eee;
   margin: 0;
+  width: 70%;  /* Adjusted width */
+  font-size: 10px;  /* Adjusted font size */
 }
 .days li {
   list-style-type: none;
   display: inline-block;
   width: 13.6%;
   text-align: center;
-  margin-bottom: 5px;
-  font-size: 12px;
+  margin-bottom: 1px;  /* Adjusted margin-bottom */
+  font-size: 8px;  /* Adjusted font size */
   color: #777;
 }
 .days li.active {
-  padding: 5px;
+  padding: 2px;  /* Adjusted padding */
   background: #F4D160;
   color: white !important;
 }
-  
+
   
   /* ---------- HEADER ---------- */
   

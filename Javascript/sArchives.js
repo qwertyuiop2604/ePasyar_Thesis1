@@ -36,108 +36,70 @@ reviews.addEventListener("click", () => {
 });
 
 // FINAL
-var tbody = document.getElementById('tbody1');
+const archivedTbody = document.getElementById("archived-tbody");
 
-const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-  querySnapshot.forEach(doc => {
+const querySnap = await getDocs(collection(db, "vigan_establishments"));
+querySnap.forEach((doc) => {
+  if (doc.data().Status === "Shop Closed") {
+    const trow = document.createElement("tr");
+    trow.innerHTML = `
+      <td>${doc.data().ArchivedBy}</td>
+      <td>${doc.data().Name}</td>
+       <td>${doc.data().Owner}</td>
+       <td>${doc.data().Number}</td>
+       <td>${doc.data().Location}</td>
+      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>   
+      <td>${doc.data().ArchivedDate}</td>
+    `;
+    archivedTbody.appendChild(trow);
+    trow.addEventListener('click', () => {
+      localStorage.setItem('ID', doc.id);
+      highlightRow(trow);
+    });
+  }
+});
+localStorage.setItem("ID", doc.id);
+       //console.log(doc.id)
 
-    if(doc.data().Status == "Shop Close"){
-      var trow = document.createElement('tr'); 
-      let td1 = document.createElement('td');
-      let td2 = document.createElement('td');
-      let td3 = document.createElement('td'); 
-      let td4 = document.createElement('td'); 
-      let td5 = document.createElement('td');
-      let td6 = document.createElement('td');
-      let td7 = document.createElement('td');
-     
-
-      td1.innerHTML = doc.data().DeletedBy;
-    
-      td2.innerHTML = doc.data().Name;
-      td3.innerHTML = doc.data().Owner;
-      td4.innerHTML = doc.data().Number;
-      td5.innerHTML = doc.data().Location;
-      td6.innerHTML = doc.data().DeletedDate;
-    
-      
-
-      trow.appendChild(td1);
-      trow.appendChild(td2);
-      trow.appendChild(td3);
-      trow.appendChild(td4);
-      trow.appendChild(td5);
-      trow.appendChild(td6);
-      trow.appendChild(td7);
-    
-
-
-      tbody.appendChild(trow);
-
-
-      trow.addEventListener('click', (e) =>{
-
-        localStorage.setItem('ID', doc.id)
-        //console.log(doc.id)
-
-        //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
-        var table = document.getElementById("table");
-        var rows = document.getElementsByTagName('tr');
-        for( let i = 1; i < rows.length; i++){
-          var currentRow = table.rows[i];
-          currentRow.onclick = function(){
-            Array.from(this.parentElement.children).forEach(function(el){
-              el.classList.remove('selected-row');
-              
-            });
-
-            // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
-            this.classList.add('selected-row');
-
-                document.getElementById("enabledTourist").disabled = false;
-
-                
-        }
-        
-      }
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
     });
 
-    }
-  });
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
 
- 
-    
+    document.getElementById("enabled").disabled = false;
+  };
+}
 
-// window.onload = GetAllDataOnce;
+ // window.onload = GetAllDataOnce;
 
-document.getElementById("enabledTourist").disabled = true; 
-
-enabledTourist.addEventListener('click', () => {
+document.getElementById('enabled').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_enable').style.display = "block";
 });
 
-cnl.addEventListener('click', (e) => {
+document.getElementById('cnl').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_enable').style.display = "none";
 });
 
-const querySnapshot2 = await getDocs(collection(db,"vigan_establishments"));
-querySnapshot2.forEach(doc2 => {   
-
-  cnfrm.addEventListener('click', (e) => {
-      const updateStats = doc(db, "vigan_establishments", doc2.id)
-      var userID = localStorage.getItem("ID")
-
-      if(userID == doc2.id){
-          updateDoc(updateStats, {
-              Status: "Shop Open",
-              DeletedBy: "",
-              DeletedDate: ""
-          }).then(() => {
-              window.location = "sArchives.html"
-          })
-      }
-
+const querySnap2 = await getDocs(collection(db, "vigan_establishments"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('cnfrm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "Shop Open",
+      ArchivedBy: "",
+      ArchivedDate: ""
+    }).then(() => {
+      window.location = "sArchives.html";
+      window.location.reload();
+    });
   });
-
 });
-

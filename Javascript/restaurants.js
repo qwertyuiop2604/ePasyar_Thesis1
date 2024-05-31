@@ -7,6 +7,7 @@ import {
   updateDoc,
   doc,
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -21,6 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 let dash = document.getElementById("dash");
 dash.addEventListener("click", () => {
@@ -75,38 +77,46 @@ const name = document.getElementById("name");
 const owner = document.getElementById("owner");
 const number = document.getElementById("number");
 const location = document.getElementById("location");
+const photos = document.getElementById('photos');
 
-formCreate.addEventListener("submit", (e) => {
+formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const selectedCategory = categorySelect.value;
+  if (validateInputs([categorySelect, name, owner,number,location, photos])) {
+    try {
+      const photoFile = photos.files[0];
+      const photoRef = ref(storage, `restaurant/${photoFile.name}`);
+      await uploadBytes(photoRef, photoFile);
+      const photoURL = await getDownloadURL(photoRef);
 
-  if (selectedCategory === "blank") {
-    alert("SELECT A CATEGORY");
-  } else if (name.value === "") {
-    alert("ENTER SHOP NAME");
-  } else if (owner.value === "") {
-    alert("ENTER OWNER NAME");
-  } else if (number.value === "") {
-    alert("ENTER CONTACT NUMBER");
-  } else if (location.value === "") {
-    alert("ENTER LOCATION");
-  } else {
-    addDoc(collection(db, "vigan_establishments"), {
-      Category: selectedCategory,
-      Name: name.value,
-      Owner: owner.value,
-      Number: number.value,
-      Location: location.value,
-      Status: "Shop Available",
-    })
-      .then(() => {
-        createAcc.style.display = "none";
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
+      await addDoc(collection(db, "vigan_establishments"), {
+        Category: categorySelect.value,
+        Name: name.value,
+        Owner: owner.value,
+        Number: number.value,
+        Location: location.value,
+        PhotoURL: photoURL,
+        Status: "Shop Available"
       });
+      createAcc.style.display = 'none';
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   }
 });
+function validateInputs(inputs) {
+  let isValid = true;
+  inputs.forEach(input => {
+    if (input.value.trim() === '') {
+      input.classList.add('invalid-input');
+      isValid = false;
+    } else {
+      input.classList.remove('invalid-input');
+      input.classList.add('valid-input');
+    }
+  });
+  return isValid;
+}
 
 // FOR EDIT MODAL CONFIRMATION
 const confirmation = document.getElementById("cnfrm_edit");
@@ -137,136 +147,91 @@ const name1 = document.getElementById("name1");
 const owner1 = document.getElementById("owner1");
 const number1 = document.getElementById("number1");
 const location1 = document.getElementById("location1");
+const photos1 = document.getElementById('photos1');
 
-formEdit.addEventListener("submit", (e) => {
+formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (categorySelect1.value === "blank") {
-    alert("SELECT A CATEGORY");
-  } else if (name1.value === "") {
-    alert("ENTER SHOP NAME");
-  } else if (owner1.value === "") {
-    alert("ENTER OWNER NAME");
-  } else if (number1.value === "") {
-    alert("ENTER CONTACT NUMBER");
-  } else if (location1.value === "") {
-    alert("ENTER LOCATION");
-  } else {
-    confirmation.style.display = "block";
-    editAcc.style.display = "none";
-  }
-});
-
-// FINAL
-var tbody = document.getElementById("tbody1");
-
-const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-querySnapshot.forEach((doc) => {
-  if (doc.data().Status == "Shop Available") {
-    var trow = document.createElement("tr");
-    let td1 = document.createElement("td");
-    let td2 = document.createElement("td");
-    let td3 = document.createElement("td");
-    let td4 = document.createElement("td");
-    let td5 = document.createElement("td");
-
-    
-    td1.innerHTML = doc.data().Name;
-    td2.innerHTML = doc.data().Owner;
-    td3.innerHTML = doc.data().Number;
-    td4.innerHTML = doc.data().Location;
-
-    trow.appendChild(td1);
-    trow.appendChild(td2);
-    trow.appendChild(td3);
-    trow.appendChild(td4);
-    trow.appendChild(td5);
-
-    tbody.appendChild(trow);
-
-    trow.addEventListener("click", (e) => {
-      localStorage.setItem("ID", doc.id);
-      console.log(doc.id);
-
-      //HIGHLIGHT TABLE ROW WHEN CLICKED
-      var table = document.getElementById("table");
-      var rows = document.getElementsByTagName("tr");
-      for (let i = 1; i < rows.length; i++) {
-        var currentRow = table.rows[i];
-        currentRow.onclick = function () {
-          Array.from(this.parentElement.children).forEach(function (el) {
-            el.classList.remove("selected-row");
-          });
-
-          this.classList.add("selected-row");
-
-          document.getElementById("edit_acc").disabled = false;
-          document.getElementById("delete_acc").disabled = false;
-
-          document.getElementById("category1").value = doc.data().Category;
-          document.getElementById("name1").value = doc.data().Name;
-          document.getElementById("owner1").value = doc.data().Owner;
-          document.getElementById("number1").value = doc.data().Number;
-          document.getElementById("location1").value = doc.data().Location;
-        };
+  if (validateInputs([categorySelect1, name1, number1,location1, photos1])) {
+    try {
+      const userID = localStorage.getItem("ID");
+      const photoFile = photos1.files[0];
+      let photoURL;
+      if (photoFile) {
+        const photoRef = ref(storage, `restaurant/${photoFile.name}`);
+        await uploadBytes(photoRef, photoFile);
+        photoURL = await getDownloadURL(photoRef);
       }
-    });
+
+      const updateData = {
+        Category: categorySelect1.value,
+        Name: name1.value,
+        Owner: owner1.value,
+        Number: number1.value,
+        Location: location1.value,
+        PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
+      };
+
+      if (photoFile) {
+        updateData.PhotoURL = photoURL;
+      }
+
+      await updateDoc(doc(db, "vigan_establishments", userID), updateData);
+      editAcc.style.display = 'none'; // Close the edit form
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
   }
 });
+
+ // Populate table with data
+ const tbody = document.getElementById('tbody1');
+ const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+ querySnapshot.forEach(doc => {
+   if (doc.data().Status === "Shop Available") {
+     const trow = document.createElement('tr');
+     trow.innerHTML = `
+       <td>${doc.data().Name}</td>
+       <td>${doc.data().Owner}</td>
+       <td>${doc.data().Number}</td>
+       <td>${doc.data().Location}</td>
+       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+     `;
+     tbody.appendChild(trow);
+
+     trow.addEventListener('click', (e) => {
+       localStorage.setItem('ID', doc.id);
+       document.getElementById('category1').value = doc.data().Category;
+       document.getElementById('name1').value = doc.data().Name;
+       document.getElementById("owner1").value = doc.data().Owner;
+       document.getElementById("number1").value = doc.data().Number;
+       document.getElementById("location1").value = doc.data().Location;
+       highlightRow(trow);
+     });
+   }
+ });
+
+ function highlightRow(row) {
+   const rows = document.querySelectorAll('#tbody1 tr');
+   rows.forEach(r => r.classList.remove('selected-row'));
+   row.classList.add('selected-row');
+   document.getElementById("edit_acc").disabled = false;
+   document.getElementById("delete_acc").disabled = false;
+ }
+ // Archive event instead of deleting
 const currentDateTime = new Date().toLocaleString();
-
-const querySnapshot2 = await getDocs(collection(db, "vigan_establishments"));
-querySnapshot2.forEach((doc2) => {
-  const confirmEdit = document.getElementById("cnfrm");
-
-  confirmEdit.addEventListener("click", (e) => {
-    const updateEvents = doc(db, "vigan_establishments", doc2.id);
-    var userID = localStorage.getItem("ID");
-
-    if (userID == doc2.id) {
-      updateDoc(updateEvents, {
-        Category: document.getElementById("category1").value,
-        Name: document.getElementById("name1").value,
-        Owner: document.getElementById("owner1").value,
-        Number: document.getElementById("number1").value,
-        Location: document.getElementById("location1").value,
-      })
-        .then(() => {
-          confirmation.style.display = "none";
-        })
-        .catch((error) => {
-          console.error("Error updating document: ", error);
-        });
-    }
-  });
-
-  cnfrm2.addEventListener('click', (e) => {
-    const updateEvents = doc(db, "vigan_establishments", doc2.id)
-    var userID = localStorage.getItem("ID")
-
-    if (userID == doc2.id) {
-      updateDoc(updateEvents, {
-        Status: "Shop Not Available",
-            DeletedBy: "ADMIN",
-            DeletedDate: currentDateTime
-      }).then(() => {
-        delete_acc_modal.style.display = 'none';
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
-      });
-    }
-  }); 
-});
-
-
-const btnDelete = document.getElementById("delete_acc");
-const btnEdit = document.getElementById("btnEdit");
-// Event Listener for delete account button - FINAL
-btnDelete.addEventListener("click", (e) => {
-  document.getElementById("delete_acc_modal").style.visibility = "visible";
-});
-cnl2.addEventListener("click", (e) => {
-  document.getElementById("delete_acc_modal").style.visibility = "hidden";
-  window.location = "restaurants.html";
+document.getElementById('delete_acc').addEventListener('click', async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
+      Status: "Shop Not Available",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+      ArchivedDate: currentDateTime
+    });
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
 });
 
 //Button to see archived accounts
