@@ -3,261 +3,135 @@
 <head>
     <title>Profile Account Panel</title>
    
+    <!-- Meta tags for character set and viewport settings -->
     <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/profile.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Linking external CSS stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/CSS/profile.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- Linking external JavaScript libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<style>
-  .row.content {
-    height: 400px
-  }
-
-  .sidenav {
-    background-color: white;
-    height: 100%;
-  }
-
-  @media screen and (max-width: 100px) {
-    .row.content {
-      height: auto;
-    }
-  }
-</style>
 <body>
     <div class="container-fluid">
-      <div class="row content">
-        <div class="col-sm-3 sidenav hidden-xs">
-          <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
-            ePasyar</h2>
-          <ul class="nav nav-pills nav-stacked">
-  
-              
-                <li ><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="#section2" id= "profile" ><i class="far fa-user"></i> Account Management</a></li>
-                <li><a href="#section12" id= "events" ><i class="fas fa-calendar-alt"></i> Events</a></li>
-                <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-                <li ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-                <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-                <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-                <li><a href="#section4" id= "reviews" ><i class="fas fa-star"></i> Reviews</a></li>
-           
-                <li><a href="#section11" id= "logout" ><i class="fas fa-sign-out-alt"></i> Log out</a></li>
-        
-              </ul><br>
+        <div class="row content">
+            <!-- Sidebar navigation -->
+            <div class="col-sm-3 sidenav hidden-xs">
+                <h2 id="dash-logo">
+                    <img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image"> ePasyar
+                </h2>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="active"><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
+                    <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+                    <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+                    <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+                    <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+                    <li><a href="#section4" id="reviews"><i class="fas fa-star"></i> Reviews</a></li>
+               
+
+                    <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
+                    <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
+                    <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+                    
+                    <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+                </ul><br>
             </div>
-        
+
+            <!-- Main content area -->
             <main class="main-container">
-        
-              <div class="main2">
-                  <div class="btn_useracc">
-                      <button class="add_acc" >Add</button>
-                      <button class="edit_acc" id="edit_acc" >Edit</button>
-                      <button id="delete_acc">Archive</button>
-                      <div>
-                        <button id="archived_acc" >See Archives</button>
-                      </div>
-            
-                  <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
-                      
-                  </div>
-                  <div class="outer-wrapper">
-                  <div class="table-wrapper">
-                  <table id="table" class="table" style="width:100%">
-                      <tr>
-                          
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Password</th>
-                          
-                      </tr>
-                  <tbody id="tbody1"></tbody>                                                       
-                  </table>
-              </div>
-              </div>
-              </div>
-              
+                <div class="main2">
+                    <div class="btn_useracc">
+                        <!-- Action buttons for account management -->
+                        <button class="add_acc">Add</button>
+                        <button class="edit_acc disabled-button" id="edit_acc" disabled>Edit</button>
+                        <button id="delete_acc" class="disabled-button" disabled>Archive</button>
+                        <div>
+                            <button id="archived_acc">See Archives</button>
+                        </div>
+                        <!-- Search input field -->
+                        <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
+                    </div>
+
+                    <!-- Table to display account details -->
+                    <div class="outer-wrapper">
+                        <div class="table-wrapper">
+                            <table id="table" class="table" style="width:100%">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Position</th>
+                                    <th>Password</th>
+                                </tr>
+                                <tbody id="tbody1"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </main>
-          </div>
-          <!----Create account--->
+        </div>
 
-          <div class="reg-container" id="user-create">
-
+        <!-- Modal for creating a new account -->
+        <div class="reg-container" id="user-create">
             <div class="container-modal">
-              <span class="close-modal">&times;</span>
-              <h1 id="create-txt">Create an Account</h1>
-              <form id="create-form">
-                        <label for="name">Name</label>
-                      <input type="text" id="name" name="name" >
-  
-                      <label for="reg-email">Email</label>
-                      <input type="text" id="email" name="email">
-                    
-                   
-                      <label for="reg-password">Password</label>
-                      <input type="password" id="password" name="password" >
-                  
-                      <label for="confirm">Confirm Password</label>
-                      <input type="password" id="confirm" name="confirm">
-      
-      
-                      <input type="submit" id="btnRegister" value="Register" />
-                  </form>
-
+                <span class="close-modal">&times;</span>
+                <h1 id="create-txt">Create an Account</h1>
+                <form id="create-form">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                    <label for="reg-email">Email</label>
+                    <input type="text" id="email" name="email">
+                    <label for="position">Position</label>
+                    <select name="position" id="position">
+                        <option> </option>
+                        <option> System Administrator</option>
+                        <option> Statistician</option>
+                    </select>
+                    <input type="button" id="btnRegister" value="Register" />
+                </form>
             </div>
+        </div>
 
-            
-          </div>
-
-             <!----Create account--->
-          <div class="edit-container" id="user-edit">
-
+        <!-- Modal for editing an existing account -->
+        <div class="edit-container" id="user-edit">
             <div class="container-modal-edit" id="edit-modal">
-              <span class="close-modal-edit">&times;</span>
-              <h1 id="edit-txt">Edit an Account</h1>
-              <form id="edit-form">
-                    
-                      <label for="name">Name</label>
-                      <input type="text" id="name1" name="name" >
-                      
-                      <label for="edit-email">Email</label>
-                      <input type="text" id="email1" name="email">
-                  
-                      <label for="edit-password">Password</label>
-                      <input type="password" id="password1" name="password" >
-                  
-                      <label for="confirm">Confirm Password</label>
-                      <input type="password" id="confirm1" name="confirm">
+                <span class="close-modal-edit">&times;</span>
+                <h1 id="edit-txt">Edit an Account</h1>
+                <form id="edit-form">
+                    <label for="name">Name</label>
+                    <input type="text" id="name1" name="name">
+                    <label for="edit-email">Email</label>
+                    <input type="text" id="email1" name="email">
+                    <label for="position">Position</label>
+                    <select name="position" id="positionEdit">
+                        <option> </option>
+                        <option> System Administrator</option>
+                        <option> Statistician</option>
+                    </select>
+                    <input type="button" id="btnSaveEdit" value="Save">
+                </form>
+            </div>
+        </div>
 
-                    
-                      <input type="submit" id="btnEdit" value="Save" />
-                  </form>
-
-            </div>      
-          </div> 
-
-
-          <div id="delete_acc_modal" class="cnfrm_modal_delete">
-              <h2>Confirm Archive?</h2>
-              <p>Are you sure you want to archive this account?</p>
-              <button id="confirm_delete">Confirm</button>
-              <button id="cancel_delete">Cancel</button>
-          </div>
-          
-           
-
-    <script type="text/javascript">
-      function showPwrd1() {
-                const passInput = document.getElementById("password")
-                const icon1 = document.getElementById("icon1")
-                
-                if(passInput.type === "password"){
-                  passInput.type = "text"
-                  icon1.innerText = "visibility_off"
-                }
-                else{
-                  password.type = "password"
-                  icon1.innerText = "visibility"
-                }
-
-        }
-
-        function showPwrd2() {
-                const confirmPass = document.getElementById("cpass")
-                const icon2 = document.getElementById("icon2")
-
-                if(confirmPass.type === "password"){
-                  confirmPass.type = "text"
-                  icon2.innerText = "visibility_off"
-                }
-                else{
-                  confirmPass.type = "password"
-                  icon2.innerText = "visibility"
-                }
-        }
-
-        function showPwrd3() {
-                const pass = document.getElementById("pass-edit")
-                const icon3 = document.getElementById("icon3")
-
-                if(pass.type === "password"){
-                  pass.type = "text"
-                  icon3.innerText = "visibility_off"
-                }
-                else{
-                  pass.type = "password"
-                  icon3.innerText = "visibility"
-                }
-        }
-
-        function showPwrd4() {
-                const cpass = document.getElementById("cpass-edit")
-                const icon4 = document.getElementById("icon4")
-
-                if(cpass.type === "password"){
-                  cpass.type = "text"
-                  icon4.innerText = "visibility_off"
-                }
-                else{
-                  cpass.type = "password"
-                  icon4.innerText = "visibility"
-                }
-        }
-      var blur = document.getElementById('blur');
-
-      function toggle(){
-            var popup = document.getElementById('user-modal');
-            popup.classList.toggle('active');
-            blur.classList.toggle('active')
-      }
-      
-      function toggle2(){
-            var popup = document.getElementById('edit-modal');
-            popup.classList.toggle('active');
-            blur.classList.toggle('active')
-      }    
-
-      function toggle3(){
-            var popup = document.getElementById('delete_acc_modal');
-            popup.classList.toggle('active');
-            document.getElementById('delete_acc_modal').style.display = "block";
-            blur.classList.toggle('active')
-      } 
-    </script>
-    <script>
-      const searchAppID = () => {
-        let filter = document.getElementById('srchText').value; // convert to uppercase for case-insensitive search
-        let mytable = document.getElementById('tbody1');
-        let tr = mytable.getElementsByTagName('tr');
-        
-    
-        for (var i = 0; i < tr.length; i++) {
-          let td = tr[i].getElementsByTagName('td')[0] ; 
-          let td2 = tr[i].getElementsByTagName('td')[1];
-          let td3 = tr[i].getElementsByTagName('td')[2];
-          
-    
-          if (td && td2 && td3) { // check if all td elements exist
-    
-            let textvalue = td.textContent.toUpperCase() || td.innerHTML; // convert to uppercase for case-insensitive search
-            let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
-            let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
-    
-            if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
-              tr[i].style.display = '';
-            } else {
-              tr[i].style.display = 'none';
-            }
+        <!-- Modal for confirming account archive -->
+        <div id="delete_acc_modal" class="cnfrm_modal_delete">
+            <h2>Confirm Archive?</h2>
+            <p>Are you sure you want to archive this account?</p>
+            <button id="cancel_delete">Cancel</button>
+            <button id="confirm_delete">Confirm</button>
             
-          }
-        }
-      }
-      
-    </script>
-        
-        <script type="module" src="/Javascript/profile.js"></script>
-   </body>
+        </div>
+    </div>
+
+
+
+    <!-- Linking an external JavaScript file for additional functionality -->
+    <script type="module" src="/Javascript/profile.js"></script>
+</body>
 </html>

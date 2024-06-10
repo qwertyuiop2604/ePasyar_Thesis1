@@ -34,7 +34,7 @@
   padding: 1px;  /* Adjusted padding */
   background: #1D5D9B;
   color: white;
-  width: 70%;
+  width: 500px;
   height: 30%; /* Adjusted width */
   font-size: 10px; /* Adjusted font size */
 }
@@ -56,7 +56,7 @@
   margin: 0;
   padding: 0;  /* Adjusted padding */
   background-color: #ddd;
-  width: 70%;  /* Adjusted width */
+  width: 500px;  /* Adjusted width */
   font-size: 10px;  /* Adjusted font size */
 }
 .weekdays li {
@@ -69,7 +69,7 @@
   padding: 1px;  /* Adjusted padding */
   background: #eee;
   margin: 0;
-  width: 70%;  /* Adjusted width */
+  width: 500px;  /* Adjusted width */
   font-size: 10px;  /* Adjusted font size */
 }
 .days li {
@@ -144,7 +144,7 @@ th, tr, td{
     border: none;
     padding: 5px;
     margin: 5px;
-    width: 100px;
+    width: 70px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
@@ -191,7 +191,7 @@ h4{
 #srchText{
   outline: none;
   border: 1px solid grey;
-  width: 350px;
+  width: 200px;
   height: 30px;
   font-size: 15px;
   align-items: end;
@@ -312,6 +312,19 @@ h4{
   display: none;
 
 }
+/* popup modal for create account */
+#cal-date{
+  border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 130px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(223, 217, 217);
+    cursor: pointer;
+}
 .container-modal{
   background-color: #1D5D9B;
 }
@@ -344,6 +357,7 @@ input {
   font-size: 14px;
   
 }
+
 #input{
   display: block;
  

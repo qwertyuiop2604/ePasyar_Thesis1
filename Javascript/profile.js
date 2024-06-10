@@ -35,7 +35,6 @@ restaurant.addEventListener('click', () => window.location = 'restaurants.html')
 let logout = document.getElementById("logout");
 logout.addEventListener('click', () => window.location = 'index.html');
 
-
 // Create Account Form Popup
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
@@ -48,23 +47,22 @@ closePop.addEventListener('click', () => createAcc.style.display = 'none');
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
 const email = document.getElementById('email');
-const pass = document.getElementById('password');
-const cpass = document.getElementById('confirm');
+const position = document.getElementById('position');
+const btnRegister = document.getElementById('btnRegister'); // Add this line to get the register button
 
-formCreate.addEventListener('submit', (e) => {
+btnRegister.addEventListener('click', (e) => { // Add event listener for the register button click
   e.preventDefault();
-  if (name.value === '' || email.value === '' || pass.value === '' || cpass.value === '') {
+  if (name.value === '' || email.value === '' || position.value === '') {
     alert("All fields are required.");
-  } else if (pass.value !== cpass.value) {
-    alert("Passwords do not match.");
+  
   } else {
-    createUserWithEmailAndPassword(auth, email.value, pass.value)
+    createUserWithEmailAndPassword(auth, email.value, "temp_password")
       .then((userCredential) => {
         const user = userCredential.user;
         setDoc(doc(db, "users", "admin", "admin_account", user.uid), {
           name: name.value,
           email: email.value,
-          password: pass.value,
+          position: position.value,
           status: "Active"
         })
           .then(() => createAcc.style.display = 'none')
@@ -73,6 +71,7 @@ formCreate.addEventListener('submit', (e) => {
       .catch((error) => alert(error.message));
   }
 });
+
 
 // Edit Account Form Popup
 const editAcc = document.getElementById('user-edit');
@@ -86,15 +85,13 @@ cPop.addEventListener('click', () => editAcc.style.display = 'none');
 const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
 const email1 = document.getElementById('email1');
-const pass1 = document.getElementById('password1');
-const cpass1 = document.getElementById('confirm1');
+const positionEdit = document.getElementById('positionEdit'); 
+const btnSaveEdit = document.getElementById('btnSaveEdit');
 
-formEdit.addEventListener('submit', async (e) => {
+btnSaveEdit.addEventListener('click', async (e) => {
   e.preventDefault();
-  if (name1.value === '' || email1.value === '' || pass1.value === '' || cpass1.value === '') {
-    alert("All fields are required.");
-  } else if (pass1.value !== cpass1.value) {
-    alert("Passwords do not match.");
+  if (name1.value === '' || email1.value === '' || positionEdit.value === '') { 
+  
   } else {
     const userId = localStorage.getItem('ID');
     if (userId) {
@@ -102,7 +99,7 @@ formEdit.addEventListener('submit', async (e) => {
       updateDoc(userRef, {
         name: name1.value,
         email: email1.value,
-        password: pass1.value
+        position: positionEdit.value 
       })
         .then(() => {
           console.log("Document successfully updated!");
@@ -115,6 +112,7 @@ formEdit.addEventListener('submit', async (e) => {
   }
 });
 
+
 // Populating table and setting up row click event
 const tbody = document.getElementById('tbody1');
 
@@ -125,31 +123,65 @@ querySnapshot.forEach((doc) => {
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
     const td3 = document.createElement('td');
+    const td4 = document.createElement('td');
+    const td5 = document.createElement('td'); // New cell for the toggle eye icon
 
     td1.textContent = doc.data().name;
     td2.textContent = doc.data().email;
-    td3.textContent = doc.data().password;
+    td3.textContent = doc.data().position;
+
+    // Mask the password
+    td4.textContent = '••••••••';
+    td4.setAttribute('data-password', doc.data().password); // Store the actual password in a data attribute
+
+    // Create the toggle eye icon
+    const eyeIcon = document.createElement('i');
+    eyeIcon.classList.add('fa', 'fa-eye'); // Assuming you are using FontAwesome for the eye icon
+    eyeIcon.style.cursor = 'pointer';
+
+    // Add event listener to toggle the password visibility
+    eyeIcon.addEventListener('click', () => {
+      if (td4.textContent === '••••••••') {
+        td4.textContent = td4.getAttribute('data-password');
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        td4.textContent = '••••••••';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    });
+
+    td5.appendChild(eyeIcon);
 
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
+    trow.appendChild(td4);
+    trow.appendChild(td5);
 
     tbody.appendChild(trow);
 
     trow.addEventListener('click', () => {
       localStorage.setItem('ID', doc.id);
       console.log(doc.id);
-
+  
       document.querySelectorAll('tr').forEach(row => row.classList.remove('selected-row'));
       trow.classList.add('selected-row');
-
+  
       document.getElementById("edit_acc").disabled = false;
+      document.getElementById("edit_acc").classList.remove("disabled-button");
+      document.getElementById("edit_acc").classList.add("enabled-button");
+  
       document.getElementById("delete_acc").disabled = false;
-
+      document.getElementById("delete_acc").classList.remove("disabled-button");
+      document.getElementById("delete_acc").classList.add("enabled-button");
+  
       document.getElementById('name1').value = doc.data().name;
       document.getElementById('email1').value = doc.data().email;
-      document.getElementById('password1').value = doc.data().password;
-    });
+      document.getElementById('position').value = doc.data().position;
+  });
+  
   }
 });
 
@@ -157,32 +189,32 @@ querySnapshot.forEach((doc) => {
 const currentDateTime = new Date().toLocaleString();
 
 // Event Listener for delete account button
-  const btnDelete = document.getElementById('delete_acc');
-  btnDelete.addEventListener('click', () => {
-    document.getElementById('delete_acc_modal').style.display = "block";
-  });
+const btnDelete = document.getElementById('delete_acc');
+btnDelete.addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "block";
+});
 
-  // Confirm delete account
-  const cnfrm2 = document.getElementById('confirm_delete');
-  cnfrm2.addEventListener('click', async () => {
-    const userId = localStorage.getItem('ID');
-    if (userId) {
-      const userRef = doc(db, "users", "admin", "admin_account", userId);
-      await updateDoc(userRef, {
-        status: "Deleted",
-        deletedBy: "ADMIN",
-        deletedDate: currentDateTime
-      })
-      .then(() => {
-        console.log("Document successfully updated to Deleted!");
-        document.getElementById('delete_acc_modal').style.display = "none";
-        window.location.reload(); // Reload the page to reflect changes
-      })
-      .catch((error) => console.error("Error updating document: ", error));
-    } else {
-      console.error("No user ID found in localStorage");
-    }
-  });
+// Confirm delete account
+const cnfrm2 = document.getElementById('confirm_delete');
+cnfrm2.addEventListener('click', async () => {
+  const userId = localStorage.getItem('ID');
+  if (userId) {
+    const userRef = doc(db, "users", "admin", "admin_account", userId);
+    await updateDoc(userRef, {
+      status: "Deleted",
+      deletedBy: "ADMIN",
+      deletedDate: currentDateTime
+    })
+    .then(() => {
+      console.log("Document successfully updated to Deleted!");
+      document.getElementById('delete_acc_modal').style.display = "none";
+      window.location.reload(); // Reload the page to reflect changes
+    })
+    .catch((error) => console.error("Error updating document: ", error));
+  } else {
+    console.error("No user ID found in localStorage");
+  }
+});
 
 // Cancel delete account
 const cnl2 = document.getElementById('cancel_delete');
@@ -191,11 +223,36 @@ cnl2.addEventListener('click', () => {
 });
 
 //Button to see archived accounts
+const archived_acc = document.getElementById('archived_acc');
 archived_acc.addEventListener('click', (e) => {
-  window.location = "prArchives.html"
-})
-
+  window.location = "prArchives.html";
+});
 
 // Initial disabling of buttons
 document.getElementById("edit_acc").disabled = true;
 document.getElementById("delete_acc").disabled = true;
+
+// Deselect rows when clicking outside the table
+document.addEventListener('click', (event) => {
+  const table = document.getElementById('table');
+  const isClickInsideTable = table.contains(event.target);
+  if (!isClickInsideTable) {
+    // Deselect all rows
+    document.querySelectorAll('tr').forEach(row => row.classList.remove('selected-row'));
+
+    // Disable buttons
+    document.getElementById("edit_acc").disabled = true;
+    document.getElementById("edit_acc").classList.remove("enabled-button");
+    document.getElementById("edit_acc").classList.add("disabled-button");
+
+    document.getElementById("delete_acc").disabled = true;
+    document.getElementById("delete_acc").classList.remove("enabled-button");
+    document.getElementById("delete_acc").classList.add("disabled-button");
+  }
+});
+
+//Button to see archived accounts
+archived_acc.addEventListener('click', (e) => {
+  window.location = "prArchives.html"
+})
+

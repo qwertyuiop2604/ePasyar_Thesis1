@@ -1,7 +1,7 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, addDoc, collection, getDocs, updateDoc, doc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -73,6 +73,7 @@ formCreate.addEventListener('submit', async (e) => {
         Status: "not done"
       });
       toggleDisplay(createAcc, 'none');
+      localStorage.setItem('lastEventUpdate', Date.now());
       window.location.reload();
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -138,6 +139,7 @@ formEdit.addEventListener('submit', async (e) => {
 
       await updateDoc(doc(db, "festivals", userID), updateData);
       toggleDisplay(editAcc, 'none');
+      localStorage.setItem('lastEventUpdate', Date.now());
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -205,6 +207,7 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
       ArchivedDate: new Date().toLocaleString()
     });
+    localStorage.setItem('lastEventUpdate', Date.now());
     window.location.reload(); // Reload to refresh the table
   } catch (error) {
     console.error("Error updating document: ", error);
@@ -242,35 +245,64 @@ function renderCalendar(month, year) {
     daysElement.innerHTML += `<li></li>`;
   }
 
-  for (let i = 1; i <= daysInMonth; i++) {
-    daysElement.innerHTML += `<li>${i}</li>`;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    daysElement.innerHTML += `<li data-date="${dateString}">${day}</li>`;
   }
 
-  addEventListenersToDays(month, year);
-}
+  const dayElements = daysElement.querySelectorAll('li');
+  dayElements.forEach(dayElement => {
+    dayElement.addEventListener('click', (e) => {
+      const selectedDate = e.target.getAttribute('data-date');
+      const eventItems = querySnapshot.docs.filter(doc => doc.data().Date === selectedDate);
 
-function addEventListenersToDays(month, year) {
-  const days = daysElement.querySelectorAll('li');
-  days.forEach(day => {
-    day.addEventListener('click', async (e) => {
-      const selectedDay = e.target.innerText;
-      const selectedDate = `${year}-${month + 1}-${selectedDay}`;
-      localStorage.setItem('selectedDate', selectedDate);
-      window.location = "archives.html"; // Page where events are displayed for the selected date
+      const eventList = document.createElement('ul');
+      eventItems.forEach(event => {
+        const eventItem = document.createElement('li');
+        eventItem.textContent = `${event.data().Name} - ${event.data().Description}`;
+        eventList.appendChild(eventItem);
+      });
+
+      const existingEventList = daysElement.querySelector('.event-list');
+      if (existingEventList) {
+        existingEventList.remove();
+      }
+
+      const eventContainer = document.createElement('div');
+      eventContainer.classList.add('event-list');
+      eventContainer.appendChild(eventList);
+
+      dayElement.appendChild(eventContainer);
     });
   });
 }
 
+renderCalendar(currentMonth, currentYear);
+
 prevButton.addEventListener('click', () => {
-  currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-  currentYear = (currentMonth === 11) ? currentYear - 1 : currentYear;
+  currentMonth = (currentMonth - 1 + 12) % 12;
+  currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
   renderCalendar(currentMonth, currentYear);
 });
 
 nextButton.addEventListener('click', () => {
-  currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
-  currentYear = (currentMonth === 0) ? currentYear + 1 : currentYear;
+  currentMonth = (currentMonth + 1) % 12;
+  currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
   renderCalendar(currentMonth, currentYear);
 });
 
-renderCalendar(currentMonth, currentYear);
+// Storage event listener
+window.addEventListener('storage', (event) => {
+  if (event.key === 'lastEventUpdate') {
+    window.location.reload();
+  }
+});
+
+function toggleDisplay(element, displayStyle) {
+  element.style.display = displayStyle;
+}
+
+// Button to see archived accounts
+document.getElementById('archived_acc').addEventListener('click', () => {
+  window.location = "archives.html";
+});
