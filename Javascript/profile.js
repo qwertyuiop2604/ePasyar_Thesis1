@@ -34,7 +34,8 @@ let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener('click', () => window.location = 'restaurants.html');
 let logout = document.getElementById("logout");
 logout.addEventListener('click', () => window.location = 'index.html');
-
+let reviews = document.getElementById("reviews");
+reviews.addEventListener('click', () => window.location = 'reviews.html');
 // Create Account Form Popup
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
