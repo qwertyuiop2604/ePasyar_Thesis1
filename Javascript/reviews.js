@@ -49,7 +49,18 @@ let events= document.getElementById("events");
 events.addEventListener("click", () => {
   window.location = "events.html";
 });
-
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
+});
 
 function goBack() {
     window.history.back();

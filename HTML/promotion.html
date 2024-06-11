@@ -43,7 +43,17 @@
             <li class="active"><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
             <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-            <li><a href="#section4" id="reviews"><i class="fas fa-star"></i> Reviews</a></li>
+            <li>
+              <a href="#section4" id="reviews">
+               <i class="fas fa-star"></i> Reviews <i class="fas fa-caret-down"></i>
+           </a>
+           <ul class="dropdown">
+             <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+             <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+             <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+           </ul>
+           </li>
             <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
             <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
             <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
@@ -79,6 +89,7 @@
                     <th>Owner</th>
                     <th>Contact Number</th>
                     <th>Email</th>
+                    <th>Type</th>
                     <th>Address</th>
                     <th>Rooms</th>
                     <th>Room Capacity</th>                 
@@ -133,6 +144,9 @@
 
             <label for="name">Email</label>
             <input type="text" id="email" name="email">
+
+            <label for="name">Type</label>
+            <input type="text" id="type" name="type">
             
             <label for="name">Address</label>
             <input type="text" id="address" name="address">
@@ -194,6 +208,9 @@
 
             <label for="name">Email</label>
             <input type="text" id="email1" name="email1">
+
+            <label for="name">Type</label>
+            <input type="text" id="type1" name="type1">
             
             <label for="name">Address</label>
             <input type="text" id="address1" name="address1">
@@ -264,7 +281,8 @@
             let td8 = tr[i].getElementsByTagName('td')[7]; 
             let td9 = tr[i].getElementsByTagName('td')[8]; 
             let td10 = tr[i].getElementsByTagName('td')[9]; 
-            let td11 = tr[i].getElementsByTagName('td')[10]; 
+            let td11 = tr[i].getElementsByTagName('td')[10];
+            let td12 = tr[i].getElementsByTagName('td')[11]; 
        
 
             if (td && td2 && td3) { // check if all td elements exist
@@ -279,6 +297,7 @@
               let textvalue8 = td8.textContent || td8.innerHTML;
               let textvalue9 = td9.textContent || td9.innerHTML;
               let textvalue10 = td10.textContent || td10.innerHTML;
+              let textvalue11 = td11.textContent || td11.innerHTML;
       
             if(textvalue.toUpperCase().indexOf(filter) > -1 
             || textvalue2.toUpperCase().indexOf(filter) > -1 
@@ -291,7 +310,8 @@
             || textvalue9.toUpperCase().indexOf(filter) > -1
             || textvalue10.toUpperCase().indexOf(filter) > -1 
             || textvalue11.toUpperCase().indexOf(filter) > -1 
-            || textvalue12.toUpperCase().indexOf(filter) > -1){
+            || textvalue12.toUpperCase().indexOf(filter) > -1
+            || textvalue13.toUpperCase().indexOf(filter) > -1){
                 tr[i].style.display = '';
             }
             else{

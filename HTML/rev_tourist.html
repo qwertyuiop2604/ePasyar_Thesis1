@@ -5,7 +5,7 @@
   <title>Dashboard Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/reviews.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/rev_tourist.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -51,10 +51,10 @@
                   <i class="fas fa-star"></i> Reviews <i class="fas fa-caret-down"></i>
               </a>
               <ul class="dropdown">
-                <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-                <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-                <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-                <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+                <li ><a href="#section13" id="revtourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+                <li class="active"><a href="#section3" id="revpromotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+                <li ><a href="#section13" id="revsouvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+                <li><a href="#section4" id="revrestaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
               </ul>
           </li>
 
@@ -85,10 +85,11 @@
 
                     <div class="outer-wrapper">
                       <div class="table-wrapper">
-                    <th>Name</th>
+                  
                     <th>Email</th>                  
                     <th>Comments</th>
                     <th>Ratings</th>
+                    <th>Date</th>
 
                   </tr>
                   <tbody id="tbody1"></tbody>
@@ -102,16 +103,6 @@
         </main>
       </div>
     
-    
-    <!-- confirmation modal for delete account -->
-      <div class="cnfrm_modal_delete" id="delete_acc_modal">
-        <h1>Confirm delete this Tourist Spot?</h1>
-            <div class="btn1">
-                <button id="cnl2">Cancel</button>
-                <button id="cnfrm2">Confirm</button>
-            </div>
-      </div>
-    </div>
 
       <script>
         const searchAppID = () => {
@@ -145,7 +136,7 @@
       
 
 
-      <script type="module" src="/Javascript/reviews.js"></script>
+      <script type="module" src="/Javascript/rev_tourist.js"></script>
 </body>
 
 </html>

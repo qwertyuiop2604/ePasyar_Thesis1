@@ -29,21 +29,10 @@ const navButtons = {
   logout: 'index.html',
   reviews: 'reviews.html',
   restaurant: 'restaurants.html',
-  localdishes: 'dishes.html'
+  localindustries: 'industries.html',
+  otop: 'otop.html',
+  events: 'events.html'
 };
-let otop = document.getElementById("otop");
-otop.addEventListener("click", () => {
-  window.location = "otop.html";
-});
-let localdishes = document.getElementById("localdishes");
-localdishes.addEventListener("click", () => {
-  window.location = "dishes.html";
-});
-let localindustries = document.getElementById("localindustries");
-localindustries.addEventListener("click", () => {
-  window.location = "industries.html";
-});
-
 
 Object.keys(navButtons).forEach(button => {
   document.getElementById(button).addEventListener('click', () => {
@@ -66,25 +55,24 @@ closePop.addEventListener('click', () => {
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
-const date = document.getElementById('date');
+
 const description = document.getElementById('description');
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name, date, description, photos])) {
+  if (validateInputs([name, description, photos])) {
     try {
       const photoFile = photos.files[0];
-      const photoRef = ref(storage, `photos/${photoFile.name}`);
+      const photoRef = ref(storage, `local_dishes/${photoFile.name}`);
       await uploadBytes(photoRef, photoFile);
       const photoURL = await getDownloadURL(photoRef);
 
-      await addDoc(collection(db, "festivals"), {
+      await addDoc(collection(db, "local_dishes"), {
         Name: name.value,
-        Date: date.value,
         Description: description.value.trim(),
         PhotoURL: photoURL,
-        Status: "not done"
+       
       });
       toggleDisplay(createAcc, 'none');
       localStorage.setItem('lastEventUpdate', Date.now());
@@ -124,26 +112,26 @@ cPop.addEventListener('click', () => {
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
-const date1 = document.getElementById('date1');
+
 const description1 = document.getElementById('description1');
 const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, date1, description1])) {
+  if (validateInputs([name1, description1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
       let photoURL;
       if (photoFile) {
-        const photoRef = ref(storage, `photos/${photoFile.name}`);
+        const photoRef = ref(storage, `local_dishes/${photoFile.name}`);
         await uploadBytes(photoRef, photoFile);
         photoURL = await getDownloadURL(photoRef);
       }
 
       const updateData = {
         Name: name1.value,
-        Date: date1.value,
+    
         Description: description1.value
       };
 
@@ -151,7 +139,7 @@ formEdit.addEventListener('submit', async (e) => {
         updateData.PhotoURL = photoURL;
       }
 
-      await updateDoc(doc(db, "festivals", userID), updateData);
+      await updateDoc(doc(db, "local_dishes", userID), updateData);
       toggleDisplay(editAcc, 'none');
       localStorage.setItem('lastEventUpdate', Date.now());
       window.location.reload(); // Reload to refresh the table
@@ -163,13 +151,13 @@ formEdit.addEventListener('submit', async (e) => {
 
 // Populate table with data
 const tbody = document.getElementById('tbody1');
-const querySnapshot = await getDocs(collection(db, "festivals"));
+const querySnapshot = await getDocs(collection(db, "local_dishes"));
 querySnapshot.forEach(doc => {
-  if (doc.data().Status === "not done") {
+  if (doc.data()) {
     const trow = document.createElement('tr');
     trow.innerHTML = `
       <td>${doc.data().Name}</td>
-      <td>${doc.data().Date}</td>
+      
       <td>${doc.data().Description}</td>
       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
     `;
@@ -178,7 +166,7 @@ querySnapshot.forEach(doc => {
     trow.addEventListener('click', (e) => {
       localStorage.setItem('ID', doc.id);
       document.getElementById('name1').value = doc.data().Name;
-      document.getElementById('date1').value = doc.data().Date;
+ 
       document.getElementById('description1').value = doc.data().Description;
       highlightRow(trow);
     });
@@ -195,12 +183,12 @@ function highlightRow(row) {
 
 // Auto-archive past events
 async function autoArchivePastEvents() {
-  const querySnapshot = await getDocs(collection(db, "festivals"));
+  const querySnapshot = await getDocs(collection(db, "local_dishes"));
   const currentDate = new Date();
 
   querySnapshot.forEach(async (doc) => {
     const eventDate = new Date(doc.data().Date);
-    if (eventDate < currentDate && doc.data().Status === "not done") {
+    if (eventDate < currentDate && doc.data()) {
       await updateDoc(doc.ref, {
         Status: "archived",
         ArchivedBy: "AUTO_ARCHIVE",
@@ -216,7 +204,7 @@ autoArchivePastEvents();
 document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
-    await updateDoc(doc(db, "festivals", userID), {
+    await updateDoc(doc(db, "local_dishes", userID), {
       Status: "archived",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
       ArchivedDate: new Date().toLocaleString()
@@ -233,78 +221,7 @@ document.getElementById('archived_acc').addEventListener('click', () => {
   window.location = "archives.html";
 });
 
-// Calendar functionality
-const monthElement = document.querySelector('.month ul li span');
-const daysElement = document.querySelector('.days');
-const prevButton = document.querySelector('.prev');
-const nextButton = document.querySelector('.next');
-
-let currentDate = new Date();
-let currentMonth = currentDate.getMonth();
-let currentYear = currentDate.getFullYear();
-
-const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-
-function renderCalendar(month, year) {
-  monthElement.innerHTML = `${months[month]}<br><span style="font-size:18px">${year}</span>`;
-  daysElement.innerHTML = '';
-
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    daysElement.innerHTML += `<li></li>`;
-  }
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    daysElement.innerHTML += `<li data-date="${dateString}">${day}</li>`;
-  }
-
-  const dayElements = daysElement.querySelectorAll('li');
-  dayElements.forEach(dayElement => {
-    dayElement.addEventListener('click', (e) => {
-      const selectedDate = e.target.getAttribute('data-date');
-      const eventItems = querySnapshot.docs.filter(doc => doc.data().Date === selectedDate);
-
-      const eventList = document.createElement('ul');
-      eventItems.forEach(event => {
-        const eventItem = document.createElement('li');
-        eventItem.textContent = `${event.data().Name} - ${event.data().Description}`;
-        eventList.appendChild(eventItem);
-      });
-
-      const existingEventList = daysElement.querySelector('.event-list');
-      if (existingEventList) {
-        existingEventList.remove();
-      }
-
-      const eventContainer = document.createElement('div');
-      eventContainer.classList.add('event-list');
-      eventContainer.appendChild(eventList);
-
-      dayElement.appendChild(eventContainer);
-    });
-  });
-}
-
-renderCalendar(currentMonth, currentYear);
-
-prevButton.addEventListener('click', () => {
-  currentMonth = (currentMonth - 1 + 12) % 12;
-  currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
-  renderCalendar(currentMonth, currentYear);
-});
-
-nextButton.addEventListener('click', () => {
-  currentMonth = (currentMonth + 1) % 12;
-  currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
-  renderCalendar(currentMonth, currentYear);
-});
-
+// 
 // Storage event listener
 window.addEventListener('storage', (event) => {
   if (event.key === 'lastEventUpdate') {
@@ -316,7 +233,3 @@ function toggleDisplay(element, displayStyle) {
   element.style.display = displayStyle;
 }
 
-// Button to see archived accounts
-document.getElementById('archived_acc').addEventListener('click', () => {
-  window.location = "archives.html";
-});

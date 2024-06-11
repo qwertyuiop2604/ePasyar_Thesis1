@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Fetch review data from the specific document
-  const reviewDocRef = doc(db, "ratings/Hotel/Hotel_reviews/34DwDmM85T9cBzk3asjU/user_reviews/zbWyov9tRGTdHrNw3JcOi96VXbh2");
+  const reviewDocRef = doc(db, "/ratings/Tourist Spot/Tourist Spot_reviews/4f1TCpXp6tRnU2lr8hiZ/user_reviews/zbWyov9tRGTdHrNw3JcOi96VXbh2");
   const reviewDoc = await getDoc(reviewDocRef);
 
   if (reviewDoc.exists()) {

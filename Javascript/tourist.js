@@ -35,7 +35,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (restaurant) restaurant.addEventListener('click', () => window.location = 'restaurants.html');
   if (logout) logout.addEventListener('click', () => window.location = 'index.html');
   if (reviews) reviews.addEventListener('click', () => window.location = 'reviews.html');
-
+  let otop = document.getElementById("otop");
+  otop.addEventListener("click", () => {
+    window.location = "otop.html";
+  });
+  let localdishes = document.getElementById("localdishes");
+  localdishes.addEventListener("click", () => {
+    window.location = "dishes.html";
+  });
+  let localindustries = document.getElementById("localindustries");
+  localindustries.addEventListener("click", () => {
+    window.location = "industries.html";
+  });
   // CREATE FORM POPUP
   const createAcc = document.getElementById('user-create');
   const openPop = document.querySelector('.add_acc');

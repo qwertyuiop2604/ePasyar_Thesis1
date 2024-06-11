@@ -44,7 +44,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   setNavEventListener("restaurant", 'restaurants.html');
   setNavEventListener("logout", 'index.html');
   setNavEventListener("reviews", 'reviews.html');
-
+  setNavEventListener("otop", 'otop.html');
+  setNavEventListener("localdishes", 'dishes.html');
+  setNavEventListener("localindustries", 'industries.html');
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');
   const openPop = document.querySelector('.add_acc');
@@ -66,6 +68,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   const Owner = document.getElementById('owner');
   const Number = document.getElementById('number');
   const Email = document.getElementById('email');
+  const Type = document.getElementById('type');
   const Address = document.getElementById('address');
   const Rooms = document.getElementById('rooms');
   const Capacity = document.getElementById('room1');
@@ -75,7 +78,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formCreate) {
     formCreate.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([categorySelect, Name, Owner, Number, Email, Address, Rooms, Capacity, Rates, photos])) {
+      if (validateInputs([categorySelect, Name, Owner, Number, Email, Type, Address, Rooms, Capacity, Rates, photos])) {
         try {
           const photoFile = photos.files[0];
           const photoRef = ref(storage, `hotels/${photoFile.name}`);
@@ -88,6 +91,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             Owner: Owner.value,
             Number: Number.value,
             Email: Email.value,
+            Type: Type.value,
             Address: Address.value,
             Rooms: Rooms.value,
             Capacity: Capacity.value,
@@ -152,6 +156,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   const Owner1 = document.getElementById('owner1');
   const Number1 = document.getElementById('number1');
   const Email1 = document.getElementById('email1');
+  const Type1 = document.getElementById('type1');
   const Address1 = document.getElementById('address1');
   const Rooms1 = document.getElementById('rooms1');
   const Capacity1 = document.getElementById('room11');
@@ -161,7 +166,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formEdit) {
     formEdit.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([categorySelect1, Name1, Owner1, Number1, Email1, Address1, Rooms1, Capacity1, Rates1, photos1])) {
+      if (validateInputs([categorySelect1, Name1, Owner1, Number1, Email1, Type1, Address1, Rooms1, Capacity1, Rates1, photos1])) {
         try {
           const userID = localStorage.getItem("ID");
           const photoFile = photos1.files[0];
@@ -178,6 +183,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             Owner: Owner1.value,
             Number: Number1.value,
             Email: Email1.value,
+            Type: Type1.value,
             Address: Address1.value,
             Rooms: Rooms1.value,
             Capacity: Capacity1.value,
@@ -211,6 +217,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             <td>${doc.data().Owner}</td>
             <td>${doc.data().Number}</td>
             <td>${doc.data().Email}</td>
+            <td>${doc.data().Type}</td>
             <td>${doc.data().Address}</td>
             <td>${doc.data().Rooms}</td>
             <td>${doc.data().Capacity}</td>
@@ -226,6 +233,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             Owner1.value = doc.data().Owner;
             Number1.value = doc.data().Number;
             Email1.value = doc.data().Email;
+            Type1.value = doc.data().Type;
             Address1.value = doc.data().Address;
             Rooms1.value = doc.data().Rooms;
             Capacity1.value = doc.data().Capacity;

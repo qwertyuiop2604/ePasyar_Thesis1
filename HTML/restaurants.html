@@ -45,7 +45,17 @@
             <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
             <li class="active"><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-            <li><a href="#section4" id="reviewS"><i class="fas fa-star"></i> Reviews</a></li>
+            <li>
+              <a href="#section4" id="reviews">
+               <i class="fas fa-star"></i> Reviews <i class="fas fa-caret-down"></i>
+           </a>
+           <ul class="dropdown">
+             <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+             <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+             <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+           </ul>
+           </li>
             <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
             <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
             <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
@@ -79,6 +89,7 @@
                     
                     <th>Name</th>  
                     <th>Owner</th> 
+                    <th>Type</th> 
                     <th>Contact Number</th>                    
                     <th>Location</th>                 
                     <th>Photos</th>
@@ -120,6 +131,9 @@
             <label for="reg-event">Owner</label>
             <input id="owner" name="Owner"></input>
 
+            <label for="reg-event">Type</label>
+            <input id="type" name="Type"></input>
+
             <label for="confirm">Contact Number</label>
             <input type="tel" id="number" name="Number">
 
@@ -160,6 +174,9 @@
 
             <label for="reg-event">Owner</label>
             <input id="owner1" name="owner"></input>
+
+            <label for="reg-event">Type</label>
+            <input id="type1" name="type"></input>
 
             <label for="confirm">Contact Number</label>
             <input type="tel" id="number1" name="number">
@@ -216,12 +233,14 @@
             let td = tr[i].getElementsByTagName('td')[0] ; 
             let td2 = tr[i].getElementsByTagName('td')[1];
             let td3 = tr[i].getElementsByTagName('td')[2];
+            let td4 = tr[i].getElementsByTagName('td')[3];
       
             if (td && td2 && td3) { // check if all td elements exist
       
               let textvalue = td.textContent.toUpperCase() || td.innerHTML; // convert to uppercase for case-insensitive search
               let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
               let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
+              let textvalue4 = td4.textContent.toUpperCase() || td4.innerHTML;
       
               if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
                 tr[i].style.display = '';

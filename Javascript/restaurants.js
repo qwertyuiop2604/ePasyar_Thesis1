@@ -57,7 +57,18 @@ reviews.addEventListener("click", () => {
   window.location = "reviews.html";
 });
 
-
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
+});
 // CREATE FORM POPUP
 const createAcc = document.getElementById("user-create");
 const openPop = document.querySelector(".add_acc");
@@ -92,6 +103,7 @@ formCreate.addEventListener('submit', async (e) => {
         Category: categorySelect.value,
         Name: name.value,
         Owner: owner.value,
+        Type: type.value,
         Number: number.value,
         Location: location.value,
         PhotoURL: photoURL,
@@ -145,6 +157,7 @@ const formEdit = document.getElementById("edit-form");
 const categorySelect1 = document.getElementById("category1");
 const name1 = document.getElementById("name1");
 const owner1 = document.getElementById("owner1");
+const type1 = document.getElementById("type1");
 const number1 = document.getElementById("number1");
 const location1 = document.getElementById("location1");
 const photos1 = document.getElementById('photos1');
@@ -166,6 +179,7 @@ formEdit.addEventListener('submit', async (e) => {
         Category: categorySelect1.value,
         Name: name1.value,
         Owner: owner1.value,
+        Type: type1.value,
         Number: number1.value,
         Location: location1.value,
         PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
@@ -193,6 +207,7 @@ formEdit.addEventListener('submit', async (e) => {
      trow.innerHTML = `
        <td>${doc.data().Name}</td>
        <td>${doc.data().Owner}</td>
+       <td>${doc.data().Type}</td>
        <td>${doc.data().Number}</td>
        <td>${doc.data().Location}</td>
        <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
@@ -204,6 +219,7 @@ formEdit.addEventListener('submit', async (e) => {
        document.getElementById('category1').value = doc.data().Category;
        document.getElementById('name1').value = doc.data().Name;
        document.getElementById("owner1").value = doc.data().Owner;
+       document.getElementById("type1").value = doc.data().Type;
        document.getElementById("number1").value = doc.data().Number;
        document.getElementById("location1").value = doc.data().Location;
        highlightRow(trow);

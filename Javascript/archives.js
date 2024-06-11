@@ -47,6 +47,20 @@ let tourist = document.getElementById("tourist");
 tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
+});
+
+
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");
 

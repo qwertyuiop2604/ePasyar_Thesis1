@@ -34,6 +34,18 @@ let reviews = document.getElementById("reviews");
 reviews.addEventListener("click", () => {
   window.location = "reviews.html";
 });
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
+});
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");
 
