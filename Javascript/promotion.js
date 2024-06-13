@@ -17,6 +17,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const storage = getStorage(app);
+  
 
   document.addEventListener('DOMContentLoaded', () => {
     function setNavEventListener(id, target) {
@@ -47,6 +48,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   setNavEventListener("otop", 'otop.html');
   setNavEventListener("localdishes", 'dishes.html');
   setNavEventListener("localindustries", 'industries.html');
+  
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');
   const openPop = document.querySelector('.add_acc');

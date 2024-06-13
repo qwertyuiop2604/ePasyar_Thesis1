@@ -27,13 +27,20 @@ const navButtons = {
   tourist: 'tourist.html',
   souvenir: 'souvenir.html',
   logout: 'index.html',
-  reviews: 'reviews.html',
+ 
   restaurant: 'restaurants.html',
   localindustries: 'industries.html',
   localdishes: 'dishes.html',
   events: 'events.html'
 
 };
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});
 
 Object.keys(navButtons).forEach(button => {
   document.getElementById(button).addEventListener('click', () => {
@@ -56,13 +63,13 @@ closePop.addEventListener('click', () => {
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
-
 const description = document.getElementById('description');
+const place = document.getElementById('place');
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name, description, photos])) {
+  if (validateInputs([name, description, place, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `otop/${photoFile.name}`);
@@ -72,6 +79,7 @@ formCreate.addEventListener('submit', async (e) => {
       await addDoc(collection(db, "otop"), {
         Name: name.value,
         Description: description.value.trim(),
+        Place: place.value,
         PhotoURL: photoURL,
        
       });
@@ -113,13 +121,13 @@ cPop.addEventListener('click', () => {
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
-
 const description1 = document.getElementById('description1');
+const place1 = document.getElementById('place1');
 const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, description1])) {
+  if (validateInputs([name1, description1, place1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -132,8 +140,8 @@ formEdit.addEventListener('submit', async (e) => {
 
       const updateData = {
         Name: name1.value,
-    
-        Description: description1.value
+        Description: description1.value,
+        Place: place1.value
       };
 
       if (photoFile) {
@@ -158,8 +166,8 @@ querySnapshot.forEach(doc => {
     const trow = document.createElement('tr');
     trow.innerHTML = `
       <td>${doc.data().Name}</td>
-      
       <td>${doc.data().Description}</td>
+      <td>${doc.data().Place}</td>
       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
     `;
     tbody.appendChild(trow);
@@ -167,8 +175,8 @@ querySnapshot.forEach(doc => {
     trow.addEventListener('click', (e) => {
       localStorage.setItem('ID', doc.id);
       document.getElementById('name1').value = doc.data().Name;
- 
       document.getElementById('description1').value = doc.data().Description;
+      document.getElementById('place1').value = doc.data().Place;
       highlightRow(trow);
     });
   }

@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"
 
 
 const firebaseConfig = {
@@ -62,7 +61,10 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-function goBack() {
-    window.history.back();
-  }
-  
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});

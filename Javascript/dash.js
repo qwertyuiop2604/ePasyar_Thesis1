@@ -91,10 +91,7 @@ let logout = document.getElementById("logout");
 logout.addEventListener("click", () => {
   window.location = "index.html";
 });
-let reviews = document.getElementById("reviews");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
-});
+
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";
@@ -108,7 +105,13 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});
 
 // Get the canvas element
 const ctx = document.getElementById("mostVisitedChart").getContext("2d");

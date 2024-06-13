@@ -52,10 +52,6 @@ let logout = document.getElementById("logout");
 logout.addEventListener("click", () => {
   window.location = "index.html";
 });
-let reviews = document.getElementById("reviewS");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
-});
 
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
@@ -69,6 +65,14 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});
+
 // CREATE FORM POPUP
 const createAcc = document.getElementById("user-create");
 const openPop = document.querySelector(".add_acc");

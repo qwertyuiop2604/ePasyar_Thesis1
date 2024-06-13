@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let souvenir = document.getElementById("souvenir");
   let restaurant = document.getElementById("restaurant");
   let logout = document.getElementById("logout");
-  let reviews = document.getElementById("reviews");
+
 
   if (dash) dash.addEventListener('click', () => window.location = 'dash.html');
   if (profile) profile.addEventListener('click', () => window.location = 'profile.html');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (souvenir) souvenir.addEventListener('click', () => window.location = 'souvenir.html');
   if (restaurant) restaurant.addEventListener('click', () => window.location = 'restaurants.html');
   if (logout) logout.addEventListener('click', () => window.location = 'index.html');
-  if (reviews) reviews.addEventListener('click', () => window.location = 'reviews.html');
+
   let otop = document.getElementById("otop");
   otop.addEventListener("click", () => {
     window.location = "otop.html";
@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   localindustries.addEventListener("click", () => {
     window.location = "industries.html";
   });
+});
+  document.addEventListener('DOMContentLoaded', async function () {
+    var dropdown = document.querySelector('.dropdown-btn');
+    var dropdownContent = document.querySelector('.dropdown-container');
+    dropdown.addEventListener('click', function () {
+      dropdownContent.classList.toggle('show');
+    });
   // CREATE FORM POPUP
   const createAcc = document.getElementById('user-create');
   const openPop = document.querySelector('.add_acc');

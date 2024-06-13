@@ -48,17 +48,31 @@
           <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
           <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
           <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-          <li>
-            <a href="#section4" id="reviews">
-             <i class="fas fa-star"></i> Reviews <i class="fas fa-caret-down"></i>
-         </a>
-         <ul class="dropdown">
-           <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-           <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-           <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-           <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-         </ul>
-         </li>
+          <li class="sidebar-list-item1">
+            <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-container">
+              <a href="rev_tourist.html">
+                <div class="con-lic">
+                  <i class="fas fa-map-marker-alt"> </i> Tourist Spots
+                </div>
+              </a>
+              <a href="rev_hotel.html">
+                <div class="con-lic">
+                  <i class="fas fa-hotel"> </i> Hotels
+                </div>
+              </a>
+              <a href="rev_souvenir.html">
+                <div class="con-lic">
+                  <i class="fas fa-shopping-bag" > </i> Souvenir Shops
+                </div>
+              </a>
+              <a href="rev_restaurant.html">
+                <div class="con-lic">
+                  <i class="fas fa-utensils"></i> Restaurant
+                </div>
+              </a>
+            </div>
+          </li>
           <li ><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li class="active"><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
@@ -84,8 +98,8 @@
                 <tr>
                   <th>Name</th>
                   <th>Description</th>
+                  <th>Place</th>
                   <th>Photos</th>
-
                 </tr>
                 <tbody id="tbody1"></tbody>
                 
@@ -105,8 +119,11 @@
           <label for="name"> Name</label>
           <input type="text" id="name" name="name">
 
-          <label for="reg-event"> Description</label>
+          <label for="description"> Description</label>
           <textarea id="description" name="description"></textarea>
+
+          <label for="place"> Place</label>
+          <textarea id="place" name="place"></textarea>
 
           <label for="photos"> Photos</label>
           <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
@@ -130,6 +147,9 @@
 
           <label for="description1"> Description</label>
           <textarea id="description1" name="description1"></textarea>
+
+          <label for="place1"> Place</label>
+          <textarea id="place1" name="place1"></textarea>
 
           <label for="photos1"> Photos</label>
           <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
