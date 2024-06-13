@@ -1,6 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, addDoc, doc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import {
+  getFirestore,
+  addDoc,
+  doc,
+  collection,
+  getDocs,
+  updateDoc,
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -9,7 +21,7 @@ const firebaseConfig = {
   projectId: "epasyar-aa569",
   storageBucket: "epasyar-aa569.appspot.com",
   messagingSenderId: "1004550371893",
-  appId: "1:1004550371893:web:692e667675470640980f7c"
+  appId: "1:1004550371893:web:692e667675470640980f7c",
 };
 
 // Initialize Firebase
@@ -17,7 +29,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   let dash = document.getElementById("dash");
   let profile = document.getElementById("profile");
   let promotion = document.getElementById("promotion");
@@ -26,14 +38,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   let restaurant = document.getElementById("restaurant");
   let logout = document.getElementById("logout");
 
-
-  if (dash) dash.addEventListener('click', () => window.location = 'dash.html');
-  if (profile) profile.addEventListener('click', () => window.location = 'profile.html');
-  if (promotion) promotion.addEventListener('click', () => window.location = 'promotion.html');
-  if (events) events.addEventListener('click', () => window.location = 'events.html');
-  if (souvenir) souvenir.addEventListener('click', () => window.location = 'souvenir.html');
-  if (restaurant) restaurant.addEventListener('click', () => window.location = 'restaurants.html');
-  if (logout) logout.addEventListener('click', () => window.location = 'index.html');
+  if (dash)
+    dash.addEventListener("click", () => (window.location = "dash.html"));
+  if (profile)
+    profile.addEventListener("click", () => (window.location = "profile.html"));
+  if (promotion)
+    promotion.addEventListener(
+      "click",
+      () => (window.location = "promotion.html")
+    );
+  if (events)
+    events.addEventListener("click", () => (window.location = "events.html"));
+  if (souvenir)
+    souvenir.addEventListener(
+      "click",
+      () => (window.location = "souvenir.html")
+    );
+  if (restaurant)
+    restaurant.addEventListener(
+      "click",
+      () => (window.location = "restaurants.html")
+    );
+  if (logout)
+    logout.addEventListener("click", () => (window.location = "index.html"));
 
   let otop = document.getElementById("otop");
   otop.addEventListener("click", () => {
@@ -48,30 +75,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location = "industries.html";
   });
 });
-  document.addEventListener('DOMContentLoaded', async function () {
-    var dropdown = document.querySelector('.dropdown-btn');
-    var dropdownContent = document.querySelector('.dropdown-container');
-    dropdown.addEventListener('click', function () {
-      dropdownContent.classList.toggle('show');
-    });
+document.addEventListener("DOMContentLoaded", async function () {
+  var dropdown = document.querySelector(".dropdown-btn");
+  var dropdownContent = document.querySelector(".dropdown-container");
+  dropdown.addEventListener("click", function () {
+    dropdownContent.classList.toggle("show");
+  });
   // CREATE FORM POPUP
-  const createAcc = document.getElementById('user-create');
-  const openPop = document.querySelector('.add_acc');
-  const closePop = document.querySelector('.close-modal');
+  const createAcc = document.getElementById("user-create");
+  const openPop = document.querySelector(".add_acc");
+  const closePop = document.querySelector(".close-modal");
 
-  if (openPop) openPop.addEventListener('click', () => createAcc.style.display = 'block');
-  if (closePop) closePop.addEventListener('click', () => createAcc.style.display = 'none');
+  if (openPop)
+    openPop.addEventListener(
+      "click",
+      () => (createAcc.style.display = "block")
+    );
+  if (closePop)
+    closePop.addEventListener(
+      "click",
+      () => (createAcc.style.display = "none")
+    );
 
   // FOR REGISTER FORM - ADD TO FIREBASE
-  const formCreate = document.getElementById('create-form');
-  const categorySelect = document.getElementById('category');
-  const name = document.getElementById('name');
-  const description = document.getElementById('description');
-  const photos = document.getElementById('photos');
+  const formCreate = document.getElementById("create-form");
+  const name = document.getElementById("name");
+  const location = document.getElementById("location");
+  const description = document.getElementById("description");
+  const photos = document.getElementById("photos");
 
-  formCreate.addEventListener('submit', async (e) => {
+  formCreate.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (validateInputs([categorySelect, name, description, photos])) {
+    if (validateInputs([name, location, description, photos])) {
       try {
         const photoFile = photos.files[0];
         const photoRef = ref(storage, `tourist/${photoFile.name}`);
@@ -79,13 +114,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const photoURL = await getDownloadURL(photoRef);
 
         await addDoc(collection(db, "vigan_establishments"), {
-          Category: categorySelect.value,
+          Category: "Tourist Spot",
           Name: name.value,
           Description: description.value.trim(),
+          Location: location.value,
           PhotoURL: photoURL,
-          Status: "Open"
+          Status: "Open",
         });
-        createAcc.style.display = 'none';
+        createAcc.style.display = "none";
         window.location.reload(); // Reload to refresh the table
       } catch (error) {
         console.error("Error adding document: ", error);
@@ -95,36 +131,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function validateInputs(inputs) {
     let isValid = true;
-    inputs.forEach(input => {
-      if (input.value.trim() === '') {
-        input.classList.add('invalid-input');
+    inputs.forEach((input) => {
+      if (input.value.trim() === "") {
+        input.classList.add("invalid-input");
         isValid = false;
       } else {
-        input.classList.remove('invalid-input');
-        input.classList.add('valid-input');
+        input.classList.remove("invalid-input");
+        input.classList.add("valid-input");
       }
     });
     return isValid;
   }
 
   // Edit FORM POPUP
-  const editAcc = document.getElementById('user-edit');
-  const oPop = document.querySelector('.edit_acc');
-  const cPop = document.querySelector('.close-modal-edit');
+  const editAcc = document.getElementById("user-edit");
+  const oPop = document.querySelector(".edit_acc");
+  const cPop = document.querySelector(".close-modal-edit");
 
-  if (oPop) oPop.addEventListener('click', () => editAcc.style.display = 'block');
-  if (cPop) cPop.addEventListener('click', () => editAcc.style.display = 'none');
+  if (oPop)
+    oPop.addEventListener("click", () => (editAcc.style.display = "block"));
+  if (cPop)
+    cPop.addEventListener("click", () => (editAcc.style.display = "none"));
 
   // FOR EDIT FORM - UPDATE TO FIREBASE
-  const formEdit = document.getElementById('edit-form');
-  const categorySelect1 = document.getElementById('category1');
-  const name1 = document.getElementById('name1');
-  const description1 = document.getElementById('description1');
-  const photos1 = document.getElementById('photos1');
+  const formEdit = document.getElementById("edit-form");
+  const name1 = document.getElementById("name1");
+  const description1 = document.getElementById("description1");
+  const location1 = document.getElementById("location1");
+  const photos1 = document.getElementById("photos1");
 
-  formEdit.addEventListener('submit', async (e) => {
+  formEdit.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (validateInputs([categorySelect1, name1, description1, photos1])) {
+    if (validateInputs([name1, description1, photos1])) {
       try {
         const userID = localStorage.getItem("ID");
         const photoFile = photos1.files[0];
@@ -136,10 +174,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const updateData = {
-          Category: categorySelect1.value,
+          Category: "Tourist Spot",
           Name: name1.value,
           Description: description1.value,
-          PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
+          Location: location1.value,
+          PhotoURL: photoURL, // Update the PhotoURL if a new photo is uploaded
         };
 
         if (photoFile) {
@@ -147,7 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         await updateDoc(doc(db, "vigan_establishments", userID), updateData);
-        editAcc.style.display = 'none'; // Close the edit form
+        editAcc.style.display = "none"; // Close the edit form
         window.location.reload(); // Reload to refresh the table
       } catch (error) {
         console.error("Error updating document: ", error);
@@ -156,45 +195,48 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Populate table with data
-  const tbody = document.getElementById('tbody1');
+  const tbody = document.getElementById("tbody1");
   const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     if (doc.data().Status === "Open") {
-      const trow = document.createElement('tr');
+      const trow = document.createElement("tr");
       trow.innerHTML = `
         <td>${doc.data().Name}</td>
         <td>${doc.data().Description}</td>
-        <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+        <td>${doc.data().Location}</td>
+        <td><img src="${
+          doc.data().PhotoURL
+        }" alt="Event Photo" width="50" height="50"></td>
       `;
       tbody.appendChild(trow);
 
-      trow.addEventListener('click', (e) => {
-        localStorage.setItem('ID', doc.id);
-        document.getElementById('category1').value = doc.data().Category;
-        document.getElementById('name1').value = doc.data().Name;
-        document.getElementById('description1').value = doc.data().Description;
+      trow.addEventListener("click", (e) => {
+        localStorage.setItem("ID", doc.id);
+        document.getElementById("name1").value = doc.data().Name;
+        document.getElementById("description1").value = doc.data().Description;
+        document.getElementById("location1").value = doc.data().Location;
         highlightRow(trow);
       });
     }
   });
 
   function highlightRow(row) {
-    const rows = document.querySelectorAll('#tbody1 tr');
-    rows.forEach(r => r.classList.remove('selected-row'));
-    row.classList.add('selected-row');
+    const rows = document.querySelectorAll("#tbody1 tr");
+    rows.forEach((r) => r.classList.remove("selected-row"));
+    row.classList.add("selected-row");
     document.getElementById("edit_acc").disabled = false;
     document.getElementById("delete_acc").disabled = false;
   }
 
   // Archive event instead of deleting
   const currentDateTime = new Date().toLocaleString();
-  document.getElementById('delete_acc').addEventListener('click', async () => {
+  document.getElementById("delete_acc").addEventListener("click", async () => {
     const userID = localStorage.getItem("ID");
     try {
       await updateDoc(doc(db, "vigan_establishments", userID), {
         Status: "Closed",
         ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-        ArchivedDate: currentDateTime
+        ArchivedDate: currentDateTime,
       });
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
@@ -203,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Button to see archived accounts
-  document.getElementById('archived_acc').addEventListener('click', () => {
+  document.getElementById("archived_acc").addEventListener("click", () => {
     window.location = "tArchives.html";
   });
 });

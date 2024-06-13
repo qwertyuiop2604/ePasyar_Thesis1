@@ -104,6 +104,7 @@
                     
                     <th>Name</th>                  
                     <th>Description</th>
+                    <th>Location</th>  
                     <th>Photos</th>  
 
 
@@ -127,14 +128,14 @@
           <span class="close-modal">&times;</span>
           <h1 id="create-txt">Create an Tourist Spots</h1>
           <div class="info">
-            <label class="category">Category </label>
+            <!-- <label class="category">Category </label>
             <div class="category-info">
               <select class="modal-input-category" id="category" name="category">
                
                 <option value="Tourist Spot">Tourist Spot</option>
   
               </select>
-              
+               -->
             </div>
           </div>   
           <form id="create-form">
@@ -144,6 +145,9 @@
 
             <label for="reg-event">Description</label>
             <textarea id="description" name="description"></textarea>
+
+            <label for="location"> Location </label>
+            <input type="text" id="location" name="location">
 
           <label for="confirm"> Photos</label>
             <input type="file" id="photos" name="photos" accept="image/png, image/jpeg"> 
@@ -163,15 +167,15 @@
         <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
 
         <div class="container-modal-edit" id="edit-modal">
-          <span class="close-modal-ediT">&times;</span>
+          <span class="close-modal-edit">&times;</span>
           <h1 id="edit-txt">Edit an Tourist Spots</h1>
-          <label class="category1">Category </label>
+          <!-- <label class="category1">Category </label>
             <div class="category-info">
               <select class="modal-input-category" id="category1" name="category">
               
                 <option value="Tourist Spot">Tourist Spot</option>
   
-              </select>
+              </select> -->
               
             </div>
           <form id="edit-form">
@@ -181,6 +185,9 @@
 
             <label for="reg-event">Description</label>
             <textarea id="description1" name="description"></textarea>
+
+            <label for="location1"> Location </label>
+            <input type="text" id="location1" name="location1">
 
             <label for="confirm"> Photos</label>
             <input type="file" id="photos1" name="photos" accept="image/png, image/jpeg"> 

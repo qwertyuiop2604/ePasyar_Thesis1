@@ -87,16 +87,16 @@ closePop.addEventListener("click", () => {
 
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById("create-form");
-const categorySelect = document.getElementById("category");
 const name = document.getElementById("name");
 const owner = document.getElementById("owner");
+const type = document.getElementById('type');
 const number = document.getElementById("number");
 const location = document.getElementById("location");
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([categorySelect, name, owner,number,location, photos])) {
+  if (validateInputs([ name, owner,type,number,location, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `restaurant/${photoFile.name}`);
@@ -104,7 +104,7 @@ formCreate.addEventListener('submit', async (e) => {
       const photoURL = await getDownloadURL(photoRef);
 
       await addDoc(collection(db, "vigan_establishments"), {
-        Category: categorySelect.value,
+        Category: "Restaurant",
         Name: name.value,
         Owner: owner.value,
         Type: type.value,
@@ -158,7 +158,6 @@ cPop.addEventListener("click", () => {
 
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById("edit-form");
-const categorySelect1 = document.getElementById("category1");
 const name1 = document.getElementById("name1");
 const owner1 = document.getElementById("owner1");
 const type1 = document.getElementById("type1");
@@ -168,7 +167,7 @@ const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([categorySelect1, name1, number1,location1, photos1])) {
+  if (validateInputs([name1,owner1,type1, number1,location1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -180,7 +179,7 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       const updateData = {
-        Category: categorySelect1.value,
+        Category: "Restaurant",
         Name: name1.value,
         Owner: owner1.value,
         Type: type1.value,
@@ -220,7 +219,6 @@ formEdit.addEventListener('submit', async (e) => {
 
      trow.addEventListener('click', (e) => {
        localStorage.setItem('ID', doc.id);
-       document.getElementById('category1').value = doc.data().Category;
        document.getElementById('name1').value = doc.data().Name;
        document.getElementById("owner1").value = doc.data().Owner;
        document.getElementById("type1").value = doc.data().Type;

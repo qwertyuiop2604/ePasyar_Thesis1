@@ -65,7 +65,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
 
   // FOR REGISTER FORM - ADD TO FIREBASE
   const formCreate = document.getElementById('create-form');
-  const categorySelect = document.getElementById('category');
   const Name = document.getElementById('name');
   const Owner = document.getElementById('owner');
   const Number = document.getElementById('number');
@@ -80,7 +79,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formCreate) {
     formCreate.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([categorySelect, Name, Owner, Number, Email, Type, Address, Rooms, Capacity, Rates, photos])) {
+      if (validateInputs([ Name, Owner, Number, Email, Type, Address, Rooms, Capacity, Rates, photos])) {
         try {
           const photoFile = photos.files[0];
           const photoRef = ref(storage, `hotels/${photoFile.name}`);
@@ -88,7 +87,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           const photoURL = await getDownloadURL(photoRef);
 
           await addDoc(collection(db, "vigan_establishments"), {
-            Category: categorySelect.value,
+            Category: "Hotel",
             Name: Name.value,
             Owner: Owner.value,
             Number: Number.value,
@@ -153,7 +152,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
 
   // FOR EDIT FORM - UPDATE TO FIREBASE
   const formEdit = document.getElementById('edit-form');
-  const categorySelect1 = document.getElementById('category1');
   const Name1 = document.getElementById('name1');
   const Owner1 = document.getElementById('owner1');
   const Number1 = document.getElementById('number1');
@@ -168,7 +166,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formEdit) {
     formEdit.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([categorySelect1, Name1, Owner1, Number1, Email1, Type1, Address1, Rooms1, Capacity1, Rates1, photos1])) {
+      if (validateInputs([ Name1, Owner1, Number1, Email1, Type1, Address1, Rooms1, Capacity1, Rates1, photos1])) {
         try {
           const userID = localStorage.getItem("ID");
           const photoFile = photos1.files[0];
@@ -180,7 +178,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           }
 
           const updateData = {
-            Category: categorySelect1.value,
+            Category: "Hotel",
             Name: Name1.value,
             Owner: Owner1.value,
             Number: Number1.value,
@@ -230,7 +228,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   
           trow.addEventListener('click', (e) => {
             localStorage.setItem('ID', doc.id);
-            categorySelect1.value = doc.data().Category;
             Name1.value = doc.data().Name;
             Owner1.value = doc.data().Owner;
             Number1.value = doc.data().Number;
