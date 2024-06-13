@@ -94,12 +94,10 @@ th, tr, td {
   text-decoration: none;
   
 }
-
 .con-lic:hover, .con-mv:hover {
-  background-color: #1D5D9B;
-  color: white;
+  background-color: gainsboro;
+  color: #1D5D9B;
 }
-
 .dropdown-container.show {
   display: block;
 }

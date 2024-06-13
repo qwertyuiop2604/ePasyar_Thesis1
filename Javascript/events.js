@@ -167,7 +167,9 @@ formEdit.addEventListener('submit', async (e) => {
   }
 });
 
+
 // Populate table with data
+
 const tbody = document.getElementById('tbody1');
 const querySnapshot = await getDocs(collection(db, "festivals"));
 querySnapshot.forEach(doc => {
@@ -233,94 +235,36 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
     console.error("Error updating document: ", error);
   }
 });
-
-// Button to see archived accounts
-document.getElementById('archived_acc').addEventListener('click', () => {
-  window.location = "archives.html";
-});
-
 // Calendar functionality
-const monthElement = document.querySelector('.month ul li span');
-const daysElement = document.querySelector('.days');
-const prevButton = document.querySelector('.prev');
-const nextButton = document.querySelector('.next');
+const calDate = document.getElementById('cal-date');
 
-let currentDate = new Date();
-let currentMonth = currentDate.getMonth();
-let currentYear = currentDate.getFullYear();
+calDate.addEventListener('change', async () => {
+  const selectedDate = calDate.value;
+  const querySnapshot = await getDocs(collection(db, "festivals"));
+  tbody.innerHTML = ''; // Clear existing table rows
 
-const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+  querySnapshot.forEach(doc => {
+    if (doc.data().Date === selectedDate && doc.data().Status === "not done") {
+      const trow = document.createElement('tr');
+      trow.innerHTML = `
+        <td>${doc.data().Name}</td>
+        <td>${doc.data().Date}</td>
+        <td>${doc.data().Description}</td>
+        <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+      `;
+      tbody.appendChild(trow);
 
-function renderCalendar(month, year) {
-  monthElement.innerHTML = `${months[month]}<br><span style="font-size:18px">${year}</span>`;
-  daysElement.innerHTML = '';
-
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    daysElement.innerHTML += `<li></li>`;
-  }
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    daysElement.innerHTML += `<li data-date="${dateString}">${day}</li>`;
-  }
-
-  const dayElements = daysElement.querySelectorAll('li');
-  dayElements.forEach(dayElement => {
-    dayElement.addEventListener('click', (e) => {
-      const selectedDate = e.target.getAttribute('data-date');
-      const eventItems = querySnapshot.docs.filter(doc => doc.data().Date === selectedDate);
-
-      const eventList = document.createElement('ul');
-      eventItems.forEach(event => {
-        const eventItem = document.createElement('li');
-        eventItem.textContent = `${event.data().Name} - ${event.data().Description}`;
-        eventList.appendChild(eventItem);
+      trow.addEventListener('click', (e) => {
+        localStorage.setItem('ID', doc.id);
+        document.getElementById('name1').value = doc.data().Name;
+        document.getElementById('date1').value = doc.data().Date;
+        document.getElementById('description1').value = doc.data().Description;
+        highlightRow(trow);
       });
-
-      const existingEventList = daysElement.querySelector('.event-list');
-      if (existingEventList) {
-        existingEventList.remove();
-      }
-
-      const eventContainer = document.createElement('div');
-      eventContainer.classList.add('event-list');
-      eventContainer.appendChild(eventList);
-
-      dayElement.appendChild(eventContainer);
-    });
+    }
   });
-}
-
-renderCalendar(currentMonth, currentYear);
-
-prevButton.addEventListener('click', () => {
-  currentMonth = (currentMonth - 1 + 12) % 12;
-  currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
-  renderCalendar(currentMonth, currentYear);
 });
 
-nextButton.addEventListener('click', () => {
-  currentMonth = (currentMonth + 1) % 12;
-  currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
-  renderCalendar(currentMonth, currentYear);
-});
-
-// Storage event listener
-window.addEventListener('storage', (event) => {
-  if (event.key === 'lastEventUpdate') {
-    window.location.reload();
-  }
-});
-
-function toggleDisplay(element, displayStyle) {
-  element.style.display = displayStyle;
-}
 
 // Button to see archived accounts
 document.getElementById('archived_acc').addEventListener('click', () => {

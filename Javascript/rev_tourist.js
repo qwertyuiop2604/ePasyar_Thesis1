@@ -15,35 +15,82 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+let dash = document.getElementById("dash");
+dash.addEventListener("click", () => {
+  window.location = "dash.html";
+});
+let profile = document.getElementById("profile");
+profile.addEventListener("click", () => {
+  window.location = "profile.html";
+});
+let promotion = document.getElementById("promotion");
+promotion.addEventListener("click", () => {
+  window.location = "promotion.html";
+});
+let events = document.getElementById("events");
+events.addEventListener("click", () => {
+  window.location = "events.html";
+});
+let tourist = document.getElementById("tourist");
+tourist.addEventListener("click", () => {
+  window.location = "tourist.html";
+});
+let souvenir = document.getElementById("souvenir");
+souvenir.addEventListener('click', () =>{
+  window.location = 'souvenir.html'});
+
+let logout = document.getElementById("logout");
+logout.addEventListener("click", () => {
+  window.location = "index.html";
+});
+
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
+});
+let restaurant = document.getElementById("restaurant");
+restaurant.addEventListener("click", () => {
+  window.location = "restaurants.html";
+});
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});
 document.addEventListener('DOMContentLoaded', async () => {
   const tbody = document.getElementById('tbody1');
+  const reviewsCollectionRef = collection(db, "ratings/Tourist Spot/Tourist Spot_reviews/4f1TCpXp6tRnU2lr8hiZ/user_reviews");
 
-  // Fetch user data
-  const querySnapshot = await getDocs(collection(db, "users"));
-  const usersMap = new Map();
-  
-  querySnapshot.forEach(doc => {
-    const data = doc.data();
-    console.log("User data:", data); // Debugging log
-    usersMap.set(data.email, data.email);
-  });
+  try {
+    const querySnapshot = await getDocs(reviewsCollectionRef);
 
-  // Fetch review data from the specific document
-  const reviewDocRef = doc(db, "/ratings/Tourist Spot/Tourist Spot_reviews/4f1TCpXp6tRnU2lr8hiZ/user_reviews/zbWyov9tRGTdHrNw3JcOi96VXbh2");
-  const reviewDoc = await getDoc(reviewDocRef);
+    // Iterate over each document in the collection
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(data); // Debugging log
 
-  if (reviewDoc.exists()) {
-    const data = reviewDoc.data();
-    console.log("Review data:", data); // Debugging log
-
-    const trow = document.createElement('tr');
-    trow.innerHTML =
-      `<td>${usersMap.get(data.email) || data.email}</td>
-       <td>${data.review_text}</td>
-       <td>${data.rating}</td>
-       <td>${new Date(data.timestamp)}</td>`;
-    tbody.appendChild(trow);
-  } else {
-    console.log("No such document!");
+      const trow = document.createElement('tr');
+      trow.innerHTML =
+        `
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td>${data.review_text}</td>
+        <td>${data.rating}</td>
+        <td>${data.timestamp}</td>`;
+      tbody.appendChild(trow);
+    });
+  } catch (error) {
+    console.error("Error retrieving review data:", error);
   }
 });

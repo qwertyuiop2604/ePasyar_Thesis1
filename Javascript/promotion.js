@@ -17,7 +17,13 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const storage = getStorage(app);
-  
+  document.addEventListener('DOMContentLoaded', function () {
+    var dropdown = document.querySelector('.dropdown-btn');
+    var dropdownContent = document.querySelector('.dropdown-container');
+    dropdown.addEventListener('click', function () {
+      dropdownContent.classList.toggle('show');
+    });
+  });
 
   document.addEventListener('DOMContentLoaded', () => {
     function setNavEventListener(id, target) {
