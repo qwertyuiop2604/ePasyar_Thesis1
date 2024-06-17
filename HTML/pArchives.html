@@ -29,61 +29,62 @@
 </head>
 
 <body>
-  <body>
-    <div class="container-fluid">
-      <div class="row content">
-        <div class="col-sm-3 sidenav hidden-xs">
-          <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
-            ePasyar</h2>
-          <ul class="nav nav-pills nav-stacked">
-              
-              <li><a href="#section14" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-              <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
-              <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
-              <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-              <li class="active"><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-              <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-              <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-              <li class="sidebar-list-item1">
-                <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-container">
-                  <a href="rev_tourist.html">
-                    <div class="con-lic">
-                      <i class="fas fa-map-marker-alt"></i> Tourist Spots
-                    </div>
-                  </a>
-                  <a href="rev_hotel.html">
-                    <div class="con-lic">
-                      <i class="fas fa-hotel"></i> Hotels
-                    </div>
-                  </a>
-                  <a href="rev_souvenir.html">
-                    <div class="con-lic">
-                      <i class="fas fa-shopping-bag" > </i> Souvenir Shops
-                    </div>
-                  </a>
-                  <a href="rev_restaurant.html">
-                    <div class="con-lic">
-                      <i class="fas fa-utensils"></i> Restaurant
-                    </div>
-                  </a>
-                </div>
-              </li>
-              
-              <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
-              <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
-              <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-              <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
-  
-            </ul><br>
-          </div>
-        
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav hidden-xs">
+        <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
+          ePasyar</h2>
+        <ul class="nav nav-pills nav-stacked">
+            
+            <li><a href="#section14" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
+            <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+            <li class="active"><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+            <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+            <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+            <li class="sidebar-list-item1">
+              <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
+              <div class="dropdown-container">
+                <a href="rev_tourist.html">
+                  <div class="con-lic">
+                    <i class="fas fa-map-marker-alt"></i> Tourist Spots
+                  </div>
+                </a>
+                <a href="rev_hotel.html">
+                  <div class="con-lic">
+                    <i class="fas fa-hotel"></i> Hotels
+                  </div>
+                </a>
+                <a href="rev_souvenir.html">
+                  <div class="con-lic">
+                    <i class="fas fa-shopping-bag" > </i> Souvenir Shops
+                  </div>
+                </a>
+                <a href="rev_restaurant.html">
+                  <div class="con-lic">
+                    <i class="fas fa-utensils"></i> Restaurant
+                  </div>
+                </a>
+              </div>
+            </li>
+            
+            <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
+            <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
+            <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+            <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+          </ul><br>
+        </div>
+
+
         <main class="main-container"  id="blur">
 
           <div class="main2">
             <div class="btn_useracc">
               <button id="bckbtn">Back</button>
               <button class="enable_acc" id="enabledbtn" >Retrieve Event</button>
+              <button class="enable_acc" id="permanentlyDelete" >Permanently Delete</button>
                 <div>
                   <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
                 </div>  
@@ -126,6 +127,14 @@
           <button id="cnl_promo3">Cancel</button>
           <button id="cnfrm_promo3">Confirm</button>
       </div>
+</div>
+
+<div class="cnfrm_modal" id="cnfrm_modal_delete">
+  <h1>Permanently Delete Event?</h1>
+  <div class="btn">
+    <button id="cnl_delete">Cancel</button>
+    <button id="cnfrm_delete">Confirm</button>
+  </div>
 </div>
 
 <script type="text/javascript">   

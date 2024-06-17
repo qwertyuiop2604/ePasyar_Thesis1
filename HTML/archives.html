@@ -71,6 +71,7 @@
             <div class="btn_useracc">
               <button id="bck">Back</button>
               <button class="enable_acc" id="enabled" >Retrieve Event</button>
+              <button class="enable_acc" id="permanentlyDelete" >Permanently Delete</button>
                 <div>
                   <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
                 </div>  
@@ -106,6 +107,15 @@
           <button id="cnfrm">Confirm</button>
       </div>
 </div>
+
+<div class="cnfrm_modal" id="cnfrm_modal_delete">
+  <h1>Permanently Delete Event?</h1>
+  <div class="btn">
+    <button id="cnl_delete">Cancel</button>
+    <button id="cnfrm_delete">Confirm</button>
+  </div>
+</div>
+
 
     
     <script type="text/javascript">   
