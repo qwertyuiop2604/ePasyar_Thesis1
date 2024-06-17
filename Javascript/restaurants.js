@@ -111,7 +111,7 @@ formCreate.addEventListener('submit', async (e) => {
         Number: number.value,
         Location: location.value,
         PhotoURL: photoURL,
-        Status: "Shop Available"
+        Status: "R Shop Open"
       });
       createAcc.style.display = 'none';
       window.location.reload(); // Reload to refresh the table
@@ -205,7 +205,7 @@ formEdit.addEventListener('submit', async (e) => {
  const tbody = document.getElementById('tbody1');
  const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
  querySnapshot.forEach(doc => {
-   if (doc.data().Status === "Shop Available") {
+   if (doc.data().Status === "R Shop Open") {
      const trow = document.createElement('tr');
      trow.innerHTML = `
        <td>${doc.data().Name}</td>
@@ -242,7 +242,7 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
     await updateDoc(doc(db, "vigan_establishments", userID), {
-      Status: "Shop Not Available",
+      Status: "R Shop Closed",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
       ArchivedDate: currentDateTime
     });

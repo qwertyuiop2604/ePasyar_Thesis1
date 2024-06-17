@@ -104,7 +104,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             Capacity: Capacity.value,
             Rates: Rates.value,
             PhotoURL: photoURL,
-            Status: "Available"
+            Status: "H Shop Open"
           });
           createPromotion.style.display = 'none';
           window.location.reload(); // Reload to refresh the table
@@ -216,7 +216,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
       tbody.innerHTML = ''; // Clear existing rows
       const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
       querySnapshot.forEach(doc => {
-        if (doc.data().Status === "Available") {
+        if (doc.data().Status === "H Shop Open") {
           const trow = document.createElement('tr');
           trow.innerHTML = `
             <td>${doc.data().Name}</td>
@@ -281,7 +281,7 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
     await updateDoc(doc(db, "vigan_establishments", userID), {
-      Status: "Not Available",
+      Status: "H Shop Closed",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
       ArchivedDate: new Date().toISOString()
     });

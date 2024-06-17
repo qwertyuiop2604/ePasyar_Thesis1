@@ -50,13 +50,20 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdown = document.querySelector('.dropdown-btn');
+  var dropdownContent = document.querySelector('.dropdown-container');
+  dropdown.addEventListener('click', function () {
+    dropdownContent.classList.toggle('show');
+  });
+});
 
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");
 
 const querySnap = await getDocs(collection(db, "vigan_establishments"));
 querySnap.forEach((doc) => {
-  if (doc.data().Status === "Not Available") {
+  if (doc.data().Status === "H Shop Closed") {
     const trow = document.createElement("tr");
     trow.innerHTML = `
       <td>${doc.data().ArchivedBy}</td>
@@ -115,7 +122,7 @@ querySnap2.forEach((doc2) => {
     const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
   
     updateDoc(updateStats, {
-      Status: "Available",
+      Status: "H Shop Open",
       ArchivedBy: "",
       ArchivedDate: ""
     }).then(() => {

@@ -67,6 +67,27 @@
   position: absolute;
   z-index: 12 !important;
 }
+.icon-spacing {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-btn i {
+  margin-right: 5px; /* Space between the star icon and the text */
+}
+
+.con-lic {
+  display: flex;
+  align-items: center;
+}
+
+.con-lic i {
+  margin-right: 10px; /* Space between the icons and the text */
+}
 
 .main-container {
   overflow-y: auto;

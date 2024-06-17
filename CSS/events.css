@@ -37,6 +37,34 @@
   
 }
 
+
+
+.dropdown-btn {
+
+  background: none;
+  border: none;
+  font-size: 14px; /* Adjust font size as needed */
+  cursor: pointer;
+}
+
+.dropdown-btn span {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-btn i {
+  margin-right: 5px; /* Space between the text and the dropdown icon */
+}
+
+.con-lic {
+  display: flex;
+  align-items: center;
+}
+
+.con-lic i {
+  margin-right: 10px; /* Space between the icons and the text */
+}
+
 .dropdown-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -800,4 +828,7 @@ label{
 }
 .btn{
     display: flex;
+}
+input[type="text"], input[type="date"], textarea {
+  text-transform: uppercase;
 }

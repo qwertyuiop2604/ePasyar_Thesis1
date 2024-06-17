@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           Description: description.value.trim(),
           Location: location.value,
           PhotoURL: photoURL,
-          Status: "Open",
+          Status: "TS Shop Open",
         });
         createAcc.style.display = "none";
         window.location.reload(); // Reload to refresh the table
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const tbody = document.getElementById("tbody1");
   const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
   querySnapshot.forEach((doc) => {
-    if (doc.data().Status === "Open") {
+    if (doc.data().Status === "TS Shop Open") {
       const trow = document.createElement("tr");
       trow.innerHTML = `
         <td>${doc.data().Name}</td>
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userID = localStorage.getItem("ID");
     try {
       await updateDoc(doc(db, "vigan_establishments", userID), {
-        Status: "Closed",
+        Status: "TS Shop Closed",
         ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
         ArchivedDate: currentDateTime,
       });

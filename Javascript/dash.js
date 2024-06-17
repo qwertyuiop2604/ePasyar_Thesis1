@@ -143,19 +143,19 @@ const mostVisitedChart = new Chart(ctx, {
   },
 });
 
-// Function to fetch data from Firestore and update the chart
 async function updateChartData() {
   try {
-    // Fetch data from Firestore
-    const querySnapshot = await getDocs(collection(db, "users"));
-    
+    // Fetch data from the subcollection 'monthly_reports' in the document 'monthly'
+    const monthlyReportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
+    const querySnapshot = await getDocs(monthlyReportsRef);
+
     // Process the data to match the chart's format
     const visitorData = new Array(12).fill(0); // Array to hold monthly visitor counts
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const month = data.month - 1; // Adjust month to zero-based index
-      const visitors = data.visitors;
+      const month = parseInt(doc.id.split('-')[1], 10) - 1; // Extract the month from the document ID (YYYY-MM) and adjust to zero-based index
+      const visitors = data.total_tourist_per_monthly || 0; // Ensure 'total_tourist_per_monthly' is a valid number
       visitorData[month] += visitors;
     });
 
@@ -169,7 +169,6 @@ async function updateChartData() {
 
 // Fetch and update the chart data
 updateChartData();
-
 
 async function fetchTourists() {
   const touristsTable = document.getElementById("touristsTableBody");

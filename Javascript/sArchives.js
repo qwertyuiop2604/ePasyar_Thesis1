@@ -51,7 +51,7 @@ const archivedTbody = document.getElementById("archived-tbody");
 
 const querySnap = await getDocs(collection(db, "vigan_establishments"));
 querySnap.forEach((doc) => {
-  if (doc.data().Status === "Shop Closed") {
+  if (doc.data().Status === "S Shop Closed") {
     const trow = document.createElement("tr");
     trow.innerHTML = `
       <td>${doc.data().ArchivedBy}</td>
@@ -105,7 +105,7 @@ querySnap2.forEach((doc2) => {
     const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
   
     updateDoc(updateStats, {
-      Status: "Shop Open",
+      Status: "S Shop Open",
       ArchivedBy: "",
       ArchivedDate: ""
     }).then(() => {
