@@ -103,3 +103,34 @@ h1 {
     font-size: 14px;
     color: white;
 }
+.row.content {
+    height: 4000px;
+}
+
+.sidenav {
+    background-color: white;
+    height: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    .row.content {
+        height: 1000px;
+    }
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

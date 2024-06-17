@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', async () => {
   const tbody = document.getElementById('tbody1');
-  const reviewsCollectionRef = collection(db, "ratings/Tourist Spot/Tourist Spot_reviews");
+  const reviewsCollectionRef = collection(db, "ratings/Tourist Spot/Tourist Spot_reviews/4f1TCpXp6tRnU2lr8hiZ/user_reviews");
 
   try {
     const querySnapshot = await getDocs(reviewsCollectionRef);

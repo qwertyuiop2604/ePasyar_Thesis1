@@ -227,35 +227,33 @@
       </div>
     </div>
 
-      <script>
-        const searchAppID = () => {
-          let filter = document.getElementById('srchText').value; // convert to uppercase for case-insensitive search
-          let mytable = document.getElementById('tbody1');
-          let tr = mytable.getElementsByTagName('tr');
-          
-      
-          for (var i = 0; i < tr.length; i++) {
-            let td = tr[i].getElementsByTagName('td')[0] ; 
-            let td2 = tr[i].getElementsByTagName('td')[1];
-            let td3 = tr[i].getElementsByTagName('td')[2];
-      
-            if (td && td2 && td3) { // check if all td elements exist
-      
-              let textvalue = td.textContent.toUpperCase() || td.innerHTML; // convert to uppercase for case-insensitive search
-              let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
-              let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
-      
-              if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
-                tr[i].style.display = '';
-              } else {
-                tr[i].style.display = 'none';
-              }
-              
+    <script>
+      const searchAppID = () => {
+        let filter = document.getElementById('srchText').value.toUpperCase(); // convert to uppercase for case-insensitive search
+        let mytable = document.getElementById('tbody1');
+        let tr = mytable.getElementsByTagName('tr');
+  
+        for (var i = 0; i < tr.length; i++) {
+          let tdName = tr[i].getElementsByTagName('td')[0];
+          let tdDescription = tr[i].getElementsByTagName('td')[1];
+          let tdLocation = tr[i].getElementsByTagName('td')[2];
+  
+          if (tdName || tdDescription || tdLocation) {
+            let txtValueName = tdName.textContent || tdName.innerText;
+            let txtValueDescription = tdDescription.textContent || tdDescription.innerText;
+            let txtValueLocation = tdLocation.textContent || tdLocation.innerText;
+  
+            if (txtValueName.toUpperCase().indexOf(filter) > -1 ||
+                txtValueDescription.toUpperCase().indexOf(filter) > -1 ||
+                txtValueLocation.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = '';
+            } else {
+              tr[i].style.display = 'none';
             }
           }
         }
-        
-      </script>
+      }
+    </script>
       
 
 
