@@ -222,8 +222,8 @@ cnfrm2.addEventListener('click', async () => {
     const userRef = doc(db, "users", "admin", "admin_account", userId);
     await updateDoc(userRef, {
       status: "Deleted",
-      deletedBy: "ADMIN",
-      deletedDate: currentDateTime
+      ArchivedBy: "ADMIN",
+      ArchivedDate: currentDateTime
     })
     .then(() => {
       console.log("Document successfully updated to Deleted!");

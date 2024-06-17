@@ -1,8 +1,5 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getFirestore,collection, getDocs, updateDoc, doc, setDoc  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-
-
+import { getFirestore, collection, getDocs, updateDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -18,141 +15,98 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let bckbtn = document.getElementById("bckbtn");
-bckbtn.addEventListener('click', () => {
-    window.location = 'profile.html'
-})
-let events = document.getElementById("events");
-events.addEventListener('click', () => {
-    window.location = 'events.html'
-})
-let souvenir = document.getElementById("souvenir");
-souvenir.addEventListener('click', () =>{
-  window.location = 'souvenir.html'
-})
-let logout = document.getElementById("logout");
-logout.addEventListener('click', () =>{
-  window.location = 'index.html'
-})
-let reviews = document.getElementById("reviews");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
+document.getElementById("bckbtn").addEventListener('click', () => {
+  window.location = 'profile.html';
 });
-let otop = document.getElementById("otop");
-otop.addEventListener("click", () => {
+
+document.getElementById("events").addEventListener('click', () => {
+  window.location = 'events.html';
+});
+
+document.getElementById("logout").addEventListener('click', () => {
+  window.location = 'index.html';
+});
+
+document.getElementById("otop").addEventListener("click", () => {
   window.location = "otop.html";
 });
-let localdishes = document.getElementById("localdishes");
-localdishes.addEventListener("click", () => {
+
+document.getElementById("localdishes").addEventListener("click", () => {
   window.location = "dishes.html";
 });
-let localindustries = document.getElementById("localindustries");
-localindustries.addEventListener("click", () => {
+
+document.getElementById("localindustries").addEventListener("click", () => {
   window.location = "industries.html";
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
+
+const archivedTbody = document.getElementById("archived-tbody");
+
+const querySnap = await getDocs(collection(db, "users/admin/admin_account"));
+querySnap.forEach((doc) => {
+  if (doc.exists()) {
+    const data = doc.data();
+    const row = `
+      <tr>
+        <td>${data.deletedBy || ''}</td>
+        <td>${data.name || ''}</td>
+        <td>${data.email || ''}</td>
+        <td>${data.password || ''}</td>
+        <td>${data.deletedDate || ''}</td>
+      </tr>
+    `;
+    archivedTbody.insertAdjacentHTML('beforeend', row);
+  }
 });
-// FINAL
-var tbody = document.getElementById('tbody1');
 
-const querySnapshot = await getDocs(collection(db, "users", "admin", "admin_account"));
-  querySnapshot.forEach(doc => {
+document.getElementById('enabledbtn').addEventListener('click', () => {
+  document.getElementById('cnfrm_modal_enable').style.display = 'block';
+});
 
-    if(doc.data().Status == "Not Available"){
-      var trow = document.createElement('tr');
-      let td1 = document.createElement('td');
-      let td2 = document.createElement('td');
-      let td3 = document.createElement('td');
-      let td4 = document.createElement('td');
-      let td5 = document.createElement('td');
+document.getElementById('permanentlyDelete').addEventListener('click', () => {
+  document.getElementById('cnfrm_modal_delete').style.display = 'block';
+});
 
-      
-    
-     
-      td1.innerHTML = doc.data().Name;
-      td2.innerHTML = doc.data().Email;
-      td3.innerHTML = doc.data().Password;
-      td4.innerHTML = doc.data().DeletedBy;
-      td5.innerHTML = doc.data().DeletedDate;
-      
-  
-      trow.appendChild(td1);
-      trow.appendChild(td2);
-      trow.appendChild(td3);
-      trow.appendChild(td4);
-      trow.appendChild(td5);
-     
-  
-      tbody.appendChild(trow);
+document.getElementById('cnl_promo3').addEventListener('click', () => {
+  document.getElementById('cnfrm_modal_enable').style.display = 'none';
+});
 
-      trow.addEventListener('click', (e) =>{
+document.getElementById('cnl_delete').addEventListener('click', () => {
+  document.getElementById('cnfrm_modal_delete').style.display = 'none';
+});
 
-        localStorage.setItem('ID', doc.id)
-        //console.log(doc.id)
-
-        //HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
-        var table = document.getElementById("table");
-        var rows = document.getElementsByTagName('tr');
-        for( let i = 1; i < rows.length; i++){
-          var currentRow = table.rows[i];
-          currentRow.onclick = function(){
-            Array.from(this.parentElement.children).forEach(function(el){
-              el.classList.remove('selected-row');
-              
-            });
-
-            // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
-            this.classList.add('selected-row');
-
-                document.getElementById("enabledbtn").disabled = false;
-
-                
-        }
-        
-      }
+document.getElementById('cnfrm_promo3').addEventListener('click', async () => {
+  document.getElementById('cnfrm_modal_enable').style.display = 'none';
+  const selectedRow = document.querySelector('tr.selected');
+  if (selectedRow) {
+    const email = selectedRow.querySelector('td:nth-child(3)').innerText;
+    const userRef = doc(db, "users/admin/admin_account", email);
+    await updateDoc(userRef, {
+      archived: false
     });
-
-    }
-  });
-
- 
-    
-
-// window.onload = GetAllDataOnce;
-
-document.getElementById("enabledbtn").disabled = true; 
-
-enabledbtn.addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_enable').style.display = "block";
+    location.reload();
+  }
 });
 
-cnl_promo3.addEventListener('click', (e) => {
-  document.getElementById('cnfrm_modal_enable').style.display = "none";
+document.getElementById('cnfrm_delete').addEventListener('click', async () => {
+  document.getElementById('cnfrm_modal_delete').style.display = 'none';
+  const selectedRow = document.querySelector('tr.selected');
+  if (selectedRow) {
+    const email = selectedRow.querySelector('td:nth-child(3)').innerText;
+    const userRef = doc(db, "users", email);
+    await setDoc(userRef, {
+      deleted: true
+    });
+    location.reload();
+  }
 });
 
-const querySnapshot2 = await getDocs(collection(db,"vigan_establishments"));
-querySnapshot2.forEach(doc2 => {   
-
-  cnfrm_promo3.addEventListener('click', (e) => {
-      const updateStats = doc(db, "vigan_establishments", doc2.id)
-      var userID = localStorage.getItem("ID")
-
-      if(userID == doc2.id){
-          updateDoc(updateStats, {
-              Status: "Available",
-              DeletedBy: "",
-              DeletedDate: ""
-          }).then(() => {
-              window.location = "pArchives.html"
-          })
-      }
-
-  });
-
+// Ensure rows can be selected
+const table = document.getElementById('table');
+table.addEventListener('click', (event) => {
+  const targetRow = event.target.closest('tr');
+  if (targetRow) {
+    const rows = table.querySelectorAll('tr');
+    rows.forEach(row => row.classList.remove('selected'));
+    targetRow.classList.add('selected');
+  }
 });
-

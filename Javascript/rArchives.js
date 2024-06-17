@@ -109,7 +109,7 @@ querySnap2.forEach((doc2) => {
       ArchivedBy: "",
       ArchivedDate: ""
     }).then(() => {
-      window.location = "sArchives.html";
+      window.location = "rArchives.html";
       window.location.reload();
     });
   });

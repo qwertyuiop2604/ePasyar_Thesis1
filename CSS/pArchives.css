@@ -16,27 +16,6 @@
   text-decoration: none;
   color: #1D5D9B;
 }
-.icon-spacing {
-  margin-right: 10px; /* Adjust the value as needed */
-}
-
-.dropdown-btn {
-  display: flex;
-  align-items: center;
-}
-
-.dropdown-btn i {
-  margin-right: 5px; /* Space between the star icon and the text */
-}
-
-.con-lic {
-  display: flex;
-  align-items: center;
-}
-
-.con-lic i {
-  margin-right: 10px; /* Space between the icons and the text */
-}
 
 .sidebar-list-item1 button {
   padding: 15px;
@@ -52,6 +31,12 @@
   outline: none;
 }
 
+#dash-logo {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 35px;
+  font-weight: bolder;
+  color: #1D5D9B;}
+  
 .dropdown-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -80,7 +65,14 @@
   padding: 20px 20px;
 }
 
+.main-title {
+  display: flex;
+  justify-content: space-between;
+}
 
+.main-title > p {
+  font-size: 20px;
+}
 
 table tr {
   padding: 4px;
@@ -108,21 +100,57 @@ th, tr, td {
   display: flex;
 }
 
+.outer-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
 .con-lic, .con-mv {
   padding: 5px 10px;
   display: flex;
   align-items: center;
   text-decoration: none;
-  
+  color: #1D5D9B;
 }
-
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
   color: #1D5D9B;
 }
-
 .dropdown-container.show {
   display: block;
+}
+
+.icon-spacing {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-btn i {
+  margin-right: 5px; /* Space between the star icon and the text */
+}
+
+.con-lic {
+  display: flex;
+  align-items: center;
+}
+
+.con-lic i {
+  margin-right: 10px; /* Space between the icons and the text */
 }
   .material-icons-outlined {
     vertical-align: middle;
