@@ -229,6 +229,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             <td>${doc.data().Capacity}</td>
             <td>${doc.data().Rates}</td>
             <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
           `;
           tbody.appendChild(trow);
   
@@ -245,14 +246,42 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             Rates1.value = doc.data().Rates;
             
             highlightRow(trow);
+          });  
+          // Generate and download QR code when clicking on Generate QR button
+           document.getElementById(`gen_qr_${doc.id}`).addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent click from propagating to row click event
+            generateAndDownloadQRCode(doc.data().Name, doc.id);
           });
         }
+         
       });
     }
   }
   
   populateTable();
 });
+function generateAndDownloadQRCode(establishmentName, documentId) {
+  // Create a new QRCode instance
+  const qrCodeContainer = document.createElement('div');
+  const qrCode = new QRCode(qrCodeContainer, {
+    text: documentId, // Pass the document ID directly
+    width: 700,
+    height: 700,
+    colorDark: "#000000", // Dark color
+    colorLight: "#ffffff", // Light color
+  });
+
+  // Get the QR code data URL after it's been generated
+  setTimeout(() => {
+    const qrImageData = qrCodeContainer.querySelector('img').src;
+
+    // Create a temporary link element to download the QR code
+    const downloadLink = document.createElement('a');
+    downloadLink.href = qrImageData;
+    downloadLink.download = `qr_${establishmentName}.png`;
+    downloadLink.click();
+  }, 1000); // Wait for QR code to be generated
+}
 
 
 function highlightRow(row) {

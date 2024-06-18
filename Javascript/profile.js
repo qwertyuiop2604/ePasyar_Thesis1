@@ -128,6 +128,7 @@ btnSaveEdit.addEventListener('click', async (e) => {
         .catch((error) => console.error("Error updating document: ", error));
     } else {
       console.error("No user ID found in localStorage");
+      window.location.reload(); // Reload the page to reflect changes
     }
   }
 });
@@ -210,24 +211,17 @@ const currentDateTime = new Date().toLocaleString();
 
 // Event Listener for delete account button
 const btnDelete = document.getElementById('delete_acc');
-btnDelete.addEventListener('click', () => {
-  document.getElementById('delete_acc_modal').style.display = "block";
-});
-
-// Confirm delete account
-const cnfrm2 = document.getElementById('confirm_delete');
-cnfrm2.addEventListener('click', async () => {
+btnDelete.addEventListener('click', async () => {
   const userId = localStorage.getItem('ID');
   if (userId) {
     const userRef = doc(db, "users", "admin", "admin_account", userId);
     await updateDoc(userRef, {
       status: "Deleted",
-      ArchivedBy: "ADMIN",
-      ArchivedDate: currentDateTime
+      deletedBy: "ADMIN",
+      deletedDate: currentDateTime
     })
     .then(() => {
       console.log("Document successfully updated to Deleted!");
-      document.getElementById('delete_acc_modal').style.display = "none";
       window.location.reload(); // Reload the page to reflect changes
     })
     .catch((error) => console.error("Error updating document: ", error));

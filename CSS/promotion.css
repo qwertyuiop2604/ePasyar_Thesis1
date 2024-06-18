@@ -55,7 +55,7 @@
 }
 
 .main-container {
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 20px 20px;
 }
 
@@ -439,8 +439,8 @@ h4{
 
   @media only screen and (max-width: 1200px){
     body {
-      overflow-y: hidden; /* Hide vertical scrollbar */
-      overflow-x: hidden; /* Hide horizontal scrollbar */
+      overflow-y: scroll; /* Hide vertical scrollbar */
+      overflow-x: scroll; /* Hide horizontal scrollbar */
     }
     .outer-wrapper {
       margin: 10px;
@@ -459,7 +459,8 @@ h4{
       height: fit-content;
       max-height: 66.4vh;
       margin-top: 22px;
-      margin: 15px;
+      margin: 5px;
+      text-align: center;
       padding-bottom: 20px;
       
     }

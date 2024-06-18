@@ -1,3 +1,4 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import {
   getFirestore,
@@ -13,6 +14,9 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+
+// Ensure you include the QRCode library in your HTML file
+// <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -75,12 +79,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location = "industries.html";
   });
 });
+
 document.addEventListener("DOMContentLoaded", async function () {
   var dropdown = document.querySelector(".dropdown-btn");
   var dropdownContent = document.querySelector(".dropdown-container");
   dropdown.addEventListener("click", function () {
     dropdownContent.classList.toggle("show");
   });
+
   // CREATE FORM POPUP
   const createAcc = document.getElementById("user-create");
   const openPop = document.querySelector(".add_acc");
@@ -146,80 +152,110 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Edit FORM POPUP
   const editAcc = document.getElementById("user-edit");
   const oPop = document.querySelector(".edit_acc");
-  const cPop = document.querySelector(".close-modal-edit");
-
-  if (oPop)
-    oPop.addEventListener("click", () => (editAcc.style.display = "block"));
-  if (cPop)
-    cPop.addEventListener("click", () => (editAcc.style.display = "none"));
-
-  // FOR EDIT FORM - UPDATE TO FIREBASE
-  const formEdit = document.getElementById("edit-form");
-  const name1 = document.getElementById("name1");
-  const description1 = document.getElementById("description1");
-  const location1 = document.getElementById("location1");
-  const photos1 = document.getElementById("photos1");
-
-  formEdit.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (validateInputs([name1, description1, photos1])) {
-      try {
-        const userID = localStorage.getItem("ID");
-        const photoFile = photos1.files[0];
-        let photoURL;
-        if (photoFile) {
-          const photoRef = ref(storage, `tourist/${photoFile.name}`);
-          await uploadBytes(photoRef, photoFile);
-          photoURL = await getDownloadURL(photoRef);
+    const cPop = document.querySelector(".close-modal-edit");
+  
+    if (oPop)
+      oPop.addEventListener("click", () => (editAcc.style.display = "block"));
+    if (cPop)
+      cPop.addEventListener("click", () => (editAcc.style.display = "none"));
+  
+    // FOR EDIT FORM - UPDATE TO FIREBASE
+    const formEdit = document.getElementById("edit-form");
+    const name1 = document.getElementById("name1");
+    const description1 = document.getElementById("description1");
+    const location1 = document.getElementById("location1");
+    const photos1 = document.getElementById("photos1");
+  
+    formEdit.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (validateInputs([name1, description1, photos1])) {
+        try {
+          const userID = localStorage.getItem("ID");
+          const photoFile = photos1.files[0];
+          let photoURL;
+          if (photoFile) {
+            const photoRef = ref(storage, `tourist/${photoFile.name}`);
+            await uploadBytes(photoRef, photoFile);
+            photoURL = await getDownloadURL(photoRef);
+          }
+  
+          const updateData = {
+            Category: "Tourist Spot",
+            Name: name1.value,
+            Description: description1.value,
+            Location: location1.value,
+          };
+  
+          if (photoFile) {
+            updateData.PhotoURL = photoURL;
+          }
+  
+          await updateDoc(doc(db, "vigan_establishments", userID), updateData);
+          editAcc.style.display = "none"; // Close the edit form
+          window.location.reload(); // Reload to refresh the table
+        } catch (error) {
+          console.error("Error updating document: ", error);
         }
-
-        const updateData = {
-          Category: "Tourist Spot",
-          Name: name1.value,
-          Description: description1.value,
-          Location: location1.value,
-          PhotoURL: photoURL, // Update the PhotoURL if a new photo is uploaded
-        };
-
-        if (photoFile) {
-          updateData.PhotoURL = photoURL;
-        }
-
-        await updateDoc(doc(db, "vigan_establishments", userID), updateData);
-        editAcc.style.display = "none"; // Close the edit form
-        window.location.reload(); // Reload to refresh the table
-      } catch (error) {
-        console.error("Error updating document: ", error);
       }
-    }
+    });
+  
+    // Populate table with data
+    const tbody = document.getElementById("tbody1");
+    const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+    querySnapshot.forEach((doc) => {
+      if (doc.data().Status === "TS Shop Open") {
+        const trow = document.createElement("tr");
+        trow.innerHTML = `
+          <td>${doc.data().Name}</td>
+          <td>${doc.data().Description}</td>
+          <td>${doc.data().Location}</td>
+          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+          <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
+        `;
+        tbody.appendChild(trow);
+        
+  
+        trow.addEventListener("click", (e) => {
+          localStorage.setItem("ID", doc.id);
+          document.getElementById("name1").value = doc.data().Name;
+          document.getElementById("description1").value = doc.data().Description;
+          document.getElementById("location1").value = doc.data().Location;
+          highlightRow(trow);
+        });
+  
+        // Generate and download QR code when clicking on Generate QR button
+        document.getElementById(`gen_qr_${doc.id}`).addEventListener("click", (e) => {
+          e.stopPropagation(); // Prevent click from propagating to row click event
+          generateAndDownloadQRCode(doc.data().Name, doc.id);
+        });
+      }
+    });
   });
-
-  // Populate table with data
-  const tbody = document.getElementById("tbody1");
-  const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-  querySnapshot.forEach((doc) => {
-    if (doc.data().Status === "TS Shop Open") {
-      const trow = document.createElement("tr");
-      trow.innerHTML = `
-        <td>${doc.data().Name}</td>
-        <td>${doc.data().Description}</td>
-        <td>${doc.data().Location}</td>
-        <td><img src="${
-          doc.data().PhotoURL
-        }" alt="Event Photo" width="50" height="50"></td>
-      `;
-      tbody.appendChild(trow);
-
-      trow.addEventListener("click", (e) => {
-        localStorage.setItem("ID", doc.id);
-        document.getElementById("name1").value = doc.data().Name;
-        document.getElementById("description1").value = doc.data().Description;
-        document.getElementById("location1").value = doc.data().Location;
-        highlightRow(trow);
-      });
-    }
-  });
-
+  
+  function generateAndDownloadQRCode(establishmentName, documentId) {
+    // Create a new QRCode instance
+    const qrCodeContainer = document.createElement('div');
+    const qrCode = new QRCode(qrCodeContainer, {
+      text: documentId, // Pass the document ID directly
+      width: 700,
+      height: 700,
+      colorDark: "#000000", // Dark color
+      colorLight: "#ffffff", // Light color
+    });
+  
+    // Get the QR code data URL after it's been generated
+    setTimeout(() => {
+      const qrImageData = qrCodeContainer.querySelector('img').src;
+  
+      // Create a temporary link element to download the QR code
+      const downloadLink = document.createElement('a');
+      downloadLink.href = qrImageData;
+      downloadLink.download = `qr_${establishmentName}.png`;
+      downloadLink.click();
+    }, 1000); // Wait for QR code to be generated
+  }
+  
+  
   function highlightRow(row) {
     const rows = document.querySelectorAll("#tbody1 tr");
     rows.forEach((r) => r.classList.remove("selected-row"));
@@ -227,7 +263,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("edit_acc").disabled = false;
     document.getElementById("delete_acc").disabled = false;
   }
-
+  
   // Archive event instead of deleting
   const currentDateTime = new Date().toLocaleString();
   document.getElementById("delete_acc").addEventListener("click", async () => {
@@ -243,9 +279,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error("Error updating document: ", error);
     }
   });
-
+  
   // Button to see archived accounts
   document.getElementById("archived_acc").addEventListener("click", () => {
     window.location = "tArchives.html";
   });
-});
