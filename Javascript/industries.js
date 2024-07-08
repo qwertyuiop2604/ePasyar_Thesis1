@@ -225,7 +225,7 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
 
 // Button to see archived accounts
 document.getElementById('archived_acc').addEventListener('click', () => {
-  window.location = "archives.html";
+  window.location = "iArchives.html";
 });
 
 // 

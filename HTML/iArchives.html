@@ -5,27 +5,12 @@
   <title>Dashboard Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/sArchives.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/archives.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
-  .row.content {
-    height: 400px
-  }
 
-  .sidenav {
-    background-color: white;
-    height: 100%;
-  }
-
-  @media screen and (max-width: 100px) {
-    .row.content {
-      height: auto;
-    }
-  }
-</style>
 </head>
 
 <body>
@@ -35,38 +20,56 @@
         <h2 id="dash-logo"><img src="/image/ePasyar.png" alt="index" width="60" height="50" class="center-image">
           ePasyar</h2>
         <ul class="nav nav-pills nav-stacked">
-          
-            <li><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
-            <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
-            <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-            <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-            <li class="active"><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-            <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-            <li>
-              <a href="#section4" id="reviews">
-               <i class="fas fa-star"></i> Reviews <i class="fas fa-caret-down"></i>
-           </a>
-           <ul class="dropdown">
-             <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-             <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-             <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-           </ul>
-           </li>
-            <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
-            <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
-            <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-            <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
 
-          </ul><br>
-        </div>
+        
+          <li><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li ><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
+          <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+          <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+          <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+          <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+          <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+          <li class="sidebar-list-item1">
+            <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-container">
+              <a href="rev_tourist.html">
+                <div class="con-lic">
+                  <i class="fas fa-map-marker-alt"></i> Tourist Spots
+                </div>
+              </a>
+              <a href="rev_hotel.html">
+                <div class="con-lic">
+                  <i class="fas fa-hotel"></i> Hotels
+                </div>
+              </a>
+              <a href="rev_souvenir.html">
+                <div class="con-lic">
+                  <i class="fas fa-shopping-bag" > </i> Souvenir Shops
+                </div>
+              </a>
+              <a href="rev_restaurant.html">
+                <div class="con-lic">
+                  <i class="fas fa-utensils"></i> Restaurant
+                </div>
+              </a>
+            </div>
+          </li>
+          
+          <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
+          <li class="active" ><a href="section43" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
+          <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+          
+          <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+
+        </ul><br>
+      </div>
+
 
         <main class="main-container"  id="blur">
 
           <div class="main2">
             <div class="btn_useracc">
-              <button id="bckbtn"><i class="fas fa-arrow-left"></i> </button>
+              <button id="bck"><i class="fas fa-arrow-left"></i> </button>
               <button class="enable_acc" id="enabled"><i class="fas fa-undo"></i> </button>
               <button class="enable_acc" id="permanentlyDelete"><i class="fas fa-trash-alt"></i></button>
               
@@ -76,15 +79,11 @@
                 <div class="table-wrapper">
                 <table id="table" class="table" style="width:100%">
                     <tr>
-                        
-                        <th>Archived By</th>
-                       
-                        <th>Name</th>  
-                        <th>Owner</th> 
-                        <th>Contact Number</th> 
-                        <th>Location</th>   
-                        <th>Photos</th>              
-                        <th>Archived On</th>
+                       <th>Archived By</th> 
+                       <th>Name</th>
+                       <th>Description</th>
+                       <th>Photos</th>
+                      <th>Archived Date</th>
     
                     </tr>
                 <tbody id="archived-tbody"></tbody>                                                       
@@ -113,6 +112,8 @@
     <button id="cnfrm_delete">Confirm</button>
   </div>
 </div>
+
+
     
     <script type="text/javascript">   
   
@@ -154,7 +155,7 @@
     </script>
 
 
-      <script type="module" src="/Javascript/sArchives.js"></script>
+      <script type="module" src="/Javascript/iArchives.js"></script>
 </body>
 
 </html>

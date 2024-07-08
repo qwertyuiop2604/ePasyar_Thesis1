@@ -70,28 +70,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const tbody = document.getElementById('tbody1');
-  const reviewsCollectionRef = collection(db, "ratings/Hotel/Hotel_reviews/34DwDmM85T9cBzk3asjU/user_reviews");
+  const reviewsCollectionRef = collection(db, "ratings/Hotel/Hotel_reviews");
+  const scansCollectionRef = collection(db, "total_scans/touristScans/hotel_scans");
 
   try {
     const querySnapshot = await getDocs(reviewsCollectionRef);
 
-    // Iterate over each document in the collection
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      console.log(data); // Debugging log
+    for (const reviewDoc of querySnapshot.docs) {
+      const reviewData = reviewDoc.data();
+      const reviewDocId = reviewDoc.id;
 
+      // Fetch the corresponding totalScans document
+      const scanDocRef = doc(scansCollectionRef, reviewDocId);
+      const scanDoc = await getDoc(scanDocRef);
+
+      const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
+
+      // Round the average rating to the nearest tenth
+      const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
+
+      // Create table row with review and scan data
       const trow = document.createElement('tr');
-      trow.innerHTML =
-        `
-        <td>${data.name}</td>
-        <td>${data.email}</td>
-        <td>${data.review_text}</td>
-        <td>${data.rating}</td>
-        <td>${data.timestamp}</td>`;
+      trow.innerHTML = `
+        <td>${reviewData.name}</td>
+        <td>${roundedAverageRating}</td>
+        <td>${reviewData.total_reviews}</td>
+        <td>${totalScans}</td>
+        <td><button class="details-btn" data-id="${reviewDocId}">Show Details</button></td>
+      `;
       tbody.appendChild(trow);
-    });
+
+      // Add event listener for the button
+      const detailsBtn = trow.querySelector('.details-btn');
+      detailsBtn.addEventListener('click', () => {
+        const reviewDocId = detailsBtn.getAttribute('data-id');
+        window.location.href = `rev_hotel_details.html?id=${reviewDocId}`;
+      });
+    }
   } catch (error) {
-    console.error("Error retrieving review data:", error);
+    console.error("Error retrieving review or scan data:", error);
   }
 });
-

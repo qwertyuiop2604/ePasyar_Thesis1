@@ -82,15 +82,15 @@
       <main class="main-container">
         <div class="main2">
           <div class="btn_useracc">
-            <button class="add_acc" id="add_acc" >Add</button>
-            <button class="edit_acc" id="edit_acc">Edit</button>
-            <button id="delete_acc">Archive</button>
+            <button class="add_acc" id="add_acc"><i class="fas fa-plus"></i> </button>
+            <button class="edit_acc" id="edit_acc"><i class="fas fa-edit"></i> </button>
+            <button id="delete_acc"><i class="fas fa-archive"></i> </button>
             <div>
-              <button id="archived_acc">See Archives</button>
+              <button id="archived_acc"><i class="fas fa-box-open"></i> </button>
                 </div>   
 
     
-            <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
+          
           </div>
           <div class="outer-wrapper">
             <div class="table-wrapper">
@@ -182,32 +182,7 @@
 
   </div>
 
-  <script>
-    const searchAppID = () => {
-      let filter = document.getElementById('srchText').value.toUpperCase();
-      let mytable = document.getElementById('tbody1');
-      let tr = mytable.getElementsByTagName('tr');
-
-      for (let i = 0; i < tr.length; i++) {
-        let td = tr[i].getElementsByTagName('td')[0];
-        let td2 = tr[i].getElementsByTagName('td')[1];
-        let td3 = tr[i].getElementsByTagName('td')[2];
-
-        if (td && td2 && td3) {
-          let textvalue = td.textContent.toUpperCase() || td.innerHTML;
-          let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
-          let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
-
-          if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
-            tr[i].style.display = '';
-          } else {
-            tr[i].style.display = 'none';
-          }
-        }
-      }
-    }
-
-  </script>
+  
 
 
   <script type="module" src="/Javascript/dishes.js"></script>

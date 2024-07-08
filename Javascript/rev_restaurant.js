@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const tbody = document.getElementById('tbody1');
-  const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
-  const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
+  const reviewsCollectionRef = collection(db, "ratings/Restaurant/Restaurant_reviews");
+  const scansCollectionRef = collection(db, "total_scans/touristScans/restaurant_scans");
 
   try {
     const querySnapshot = await getDocs(reviewsCollectionRef);
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const detailsBtn = trow.querySelector('.details-btn');
       detailsBtn.addEventListener('click', () => {
         const reviewDocId = detailsBtn.getAttribute('data-id');
-        window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
+        window.location.href = `rev_restaurant_details.html?id=${reviewDocId}`;
       });
     }
   } catch (error) {

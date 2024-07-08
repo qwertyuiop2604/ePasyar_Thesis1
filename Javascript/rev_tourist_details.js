@@ -68,46 +68,39 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
 document.addEventListener('DOMContentLoaded', async () => {
   const tbody = document.getElementById('tbody1');
-  const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
-  const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const establishmentId = urlParams.get('id');
+  
   try {
-    const querySnapshot = await getDocs(reviewsCollectionRef);
+    // Reference to the user_reviews subcollection under the establishment
+    const userReviewsCollectionRef = collection(db, `ratings/Tourist Spot/Tourist Spot_reviews/${establishmentId}/user_reviews`);
+    
+    // Query all documents in the user_reviews subcollection
+    const userReviewsQuerySnapshot = await getDocs(userReviewsCollectionRef);
 
-    for (const reviewDoc of querySnapshot.docs) {
-      const reviewData = reviewDoc.data();
-      const reviewDocId = reviewDoc.id;
+    // Process each review document
+    userReviewsQuerySnapshot.forEach((doc) => {
+      if (doc.exists()) {
+        const reviewData = doc.data();
 
-      // Fetch the corresponding totalScans document
-      const scanDocRef = doc(scansCollectionRef, reviewDocId);
-      const scanDoc = await getDoc(scanDocRef);
+        const roundedAverageRating = (Math.round(reviewData.rating * 10) / 10).toFixed(1);
 
-      const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
-
-      // Round the average rating to the nearest tenth
-      const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
-
-      // Create table row with review and scan data
-      const trow = document.createElement('tr');
-      trow.innerHTML = `
-        <td>${reviewData.name}</td>
-        <td>${roundedAverageRating}</td>
-        <td>${reviewData.total_reviews}</td>
-        <td>${totalScans}</td>
-        <td><button class="details-btn" data-id="${reviewDocId}">Show Details</button></td>
-      `;
-      tbody.appendChild(trow);
-
-      // Add event listener for the button
-      const detailsBtn = trow.querySelector('.details-btn');
-      detailsBtn.addEventListener('click', () => {
-        const reviewDocId = detailsBtn.getAttribute('data-id');
-        window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
-      });
-    }
+        const trow = document.createElement('tr');
+        trow.innerHTML = `
+          <td>${reviewData.email}</td>
+          <td>${reviewData.review_text}</td>
+          <td>${roundedAverageRating}</td>
+          <td>${reviewData.timestamp}</td
+        `;
+        tbody.appendChild(trow);
+      } else {
+        console.error("No such review document!");
+      }
+    });
   } catch (error) {
-    console.error("Error retrieving review or scan data:", error);
+    console.error("Error retrieving reviews data:", error);
   }
 });

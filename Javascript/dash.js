@@ -189,7 +189,7 @@ async function fetchTourists() {
                     <td>${userData.lName}</td>
                     <td>${userData.email}</td>
                     <td>${userData.country}</td>
-                    <td>${userData.password}</td>
+                 
                   </tr>`;
       touristsTable.innerHTML += row;
     });
