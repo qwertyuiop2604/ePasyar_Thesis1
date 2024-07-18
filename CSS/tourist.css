@@ -74,7 +74,7 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 70px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
@@ -307,21 +307,7 @@ th, tr, td{
     padding: 7px;
     text-align: left;
 }
-.btn_useracc button{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 100px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(223, 217, 217);
-    cursor: pointer;
-}
-.btn_useracc{
-  display: flex;
-}
+
 #category{
   padding: 10px;
   margin-bottom: 10px;

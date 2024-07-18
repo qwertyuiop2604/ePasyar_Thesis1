@@ -30,6 +30,12 @@
     
     <form id="login-form">
         <div id="vigan">Welcome, KaiVigan!</div>
+        <label for="position">Position</label>
+        <select name="position" id="position">
+            <option value="">Select a position</option>
+            <option value="System Administrator">System Administrator</option>
+            <option value="Statistician">Statistician</option>
+        </select>
         <label for="email">Email</label>
         <input type="text" id="email" name="email" required>
         <label for="password">Password</label>
@@ -40,11 +46,11 @@
         <!-- <div id="forgotPass">
             <p>Forgot Password</p>
         </div> -->
-        <button id="btnLogin">Login</button>
+        <button id="btnLogin">Login</button> <div id="register">
+           
+        </div> <p>Not registered? <a id="register-button" href="registration.html">Create an Account</a></p>
     </form>
-        <!-- <div id="register">
-            <p>Not registered? <a id="register-button" href="register.html">Create an Account</a></p>
-        </div> -->
+       
 
         <script type="module" src="/Javascript/index.js"></script>
     </div>

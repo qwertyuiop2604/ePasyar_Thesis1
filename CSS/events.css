@@ -108,7 +108,7 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 9px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
@@ -163,9 +163,13 @@ th, tr, td {
   padding: 1px;  /* Adjusted padding */
   background: #1D5D9B;
   color: white;
-  width: 500px;
+  width: 5px;
   height: 30%; /* Adjusted width */
   font-size: 10px; /* Adjusted font size */
+}
+#date{
+  width: 9px;
+
 }
 .month ul {
   margin: 0;
@@ -185,7 +189,7 @@ th, tr, td {
   margin: 0;
   padding: 0;  /* Adjusted padding */
   background-color: #ddd;
-  width: 500px;  /* Adjusted width */
+  width: 50px;  /* Adjusted width */
   font-size: 10px;  /* Adjusted font size */
 }
 .weekdays li {
@@ -239,7 +243,7 @@ th, tr, td {
 /* Main content */
 .main {
 margin-left: 200px; /* Same as the width of the sidenav */
-font-size: 14px; /* Increased text to enable scrolling */
+font-size: 12px; /* Increased text to enable scrolling */
 /* padding: 0px 10px; */
 }
 
@@ -446,14 +450,16 @@ h4{
   border: none;
     padding: 5px;
     margin: 5px;
-    width: 130px;
+    width: 30px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: rgb(223, 217, 217);
+    font-weight: bold;
     cursor: pointer;
 }
+
 .container-modal{
   background-color: #1D5D9B;
 }
