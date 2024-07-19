@@ -3,18 +3,67 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #24146C;
+  font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+
+.sidenav h2, .sidenav a {
+  color: white;
+}
+
+.nav-pills > li > a {
+  color: #24146C;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus 
+{
+  background-color: #24146C;
+  color: white;
+}
+.nav-pills > li.active > a:hover {
+  background-color: #24146C;
+  color: white;
+}
+.card {
+  background-color: #f1f1f1;
+  border: 1px solid #24146C;
+}
+
+.card h4, .card p {
+  color: #24146C;
+}
+
+.well {
+  background-color: #24146C;
+  color: white;
+}
+
+
+#dash-logo img {
+  width: 60px;
+  height: 50px;
+}
+
+#dash_label {
+  color: #24146C;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+
 .dropdown-container {
-  color: #1D5D9B;
+  color: #24146C;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .sidebar-list-item1 button {
@@ -22,7 +71,7 @@
   text-decoration: none;
   font-size: 14px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #1D5D9B;
+  color: #24146C;
   display: block;
   border: none;
   background: none;
@@ -33,7 +82,7 @@
 }
 .container-fluid{
   font-size: 14px;
-  
+  color: #24146C;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   
 }
@@ -42,6 +91,9 @@
   
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   
+}
+ul,li,a{
+  color: #24146C;
 }
 
 
@@ -132,7 +184,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .dropdown-container.show {
@@ -161,7 +213,7 @@ h2{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 50px;
     font-weight: bolder;
-    color: #1D5D9B;
+    color: #24146C;
 }
 h4{
 
@@ -181,7 +233,7 @@ p{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 35px;
     font-weight: bolder;
-    color: #1D5D9B;  
+    color: #24146C;  
 }
 .sidenav{
     color: black;
@@ -233,6 +285,7 @@ button{
   }
 }
 
+
 /* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -271,7 +324,7 @@ button{
     font-size: 30px;
     font-weight: bold;
     background-color: whitesmoke;
-    color: #1D5D9B;
+    color: #24146C;
     margin: 2%;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
@@ -513,7 +566,7 @@ th, tr, td{
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
+    background-color: #24146C; 
     color: white;
     cursor: pointer;
 }
@@ -530,7 +583,7 @@ tr th, tr th{
  }
 
 .selected-row{
-  background-color: #1D5D9B !important;
+  background-color: #24146C !important;
   color: white;
 }
 #srchText{
@@ -642,7 +695,7 @@ tr th, tr th{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -657,7 +710,7 @@ tr th, tr th{
 
 }
 .container-modal{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email{
   text-align: start;

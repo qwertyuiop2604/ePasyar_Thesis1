@@ -60,7 +60,7 @@ input {
     border: 1px solid #CCC;
 }
 
-button, #btnLogin, #register-button, #logout-btn {
+button, #btnLogin,  #logout-btn {
     width: 100px;
     height: 30px;
     margin: 10px auto; 
@@ -73,6 +73,20 @@ button, #btnLogin, #register-button, #logout-btn {
     font-weight: bold;
     cursor: pointer;
     text-align: center;
+}
+#btnBack{
+    width: 35px;
+    height: 30px;
+    margin: 10px auto; 
+    padding: 5px 10px;
+    background-color: #F3F709;
+    color: #000000;
+    border: none;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: start;
 }
 
 #register {

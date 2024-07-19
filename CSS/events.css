@@ -3,18 +3,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #24146C;
+  font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .dropdown-container {
-  color: #1D5D9B;
+  color: #24146C;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .sidebar-list-item1 button {
@@ -22,7 +24,7 @@
   text-decoration: none;
   font-size: 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #1D5D9B;
+  color: #24146C;
   display: block;
   border: none;
   background: none;
@@ -131,7 +133,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .dropdown-container.show {
@@ -161,7 +163,7 @@ th, tr, td {
 .month {
   text-align: center;
   padding: 1px;  /* Adjusted padding */
-  background: #1D5D9B;
+  background: #24146C;
   color: white;
   width: 5px;
   height: 30%; /* Adjusted width */
@@ -273,6 +275,37 @@ th, tr, td{
     padding: 7px;
     text-align: left;
 }
+
+
+.sidenav h2, .sidenav a {
+  color: white;
+}
+
+.nav-pills > li > a {
+  color: #24146C;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus, 
+.nav-pills > li.active > a:hover {
+  background-color: #24146C;
+  color: white;
+}
+
+.card {
+  background-color: #f1f1f1;
+  border: 1px solid #24146C;
+}
+
+.card h4, .card p {
+  color: #24146C;
+}
+
+.well {
+  background-color: #24146C;
+  color: white;
+}
+
 .btn_useracc button{
     border: none;
     padding: 5px;
@@ -297,8 +330,8 @@ th, tr, td{
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
-    color: white;
+    background-color: wheat; 
+    color: #24146C;
     cursor: pointer;
 }
 tr th, tr th{
@@ -318,7 +351,7 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #1D5D9B !important;
+  background-color: #24146C !important;
   color: white;
 }
 #srchText{
@@ -431,7 +464,7 @@ h4{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -461,7 +494,7 @@ h4{
 }
 
 .container-modal{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email{
   text-align: start;
@@ -537,7 +570,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
