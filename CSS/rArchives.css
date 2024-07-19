@@ -1,27 +1,29 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #24146C;
+  font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .dropdown-container {
-  color: #1D5D9B;
+  color: #24146C;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .sidebar-list-item1 button {
   padding: 15px;
   text-decoration: none;
-  font-size: 14px;
-  color: #1D5D9B;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #24146C;
   display: block;
   border: none;
   background: none;
@@ -29,6 +31,72 @@
   text-align: left;
   cursor: pointer;
   outline: none;
+}
+.container-fluid{
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+}
+
+
+
+
+.dropdown-container {
+  color: #24146C;
+ 
+  display: none;
+}
+
+.dropdown-container a {
+  text-decoration: none;
+  color: #24146C;
+}
+
+.sidebar-list-item1 button {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #24146C;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+.icon-spacing {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+}
+#dash-logo {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 35px;
+  font-weight: bolder;
+  color: #24146C;}
+  
+.dropdown-btn i {
+  margin-right: 5px; /* Space between the star icon and the text */
+}
+
+.con-lic {
+  display: flex;
+  align-items: center;
+}
+
+.con-lic i {
+  margin-right: 10px; /* Space between the icons and the text */
+}
+
+.container-fluid{
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
 }
 
 .dropdown-btn:hover {
@@ -74,7 +142,7 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 5px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
@@ -83,9 +151,7 @@ th, tr, td {
   cursor: pointer;
 }
 
-.btn_useracc {
-  display: flex;
-}
+
 
 .con-lic, .con-mv {
   padding: 5px 10px;
@@ -97,36 +163,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #1D5D9B;
-}
-.icon-spacing {
-  margin-right: 10px; /* Adjust the value as needed */
-}
-
-.dropdown-btn {
-  display: flex;
-  align-items: center;
-}
-
-.dropdown-btn i {
-  margin-right: 5px; /* Space between the star icon and the text */
-}
-#dash-logo {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 35px;
-  font-weight: bolder;
-  color: #1D5D9B;}
-  
-.con-lic {
-  display: flex;
-  align-items: center;
-}
-input[type="text"], input[type="date"], textarea {
-  text-transform: uppercase;
-}
-
-.con-lic i {
-  margin-right: 10px; /* Space between the icons and the text */
+  color: #24146C;
 }
 
 .dropdown-container.show {
@@ -137,12 +174,43 @@ input[type="text"], input[type="date"], textarea {
     line-height: 1px;
   }
   
-  #dash-logo{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 35px;
-    font-weight: bolder;
-    color: #1D5D9B;  
-}
+    .text-primary {
+      color: #666666;
+    }
+    
+    .text-blue {
+      color: #032d89;
+    }
+    
+    .text-red {
+      color: #cc3c43;
+    }
+    
+    .text-green {
+      color: #367952;
+    }
+    
+    .text-orange {
+      color: #f5b74f;
+    }
+  
+  .font-weight-bold {
+    font-weight: 300;
+  }
+  
+  /*.grid-container {
+    display: grid;
+    grid-template-columns: 260px 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+      "sidebar header header header"
+      "sidebar main main main";
+    height: 100vh;
+  }
+  
+  
+  /* ---------- HEADER ---------- */
+  
   .header {
     grid-area: header;
     height: 70px;
@@ -301,31 +369,7 @@ th, tr, td{
     text-align: left;
 }
 .btn_useracc button{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 200px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(223, 217, 217);
-    cursor: pointer;
-}
-#bckbtn{
   border: none;
-  padding: 5px;
-  margin: 5px;
-  width: 100px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: rgb(223, 217, 217);
-  cursor: pointer;
-}
-#enabledTourist{
-   border: none;
   padding: 5px;
   margin: 5px;
   width: 200px;
@@ -335,6 +379,42 @@ th, tr, td{
   margin-bottom: 10px;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
+}
+#bckbtn{
+border: none;
+padding: 5px;
+margin: 5px;
+width: 50px;
+border-radius: 5px;
+text-transform: uppercase;
+margin-top: 10px;
+margin-bottom: 10px;
+background-color: rgb(223, 217, 217);
+cursor: pointer;
+}
+#permanentlyDelete{
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  width: 50px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(223, 217, 217);
+  cursor: pointer;
+  }
+#enabled{
+ border: none;
+padding: 5px;
+margin: 5px;
+width: 50px;
+border-radius: 5px;
+text-transform: uppercase;
+margin-top: 10px;
+margin-bottom: 10px;
+background-color: rgb(223, 217, 217);
+cursor: pointer;
 }
 .btn_useracc{
   display: flex;
@@ -348,7 +428,7 @@ th, tr, td{
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
+    background-color: #24146C; 
     color: white;
     cursor: pointer;
 }
@@ -361,7 +441,7 @@ tr th, tr th{
     background-color: #f2f2f23b;
 }
 .table tr:hover{
-    background: gainsboro;
+  background-color: #24146C
  }
 h4{
   align-items: end;
@@ -369,7 +449,7 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #1D5D9B !important;
+  background-color: #24146C !important;
   color: white;
 }
 #srchText{
@@ -472,7 +552,7 @@ h4{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -487,7 +567,7 @@ h4{
 
 }
 .container-modal{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email{
   text-align: start;
@@ -567,7 +647,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -582,7 +662,7 @@ label{
 
 }
 .container-modal-edit{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email1{
   text-align: start;
@@ -812,9 +892,11 @@ label{
   letter-spacing: 3px;
   text-align: center;
 }
-
-#cnl{
-  margin-left: 250px;
+#cnl2{
+  margin-left: 300px;
+}
+.cnl{
+  margin-left: 300px;
 }
 
 .btn button{

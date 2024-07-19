@@ -1,20 +1,21 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #24146C;
+  font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .dropdown-container {
-  color: #1D5D9B;
+  color: #24146C;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .sidebar-list-item1 button {
@@ -22,7 +23,41 @@
   text-decoration: none;
   font-size: 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #1D5D9B;
+  color: #24146C;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+.container-fluid{
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+}
+
+
+
+
+.dropdown-container {
+  color: #24146C;
+ 
+  display: none;
+}
+
+.dropdown-container a {
+  text-decoration: none;
+  color: #24146C;
+}
+
+.sidebar-list-item1 button {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #24146C;
   display: block;
   border: none;
   background: none;
@@ -43,7 +78,7 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 35px;
   font-weight: bolder;
-  color: #1D5D9B;}
+  color: #24146C;}
   
 .dropdown-btn i {
   margin-right: 5px; /* Space between the star icon and the text */
@@ -107,7 +142,7 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 5px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
@@ -116,9 +151,7 @@ th, tr, td {
   cursor: pointer;
 }
 
-.btn_useracc {
-  display: flex;
-}
+
 
 .con-lic, .con-mv {
   padding: 5px 10px;
@@ -130,7 +163,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .dropdown-container.show {
@@ -351,7 +384,7 @@ th, tr, td{
 border: none;
 padding: 5px;
 margin: 5px;
-width: 100px;
+width: 50px;
 border-radius: 5px;
 text-transform: uppercase;
 margin-top: 10px;
@@ -359,11 +392,23 @@ margin-bottom: 10px;
 background-color: rgb(223, 217, 217);
 cursor: pointer;
 }
+#permanentlyDelete{
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  width: 50px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(223, 217, 217);
+  cursor: pointer;
+  }
 #enabledTourist{
  border: none;
 padding: 5px;
 margin: 5px;
-width: 200px;
+width: 50px;
 border-radius: 5px;
 text-transform: uppercase;
 margin-top: 10px;
@@ -383,7 +428,7 @@ cursor: pointer;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
+    background-color: #24146C; 
     color: white;
     cursor: pointer;
 }
@@ -396,7 +441,7 @@ tr th, tr th{
     background-color: #f2f2f23b;
 }
 .table tr:hover{
-  background-color: #1D5D9B
+  background-color: #24146C
  }
 h4{
   align-items: end;
@@ -404,7 +449,7 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #1D5D9B !important;
+  background-color: #24146C !important;
   color: white;
 }
 #srchText{
@@ -507,7 +552,7 @@ h4{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -522,7 +567,7 @@ h4{
 
 }
 .container-modal{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email{
   text-align: start;
@@ -602,7 +647,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -617,7 +662,7 @@ label{
 
 }
 .container-modal-edit{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email1{
   text-align: start;

@@ -3,35 +3,59 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #24146C;
+  font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .dropdown-container {
-  color: #1D5D9B;
+  color: #24146C;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #1D5D9B;
+  color: #24146C;
 }
-.icon-spacing {
-  margin-right: 10px; /* Adjust the value as needed */
-}
-#dash-logo {
+
+.sidebar-list-item1 button {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 35px;
-  font-weight: bolder;
-  color: #1D5D9B;}
+  color: #24146C;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+.container-fluid{
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   
+}
+
+
+
 .dropdown-btn {
+
+  background: none;
+  border: none;
+  font-size: 14px; /* Adjust font size as needed */
+  cursor: pointer;
+}
+
+.dropdown-btn span {
   display: flex;
   align-items: center;
 }
 
 .dropdown-btn i {
-  margin-right: 5px; /* Space between the star icon and the text */
+  margin-right: 5px; /* Space between the text and the dropdown icon */
 }
 
 .con-lic {
@@ -41,20 +65,6 @@
 
 .con-lic i {
   margin-right: 10px; /* Space between the icons and the text */
-}
-
-.sidebar-list-item1 button {
-  padding: 15px;
-  text-decoration: none;
-  font-size: 14px;
-  color: #1D5D9B;
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
 }
 
 .dropdown-btn:hover {
@@ -67,7 +77,7 @@
 
 .main {
   margin-left: 200px;
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .dropdown-container {
@@ -100,7 +110,7 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 9px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
@@ -123,7 +133,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #1D5D9B;
+  color: #24146C;
 }
 
 .dropdown-container.show {
@@ -153,11 +163,15 @@ th, tr, td {
 .month {
   text-align: center;
   padding: 1px;  /* Adjusted padding */
-  background: #1D5D9B;
+  background: #24146C;
   color: white;
-  width: 500px;
+  width: 5px;
   height: 30%; /* Adjusted width */
   font-size: 10px; /* Adjusted font size */
+}
+#date{
+  width: 9px;
+
 }
 .month ul {
   margin: 0;
@@ -177,7 +191,7 @@ th, tr, td {
   margin: 0;
   padding: 0;  /* Adjusted padding */
   background-color: #ddd;
-  width: 500px;  /* Adjusted width */
+  width: 50px;  /* Adjusted width */
   font-size: 10px;  /* Adjusted font size */
 }
 .weekdays li {
@@ -231,7 +245,7 @@ th, tr, td {
 /* Main content */
 .main {
 margin-left: 200px; /* Same as the width of the sidenav */
-font-size: 20px; /* Increased text to enable scrolling */
+font-size: 12px; /* Increased text to enable scrolling */
 /* padding: 0px 10px; */
 }
 
@@ -261,6 +275,37 @@ th, tr, td{
     padding: 7px;
     text-align: left;
 }
+
+
+.sidenav h2, .sidenav a {
+  color: white;
+}
+
+.nav-pills > li > a {
+  color: #24146C;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus, 
+.nav-pills > li.active > a:hover {
+  background-color: #24146C;
+  color: white;
+}
+
+.card {
+  background-color: #f1f1f1;
+  border: 1px solid #24146C;
+}
+
+.card h4, .card p {
+  color: #24146C;
+}
+
+.well {
+  background-color: #24146C;
+  color: white;
+}
+
 .btn_useracc button{
     border: none;
     padding: 5px;
@@ -285,8 +330,8 @@ th, tr, td{
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
-    color: white;
+    background-color: wheat; 
+    color: #24146C;
     cursor: pointer;
 }
 tr th, tr th{
@@ -306,7 +351,7 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #1D5D9B !important;
+  background-color: #24146C !important;
   color: white;
 }
 #srchText{
@@ -419,7 +464,7 @@ h4{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -438,16 +483,18 @@ h4{
   border: none;
     padding: 5px;
     margin: 5px;
-    width: 130px;
+    width: 30px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: rgb(223, 217, 217);
+    font-weight: bold;
     cursor: pointer;
 }
+
 .container-modal{
-  background-color: #1D5D9B;
+  background-color: #24146C;
 }
 #email{
   text-align: start;
@@ -484,7 +531,7 @@ input {
  
 }
 #btnRegister{
-  width: 150px;
+  width: 100px;
   height: 30px;
   display: block;
   margin: 10px auto; 
@@ -523,7 +570,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #1D5D9B;
+  background-color: #24146C;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -821,3 +868,12 @@ label{
 .btn{
     display: flex;
 }
+input[type="text"], input[type="date"], textarea {
+  text-transform: uppercase;
+}
+#dash-logo {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 35px;
+  font-weight: bolder;
+  color: #1D5D9B;}
+  
