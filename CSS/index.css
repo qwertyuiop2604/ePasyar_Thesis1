@@ -15,11 +15,16 @@ body {
     border-radius: 10px;
     padding: 15px;
     margin: 15px;
+    margin-top: 115px;
     height: 500px;
     background-color: #24146C; 
     text-align: center;
 }
-
+.column{
+    float: left;
+    width: 23%;
+    padding: 0;
+}
 .login-container form {
     padding: 0 35px;
 }
@@ -37,7 +42,7 @@ img.center-image {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #FBEEAC;
+    background-color: white;
     box-sizing: border-box;
     border-radius: 10px;
     font-size: 14px;
@@ -66,13 +71,13 @@ p{
     color: white;
 }
 a{
-    color: yellow;
+    color: white;
 }
 
 button, #btnLogin, #logout-btn {
     width: 100px;
     height: 30px;
-    background-color: #F3F709;
+    background-color: white;
    
     color: #000000;
     border: none;
@@ -110,7 +115,7 @@ label {
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #F3F709;
+    color: white;
     font-size: 30px;
 }
 #vigan{

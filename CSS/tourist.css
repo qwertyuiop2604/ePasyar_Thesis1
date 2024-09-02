@@ -1,11 +1,27 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #24146C;
+  color: black;
   font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.sidenav h2, .sidenav a {
+  color: white;
+}
+.nav-pills > li > a {
+  color: black;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus 
+{
+  background-color: #24146C;
+  color: white;
+}
+.nav-pills > li.active > a:hover {
+  background-color: #24146C;
+  color: white;
 }
 
 .dropdown-container {
@@ -110,11 +126,12 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 9px;
+  width: 100px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 13px;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
 }
@@ -277,20 +294,6 @@ th, tr, td{
 }
 
 
-.sidenav h2, .sidenav a {
-  color: white;
-}
-
-.nav-pills > li > a {
-  color: #24146C;
-}
-
-.nav-pills > li.active > a, 
-.nav-pills > li.active > a:focus, 
-.nav-pills > li.active > a:hover {
-  background-color: #24146C;
-  color: white;
-}
 
 .card {
   background-color: #f1f1f1;
@@ -306,32 +309,19 @@ th, tr, td{
   color: white;
 }
 
-.btn_useracc button{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 70px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(223, 217, 217);
-    cursor: pointer;
-}
-.btn_useracc{
-  display: flex;
-}
+
+
 #archived_acc{
     border: none;
-    padding: 5px;
+    padding: 8px;
     margin: 5px;
     width: 120px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: wheat; 
-    color: #24146C;
+  
+    color: black;
     cursor: pointer;
 }
 tr th, tr th{

@@ -72,20 +72,18 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   // FOR REGISTER FORM - ADD TO FIREBASE
   const formCreate = document.getElementById('create-form');
   const Name = document.getElementById('name');
-  const Owner = document.getElementById('owner');
+
   const Number = document.getElementById('number');
   const Email = document.getElementById('email');
   const Type = document.getElementById('type');
   const Address = document.getElementById('address');
-  const Rooms = document.getElementById('rooms');
-  const Capacity = document.getElementById('room1');
-  const Rates = document.getElementById('room2');
+
   const photos = document.getElementById('photos');
 
   if (formCreate) {
     formCreate.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([ Name, Owner, Number, Email, Type, Address, Rooms, Capacity, Rates, photos])) {
+      if (validateInputs([ Name, Number, Email, Type, Address,  photos])) {
         try {
           const photoFile = photos.files[0];
           const photoRef = ref(storage, `hotels/${photoFile.name}`);
@@ -95,14 +93,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           await addDoc(collection(db, "vigan_establishments"), {
             Category: "Hotel",
             Name: Name.value,
-            Owner: Owner.value,
+           
             Number: Number.value,
             Email: Email.value,
             Type: Type.value,
             Address: Address.value,
-            Rooms: Rooms.value,
-            Capacity: Capacity.value,
-            Rates: Rates.value,
+           
             PhotoURL: photoURL,
             Status: "H Shop Open"
           });
@@ -159,20 +155,18 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   // FOR EDIT FORM - UPDATE TO FIREBASE
   const formEdit = document.getElementById('edit-form');
   const Name1 = document.getElementById('name1');
-  const Owner1 = document.getElementById('owner1');
+
   const Number1 = document.getElementById('number1');
   const Email1 = document.getElementById('email1');
   const Type1 = document.getElementById('type1');
   const Address1 = document.getElementById('address1');
-  const Rooms1 = document.getElementById('rooms1');
-  const Capacity1 = document.getElementById('room11');
-  const Rates1 = document.getElementById('room21');
+
   const photos1 = document.getElementById('photos1');
 
   if (formEdit) {
     formEdit.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([ Name1, Owner1, Number1, Email1, Type1, Address1, Rooms1, Capacity1, Rates1, photos1])) {
+      if (validateInputs([ Name1, , Number1, Email1, Type1, Address1, photos1])) {
         try {
           const userID = localStorage.getItem("ID");
           const photoFile = photos1.files[0];
@@ -186,14 +180,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           const updateData = {
             Category: "Hotel",
             Name: Name1.value,
-            Owner: Owner1.value,
+           
             Number: Number1.value,
             Email: Email1.value,
             Type: Type1.value,
             Address: Address1.value,
-            Rooms: Rooms1.value,
-            Capacity: Capacity1.value,
-            Rates: Rates1.value,
+        
           };
 
           if (photoFile) {
@@ -220,14 +212,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           const trow = document.createElement('tr');
           trow.innerHTML = `
             <td>${doc.data().Name}</td>
-            <td>${doc.data().Owner}</td>
+           
             <td>${doc.data().Number}</td>
             <td>${doc.data().Email}</td>
             <td>${doc.data().Type}</td>
             <td>${doc.data().Address}</td>
-            <td>${doc.data().Rooms}</td>
-            <td>${doc.data().Capacity}</td>
-            <td>${doc.data().Rates}</td>
+           
             <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
              <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
           `;
@@ -236,14 +226,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           trow.addEventListener('click', (e) => {
             localStorage.setItem('ID', doc.id);
             Name1.value = doc.data().Name;
-            Owner1.value = doc.data().Owner;
+          
             Number1.value = doc.data().Number;
             Email1.value = doc.data().Email;
             Type1.value = doc.data().Type;
-            Address1.value = doc.data().Address;
-            Rooms1.value = doc.data().Rooms;
-            Capacity1.value = doc.data().Capacity;
-            Rates1.value = doc.data().Rates;
+           
+   
             
             highlightRow(trow);
           });  

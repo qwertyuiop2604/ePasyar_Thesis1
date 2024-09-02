@@ -26,10 +26,7 @@ let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
   window.location = "profile.html";
 });
-let users = document.getElementById("users");
-users.addEventListener("click", () => {
-  window.location = "profile.html";
-});
+
 let hotels = document.getElementById("hOtels");
 hotels.addEventListener("click", () => {
   window.location = "promotion.html";
@@ -72,10 +69,7 @@ let souvenirs = document.getElementById("souvenirs");
 souvenirs.addEventListener("click", () => {
   window.location = "souvenir.html";
 });
-let admin = document.getElementById("admin");
-admin.addEventListener("click", () => {
-  window.location = "profile.html";
-});
+
 
 let event = document.getElementById("eventS");
 event.addEventListener("click", () => {
@@ -143,32 +137,118 @@ const mostVisitedChart = new Chart(ctx, {
   },
 });
 
-async function updateChartData() {
+async function updateChartData(type) {
   try {
-    // Fetch data from the subcollection 'monthly_reports' in the document 'monthly'
-    const monthlyReportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
-    const querySnapshot = await getDocs(monthlyReportsRef);
+    let reportsRef;
+    let dataKey;
+    let label;
+    let xLabels = [];
 
-    // Process the data to match the chart's format
-    const visitorData = new Array(12).fill(0); // Array to hold monthly visitor counts
+    if (type === "Daily") {
+      reportsRef = collection(db, "tourist_arrival_reports", "daily", "daily_reports");
+      dataKey = "total_tourist_per_daily";
+      label = "Number of Visitors (Daily)";
+      for (let i = 1; i <= 31; i++) xLabels.push(i); // Days of the month
+    } else if (type === "Weekly") {
+      reportsRef = collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
+      dataKey = "total_tourist_per_weekly";
+      label = "Number of Visitors (Weekly)";
+    } else if (type === "Monthly") {
+      reportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
+      dataKey = "total_tourist_per_monthly";
+      label = "Number of Visitors (Monthly)";
+      xLabels = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+    } else if (type === "Yearly") {
+      reportsRef = collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
+      dataKey = "total_tourist_per_yearly";
+      label = "Number of Visitors (Yearly)";
+      for (let i = new Date().getFullYear() - 10; i <= new Date().getFullYear(); i++) xLabels.push(i); // Last 10 years
+    } else {
+      console.error("Invalid report type");
+      return;
+    }
+
+    const querySnapshot = await getDocs(reportsRef);
+    const visitorData = [];
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const month = parseInt(doc.id.split('-')[1], 10) - 1; // Extract the month from the document ID (YYYY-MM) and adjust to zero-based index
-      const visitors = data.total_tourist_per_monthly || 0; // Ensure 'total_tourist_per_monthly' is a valid number
-      visitorData[month] += visitors;
+      const value = data[dataKey] || 0;
+      visitorData.push(value);
+
+      if (type === "Weekly") {
+        xLabels.push(doc.id); // Use document IDs as labels for weekly reports
+      }
     });
 
     // Update chart data
+    mostVisitedChart.data.labels = xLabels;
     mostVisitedChart.data.datasets[0].data = visitorData;
+    mostVisitedChart.data.datasets[0].label = label;
     mostVisitedChart.update();
   } catch (error) {
     console.error("Error fetching visitor data:", error);
   }
 }
 
-// Fetch and update the chart data
-updateChartData();
+// Toggle hamburger menu
+function toggleMenu() {
+  var menuContent = document.getElementById("menuContent");
+  if (menuContent.style.display === "block") {
+    menuContent.style.display = "none";
+  } else {
+    menuContent.style.display = "block";
+  }
+}
+
+// Event listeners for menu options
+document.getElementById('menuContent').addEventListener('click', function(event) {
+  if (event.target.tagName === 'A') {
+    const type = event.target.textContent.trim();
+    updateChartData(type);
+  }
+});
+
+// Sample HTML for menu
+/*
+<div class="menu-content" id="menuContent">
+  <a href="#section1">Daily</a>
+  <a href="#section2">Weekly</a>
+  <a href="#section3">Monthly</a>
+  <a href="#section4">Yearly</a>
+</div>
+*/
+
+// Fetch initial chart data for monthly reports by default
+updateChartData("Monthly");
+
+
+
+
+// Event listeners for menu options
+document.getElementById('menuContent').addEventListener('click', function(event) {
+  if (event.target.tagName === 'A') {
+    const type = event.target.textContent.trim();
+    updateChartData(type);
+  }
+});
+
+// Sample HTML for menu
+/*
+<div class="menu-content" id="menuContent">
+  <a href="#section1">Daily</a>
+  <a href="#section2">Weekly</a>
+  <a href="#section3">Monthly</a>
+  <a href="#section4">Yearly</a>
+</div>
+*/
+
+// Fetch initial chart data for monthly reports by default
+updateChartData("Monthly");
+
 
 async function fetchTourists() {
   const touristsTable = document.getElementById("touristsTableBody");
@@ -202,36 +282,23 @@ async function fetchTourists() {
 fetchTourists();
 
 // Firestore references
-const usersRef = collection(db, "users");
-const adminsRef = collection(db, "users/admin/admin_account");
+
 const eventsRef = collection(db, "festivals");
 const establishmentsRef = collection(db, "vigan_establishments");
-const totalRef = collection(db, "total_scans");
+
 
 // Counters
-let userCount = 0;
-let adminCount = 0;
+
+
 let eventsCount = 0;
 let hotelCount = 0;
 let touristCount = 0;
 let restoCount = 0;
 let souvenirCount = 0;
-let totalCount = 0;
+
 
 // Update functions
-const updateUserCountElement = (count) => {
-  const userCountElement = document.getElementById("userCount");
-  if (userCountElement) {
-    userCountElement.textContent = `${count}`;
-  }
-};
 
-const updateAdminCountElement = (count) => {
-  const adminCountElement = document.getElementById("adminCount");
-  if (adminCountElement) {
-    adminCountElement.textContent = `${count}`;
-  }
-};
 
 const updateEventsCountElement = (count) => {
   const eventsCountElement = document.getElementById("eventsCount");
@@ -268,12 +335,7 @@ const updateSouvenirCountElement = (count) => {
   }
 };
 
-const updateTotalCountElement = (count) => {
-  const totalCountElement = document.getElementById("totalCount");
-  if (totalCountElement) {
-    totalCountElement.textContent = `${count}`;
-  }
-};
+
 
 // Snapshot handlers
 const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
@@ -299,34 +361,18 @@ const handleSouvenirSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
 };
 
-const handleUsersSnapshot = (snapshot) => {
-  userCount = snapshot.docs.length;
-  updateUserCountElement(userCount);
-};
 
-const handleAdminsSnapshot = (snapshot) => {
-  adminCount = snapshot.docs.length;
-  updateAdminCountElement(adminCount);
-};
+
+
 
 const handleEventsSnapshot = (snapshot) => {
   eventsCount = snapshot.docs.length;
   updateEventsCountElement(eventsCount);
 };
 
-const handleTotalSnapshot = (snapshot) => {
-  totalCount = snapshot.docs.length;
-  updateTotalCountElement(totalCount);
-};
 
-// Setup Firestore listeners
-onSnapshot(usersRef, handleUsersSnapshot, (error) => {
-  console.error("Error fetching users:", error);
-});
 
-onSnapshot(adminsRef, handleAdminsSnapshot, (error) => {
-  console.error("Error fetching admins:", error);
-});
+
 
 onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
   console.error("Error fetching events:", error);
@@ -341,6 +387,3 @@ onSnapshot(establishmentsRef, (snapshot) => {
   console.error("Error fetching establishments:", error);
 });
 
-onSnapshot(totalRef, handleTotalSnapshot, (error) => {
-  console.error("Error fetching total scans:", error);
-});
