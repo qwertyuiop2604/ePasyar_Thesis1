@@ -146,7 +146,7 @@ document.getElementById('cnfrm_delete').addEventListener('click', async () => {
   try {
     const docRef = doc(db, "vigan_establishments", localStorage.getItem("ID"));
     await deleteDoc(docRef);
-    window.location = "tArchives.html";
+    window.location = "pArchives.html";
     window.location.reload();
   } catch (error) {
     console.error("Error deleting document: ", error);

@@ -60,11 +60,55 @@
   font-weight: bolder;
   font-size: 40px;
   padding: 5px;
-  background-color: whitesmoke;
+  background-color: #C8A1E0;
 
   margin: 20px 0;
 }
 
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px; /* Adjust as needed */
+  margin-top: 20px; /* Space above the chart */
+}
+
+.dropdown-container {
+  position: absolute;
+  top: -60px; /* Adjust to position the dropdown and button above the chart */
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+#dropdownMenu {
+  margin-right: 65px;
+ 
+}
+
+#generateReport {
+  margin-left: 280px; /* Space between the button and the chart */
+}
+
+#mostVisitedChart {
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+  background-color: #f9f9f9; /* Light background for better chart visibility */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Attractive blue color */
+  border-color: #007bff; /* Match button border with color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  border-color: #004085; /* Darker border on hover */
+}
+
+.btn-primary:focus, .btn-primary:active {
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); /* Focus shadow */
+}
 
 .dropdown-container {
   color: #24146C;

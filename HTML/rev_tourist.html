@@ -11,25 +11,27 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js"></script>
+  <style>
+    .row.content {
+      height: 400px
+    }
 
+    .sidenav {
+      background-color: #C8A1E0;
+      border-color: #C8A1E0;
+      border-radius: 3px;
+      height: 160%;
+    }
+
+    @media screen and (max-width: 100px) {
+      .row.content {
+        height: auto;
+      }
+    }
+    </style>
 
 </head>
-<style>
-  .row.content {
-    height: 400px
-  }
 
-  .sidenav {
-    background-color: white;
-    height: 100%;
-  }
-
-  @media screen and (max-width: 100px) {
-    .row.content {
-      height: auto;
-    }
-  }
-</style>
 <body>
 
     <div class="container-fluid">

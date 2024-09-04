@@ -88,7 +88,6 @@ closePop.addEventListener("click", () => {
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById("create-form");
 const name = document.getElementById("name");
-const owner = document.getElementById("owner");
 const type = document.getElementById('type');
 const number = document.getElementById("number");
 const location = document.getElementById("location");
@@ -96,7 +95,7 @@ const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([ name, owner,type,number,location, photos])) {
+  if (validateInputs([ name,type,number,location, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `restaurant/${photoFile.name}`);
@@ -106,7 +105,6 @@ formCreate.addEventListener('submit', async (e) => {
       await addDoc(collection(db, "vigan_establishments"), {
         Category: "Restaurant",
         Name: name.value,
-        Owner: owner.value,
         Type: type.value,
         Number: number.value,
         Location: location.value,
@@ -159,7 +157,6 @@ cPop.addEventListener("click", () => {
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById("edit-form");
 const name1 = document.getElementById("name1");
-const owner1 = document.getElementById("owner1");
 const type1 = document.getElementById("type1");
 const number1 = document.getElementById("number1");
 const location1 = document.getElementById("location1");
@@ -167,7 +164,7 @@ const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1,owner1,type1, number1,location1, photos1])) {
+  if (validateInputs([name1,type1, number1,location1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -181,7 +178,7 @@ formEdit.addEventListener('submit', async (e) => {
       const updateData = {
         Category: "Restaurant",
         Name: name1.value,
-        Owner: owner1.value,
+
         Type: type1.value,
         Number: number1.value,
         Location: location1.value,
@@ -200,62 +197,152 @@ formEdit.addEventListener('submit', async (e) => {
     }
   }
 });
+// Fetch documents from Firestore and assign to querySnapshot
+async function fetchEstablishments() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+    const tbody = document.getElementById('tbody1'); // Make sure tbody is defined
 
- // Populate table with data
- const tbody = document.getElementById('tbody1');
- const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
- querySnapshot.forEach(doc => {
-   if (doc.data().Status === "R Shop Open") {
-     const trow = document.createElement('tr');
-     trow.innerHTML = `
-       <td>${doc.data().Name}</td>
-       <td>${doc.data().Owner}</td>
-       <td>${doc.data().Type}</td>
-       <td>${doc.data().Number}</td>
-       <td>${doc.data().Location}</td>
-       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
-        <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
-     `;
-     tbody.appendChild(trow);
+    querySnapshot.forEach(doc => {
+      if (doc.data().Status === "R Shop Open") {
+        const trow = document.createElement('tr');
+        trow.innerHTML = `
+          <td>${doc.data().Name}</td>
+          <td>${doc.data().Type}</td>
+          <td>${doc.data().Number}</td>
+          <td>${doc.data().Location}</td>
+          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+          <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
+        `;
+        tbody.appendChild(trow);
 
-     trow.addEventListener('click', (e) => {
-       localStorage.setItem('ID', doc.id);
-       document.getElementById('name1').value = doc.data().Name;
-       document.getElementById("owner1").value = doc.data().Owner;
-       document.getElementById("type1").value = doc.data().Type;
-       document.getElementById("number1").value = doc.data().Number;
-       document.getElementById("location1").value = doc.data().Location;
-       highlightRow(trow);
-     });
-      // Generate and download QR code when clicking on Generate QR button
-      document.getElementById(`gen_qr_${doc.id}`).addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent click from propagating to row click event
-        generateAndDownloadQRCode(doc.data().Name, doc.id);
-      });
-   }
- });
- function generateAndDownloadQRCode(establishmentName, documentId) {
-  // Create a new QRCode instance
+        trow.addEventListener('click', (e) => {
+          localStorage.setItem('ID', doc.id);
+          document.getElementById('name1').value = doc.data().Name;
+          document.getElementById("type1").value = doc.data().Type;
+          document.getElementById("number1").value = doc.data().Number;
+          document.getElementById("location1").value = doc.data().Location;
+          highlightRow(trow);
+        });
+
+        // QR Code generation and display
+        const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
+        let qrCodeData; // Variable to store QR code data URL
+
+        qrBtn.addEventListener("click", async (e) => {
+          e.stopPropagation(); // Prevent click from propagating to row click event
+
+          if (!qrCodeData) {
+            // Generate the QR code if it hasn't been generated yet
+            qrBtn.textContent = "Generating QR...";
+            qrBtn.disabled = true;
+
+            qrCodeData = await generateQRCode(doc.data().Name, doc.id);
+            qrBtn.textContent = "View My QR Code";
+            qrBtn.disabled = false;
+          } else {
+            // Show the QR code in a modal within the table
+            showQRCodeModal(qrCodeData, doc.data().Name);
+          }
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching documents: ", error);
+  }
+}
+
+// Function to generate QR code and return its data URL
+async function generateQRCode(establishmentName, documentId) {
   const qrCodeContainer = document.createElement('div');
   const qrCode = new QRCode(qrCodeContainer, {
-    text: documentId, // Pass the document ID directly
+    text: documentId, // Use the document ID as the QR code content
     width: 700,
     height: 700,
     colorDark: "#000000", // Dark color
     colorLight: "#ffffff", // Light color
   });
 
-  // Get the QR code data URL after it's been generated
-  setTimeout(() => {
-    const qrImageData = qrCodeContainer.querySelector('img').src;
-
-    // Create a temporary link element to download the QR code
-    const downloadLink = document.createElement('a');
-    downloadLink.href = qrImageData;
-    downloadLink.download = `qr_${establishmentName}.png`;
-    downloadLink.click();
-  }, 1000); // Wait for QR code to be generated
+  // Return the QR code data URL after it's been generated
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const qrImageData = qrCodeContainer.querySelector('img').src;
+      resolve(qrImageData);
+    }, 1000); // Wait for QR code to be generated
+  });
 }
+
+// Function to display QR code in a modal
+function showQRCodeModal(qrCodeData, establishmentName) {
+  // Create the modal container
+  const modal = document.createElement('div');
+  modal.classList.add('qr-modal');
+
+  // Set up modal content
+  modal.innerHTML = `
+    <div class="qr-modal-content">
+      <span class="qr-close">&times;</span>
+      <h3>QR Code for ${establishmentName}</h3>
+      <img src="${qrCodeData}" alt="QR Code for ${establishmentName}">
+    </div>
+  `;
+
+  // Append modal to the document body
+  document.body.appendChild(modal);
+
+  // Show the modal
+  modal.style.display = 'block';
+
+  // Add event listener to close the modal
+  modal.querySelector('.qr-close').addEventListener('click', () => {
+    modal.style.display = 'none';
+    modal.remove();
+  });
+}
+
+fetchEstablishments();
+
+// Add some CSS for the modal (you can adjust as needed)
+const style = document.createElement('style');
+style.innerHTML = `
+  .qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .qr-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+  }
+  .qr-modal-content img {
+    width: 200px;
+    height: 200px;
+  }
+  .qr-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .qr-close:hover,
+  .qr-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+`;
+document.head.appendChild(style);
+
 
  function highlightRow(row) {
    const rows = document.querySelectorAll('#tbody1 tr');

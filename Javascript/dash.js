@@ -7,6 +7,7 @@ import {
   where,
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+// import { jsPDF } from "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -277,6 +278,75 @@ async function fetchTourists() {
     console.error("Error fetching tourists:", error);
   }
 }
+async function generateReport() {
+  const { jsPDF } = window.jspdf;
+
+  try {
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+
+    // Fetch data for reports
+    const dailyData = await getData("Daily");
+    const weeklyData = await getData("Weekly");
+    const monthlyData = await getData("Monthly");
+    const yearlyData = await getData("Yearly");
+
+    // Add content to the PDF
+    doc.text("Tourist Report", 20, 10);
+    doc.text("Daily Report:", 20, 20);
+    doc.text(dailyData, 20, 30);
+
+    doc.text("Weekly Report:", 20, 50);
+    doc.text(weeklyData, 20, 60);
+
+    doc.text("Monthly Report:", 20, 80);
+    doc.text(monthlyData, 20, 90);
+
+    doc.text("Yearly Report:", 20, 110);
+    doc.text(yearlyData, 20, 120);
+
+    // Save the PDF
+    doc.save("TouristReport.pdf");
+  } catch (error) {
+    console.error("Error generating report:", error);
+  }
+}
+
+async function getData(type) {
+  let reportsRef;
+  let dataKey;
+
+  if (type === "Daily") {
+    reportsRef = collection(db, "tourist_arrival_reports", "daily", "daily_reports");
+    dataKey = "total_tourist_per_daily";
+  } else if (type === "Weekly") {
+    reportsRef = collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
+    dataKey = "total_tourist_per_weekly";
+  } else if (type === "Monthly") {
+    reportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
+    dataKey = "total_tourist_per_monthly";
+  } else if (type === "Yearly") {
+    reportsRef = collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
+    dataKey = "total_tourist_per_yearly";
+  } else {
+    console.error("Invalid report type");
+    return "";
+  }
+
+  const querySnapshot = await getDocs(reportsRef);
+  let reportData = "";
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const value = data[dataKey] || 0;
+    reportData += `Date/Period: ${doc.id}, Count: ${value}\n`;
+  });
+
+  return reportData;
+}
+
+// Event listener for "Generate Report" button
+document.getElementById("generateReport").addEventListener("click", generateReport);
 
 // Call the function to fetch and populate the table
 fetchTourists();

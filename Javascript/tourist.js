@@ -1,18 +1,22 @@
+import { 
+  initializeApp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import {
-  getFirestore,
-  addDoc,
-  doc,
-  collection,
-  getDocs,
-  updateDoc,
+import { 
+  getFirestore, 
+  addDoc, 
+  doc, 
+  collection, 
+  getDocs, 
+  updateDoc, 
+  getDoc  // Include getDoc here
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
+
+import { 
+  getStorage, 
+  ref, 
+  uploadBytes, 
+  getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
 // Ensure you include the QRCode library in your HTML file
@@ -197,90 +201,239 @@ document.addEventListener("DOMContentLoaded", async function () {
           console.error("Error updating document: ", error);
         }
       }
+      
     });
+    
   
-    // Populate table with data
-    const tbody = document.getElementById("tbody1");
-    const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-    querySnapshot.forEach((doc) => {
-      if (doc.data().Status === "TS Shop Open") {
-        const trow = document.createElement("tr");
-        trow.innerHTML = `
-          <td>${doc.data().Name}</td>
-          <td>${doc.data().Description}</td>
-          <td>${doc.data().Location}</td>
-          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
-          <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
-        `;
-        tbody.appendChild(trow);
+// Additional event listeners and modal setups
+  // Make sure these are correctly added and closed.
+  
+  // Fetch documents from Firestore and assign to querySnapshot
+  async function fetchEstablishments() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+      const tbody = document.getElementById('tbody1');
+  
+      querySnapshot.forEach(doc => {
+        if (doc.data().Status === "TS Shop Open") {
+          const trow = document.createElement('tr');
+          trow.innerHTML = `
+            <td>${doc.data().Name}</td>
+         
+             <td>${doc.data().Description}</td>
+              <td>${doc.data().Location}</td>
+       
+            <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+            <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
+            <button id="rate_${doc.id}" class="rate-btn">Reviews</button> <!-- Rating button -->
+          </td>
+          `;
+          tbody.appendChild(trow);
+
+          trow.addEventListener('click', (e) => {
+            localStorage.setItem('ID', doc.id);
+            document.getElementById('name1').value = doc.data().Name;
+            document.getElementById("description1").value = doc.data().Description;
+            document.getElementById("location1").value = doc.data().Location;
         
-  
-        trow.addEventListener("click", (e) => {
-          localStorage.setItem("ID", doc.id);
-          document.getElementById("name1").value = doc.data().Name;
-          document.getElementById("description1").value = doc.data().Description;
-          document.getElementById("location1").value = doc.data().Location;
-          highlightRow(trow);
-        });
-  
-        // Generate and download QR code when clicking on Generate QR button
-        document.getElementById(`gen_qr_${doc.id}`).addEventListener("click", (e) => {
-          e.stopPropagation(); // Prevent click from propagating to row click event
-          generateAndDownloadQRCode(doc.data().Name, doc.id);
-        });
-      }
-    });
-  });
-  
-  function generateAndDownloadQRCode(establishmentName, documentId) {
-    // Create a new QRCode instance
+            highlightRow(trow);
+          });
+
+          // QR Code generation and display
+          const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
+          let qrCodeData;
+
+          qrBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+
+            if (!qrCodeData) {
+              qrBtn.textContent = "Generating QR...";
+              qrBtn.disabled = true;
+
+              qrCodeData = await generateQRCode(doc.data().Name, doc.id);
+              qrBtn.textContent = "View My QR Code";
+              qrBtn.disabled = false;
+            } else {
+              showQRCodeModal(qrCodeData, doc.data().Name);
+            }
+          });
+
+          // Review Button Event Listener
+          const reviewBtn = document.getElementById(`rate_${doc.id}`);
+          reviewBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const establishmentID = doc.id;
+            window.location.href = `review_page.html?id=${establishmentID}`; // Redirect to review page with establishment ID
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching documents: ", error);
+    }
+  }
+
+  fetchEstablishments();
+
+  // Other event listeners and functions...
+});
+
+  // Add QR code functions and event handlers properly
+  async function generateQRCode(establishmentName, documentId) {
     const qrCodeContainer = document.createElement('div');
     const qrCode = new QRCode(qrCodeContainer, {
-      text: documentId, // Pass the document ID directly
-      width: 700,
-      height: 700,
-      colorDark: "#000000", // Dark color
-      colorLight: "#ffffff", // Light color
+      text: documentId,
+      width: 500,
+      height: 500,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
     });
-  
-    // Get the QR code data URL after it's been generated
-    setTimeout(() => {
-      const qrImageData = qrCodeContainer.querySelector('img').src;
-  
-      // Create a temporary link element to download the QR code
-      const downloadLink = document.createElement('a');
-      downloadLink.href = qrImageData;
-      downloadLink.download = `qr_${establishmentName}.png`;
-      downloadLink.click();
-    }, 1000); // Wait for QR code to be generated
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const qrImageData = qrCodeContainer.querySelector('img').src;
+        resolve(qrImageData);
+      }, 1000);
+    });
   }
-  
-  
-  function highlightRow(row) {
-    const rows = document.querySelectorAll("#tbody1 tr");
-    rows.forEach((r) => r.classList.remove("selected-row"));
-    row.classList.add("selected-row");
-    document.getElementById("edit_acc").disabled = false;
-    document.getElementById("delete_acc").disabled = false;
+
+  function showQRCodeModal(qrCodeData, establishmentName) {
+    const modal = document.createElement('div');
+    modal.classList.add('qr-modal');
+    modal.innerHTML = `
+      <div class="qr-modal-content">
+        <span class="qr-close">&times;</span>
+        <h3>QR Code for ${establishmentName}</h3>
+        <img src="${qrCodeData}" alt="QR Code for ${establishmentName}">
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.style.display = 'block';
+    modal.querySelector('.qr-close').addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.remove();
+    });
   }
-  
-  // Archive event instead of deleting
-  const currentDateTime = new Date().toLocaleString();
-  document.getElementById("delete_acc").addEventListener("click", async () => {
-    const userID = localStorage.getItem("ID");
-    try {
-      await updateDoc(doc(db, "vigan_establishments", userID), {
-        Status: "TS Shop Closed",
-        ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-        ArchivedDate: currentDateTime,
+
+  // Add CSS for modal dynamically
+  const style = document.createElement('style');
+  style.innerHTML = `
+  .qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .qr-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+  }
+  .qr-modal-content img {
+    width: 200px;
+    height: 200px;
+  }
+  .qr-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .qr-close:hover,
+  .qr-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+`;
+  document.head.appendChild(style);
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const tbody = document.getElementById('tbody1');
+  const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
+  const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
+
+  try {
+    const querySnapshot = await getDocs(reviewsCollectionRef);
+
+    for (const reviewDoc of querySnapshot.docs) {
+      const reviewData = reviewDoc.data();
+      const reviewDocId = reviewDoc.id;
+
+      // Fetch the corresponding totalScans document
+      const scanDocRef = doc(scansCollectionRef, reviewDocId);
+      const scanDoc = await getDoc(scanDocRef);
+
+      const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
+
+      // Round the average rating to the nearest tenth
+      const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
+
+      // Create table row with review and scan data
+      const trow = document.createElement('tr');
+      trow.innerHTML = `
+        <td>${reviewData.name}</td>
+        <td>${reviewData.total_reviews}</td>
+        <td>${totalScans}</td>
+        <td>
+          <button class="details-btn" data-id="${reviewDocId}">Show Details</button>
+          <button class="reveal-rating-btn" data-rating="${roundedAverageRating}">Reveal Rating</button> <!-- Rating button -->
+        </td>
+      `;
+      tbody.appendChild(trow);
+
+      // Add event listener for the "Show Details" button
+      const detailsBtn = trow.querySelector('.details-btn');
+      detailsBtn.addEventListener('click', () => {
+        const reviewDocId = detailsBtn.getAttribute('data-id');
+        window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
       });
-      window.location.reload(); // Reload to refresh the table
-    } catch (error) {
-      console.error("Error updating document: ", error);
+
+      // Add event listener for the "Reveal Rating" button to show rating in a popup
+      const revealRatingBtn = trow.querySelector('.reveal-rating-btn');
+      revealRatingBtn.addEventListener('click', () => {
+        const rating = revealRatingBtn.getAttribute('data-rating');
+        alert(`Average Rating: ${rating}`); // Popup showing the rating
+      });
     }
-  });
-  
-  // Button to see archived accounts
-  document.getElementById("archived_acc").addEventListener("click", () => {
-    window.location = "tArchives.html";
-  });
+  } catch (error) {
+    console.error("Error retrieving review or scan data:", error);
+  }
+});
+
+function highlightRow(row) {
+  const rows = document.querySelectorAll("#tbody1 tr");
+  rows.forEach((r) => r.classList.remove("selected-row"));
+  row.classList.add("selected-row");
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
+}
+
+// Archive event instead of deleting
+const currentDateTime = new Date().toLocaleString();
+document.getElementById("delete_acc").addEventListener("click", async () => {
+  const userID = localStorage.getItem("ID");
+  try {
+    await updateDoc(doc(db, "vigan_establishments", userID), {
+      Status: "TS Shop Closed",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+      ArchivedDate: currentDateTime,
+    });
+    window.location.reload(); // Reload to refresh the table
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+});
+
+// Button to see archived accounts
+document.getElementById("archived_acc").addEventListener("click", () => {
+  window.location = "tArchives.html";
+});

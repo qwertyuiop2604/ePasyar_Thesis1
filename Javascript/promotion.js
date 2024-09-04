@@ -199,77 +199,148 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           console.error("Error updating document: ", error);
         }
       }
+      
     });
+    
   }
-
-  async function populateTable() {
-    const tbody = document.getElementById('tbody1');
-    if (tbody) {
-      tbody.innerHTML = ''; // Clear existing rows
+// Additional event listeners and modal setups
+  // Make sure these are correctly added and closed.
+  
+  // Fetch documents from Firestore and assign to querySnapshot
+  async function fetchEstablishments() {
+    try {
       const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+      const tbody = document.getElementById('tbody1');
+  
       querySnapshot.forEach(doc => {
         if (doc.data().Status === "H Shop Open") {
           const trow = document.createElement('tr');
           trow.innerHTML = `
             <td>${doc.data().Name}</td>
-           
-            <td>${doc.data().Number}</td>
-            <td>${doc.data().Email}</td>
-            <td>${doc.data().Type}</td>
+          <td>${doc.data().Number}</td>
+             <td>${doc.data().Email}</td>
+              <td>${doc.data().Type}</td>
             <td>${doc.data().Address}</td>
-           
             <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
-             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn" accept="image/png, image/jpeg">Generate QR</button></td>
+            <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
           `;
           tbody.appendChild(trow);
-  
+
           trow.addEventListener('click', (e) => {
             localStorage.setItem('ID', doc.id);
-            Name1.value = doc.data().Name;
-          
-            Number1.value = doc.data().Number;
-            Email1.value = doc.data().Email;
-            Type1.value = doc.data().Type;
-           
-   
-            
+            document.getElementById('name1').value = doc.data().Name;
+            document.getElementById("type1").value = doc.data().Type;
+            document.getElementById("email1").value = doc.data().Email;
+            document.getElementById("number1").value = doc.data().Number;
+            document.getElementById("Address1").value = doc.data().Address;
             highlightRow(trow);
-          });  
-          // Generate and download QR code when clicking on Generate QR button
-           document.getElementById(`gen_qr_${doc.id}`).addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevent click from propagating to row click event
-            generateAndDownloadQRCode(doc.data().Name, doc.id);
+          });
+
+          // QR Code generation and display
+          const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
+          let qrCodeData;
+
+          qrBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+
+            if (!qrCodeData) {
+              qrBtn.textContent = "Generating QR...";
+              qrBtn.disabled = true;
+
+              qrCodeData = await generateQRCode(doc.data().Name, doc.id);
+              qrBtn.textContent = "View My QR Code";
+              qrBtn.disabled = false;
+            } else {
+              showQRCodeModal(qrCodeData, doc.data().Name);
+            }
           });
         }
-         
       });
+    } catch (error) {
+      console.error("Error fetching documents: ", error);
     }
   }
-  
-  populateTable();
+
+  fetchEstablishments();
+
+  // Add QR code functions and event handlers properly
+  async function generateQRCode(establishmentName, documentId) {
+    const qrCodeContainer = document.createElement('div');
+    const qrCode = new QRCode(qrCodeContainer, {
+      text: documentId,
+      width: 500,
+      height: 500,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+    });
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const qrImageData = qrCodeContainer.querySelector('img').src;
+        resolve(qrImageData);
+      }, 1000);
+    });
+  }
+
+  function showQRCodeModal(qrCodeData, establishmentName) {
+    const modal = document.createElement('div');
+    modal.classList.add('qr-modal');
+    modal.innerHTML = `
+      <div class="qr-modal-content">
+        <span class="qr-close">&times;</span>
+        <h3>QR Code for ${establishmentName}</h3>
+        <img src="${qrCodeData}" alt="QR Code for ${establishmentName}">
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.style.display = 'block';
+    modal.querySelector('.qr-close').addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.remove();
+    });
+  }
+
+  // Add CSS for modal dynamically
+  const style = document.createElement('style');
+  style.innerHTML = `
+  .qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .qr-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+  }
+  .qr-modal-content img {
+    width: 200px;
+    height: 200px;
+  }
+  .qr-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .qr-close:hover,
+  .qr-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+`;
+  document.head.appendChild(style);
 });
-function generateAndDownloadQRCode(establishmentName, documentId) {
-  // Create a new QRCode instance
-  const qrCodeContainer = document.createElement('div');
-  const qrCode = new QRCode(qrCodeContainer, {
-    text: documentId, // Pass the document ID directly
-    width: 700,
-    height: 700,
-    colorDark: "#000000", // Dark color
-    colorLight: "#ffffff", // Light color
-  });
-
-  // Get the QR code data URL after it's been generated
-  setTimeout(() => {
-    const qrImageData = qrCodeContainer.querySelector('img').src;
-
-    // Create a temporary link element to download the QR code
-    const downloadLink = document.createElement('a');
-    downloadLink.href = qrImageData;
-    downloadLink.download = `qr_${establishmentName}.png`;
-    downloadLink.click();
-  }, 1000); // Wait for QR code to be generated
-}
 
 
 function highlightRow(row) {
