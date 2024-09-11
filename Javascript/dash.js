@@ -251,33 +251,6 @@ document.getElementById('menuContent').addEventListener('click', function(event)
 updateChartData("Monthly");
 
 
-async function fetchTourists() {
-  const touristsTable = document.getElementById("touristsTableBody");
-
-  // Clear existing rows
-  touristsTable.innerHTML = "";
-
-  try {
-    // Fetch data from Firestore
-    const querySnapshot = await getDocs(collection(db, "users"));
-
-    // Iterate over the documents and populate the table
-    querySnapshot.forEach((doc) => {
-      const userData = doc.data();
-      const row = `<tr>
-                    
-                    <td>${userData.fName}</td>
-                    <td>${userData.lName}</td>
-                    <td>${userData.email}</td>
-                    <td>${userData.country}</td>
-                 
-                  </tr>`;
-      touristsTable.innerHTML += row;
-    });
-  } catch (error) {
-    console.error("Error fetching tourists:", error);
-  }
-}
 async function generateReport() {
   const { jsPDF } = window.jspdf;
 
@@ -348,8 +321,7 @@ async function getData(type) {
 // Event listener for "Generate Report" button
 document.getElementById("generateReport").addEventListener("click", generateReport);
 
-// Call the function to fetch and populate the table
-fetchTourists();
+
 
 // Firestore references
 

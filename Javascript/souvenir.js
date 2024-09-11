@@ -225,7 +225,9 @@ formEdit.addEventListener('submit', async (e) => {
             document.getElementById("location1").value = doc.data().Location;
         
             highlightRow(trow);
+            
           });
+          
 
           // QR Code generation and display
           const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
@@ -349,6 +351,14 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
     console.error("Error updating document: ", error);
   }
 });
+
+function highlightRow(row) {
+  const rows = document.querySelectorAll("#tbody1 tr");
+  rows.forEach((r) => r.classList.remove("selected-row"));
+  row.classList.add("selected-row");
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
+}
 
 
 //Button to see archived accounts

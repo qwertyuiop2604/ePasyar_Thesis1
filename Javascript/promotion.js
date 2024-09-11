@@ -232,7 +232,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             document.getElementById("type1").value = doc.data().Type;
             document.getElementById("email1").value = doc.data().Email;
             document.getElementById("number1").value = doc.data().Number;
-            document.getElementById("Address1").value = doc.data().Address;
+            document.getElementById("address1").value = doc.data().Address;
             highlightRow(trow);
           });
 

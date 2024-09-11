@@ -325,7 +325,10 @@ th, tr, td{
   color: white;
 }
 
-
+.selected-row {
+  background-color: #24146C !important;
+  color: white;
+}
 
 #promoArchive{
     border: none;

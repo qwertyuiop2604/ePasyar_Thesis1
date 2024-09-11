@@ -24,11 +24,12 @@
 .nav-pills > li.active > a:hover {
   background-color: #24146C;
   color: white;
-}
+} 
+
 
 .card {
-  background-color: #f1f1f1;
-  border: 1px solid #24146C;
+  background-color: aliceblue;
+  border: 2px solid #24146C;
   border-radius: 10px;
   box-shadow: 1 5px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -46,6 +47,7 @@
   background-color: #24146C;
   color: white;
 }
+
 .hamburger-menu {
   display: block;
 }
@@ -60,7 +62,7 @@
   font-weight: bolder;
   font-size: 40px;
   padding: 5px;
-  background-color: #C8A1E0;
+  background-color: gainsboro;
 
   margin: 20px 0;
 }
@@ -86,7 +88,8 @@
 }
 
 #generateReport {
-  margin-left: 280px; /* Space between the button and the chart */
+  margin-left: 80px;
+ 
 }
 
 #mostVisitedChart {
@@ -96,13 +99,13 @@
 }
 
 .btn-primary {
-  background-color: #007bff; /* Attractive blue color */
-  border-color: #007bff; /* Match button border with color */
+  background-color: #24146C; /* Attractive blue color */
+  border-color: #24146C; /* Match button border with color */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
 .btn-primary:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #24146C; /* Darker blue on hover */
   border-color: #004085; /* Darker border on hover */
 }
 

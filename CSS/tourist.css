@@ -172,6 +172,10 @@ th, tr, td {
 
   
 }
+  .selected-row {
+    background-color: gainsboro !important;
+    color: white;
+}
 @media screen and (max-width: 600px) {
   .column {
     width: 100%;
