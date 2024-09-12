@@ -57,12 +57,17 @@ const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
 const closePop = document.querySelector('.close-modal');
 
+// For CREATE FORM POPUP
 openPop.addEventListener('click', () => {
   createAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
 });
+
 closePop.addEventListener('click', () => {
   createAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
 });
+
 
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById('create-form');
@@ -116,11 +121,15 @@ const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
 
+// For EDIT FORM POPUP
 oPop.addEventListener('click', () => {
   editAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
 });
+
 cPop.addEventListener('click', () => {
   editAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
 });
 
 // FOR EDIT FORM - UPDATE TO FIREBASE
@@ -183,6 +192,15 @@ async function fetchAndSortEvents() {
 
   return events;
 }
+function toggleBlur(shouldBlur) {
+  const tableContainer = document.querySelector('#table'); // Ensure this element wraps your table
+  if (shouldBlur) {
+    tableContainer.classList.add('blur-background');
+  } else {
+    tableContainer.classList.remove('blur-background');
+  }
+}
+
 
 
 // Function to populate table with sorted events

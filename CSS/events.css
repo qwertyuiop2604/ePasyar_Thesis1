@@ -177,7 +177,12 @@ th, tr, td {
     line-height: 1px;
   }
   
-  
+  .fa,
+.fas,
+.far {
+  color: #24146C;
+  font-size: 16px;
+}
   body{
     display: block;
 }
@@ -885,3 +890,20 @@ input[type="text"], input[type="date"], textarea {
   font-weight: bolder;
   color: #24146C;}
   
+  /* Ensure the modal itself is not blurred */
+.modal {
+  position: fixed;
+  z-index: 1001; /* Ensure it is on top of other content */
+  /* Add other styling properties for the modal */
+}
+
+/* Apply blur to background */
+.blur-background {
+  filter: blur(5px); /* Adjust the blur intensity as needed */
+  /* Ensure this class applies to the correct background element */
+}
+
+/* Ensure the background element covers the whole page */
+#table {
+  position: relative;
+}

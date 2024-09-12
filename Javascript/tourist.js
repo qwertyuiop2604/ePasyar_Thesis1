@@ -96,16 +96,17 @@ document.addEventListener("DOMContentLoaded", async function () {
   const openPop = document.querySelector(".add_acc");
   const closePop = document.querySelector(".close-modal");
 
-  if (openPop)
-    openPop.addEventListener(
-      "click",
-      () => (createAcc.style.display = "block")
-    );
-  if (closePop)
-    closePop.addEventListener(
-      "click",
-      () => (createAcc.style.display = "none")
-    );
+// For CREATE FORM POPUP
+openPop.addEventListener('click', () => {
+  createAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
+});
+
+closePop.addEventListener('click', () => {
+  createAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
+});
+
 
   // FOR REGISTER FORM - ADD TO FIREBASE
   const formCreate = document.getElementById("create-form");
@@ -158,10 +159,17 @@ document.addEventListener("DOMContentLoaded", async function () {
   const oPop = document.querySelector(".edit_acc");
     const cPop = document.querySelector(".close-modal-edit");
   
-    if (oPop)
-      oPop.addEventListener("click", () => (editAcc.style.display = "block"));
-    if (cPop)
-      cPop.addEventListener("click", () => (editAcc.style.display = "none"));
+ // For EDIT FORM POPUP
+oPop.addEventListener('click', () => {
+  editAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
+});
+
+cPop.addEventListener('click', () => {
+  editAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
+});
+
   
     // FOR EDIT FORM - UPDATE TO FIREBASE
     const formEdit = document.getElementById("edit-form");
@@ -203,7 +211,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
       
     });
-    
+    function toggleBlur(shouldBlur) {
+      const tableContainer = document.querySelector('#table'); // Ensure this element wraps your table
+      if (shouldBlur) {
+        tableContainer.classList.add('blur-background');
+      } else {
+        tableContainer.classList.remove('blur-background');
+      }
+    }
   
 // Additional event listeners and modal setups
   // Make sure these are correctly added and closed.

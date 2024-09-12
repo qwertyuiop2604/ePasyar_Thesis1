@@ -74,6 +74,12 @@
   background-color: gainsboro !important;
   color: white;
 }
+.fa,
+.fas,
+.far {
+  color: #24146C;
+  font-size: 16px;
+}
 
 
 .dropdown-btn {

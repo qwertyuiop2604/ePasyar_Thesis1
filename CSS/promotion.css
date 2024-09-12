@@ -309,6 +309,12 @@ th, tr, td{
     text-align: left;
 }
 
+.fa,
+.fas,
+.far {
+  color: #24146C;
+  font-size: 16px;
+}
 
 
 .card {
