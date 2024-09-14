@@ -156,6 +156,27 @@ formEdit.addEventListener('submit', async (e) => {
   }
 });
 
+// Function to limit the description to 1000 words
+function limitWords(textareaId, maxWords) {
+  const textarea = document.getElementById(textareaId);
+  const wordCountMessage = document.createElement('div');
+  wordCountMessage.style.color = 'yellow';
+  textarea.parentNode.insertBefore(wordCountMessage, textarea.nextSibling);
+
+  textarea.addEventListener('input', function () {
+    let words = textarea.value.split(/\s+/).filter(word => word.length > 0);
+    if (words.length > maxWords) {
+      textarea.value = words.slice(0, maxWords).join(' ');
+      words = words.slice(0, maxWords);
+    }
+    wordCountMessage.textContent = `Word Count: ${words.length}/${maxWords}`;
+  });
+}
+
+// Apply the word limit to both add and edit forms
+limitWords('description', 100);
+limitWords('description1', 100);
+
 // Populate table with data
 const tbody = document.getElementById('tbody1');
 const querySnapshot = await getDocs(collection(db, "local_dishes"));

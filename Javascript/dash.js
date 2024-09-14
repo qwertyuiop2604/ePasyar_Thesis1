@@ -100,13 +100,7 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
+
 
 // Get the canvas element
 const ctx = document.getElementById("mostVisitedChart").getContext("2d");

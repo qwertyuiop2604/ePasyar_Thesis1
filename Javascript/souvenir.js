@@ -197,6 +197,8 @@ formEdit.addEventListener('submit', async (e) => {
     }
   }
 });
+
+
  
   // Fetch documents from Firestore and assign to querySnapshot
   async function fetchEstablishments() {

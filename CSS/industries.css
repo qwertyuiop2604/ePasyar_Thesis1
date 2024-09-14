@@ -1,11 +1,27 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #24146C;
+  color: black;
   font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.sidenav h2, .sidenav a {
+  color: white;
+}
+.nav-pills > li > a {
+  color: black;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus 
+{
+  background-color: #24146C;
+  color: white;
+}
+.nav-pills > li.active > a:hover {
+  background-color: #24146C;
+  color: white;
 }
 
 .dropdown-container {
@@ -39,7 +55,12 @@
   
 }
 
-
+.fa,
+.fas,
+.far {
+  color: #24146C;
+  font-size: 16px;
+}
 
 .dropdown-btn {
 
@@ -110,11 +131,12 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 9px;
+  width: 100px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 13px;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
 }
@@ -149,9 +171,15 @@ th, tr, td {
     display: block;
 }
 .sidenav{
+  height: 160%;
   color: black;
   font-size: 14px;
+
   
+}
+  .selected-row {
+    background-color: gainsboro !important;
+    color: white;
 }
 @media screen and (max-width: 600px) {
   .column {
@@ -277,20 +305,6 @@ th, tr, td{
 }
 
 
-.sidenav h2, .sidenav a {
-  color: white;
-}
-
-.nav-pills > li > a {
-  color: #24146C;
-}
-
-.nav-pills > li.active > a, 
-.nav-pills > li.active > a:focus, 
-.nav-pills > li.active > a:hover {
-  background-color: #24146C;
-  color: white;
-}
 
 .card {
   background-color: #f1f1f1;
@@ -306,32 +320,19 @@ th, tr, td{
   color: white;
 }
 
-.btn_useracc button{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 70px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(223, 217, 217);
-    cursor: pointer;
-}
-.btn_useracc{
-  display: flex;
-}
+
+
 #archived_acc{
     border: none;
-    padding: 5px;
+    padding: 8px;
     margin: 5px;
     width: 120px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
-    color: #24146C;
+  
+    color: black;
     cursor: pointer;
 }
 tr th, tr th{
@@ -875,5 +876,22 @@ input[type="text"], input[type="date"], textarea {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 35px;
   font-weight: bolder;
-  color: #1D5D9B;}
+  color: #24146C;}
   
+    /* Ensure the modal itself is not blurred */
+.modal {
+  position: fixed;
+  z-index: 1001; /* Ensure it is on top of other content */
+  /* Add other styling properties for the modal */
+}
+
+/* Apply blur to background */
+.blur-background {
+  filter: blur(5px); /* Adjust the blur intensity as needed */
+  /* Ensure this class applies to the correct background element */
+}
+
+/* Ensure the background element covers the whole page */
+#table {
+  position: relative;
+}

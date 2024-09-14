@@ -101,6 +101,26 @@ formCreate.addEventListener('submit', async (e) => {
     }
   }
 });
+// Function to limit the description to 1000 words
+function limitWords(textareaId, maxWords) {
+  const textarea = document.getElementById(textareaId);
+  const wordCountMessage = document.createElement('div');
+  wordCountMessage.style.color = 'yellow';
+  textarea.parentNode.insertBefore(wordCountMessage, textarea.nextSibling);
+
+  textarea.addEventListener('input', function () {
+    let words = textarea.value.split(/\s+/).filter(word => word.length > 0);
+    if (words.length > maxWords) {
+      textarea.value = words.slice(0, maxWords).join(' ');
+      words = words.slice(0, maxWords);
+    }
+    wordCountMessage.textContent = `Word Count: ${words.length}/${maxWords}`;
+  });
+}
+
+// Apply the word limit to both add and edit forms
+limitWords('description', 100);
+limitWords('description1', 100);
 
 function validateInputs(inputs) {
   let isValid = true;
@@ -173,6 +193,43 @@ formEdit.addEventListener('submit', async (e) => {
     }
   }
 });
+
+// Function to display events with multiple photos in the table
+async function displayEvents() {
+  const querySnapshot = await getDocs(collection(db, "festivals"));
+  const tbody = document.getElementById('tbody1');
+  tbody.innerHTML = '';
+
+  querySnapshot.forEach((doc) => {
+    const eventData = doc.data();
+    const tr = document.createElement('tr');
+
+    const nameCell = document.createElement('td');
+    nameCell.textContent = eventData.Name;
+    tr.appendChild(nameCell);
+
+    const dateCell = document.createElement('td');
+    dateCell.textContent = eventData.Date;
+    tr.appendChild(dateCell);
+
+    const descriptionCell = document.createElement('td');
+    descriptionCell.textContent = eventData.Description;
+    tr.appendChild(descriptionCell);
+
+    // Create a cell to display multiple photos
+    const photoCell = document.createElement('td');
+    eventData.PhotoURLs.forEach((url) => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.width = '500px'; // Adjust the size as needed
+      img.style.margin = '5px';
+      photoCell.appendChild(img);
+    });
+    tr.appendChild(photoCell);
+
+    tbody.appendChild(tr);
+  });
+}
 
 // Function to fetch and sort events
 async function fetchAndSortEvents() {
