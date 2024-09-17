@@ -58,7 +58,7 @@ querySnap.forEach((doc) => {
        <td>${doc.data().Owner}</td>
        <td>${doc.data().Number}</td>
        <td>${doc.data().Location}</td>
-      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>   
+       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
       <td>${doc.data().ArchivedDate}</td>
     `;
     archivedTbody.appendChild(trow);

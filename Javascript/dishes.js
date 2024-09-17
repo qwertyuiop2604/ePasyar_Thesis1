@@ -187,7 +187,7 @@ querySnapshot.forEach(doc => {
       <td>${doc.data().Name}</td>
       
       <td>${doc.data().Description}</td>
-      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+      <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>
     `;
     tbody.appendChild(trow);
 

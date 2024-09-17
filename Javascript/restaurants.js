@@ -211,7 +211,7 @@ async function fetchEstablishments() {
           <td>${doc.data().Type}</td>
           <td>${doc.data().Number}</td>
           <td>${doc.data().Location}</td>
-          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+            <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
           <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
         `;
         tbody.appendChild(trow);

@@ -221,7 +221,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
              <td>${doc.data().Email}</td>
               <td>${doc.data().Type}</td>
             <td>${doc.data().Address}</td>
-            <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+             <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
           `;
           tbody.appendChild(trow);

@@ -258,8 +258,7 @@ limitWords('description1', 100);
          
              <td>${doc.data().Description}</td>
               <td>${doc.data().Location}</td>
-       
-            <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
             <button id="rate_${doc.id}" class="rate-btn">Reviews</button> <!-- Rating button -->
           </td>

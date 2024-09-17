@@ -284,7 +284,7 @@ async function populateTable(events) {
         <td>${event.Name}</td>
         <td>${formattedDate}</td>
         <td>${event.Description}</td>
-        <td><img src="${event.PhotoURL}" alt="Event Photo" width="50" height="50"></td>
+        <td><img src="${event.PhotoURL}" alt="Event Photo" width="150" height="150"></td>
       `;
       tbody.appendChild(trow);
 
