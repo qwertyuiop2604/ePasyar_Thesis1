@@ -84,12 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", async function () {
-  var dropdown = document.querySelector(".dropdown-btn");
-  var dropdownContent = document.querySelector(".dropdown-container");
-  dropdown.addEventListener("click", function () {
-    dropdownContent.classList.toggle("show");
-  });
 
   // CREATE FORM POPUP
   const createAcc = document.getElementById("user-create");
@@ -310,7 +304,6 @@ limitWords('description1', 100);
   fetchEstablishments();
 
   // Other event listeners and functions...
-});
 
   // Add QR code functions and event handlers properly
   async function generateQRCode(establishmentName, documentId) {
@@ -391,58 +384,58 @@ limitWords('description1', 100);
   document.head.appendChild(style);
 
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const tbody = document.getElementById('tbody1');
-  const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
-  const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
+// document.addEventListener('DOMContentLoaded', async () => {
+//   const tbody = document.getElementById('tbody1');
+//   const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
+//   const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
 
-  try {
-    const querySnapshot = await getDocs(reviewsCollectionRef);
+//   try {
+//     const querySnapshot = await getDocs(reviewsCollectionRef);
 
-    for (const reviewDoc of querySnapshot.docs) {
-      const reviewData = reviewDoc.data();
-      const reviewDocId = reviewDoc.id;
+//     for (const reviewDoc of querySnapshot.docs) {
+//       const reviewData = reviewDoc.data();
+//       const reviewDocId = reviewDoc.id;
 
-      // Fetch the corresponding totalScans document
-      const scanDocRef = doc(scansCollectionRef, reviewDocId);
-      const scanDoc = await getDoc(scanDocRef);
+//       // Fetch the corresponding totalScans document
+//       const scanDocRef = doc(scansCollectionRef, reviewDocId);
+//       const scanDoc = await getDoc(scanDocRef);
 
-      const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
+//       const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
 
-      // Round the average rating to the nearest tenth
-      const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
+//       // Round the average rating to the nearest tenth
+//       const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
 
-      // Create table row with review and scan data
-      const trow = document.createElement('tr');
-      trow.innerHTML = `
-        <td>${reviewData.name}</td>
-        <td>${reviewData.total_reviews}</td>
-        <td>${totalScans}</td>
-        <td>
-          <button class="details-btn" data-id="${reviewDocId}">Show Details</button>
-          <button class="reveal-rating-btn" data-rating="${roundedAverageRating}">Reveal Rating</button> <!-- Rating button -->
-        </td>
-      `;
-      tbody.appendChild(trow);
+//       // Create table row with review and scan data
+//       const trow = document.createElement('tr');
+//       trow.innerHTML = `
+//         <td>${reviewData.name}</td>
+//         <td>${reviewData.total_reviews}</td>
+//         <td>${totalScans}</td>
+//         <td>
+//           <button class="details-btn" data-id="${reviewDocId}">Show Details</button>
+//           <button class="reveal-rating-btn" data-rating="${roundedAverageRating}">Reveal Rating</button> <!-- Rating button -->
+//         </td>
+//       `;
+//       tbody.appendChild(trow);
 
-      // Add event listener for the "Show Details" button
-      const detailsBtn = trow.querySelector('.details-btn');
-      detailsBtn.addEventListener('click', () => {
-        const reviewDocId = detailsBtn.getAttribute('data-id');
-        window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
-      });
+//       // Add event listener for the "Show Details" button
+//       const detailsBtn = trow.querySelector('.details-btn');
+//       detailsBtn.addEventListener('click', () => {
+//         const reviewDocId = detailsBtn.getAttribute('data-id');
+//         window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
+//       });
 
-      // Add event listener for the "Reveal Rating" button to show rating in a popup
-      const revealRatingBtn = trow.querySelector('.reveal-rating-btn');
-      revealRatingBtn.addEventListener('click', () => {
-        const rating = revealRatingBtn.getAttribute('data-rating');
-        alert(`Average Rating: ${rating}`); // Popup showing the rating
-      });
-    }
-  } catch (error) {
-    console.error("Error retrieving review or scan data:", error);
-  }
-});
+//       // Add event listener for the "Reveal Rating" button to show rating in a popup
+//       const revealRatingBtn = trow.querySelector('.reveal-rating-btn');
+//       revealRatingBtn.addEventListener('click', () => {
+//         const rating = revealRatingBtn.getAttribute('data-rating');
+//         alert(`Average Rating: ${rating}`); // Popup showing the rating
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error retrieving review or scan data:", error);
+//   }
+// });
 
 function highlightRow(row) {
   const rows = document.querySelectorAll("#tbody1 tr");
