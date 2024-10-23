@@ -424,6 +424,74 @@ onSnapshot(establishmentsRef, (snapshot) => {
   console.error("Error fetching establishments:", error);
 });
 
+// Get the canvas element for the tourist spots chart
+const touristCtx = document.getElementById("touristSpotsChart").getContext("2d");
+
+// Create the bar chart for tourist spots
+const touristSpotsChart = new Chart(touristCtx, {
+  type: "bar",
+  data: {
+    labels: [], // Initially empty, will be populated from Firebase
+    datasets: [{
+      label: "Number of Tourist Spot Visitors",
+      data: [], // Initially empty, will be populated from Firebase
+      backgroundColor: [
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 159, 64, 0.2)",
+        "rgba(201, 203, 207, 0.2)",
+        "rgba(255, 99, 132, 0.2)"
+      ],
+      borderColor: [
+        "rgba(75, 192, 192, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 206, 86, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+        "rgba(201, 203, 207, 1)",
+        "rgba(255, 99, 132, 1)"
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+// Function to fetch tourist spot data from Firestore
+async function fetchTouristSpotData() {
+  try {
+    const touristScansRef = collection(db, "total_scans/touristScans/touristspot_scans");
+    const querySnapshot = await getDocs(touristScansRef);
+
+    const labels = [];
+    const data = [];
+
+    querySnapshot.forEach((doc) => {
+      labels.push(doc.id); // Use document ID as label
+      const totalScans = doc.data().totalScans || 0; // Retrieve totalScans field
+      data.push(totalScans); // Add the totalScans to data array
+    });
+
+    // Update the chart with the fetched data
+    touristSpotsChart.data.labels = labels;
+    touristSpotsChart.data.datasets[0].data = data;
+    touristSpotsChart.update(); // Refresh the chart
+  } catch (error) {
+    console.error("Error fetching tourist spot data:", error);
+  }
+}
+
+// Fetch the tourist spot data when the page loads
+fetchTouristSpotData();
+
 let logoutButton = document.getElementById("logout");
 logoutButton.addEventListener("click", (event) => {
   event.preventDefault(); // Prevent the default action (page reload or redirect)

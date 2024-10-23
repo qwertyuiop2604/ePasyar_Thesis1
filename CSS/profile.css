@@ -2,52 +2,50 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #24146C;
-  font-weight: bold;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+  color: #337ab7;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;}
 
 h2{
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 50px;
+  font-family: 'Poppins', sans-serif;  font-size: 50px;
   font-weight: bolder;
-  color: #24146C;
+  color: #337ab7;
 }
 
 .nav-pills > li > a {
-  color: #24146C;
+  color: #337ab7;
 }
 
 .nav-pills > li.active > a, 
 .nav-pills > li.active > a:focus, 
 .nav-pills > li.active > a:hover {
-  background-color: #24146C;
+  background-color: #337ab7;
 
 }
 
 .card {
   background-color: #f1f1f1;
-  border: 1px solid #24146C;
+  border: 1px solid #337ab7;
 }
 
 .card h4, .card p {
-  color: #24146C;
+  color: #337ab7;
 }
 
 .well {
-  background-color: #24146C;
+  background-color: #337ab7;
   color: white;
 }
 
 .dropdown-container {
-  color: #24146C;
+  color: #337ab7;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #24146C;
+  color: #337ab7;
 }
 
 .sidebar-list-item1 button {
@@ -55,7 +53,7 @@ h2{
   text-decoration: none;
   font-size: 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #24146C;
+  color: #337ab7;
   display: block;
   border: none;
   background: none;
@@ -139,11 +137,12 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 120px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 12px;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
 }
@@ -151,7 +150,6 @@ th, tr, td {
 .btn_useracc {
   display: flex;
 }
-
 .outer-wrapper {
   display: flex;
   flex-direction: column;
@@ -262,17 +260,21 @@ th, tr, td {
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
   }
   h2{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 50px;
+    font-family: 'Poppins', sans-serif;    font-size: 50px;
     font-weight: bolder;
-    color: #24146C;
+    color: #337ab7;
 }
   
   .menu-icon {
     display: none;
   }
   
-  
+  .fa,
+  .fas,
+  .far {
+    color: #184267;
+    font-size: 16px;
+  }
  /* ---------- SIDEBAR ---------- */
   
  #sidebar {
@@ -344,10 +346,9 @@ p
   font-size: 30px;
   font-weight: bold;
   background-color: whitesmoke;
-  color: #1D5D9B;
+  color: #000000;
   margin: 2%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+  font-family: 'Poppins', sans-serif;
   
 }
 
@@ -389,32 +390,17 @@ th, tr, td{
     padding: 7px;
     text-align: left;
 }
-.btn_useracc button{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 100px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(223, 217, 217);
-    cursor: pointer;
-}
-.btn_useracc{
-  display: flex;
-}
+
 #archived_acc{
     border: none;
-    padding: 5px;
+    padding: 8px;
     margin: 5px;
-    width: 120px;
+    width: 130px;
     border-radius: 5px;
     text-transform: uppercase;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-color: #1D5D9B; 
-    color: white;
+    color: black;
     cursor: pointer;
 }
 tr th, tr th{
@@ -556,8 +542,7 @@ h4{
 }
 #email{
   text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
+  font-family: 'Poppins', sans-serif;  font-size: 14px;
   color: black;
 }
 
@@ -594,8 +579,7 @@ input {
   border: 5px;
   border-radius: 15px;
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+  font-family: 'Poppins', sans-serif;  font-weight: bold;
   cursor: pointer;
   text-align: center;
   margin-top: 30px;
@@ -609,8 +593,7 @@ input {
 }
 label{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: white;
+  font-family: 'Poppins', sans-serif;  color: white;
 }
 .close-modal{
   position: absolute;
@@ -659,8 +642,7 @@ label{
 }
 #email1{
   text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
+  font-family: 'Poppins', sans-serif;  font-size: 14px;
   color: black;
 }
 textarea {
@@ -729,8 +711,7 @@ input {
   border: 5px;
   border-radius: 15px;
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+  font-family: 'Poppins', sans-serif;  font-weight: bold;
   cursor: pointer;
   text-align: center;
   margin-top: 30px;
@@ -744,8 +725,7 @@ input {
 }
 label{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: white;
+  font-family: 'Poppins', sans-serif;   color: white;
 }
 .close-modal-edit{
   position: absolute;
@@ -792,7 +772,7 @@ label{
 }
 
 .edit{
-  font-weight: bold;
+
   width: 170px;
 }
 .modal-form-edit{

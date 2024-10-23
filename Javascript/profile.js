@@ -144,42 +144,17 @@ querySnapshot.forEach((doc) => {
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
     const td3 = document.createElement('td');
-    const td4 = document.createElement('td');
-    const td5 = document.createElement('td'); // New cell for the toggle eye icon
+    
 
     td1.textContent = doc.data().name;
     td2.textContent = doc.data().email;
     td3.textContent = doc.data().position;
 
-    // Mask the password
-    td4.textContent = '••••••••';
-    td4.setAttribute('data-password', doc.data().password); // Store the actual password in a data attribute
-
-    // Create the toggle eye icon
-    const eyeIcon = document.createElement('i');
-    eyeIcon.classList.add('fa', 'fa-eye'); // Assuming you are using FontAwesome for the eye icon
-    eyeIcon.style.cursor = 'pointer';
-
-    // Add event listener to toggle the password visibility
-    eyeIcon.addEventListener('click', () => {
-      if (td4.textContent === '••••••••') {
-        td4.textContent = td4.getAttribute('data-password');
-        eyeIcon.classList.remove('fa-eye');
-        eyeIcon.classList.add('fa-eye-slash');
-      } else {
-        td4.textContent = '••••••••';
-        eyeIcon.classList.remove('fa-eye-slash');
-        eyeIcon.classList.add('fa-eye');
-      }
-    });
-
-    td5.appendChild(eyeIcon);
-
+  
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
-    trow.appendChild(td4);
-    trow.appendChild(td5);
+  
 
     tbody.appendChild(trow);
 
