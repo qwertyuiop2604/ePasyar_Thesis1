@@ -101,7 +101,6 @@ localindustries.addEventListener("click", () => {
 });
 
 
-
 // Get the canvas element
 const ctx = document.getElementById("mostVisitedChart").getContext("2d");
 
@@ -188,6 +187,7 @@ async function updateChartData(type) {
     console.error("Error fetching visitor data:", error);
   }
 }
+
 
 // Toggle hamburger menu
 function toggleMenu() {
@@ -312,6 +312,7 @@ async function getData(type) {
   return reportData;
 }
 
+
 // Event listener for "Generate Report" button
 document.getElementById("generateReport").addEventListener("click", generateReport);
 
@@ -421,5 +422,20 @@ onSnapshot(establishmentsRef, (snapshot) => {
   handleSouvenirSnapshot(snapshot);
 }, (error) => {
   console.error("Error fetching establishments:", error);
+});
+
+let logoutButton = document.getElementById("logout");
+logoutButton.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the default action (page reload or redirect)
+  
+  // Show a confirmation dialog
+  let userConfirmed = confirm("Are you sure you want to log out?");
+  
+  if (userConfirmed) {
+    // If the user confirms, redirect to the logout page (index.html)
+    window.location = "index.html";
+  } else {
+    window.location = "dash.html";
+  }
 });
 

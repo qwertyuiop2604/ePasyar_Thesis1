@@ -3,22 +3,16 @@
   padding: 0;
   box-sizing: border-box;
   color: black;
-  font-weight: bold;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
 }
-.row {
-  margin-right: -15px;
-  margin-left: -15px;
-}
+
 .row.content {
   height: 400px;
 }
 #row-content{
   font-size: 14px;
-  font-family: system-ui, 
-  -apple-system, BlinkMacSystemFont, 
-  'Segoe UI', Roboto, Oxygen, Ubuntu, 
-  Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
 
 
 }
@@ -32,31 +26,31 @@
 .nav-pills > li.active > a, 
 .nav-pills > li.active > a:focus 
 {
-  background-color: #24146C;
+  background-color: #337ab7;
   color: white;
 }
 .nav-pills > li.active > a:hover {
-  background-color: #24146C;
+  background-color: #337ab7;
   color: white;
 }
 
 .dropdown-container {
-  color: #24146C;
+  color: #337ab7;
  
   display: none;
 }
 
 .dropdown-container a {
   text-decoration: none;
-  color: #24146C;
+  color: #337ab7;
 }
 
 .sidebar-list-item1 button {
   padding: 15px;
   text-decoration: none;
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #24146C;
+  font-family: 'Poppins', sans-serif;
+  color: #337ab7;
   display: block;
   border: none;
   background: none;
@@ -67,7 +61,7 @@
 }
 .container-fluid{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   
 }
 
@@ -112,9 +106,7 @@
   font-size: 14px;
 }
 
-.dropdown-container {
-  padding-left: 8px;
-}
+
 
 .sidebar-responsive {
   display: inline !important;
@@ -142,12 +134,12 @@ th, tr, td {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 100px;
+  width: 110px;
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: 12px;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
 }
@@ -166,7 +158,7 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #24146C;
+  color: #337ab7;
 }
 
 .dropdown-container.show {
@@ -177,14 +169,21 @@ th, tr, td {
     line-height: 1px;
   }
   
-  
+  .fa,
+.fas,
+.far {
+  color: #184267;
+  font-size: 16px;
+}
   body{
     display: block;
 }
-.sidenav{
+
+.sidenav {
+ 
+  height: 160%;
   color: black;
   font-size: 14px;
-  
 }
 @media screen and (max-width: 600px) {
   .column {
@@ -196,7 +195,7 @@ th, tr, td {
 .month {
   text-align: center;
   padding: 1px;  /* Adjusted padding */
-  background: #24146C;
+  background: #337ab7;
   color: white;
   width: 5px;
   height: 30%; /* Adjusted width */
@@ -277,7 +276,7 @@ th, tr, td {
 
 /* Main content */
 .main {
-margin-left: 200px; /* Same as the width of the sidenav */
+margin-left: px; /* Same as the width of the sidenav */
 font-size: 12px; /* Increased text to enable scrolling */
 /* padding: 0px 10px; */
 }
@@ -309,34 +308,25 @@ th, tr, td{
     text-align: left;
 }
 
-.fa,
-.fas,
-.far {
-  color: #24146C;
-  font-size: 16px;
-}
 
 
 .card {
   background-color: #f1f1f1;
-  border: 1px solid #24146C;
+  border: 1px solid #337ab7;
 }
 
 .card h4, .card p {
-  color: #24146C;
+  color: #337ab7;
 }
 
 .well {
-  background-color: #24146C;
+  background-color: #337ab7;
   color: white;
 }
 
-.selected-row {
-  background-color: #24146C !important;
-  color: white;
-}
 
-#promoArchive{
+
+#archived_acc{
     border: none;
     padding: 8px;
     margin: 5px;
@@ -366,7 +356,7 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #24146C !important;
+  background-color: #337ab7 !important;
   color: white;
 }
 #srchText{
@@ -479,7 +469,7 @@ h4{
 
 /* popup modal for create account */
 .reg-container{
-  background-color: #24146C;
+  background-color: #337ab7;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -509,11 +499,11 @@ h4{
 }
 
 .container-modal{
-  background-color: #24146C;
+  background-color: #337ab7;
 }
 #email{
   text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   color: black;
 }
@@ -545,23 +535,7 @@ input {
   display: block;
  
 }
-#btnRegister{
-  width: 100px;
-  height: 30px;
-  display: block;
-  margin: 10px auto; 
-  padding: 5px 10px;
-  background-color: #F4D160;
-  color: #000000;
-  border: 5px;
-  border-radius: 15px;
-  font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 30px;
-}
+
 #create-txt{
   text-align: center;
   margin-bottom: 20px;
@@ -571,7 +545,7 @@ input {
 }
 label{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: white;
 }
 .close-modal{
@@ -585,7 +559,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #24146C;
+  background-color: #337ab7;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -600,14 +574,9 @@ label{
 
 }
 .container-modal-edit{
-  background-color: #1D5D9B;
+  background-color: #337ab7;
 }
-#email1{
-  text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  color: black;
-}
+
 textarea {
   padding: 10px;
   margin-bottom: 10px;
@@ -642,18 +611,18 @@ input {
   display: block;
  
 }
-#btnEdit{
+#btnEditPromo{
   width: 100px;
   height: 30px;
   display: block;
   margin: 10px auto; 
   padding: 5px 10px;
-  background-color: #F4D160;
+  background-color: white;
   color: #000000;
   border: 5px;
   border-radius: 15px;
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
@@ -668,7 +637,7 @@ input {
 }
 label{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: white;
 }
 .close-modal-edit{
@@ -867,18 +836,23 @@ label{
   margin-left: 300px;
 }
 
-.btn button{
-	padding: 4px;
-	width: 100px; 
-  outline: none;
-	padding: 10px;
-  margin: 10px;
-  text-transform: uppercase;
-  font-size: 12px;
-  margin-top: 20px;
+
+#btnRegister{
+  width: 100px;
+  height: 30px;
+  display: block;
+  margin: 10px auto; 
+  padding: 5px 10px;
+  background-color: white;
+  color: #000000;
+  border: 5px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
   cursor: pointer;
-  background-color: var(--blueButton);
-  color:white;
+  text-align: center;
+  margin-top: 30px;
 }
 .btn{
     display: flex;
@@ -887,8 +861,25 @@ input[type="text"], input[type="date"], textarea {
   text-transform: uppercase;
 }
 #dash-logo {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 35px;
   font-weight: bolder;
-  color: #1D5D9B;}
+  color: black;}
   
+  /* Ensure the modal itself is not blurred */
+.modal {
+  position: fixed;
+  z-index: 1001; /* Ensure it is on top of other content */
+  /* Add other styling properties for the modal */
+}
+
+/* Apply blur to background */
+.blur-background {
+  filter: blur(5px); /* Adjust the blur intensity as needed */
+  /* Ensure this class applies to the correct background element */
+}
+
+/* Ensure the background element covers the whole page */
+#table {
+  position: relative;
+}
