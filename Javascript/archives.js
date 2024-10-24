@@ -61,13 +61,6 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
 
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");

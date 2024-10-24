@@ -2,28 +2,43 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #24146C;
-  font-weight: bold;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: black;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.dropdown-container {
-  color: #24146C;
- 
-  display: none;
+.row.content {
+  height: 400px;
+}
+#row-content{
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+
+
+}
+.sidenav h2, .sidenav a {
+  color: white;
+}
+.nav-pills > li > a {
+  color: black;
 }
 
-.dropdown-container a {
-  text-decoration: none;
-  color: #24146C;
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:focus 
+{
+  background-color: #337ab7;
+  color: white;
+}
+.nav-pills > li.active > a:hover {
+  background-color: #337ab7;
+  color: white;
 }
 
 .sidebar-list-item1 button {
   padding: 15px;
   text-decoration: none;
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #24146C;
+  font-family: 'Poppins', sans-serif;  color: #337ab7;
   display: block;
   border: none;
   background: none;
@@ -34,38 +49,10 @@
 }
 .container-fluid{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
+  font-family: 'Poppins', sans-serif;  
 }
 
 
-
-
-.dropdown-container {
-  color: #24146C;
- 
-  display: none;
-}
-
-.dropdown-container a {
-  text-decoration: none;
-  color: #24146C;
-}
-
-.sidebar-list-item1 button {
-  padding: 15px;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #24146C;
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-}
 .icon-spacing {
   margin-right: 10px; /* Adjust the value as needed */
 }
@@ -75,10 +62,9 @@
   align-items: center;
 }
 #dash-logo {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 35px;
+  font-family: 'Poppins', sans-serif;  font-size: 35px;
   font-weight: bolder;
-  color: #24146C;}
+  color: black;}
   
 .dropdown-btn i {
   margin-right: 5px; /* Space between the star icon and the text */
@@ -95,8 +81,7 @@
 
 .container-fluid{
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
+  font-family: 'Poppins', sans-serif;  
 }
 
 .dropdown-btn:hover {
@@ -138,21 +123,26 @@ th, tr, td {
   text-align: left;
 }
 
+
 .btn_useracc button {
   border: none;
   padding: 5px;
   margin: 5px;
-  width: 5px;
+  width: 123px; /* Adjusted width */
   border-radius: 5px;
   text-transform: uppercase;
   margin-top: 10px;
   margin-bottom: 10px;
+ 
+  font-size: 11px; /* Adjusted font size */
+  font-family: 'Poppins', sans-serif;
   background-color: rgb(223, 217, 217);
   cursor: pointer;
 }
 
 
-
+.btn_useracc{
+  display: flex;}
 .con-lic, .con-mv {
   padding: 5px 10px;
   display: flex;
@@ -163,53 +153,17 @@ th, tr, td {
 
 .con-lic:hover, .con-mv:hover {
   background-color: gainsboro;
-  color: #24146C;
+  color: #337ab7;
 }
 
 .dropdown-container.show {
   display: block;
 }
-  .material-icons-outlined {
-    vertical-align: middle;
-    line-height: 1px;
-  }
-  
-    .text-primary {
-      color: #666666;
-    }
-    
-    .text-blue {
-      color: #032d89;
-    }
-    
-    .text-red {
-      color: #cc3c43;
-    }
-    
-    .text-green {
-      color: #367952;
-    }
-    
-    .text-orange {
-      color: #f5b74f;
-    }
+
   
   .font-weight-bold {
     font-weight: 300;
   }
-  
-  /*.grid-container {
-    display: grid;
-    grid-template-columns: 260px 1fr 1fr 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas:
-      "sidebar header header header"
-      "sidebar main main main";
-    height: 100vh;
-  }
-  
-  
-  /* ---------- HEADER ---------- */
   
   .header {
     grid-area: header;
@@ -227,12 +181,25 @@ th, tr, td {
   }
   
   
+.enable_acc{
+    border: none;
+    padding: 8px;
+    margin: 5px;
+    width: 120px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  
+    color: black;
+    cursor: pointer;
+}
  /* ---------- SIDEBAR ---------- */
   
  #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #032d89;
+  background-color: #337ab7;
   color: white;
   overflow-y: auto;
   transition: all 0.5s;
@@ -281,44 +248,7 @@ list-style: none;
 padding: 10px 20px 10px 10px;
 display: none;
 }
-/*.dropdown-container{
-color: #e6e8ed;
-padding-top: 10px;
-margin-top: 20px;
-}
-.dropdown-container .con-lic, .dropdown-container .con-mv{
-padding: 20px 15px 0px 20px;
-margin-top: -20px;
-}
-.dropdown-container a{
-  text-decoration: none;
-  color: white;
-}
-.sidebar-list-item1 button{
-  padding: 20px 15px 20px 20px;
-  text-decoration: none;
-  font-size: 16px;
-  color: white;
-  display: block;
-  border: none;
-  background: none;
-  width:100%;
-  text-align: left;
-  cursor: default;
-  outline: none;
-}
 
-/* On mouse-over */
-/*.dropdown-btn:hover {
-background-color: rgba(255, 255, 255, 0.2);
-}
-.con-lic:hover{
-background-color: rgba(255, 255, 255, 0.2);
-}
-.con-mv:hover {
-background-color: rgba(255, 255, 255, 0.2); 
-}
-/* Main content */
 .main {
 margin-left: 200px; /* Same as the width of the sidenav */
 font-size: 20px; /* Increased text to enable scrolling */
@@ -368,70 +298,8 @@ th, tr, td{
     padding: 7px;
     text-align: left;
 }
-.btn_useracc button{
-  border: none;
-  padding: 5px;
-  margin: 5px;
-  width: 200px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: rgb(223, 217, 217);
-  cursor: pointer;
-}
-#bckbtn{
-border: none;
-padding: 5px;
-margin: 5px;
-width: 50px;
-border-radius: 5px;
-text-transform: uppercase;
-margin-top: 10px;
-margin-bottom: 10px;
-background-color: rgb(223, 217, 217);
-cursor: pointer;
-}
-#permanentlyDelete{
-  border: none;
-  padding: 5px;
-  margin: 5px;
-  width: 50px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: rgb(223, 217, 217);
-  cursor: pointer;
-  }
-#enabledTourist{
- border: none;
-padding: 5px;
-margin: 5px;
-width: 50px;
-border-radius: 5px;
-text-transform: uppercase;
-margin-top: 10px;
-margin-bottom: 10px;
-background-color: rgb(223, 217, 217);
-cursor: pointer;
-}
-.btn_useracc{
-  display: flex;
-}
-#archived_acc{
-    border: none;
-    padding: 5px;
-    margin: 5px;
-    width: 120px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #24146C; 
-    color: white;
-    cursor: pointer;
-}
+
+
 tr th, tr th{
     background-color: gainsboro;
    
@@ -441,7 +309,8 @@ tr th, tr th{
     background-color: #f2f2f23b;
 }
 .table tr:hover{
-  background-color: #24146C
+  background-color: #337ab7;
+  color: white;
  }
 h4{
   align-items: end;
@@ -449,23 +318,10 @@ h4{
   cursor: pointer;
 }
 .selected-row{
-  background-color: #24146C !important;
+  background-color: #337ab7 !important;
   color: white;
 }
-#srchText{
-  outline: none;
-  border: 1px solid grey;
-  width: 350px;
-  height: 30px;
-  font-size: 15px;
-  align-items: end;
-  margin-left: 125px;
-  margin-top: 10px;
-  border-radius: 5px;
-  padding-left: 5px;
-  text-transform: uppercase;
-  /* margin-bottom: 10px; */
-}
+
 .btn1 button{
   padding: 4px;
   padding: 10px;
@@ -550,29 +406,13 @@ h4{
 }
 
 
-/* popup modal for create account */
-.reg-container{
-  background-color: #24146C;
-  width: 500px;
-  border-radius: 15px;
-  padding: 10px;
-  margin: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.4s, top 0.4s;
-  border-radius: 10px;
-  display: none;
 
-}
 .container-modal{
-  background-color: #24146C;
+  background-color: #337ab7;
 }
 #email{
   text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
+  font-family: 'Poppins', sans-serif;  font-size: 14px;
   color: black;
 }
 textarea {
@@ -618,8 +458,7 @@ input {
   border: 5px;
   border-radius: 15px;
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+  font-family: 'Poppins', sans-serif;  font-weight: bold;
   cursor: pointer;
   text-align: center;
   margin-top: 30px;
@@ -632,9 +471,8 @@ input {
   
 }
 label{
-  font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: white;
+  font-size: 12px;
+  font-family: 'Poppins', sans-serif;  color: white;
 }
 .close-modal{
   position: absolute;
@@ -647,7 +485,7 @@ label{
 }
 /* popup modal for edit account */
 .edit-container{
-  background-color: #24146C;
+  background-color: #337ab7;
   width: 500px;
   border-radius: 15px;
   padding: 10px;
@@ -662,14 +500,9 @@ label{
 
 }
 .container-modal-edit{
-  background-color: #24146C;
+  background-color: #337ab7;
 }
-#email1{
-  text-align: start;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  color: black;
-}
+
 textarea {
   padding: 10px;
   margin-bottom: 10px;
@@ -720,8 +553,7 @@ input {
   border: 5px;
   border-radius: 15px;
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+  font-family: 'Poppins', sans-serif;  font-weight: bold;
   cursor: pointer;
   text-align: center;
   margin-top: 30px;
@@ -733,10 +565,11 @@ input {
   color: white;
   
 }
-label{
+.fa,
+.fas,
+.far {
+  color: #184267;
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: white;
 }
 .close-modal-edit{
   position: absolute;
