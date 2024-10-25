@@ -17,13 +17,39 @@
       height: 400px
     }
 
-    .sidenav {
-      background-color: gainsboro;
-      border-color: black;
-      border-radius: 3px;
-      height: 160%;
-      width: 260px;
-    }
+  /* Container and sidebar styling */
+  .container-fluid {
+    display: flex;
+  }
+
+  .sidenav {
+    background-color: gainsboro;
+    border-color: black;
+    border-radius: 3px;
+    height: 100vh; /* Full height of viewport */
+    width: 260px;
+    position: fixed;
+  }
+
+  .main-container {
+    margin-left: 245px; /* Offset main content for sidebar width */
+    padding: 15px;
+    width: calc(100% - 230  px);
+  }
+
+  /* Table wrapper styling */
+  .outer-wrapper {
+    max-height: 500px; /* Set a max-height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: white;
+   
+  }
+
+  /* Adjust the table to fit within the wrapper */
+  .table {
+    width: 100%;
+    table-layout: fixed;
+  }
 
     @media screen and (max-width: 100px) {
       .row.content {
@@ -108,7 +134,7 @@
                   
                     <th>Contact Number</th>
                     <th>Email</th>
-                    <th>Type</th>
+                 
                     <th>Address</th>
                    
                    
@@ -162,8 +188,6 @@
             <label for="name">Email</label>
             <input type="text" id="email" name="email">
 
-            <label for="name">Type</label>
-            <input type="text" id="type" name="type">
             
             <label for="name">Address</label>
             <input type="text" id="address" name="address">
@@ -217,8 +241,6 @@
             <label for="name">Email</label>
             <input type="text" id="email1" name="email1">
 
-            <label for="name">Type</label>
-            <input type="text" id="type1" name="type1">
             
             <label for="name">Address</label>
             <input type="text" id="address1" name="address1">

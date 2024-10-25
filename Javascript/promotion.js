@@ -75,7 +75,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
 
   const Number = document.getElementById('number');
   const Email = document.getElementById('email');
-  const Type = document.getElementById('type');
+
   const Address = document.getElementById('address');
 
   const photos = document.getElementById('photos');
@@ -83,7 +83,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formCreate) {
     formCreate.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([ Name, Number, Email, Type, Address,  photos])) {
+      if (validateInputs([ Name, Number, Email, Address,  photos])) {
         try {
           const photoFile = photos.files[0];
           const photoRef = ref(storage, `hotels/${photoFile.name}`);
@@ -96,7 +96,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
            
             Number: Number.value,
             Email: Email.value,
-            Type: Type.value,
+          
             Address: Address.value,
            
             PhotoURL: photoURL,
@@ -158,7 +158,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
 
   const Number1 = document.getElementById('number1');
   const Email1 = document.getElementById('email1');
-  const Type1 = document.getElementById('type1');
+
   const Address1 = document.getElementById('address1');
 
   const photos1 = document.getElementById('photos1');
@@ -166,7 +166,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (formEdit) {
     formEdit.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([ Name1, , Number1, Email1, Type1, Address1, photos1])) {
+      if (validateInputs([ Name1, , Number1, Email1, Address1, photos1])) {
         try {
           const userID = localStorage.getItem("ID");
           const photoFile = photos1.files[0];
@@ -183,7 +183,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
            
             Number: Number1.value,
             Email: Email1.value,
-            Type: Type1.value,
             Address: Address1.value,
         
           };
@@ -219,7 +218,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
             <td>${doc.data().Name}</td>
           <td>${doc.data().Number}</td>
              <td>${doc.data().Email}</td>
-              <td>${doc.data().Type}</td>
+            
             <td>${doc.data().Address}</td>
              <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
@@ -229,7 +228,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           trow.addEventListener('click', (e) => {
             localStorage.setItem('ID', doc.id);
             document.getElementById('name1').value = doc.data().Name;
-            document.getElementById("type1").value = doc.data().Type;
+           
             document.getElementById("email1").value = doc.data().Email;
             document.getElementById("number1").value = doc.data().Number;
             document.getElementById("address1").value = doc.data().Address;

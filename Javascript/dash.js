@@ -453,7 +453,7 @@ const touristSpotsChart = new Chart(touristCtx, {
         "rgba(201, 203, 207, 1)",
         "rgba(255, 99, 132, 1)"
       ],
-      borderWidth: 1
+      borderWidth: 2  
     }]
   },
   options: {

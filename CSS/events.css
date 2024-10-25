@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   color: black;
-  font-size: 18px;
+  font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -175,12 +175,23 @@ th, tr, td {
   color: #184267;
   font-size: 16px;
 }
+#table-container {
+  max-height: 70vh; /* Adjust height as needed */
+  overflow-y: auto;
+  width: 100%; /* Make it take up available space */
+}
+body {
+  display: flex;
+  flex-direction: row;
+}
   body{
     display: block;
 }
 
 .sidenav {
- 
+  position: fixed;
+  height: 100vh;
+  width: 200px; /* Adjust width as necessary */
   height: 160%;
   color: black;
   font-size: 14px;

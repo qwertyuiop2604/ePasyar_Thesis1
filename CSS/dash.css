@@ -119,6 +119,12 @@
   background-color: #f9f9f9; /* Light background for better chart visibility */
 }
 
+#touristSpotsChart {
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+  background-color: #f9f9f9; /* Light background for better chart visibility */
+}
+
 .btn-primary {
   background-color: #337ab7; /* Attractive blue color */
   border-color: #337ab7; /* Match button border with color */
@@ -397,7 +403,9 @@ button{
 .count {
   font-size: 14px;
 }
-
+#touristSpotsChart{
+  width: 1500px;
+}
 
 #mostVisitedChart{
   width: 1500px;
