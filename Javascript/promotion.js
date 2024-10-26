@@ -63,9 +63,11 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (openPop && closePop && createPromotion) {
     openPop.addEventListener('click', () => {
       createPromotion.style.display = 'block';
+      toggleBlur(true);
     });
     closePop.addEventListener('click', () => {
       createPromotion.style.display = 'none';
+      toggleBlur(false);
     });
   }
 
@@ -146,9 +148,11 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   if (opPop && cloPop && editPromotion) {
     opPop.addEventListener('click', () => {
       editPromotion.style.display = 'block';
+      toggleBlur(true); 
     });
     cloPop.addEventListener('click', () => {
       editPromotion.style.display = 'none';
+      toggleBlur(false);
     });
   }
 
@@ -378,6 +382,14 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
   }
 });
 
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
 // Button to see archived accounts
 document.getElementById('promoArchive').addEventListener('click', () => {
   window.location = "pArchives.html";

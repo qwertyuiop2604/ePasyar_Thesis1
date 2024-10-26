@@ -23,7 +23,10 @@ h2{
   background-color: #337ab7;
 
 }
-
+.blur-background {
+  filter: blur(2px); /* Adjust the blur intensity as needed */
+  /* Ensure this class applies to the correct background element */
+}
 .card {
   background-color: #f1f1f1;
   border: 1px solid #337ab7;

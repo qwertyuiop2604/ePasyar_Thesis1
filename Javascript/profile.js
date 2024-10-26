@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, setDoc, doc, getDocs, updateDoc, collection } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -47,21 +47,21 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
 
 // Create Account Form Popup
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
 const closePop = document.querySelector('.close-modal');
+// For CREATE FORM POPUP
+openPop.addEventListener('click', () => {
+  createAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
+});
 
-openPop.addEventListener('click', () => createAcc.style.display = 'block');
-closePop.addEventListener('click', () => createAcc.style.display = 'none');
+closePop.addEventListener('click', () => {
+  createAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
+});
 
 // Register Form - Add to Firebase
 const formCreate = document.getElementById('create-form');
@@ -98,8 +98,16 @@ const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
 
-oPop.addEventListener('click', () => editAcc.style.display = 'block');
-cPop.addEventListener('click', () => editAcc.style.display = 'none');
+// For EDIT FORM POPUP
+oPop.addEventListener('click', () => {
+  editAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
+});
+
+cPop.addEventListener('click', () => {
+  editAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
+});
 
 // Edit Form - Update to Firebase
 const formEdit = document.getElementById('edit-form');
@@ -239,6 +247,14 @@ document.addEventListener('click', (event) => {
     document.getElementById("delete_acc").classList.add("disabled-button");
   }
 });
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
 
 //Button to see archived accounts
 archived_acc.addEventListener('click', (e) => {

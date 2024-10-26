@@ -114,6 +114,15 @@ querySnap2.forEach((doc2) => {
   });
 });
 
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
+
 // Event listener for permanently deleting an event
 document.getElementById('permanentlyDelete').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_delete').style.display = "block";

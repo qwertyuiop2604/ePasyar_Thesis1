@@ -873,9 +873,8 @@ input[type="text"], input[type="date"], textarea {
   /* Add other styling properties for the modal */
 }
 
-/* Apply blur to background */
 .blur-background {
-  filter: blur(5px); /* Adjust the blur intensity as needed */
+  filter: blur(2px); /* Adjust the blur intensity as needed */
   /* Ensure this class applies to the correct background element */
 }
 

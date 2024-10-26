@@ -82,10 +82,7 @@ restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
 });
 
-let logout = document.getElementById("logout");
-logout.addEventListener("click", () => {
-  window.location = "index.html";
-});
+
 
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
@@ -492,18 +489,36 @@ async function fetchTouristSpotData() {
 // Fetch the tourist spot data when the page loads
 fetchTouristSpotData();
 
-let logoutButton = document.getElementById("logout");
-logoutButton.addEventListener("click", (event) => {
-  event.preventDefault(); // Prevent the default action (page reload or redirect)
-  
-  // Show a confirmation dialog
-  let userConfirmed = confirm("Are you sure you want to log out?");
-  
-  if (userConfirmed) {
-    // If the user confirms, redirect to the logout page (index.html)
-    window.location = "index.html";
-  } else {
-    window.location = "dash.html";
-  }
+
+
+let logoutModal = document.getElementById("logout");
+let modal = document.getElementById("logoutModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let confirmBtn = document.getElementById("confirmLogout");
+let cancelBtn = document.getElementById("cancelLogout");
+
+logout.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the modal
 });
+
+closeBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when the close button is clicked
+};
+
+cancelBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+};
+
+confirmBtn.onclick = function() {
+  window.location = "index.html"; // Redirect to index.html on confirmation
+};
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
 

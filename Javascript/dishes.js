@@ -52,11 +52,15 @@ const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
 const closePop = document.querySelector('.close-modal');
 
+// For CREATE FORM POPUP
 openPop.addEventListener('click', () => {
   createAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
 });
+
 closePop.addEventListener('click', () => {
   createAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
 });
 
 // FOR REGISTER FORM - ADD TO FIREBASE
@@ -108,13 +112,17 @@ function validateInputs(inputs) {
 const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
-
+// For EDIT FORM POPUP
 oPop.addEventListener('click', () => {
   editAcc.style.display = 'block';
+  toggleBlur(true); // Apply blur effect
 });
+
 cPop.addEventListener('click', () => {
   editAcc.style.display = 'none';
+  toggleBlur(false); // Remove blur effect
 });
+
 
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById('edit-form');
@@ -122,6 +130,8 @@ const name1 = document.getElementById('name1');
 
 const description1 = document.getElementById('description1');
 const photos1 = document.getElementById('photos1');
+
+
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -209,6 +219,14 @@ function highlightRow(row) {
   document.getElementById("delete_acc").disabled = false;
 }
 
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
 // Auto-archive past events
 async function autoArchivePastEvents() {
   const querySnapshot = await getDocs(collection(db, "local_dishes"));

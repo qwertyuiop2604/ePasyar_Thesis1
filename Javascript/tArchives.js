@@ -69,6 +69,14 @@ document.getElementById("localindustries").addEventListener("click", () => {
     }
   });
 })();
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
 
 // Function to highlight the selected table row
 function highlightRow(row) {

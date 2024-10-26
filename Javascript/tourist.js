@@ -226,14 +226,14 @@ function limitWords(textareaId, maxWords) {
 limitWords('description', 100);
 limitWords('description1', 100);
 
-    function toggleBlur(shouldBlur) {
-      const tableContainer = document.querySelector('#table'); // Ensure this element wraps your table
-      if (shouldBlur) {
-        tableContainer.classList.add('blur-background');
-      } else {
-        tableContainer.classList.remove('blur-background');
-      }
-    }
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
   
 // Additional event listeners and modal setups
   // Make sure these are correctly added and closed.

@@ -251,13 +251,14 @@ async function fetchAndSortEvents() {
   return events;
 }
 function toggleBlur(shouldBlur) {
-  const tableContainer = document.querySelector('#table'); // Ensure this element wraps your table
+  const container = document.querySelector('.main-container'); // Select the common container
   if (shouldBlur) {
-    tableContainer.classList.add('blur-background');
+    container.classList.add('blur-background');
   } else {
-    tableContainer.classList.remove('blur-background');
+    container.classList.remove('blur-background');
   }
 }
+
 
 
 

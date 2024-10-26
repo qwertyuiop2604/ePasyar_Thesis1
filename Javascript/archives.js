@@ -150,3 +150,11 @@ document.getElementById('cnfrm_delete').addEventListener('click', async () => {
     console.error("Error deleting document: ", error);
   }
 });
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
