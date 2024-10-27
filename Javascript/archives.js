@@ -31,10 +31,7 @@ let events = document.getElementById("events");
 events.addEventListener("click", () => {
   window.location = "events.html";
 });
-let logout = document.getElementById("logout");
-logout.addEventListener("click", () => {
-  window.location = "index.html";
-});
+
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {
   window.location = "souvenir.html";
@@ -129,32 +126,35 @@ querySnap2.forEach((doc2) => {
   });
 });
 
-// Event listener for permanently deleting an event
-document.getElementById('permanentlyDelete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "block";
+
+
+let logoutModal = document.getElementById("logout");
+let modal = document.getElementById("logoutModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let confirmBtn = document.getElementById("confirmLogout");
+let cancelBtn = document.getElementById("cancelLogout");
+
+logout.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the modal
 });
 
-// Event listener for cancel button in delete confirmation modal
-document.getElementById('cnl_delete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "none";
-});
+closeBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when the close button is clicked
+};
 
-// Event listener for confirm button in delete confirmation modal
-document.getElementById('cnfrm_delete').addEventListener('click', async () => {
-  try {
-    const docRef = doc(db, "festivals", localStorage.getItem("ID"));
-    await deleteDoc(docRef);
-    window.location = "archives.html";
-    window.location.reload();
-  } catch (error) {
-    console.error("Error deleting document: ", error);
+cancelBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+};
+
+confirmBtn.onclick = function() {
+  window.location = "index.html"; // Redirect to index.html on confirmation
+};
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
   }
-});
-function toggleBlur(shouldBlur) {
-  const container = document.querySelector('.main-container'); // Select the common container
-  if (shouldBlur) {
-    container.classList.add('blur-background');
-  } else {
-    container.classList.remove('blur-background');
-  }
-}
+};
+ 

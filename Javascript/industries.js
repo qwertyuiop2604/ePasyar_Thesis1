@@ -26,20 +26,12 @@ const navButtons = {
   promotion: 'promotion.html',
   tourist: 'tourist.html',
   souvenir: 'souvenir.html',
-  logout: 'index.html',
-
   restaurant: 'restaurants.html',
   localdishes: 'dishes.html',
   otop: 'otop.html',
   events: 'events.html'
 };
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
+
 
 Object.keys(navButtons).forEach(button => {
   document.getElementById(button).addEventListener('click', () => {
@@ -277,3 +269,34 @@ function toggleDisplay(element, displayStyle) {
   element.style.display = displayStyle;
 }
 
+
+let logoutModal = document.getElementById("logout");
+let modal = document.getElementById("logoutModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let confirmBtn = document.getElementById("confirmLogout");
+let cancelBtn = document.getElementById("cancelLogout");
+
+logout.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the modal
+});
+
+closeBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when the close button is clicked
+};
+
+cancelBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+};
+
+confirmBtn.onclick = function() {
+  window.location = "index.html"; // Redirect to index.html on confirmation
+};
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+ 

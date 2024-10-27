@@ -36,10 +36,7 @@ let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener('click', () =>{
   window.location = 'souvenir.html'
 })
-let logout = document.getElementById("logout");
-logout.addEventListener('click', () =>{
-  window.location = 'index.html'
-})
+
 let restaurants = document.getElementById("restaurant");
 restaurants.addEventListener("click", () => {
   window.location = "restaurants.html";

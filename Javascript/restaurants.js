@@ -48,10 +48,7 @@ let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener('click', () =>{
   window.location = 'souvenir.html'});
 
-let logout = document.getElementById("logout");
-logout.addEventListener("click", () => {
-  window.location = "index.html";
-});
+
 
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
@@ -388,3 +385,34 @@ function toggleBlur(shouldBlur) {
 archived_acc.addEventListener("click", (e) => {
   window.location = "rArchives.html";
 });
+
+let logoutModal = document.getElementById("logout");
+let modal = document.getElementById("logoutModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let confirmBtn = document.getElementById("confirmLogout");
+let cancelBtn = document.getElementById("cancelLogout");
+
+logout.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the modal
+});
+
+closeBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when the close button is clicked
+};
+
+cancelBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+};
+
+confirmBtn.onclick = function() {
+  window.location = "index.html"; // Redirect to index.html on confirmation
+};
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+ 

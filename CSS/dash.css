@@ -711,6 +711,8 @@ label{
 .btn{
     display: flex;
 }
+
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -738,7 +740,8 @@ label{
   color: #F4D160;
   float: right;
   font-size: 28px;
-  font-weight: bold;
+
+
 }
 
 .close:hover,
@@ -749,6 +752,8 @@ label{
 }
 #confirmLogout{
   color: black;
+  margin: 10px;
+
   font-family: 'Poppins', sans-serif;
 
 }

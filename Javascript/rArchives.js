@@ -25,10 +25,7 @@ let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'
 })
-let logout = document.getElementById("logout");
-logout.addEventListener('click', () =>{
-window.location = 'index.html'
-})
+
 let reviews = document.getElementById("reviews");
 reviews.addEventListener("click", () => {
   window.location = "reviews.html";
@@ -135,3 +132,35 @@ document.getElementById('cnfrm_delete').addEventListener('click', async () => {
     console.error("Error deleting document: ", error);
   }
 });
+
+
+let logoutModal = document.getElementById("logout");
+let modal = document.getElementById("logoutModal");
+let closeBtn = document.getElementsByClassName("close")[0];
+let confirmBtn = document.getElementById("confirmLogout");
+let cancelBtn = document.getElementById("cancelLogout");
+
+logout.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the modal
+});
+
+closeBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when the close button is clicked
+};
+
+cancelBtn.onclick = function() {
+  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+};
+
+confirmBtn.onclick = function() {
+  window.location = "index.html"; // Redirect to index.html on confirmation
+};
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+ 
