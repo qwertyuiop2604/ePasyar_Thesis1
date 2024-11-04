@@ -461,21 +461,24 @@ const touristSpotsChart = new Chart(touristCtx, {
     }
   }
 });
-
 // Function to fetch tourist spot data from Firestore
 async function fetchTouristSpotData() {
   try {
     const touristScansRef = collection(db, "total_scans/touristScans/touristspot_scans");
     const querySnapshot = await getDocs(touristScansRef);
 
+
     const labels = [];
     const data = [];
 
+
     querySnapshot.forEach((doc) => {
-      labels.push(doc.id); // Use document ID as label
+      const establishment = doc.data().establishmentName || "Unknown";
+      labels.push(establishment);
       const totalScans = doc.data().totalScans || 0; // Retrieve totalScans field
       data.push(totalScans); // Add the totalScans to data array
     });
+
 
     // Update the chart with the fetched data
     touristSpotsChart.data.labels = labels;
@@ -485,6 +488,8 @@ async function fetchTouristSpotData() {
     console.error("Error fetching tourist spot data:", error);
   }
 }
+
+
 
 // Fetch the tourist spot data when the page loads
 fetchTouristSpotData();

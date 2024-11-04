@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Promotions Panel</title>
+  <title>Archived Accounts </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/CSS/pArchives.css">
@@ -105,27 +105,13 @@
         <br>
       </div>
 
-      <div>
-        <div id="logoutModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Are you sure you want to log out?</h2>
-           
-            <button id="confirmLogout">Yes, log out</button>
-            <button id="cancelLogout">Cancel</button>
-          </div>
-        </div>
-    
-
       <main class="main-container" id="blur">
         <div class="main2">
           <div class="btn_useracc">
             <button id="bckbtn">Back</button>
             <button class="enable_acc" id="enabledbtn">Retrieve</button>
             <button class="enable_acc" id="permanentlyDelete"> Delete</button>
-            <div>
-              <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
-            </div>
+            
           </div>
 
           <div class="outer-wrapper">
@@ -135,7 +121,6 @@
                   <th>Archived By</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Password</th>
                   <th>Archived Date</th>
                 </tr>
                 <tbody id="archived-tbody"></tbody>
@@ -148,21 +133,45 @@
     <!-- End Main -->
 
     <!-- confirmation modal for enable account -->
-    <div class="cnfrm_modal" id="cnfrm_modal_enable">
-      <h1>Enable Promotion?</h1>
-      <div class="btn_promo3">
-        <button id="cnl_promo3">Cancel</button>
-        <button id="cnfrm_promo3">Confirm</button>
-      </div>
+<div class="cnfrm_modal" id="cnfrm_modal_retrieve">
+    <h1>Retrieve Account?</h1>
+    <div class="btn_confirmation">
+      <button id="cnl_rtv" class="btn btn-danger">Cancel</button>
+      <button id="cnfrm_rtv" class="btn btn-primary">Confirm</button>
     </div>
+</div>
 
-    <div class="cnfrm_modal" id="cnfrm_modal_delete">
-      <h1>Permanently Delete Event?</h1>
-      <div class="btn">
-        <button id="cnl_delete">Cancel</button>
-        <button id="cnfrm_delete">Confirm</button>
-      </div>
+<!-- confirmation modal for delete account -->
+<div class="cnfrm_modal" id="cnfrm_modal_delete">
+
+    <h1>Permanently Delete Account?</h1>
+    <div class="btn">
+      <button id="cnl_delete" class="btn btn-danger">Cancel</button>
+      <button id="cnfrm_delete" class="btn btn-primary">Confirm</button>
     </div>
+</div>
+
+        <!-- confirmation modal for delete account -->
+        <div class="cnfrm_modal_delete" id="delete_acc_modal">
+          <h1>Are you sure you want to archive this Event?</h1>
+          <div class="btn1">
+            <button id="cnl2">Cancel</button>
+            <button id="cnfrm2">Confirm</button>
+          </div>
+        </div>
+    
+      </div>
+
+             <!-- confirmation modal for delete account -->
+             <div class="cnfrm_modal_delete" id="delete_acc_modal">
+              <h1>Are you sure you want to archive this Event?</h1>
+              <div class="btn1">
+                <button id="cnl2">Cancel</button>
+                <button id="cnfrm2">Confirm</button>
+              </div>
+            </div>
+        
+          </div>
 
     <script type="text/javascript">
       function searchAppID() {

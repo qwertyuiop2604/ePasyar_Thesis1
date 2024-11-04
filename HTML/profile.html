@@ -113,17 +113,7 @@
                     <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
                 </ul><br>
             </div>
-            <div>
-              <div id="logoutModal" class="modal">
-                <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h2>Are you sure you want to log out?</h2>
-                 
-                  <button id="confirmLogout">Yes, log out</button>
-                  <button id="cancelLogout">Cancel</button>
-                </div>
-              </div>
-        
+
             <!-- Main content area -->
             <main class="main-container">
                 <div class="main2">
@@ -131,12 +121,12 @@
                         <!-- Action buttons for account management -->
                         <button class="add_acc"><i class="fas fa-plus"></i> Add </button>
                         <button class="edit_acc disabled-button" id="edit_acc" disabled> <i class="fas fa-edit"></i> Edit</button>
-                        <button id="delete_acc" class="disabled-button" disabled><i class="fas fa-archive"></i> Archive</button>
+                        <button id="delete_acc" class="disabled-button" disabled><i class="fas fa-archive"></i> Delete</button>
                         <div>
                             <button id="archived_acc"> <i class="fas fa-box-open"></i> See Archives</button>
                         </div>
                         <!-- Search input field -->
-                        <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
+                        
                     </div>
 
                     <!-- Table to display account details -->
@@ -147,6 +137,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Position</th>
+                                    <th>Status</th>
                                     
                                 </tr>
                                 <tbody id="tbody1"></tbody>
@@ -165,6 +156,8 @@
                 <form id="create-form">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name">
+                    <label for="name">Employee Number</label>
+                    <input type="text" id="em_no" name="em_no">
                     <label for="reg-email">Email</label>
                     <input type="text" id="email" name="email">
                     <label for="position">Position</label>
@@ -186,6 +179,8 @@
                 <form id="edit-form">
                     <label for="name">Name</label>
                     <input type="text" id="name1" name="name">
+                    <label for="name">Employee Number</label>
+                    <input type="text" id="em_no1" name="em_no">
                     <label for="edit-email">Email</label>
                     <input type="text" id="email1" name="email">
                     <label for="position">Position</label>
@@ -208,6 +203,17 @@
             
         </div>
     </div>
+
+        <!-- confirmation modal for delete account -->
+        <div class="cnfrm_modal_delete" id="delete_acc_modal">
+          <h1>Are you sure you want to archive this Event?</h1>
+          <div class="btn1">
+            <button id="cnl2">Cancel</button>
+            <button id="cnfrm2">Confirm</button>
+          </div>
+        </div>
+    
+      </div>
 
 
 

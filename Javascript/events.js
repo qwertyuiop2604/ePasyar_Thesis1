@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
 import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
@@ -76,8 +77,6 @@ formCreate.addEventListener('submit', async (e) => {
   if (validateInputs([name, date, description, photos])) {
     try {
       const photoFile = photos.files[0]; // Get the file from the input
-      if (photoFile) {
-        // Upload photo to Firebase storage
         const photoRef = ref(storage, `photos/${photoFile.name}`);
         await uploadBytes(photoRef, photoFile); // Upload the file
         const photoURL = await getDownloadURL(photoRef); // Get the uploaded photo's URL
@@ -90,19 +89,14 @@ formCreate.addEventListener('submit', async (e) => {
           PhotoURL: photoURL, // Add the photo URL
           Status: "not done" // Mark the event as not done
         });
-
-        console.log("Event added successfully!");
-        toggleDisplay(createAcc, 'none'); // Hide the form
-        localStorage.setItem('lastEventUpdate', Date.now()); // Update local storage
-        window.location.reload(); // Reload the page to show the newly added event
-      } else {
-        console.error("No photo uploaded. Please select a photo.");
+        toggleDisplay(createAcc, 'none');
+        localStorage.setItem('lastEventUpdate', Date.now());
+        window.location.reload();
+      } catch (error) {
+        console.error("Error adding document: ", error);
       }
-    } catch (error) {
-      console.error("Error adding document to Firestore: ", error);
     }
-  }
-});
+  });
 
 
 function validateInputs(inputs) {
@@ -170,7 +164,7 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       await updateDoc(doc(db, "festivals", userID), updateData);
-      toggleDisplay(editAcc, 'none');
+
       localStorage.setItem('lastEventUpdate', Date.now());
       window.location.reload(); // Reload to refresh the table
     } catch (error) {

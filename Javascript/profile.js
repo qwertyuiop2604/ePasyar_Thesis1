@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
 import { getFirestore, setDoc, doc, getDocs, updateDoc, collection } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
@@ -12,10 +13,12 @@ const firebaseConfig = {
   appId: "1:1004550371893:web:692e667675470640980f7c"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
 
 // Navigation
 let dash = document.getElementById("dash");
@@ -32,6 +35,8 @@ let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener('click', () => window.location = 'souvenir.html');
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener('click', () => window.location = 'restaurants.html');
+let logout = document.getElementById("logout");
+logout.addEventListener('click', () => window.location = 'index.html');
 
 
 let otop = document.getElementById("otop");
@@ -47,6 +52,7 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
+
 // Create Account Form Popup
 const createAcc = document.getElementById('user-create');
 const openPop = document.querySelector('.add_acc');
@@ -57,39 +63,112 @@ openPop.addEventListener('click', () => {
   toggleBlur(true); // Apply blur effect
 });
 
+
 closePop.addEventListener('click', () => {
   createAcc.style.display = 'none';
   toggleBlur(false); // Remove blur effect
 });
+
 
 // Register Form - Add to Firebase
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
 const email = document.getElementById('email');
 const position = document.getElementById('position');
+const em_no = document.getElementById('em_no');
 const btnRegister = document.getElementById('btnRegister'); // Add this line to get the register button
 
-btnRegister.addEventListener('click', (e) => { // Add event listener for the register button click
+
+// Register Form - Add to Firebase
+btnRegister.addEventListener('click', async (e) => {
   e.preventDefault();
-  if (name.value === '' || email.value === '' || position.value === '') {
+  if (name.value === '' || email.value === '' || position.value === '' || em_no.value === '') {
     alert("All fields are required.");
-  
+    return;
+  }
+
+
+  // Create the initial password based on position and employee number
+  let password;
+  if (position.value.toLowerCase() === 'statistician') {
+    password = `STAT_${em_no.value.slice(-6)}`;
+  } else if (position.value.toLowerCase() === 'admin') {
+    password = `ADMIN_${em_no.value.slice(-6)}`;
   } else {
-    createUserWithEmailAndPassword(auth, email.value, "temp_password")
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setDoc(doc(db, "users", "admin", "admin_account", user.uid), {
-          name: name.value,
-          email: email.value,
-          position: position.value,
-          status: "Active"
-        })
-          .then(() => createAcc.style.display = 'none')
-          .catch((error) => console.error("Error adding document: ", error));
-      })
-      .catch((error) => alert(error.message));
+    alert("Unknown position. Cannot generate password.");
+    return;
+  }
+
+
+  try {
+    // Create the user with generated password
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password);
+    const user = userCredential.user;
+
+
+    // Set initial status to "Pending" and firstLogin to true
+    await setDoc(doc(db, "users", "admin", "admin_account", user.uid), {
+      name: name.value,
+      email: email.value,
+      position: position.value,
+      status: "Pending",
+      firstLogin: true
+    });
+
+
+    // Send email verification
+    await sendEmailVerification(user);
+    alert("Account created. Verification email sent. Please verify your email to activate your account.");
+
+
+    createAcc.style.display = 'none';
+
+
+  } catch (error) {
+    console.error("Error during registration:", error.message);
+    alert(error.message);
   }
 });
+
+
+
+
+  const user = auth.currentUser;
+ 
+  if (user && user.emailVerified) {
+    // Update status to "Active" if email is verified
+    await updateDoc(userRef, { status: "Active" })
+      .then(() => console.log("User status updated to Active"))
+      .catch((error) => console.error("Error updating status: ", error));
+  }
+
+
+
+
+// Add a listener for authentication state changes
+// Listen for auth state changes
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    // Check if user is verified each time they log in
+    if (user.emailVerified) {
+      const userRef = doc(db, "users", "admin", "admin_account", user.uid);
+      try {
+        await updateDoc(userRef, { status: "Active" });
+        console.log("User status updated to Active");
+      } catch (error) {
+        console.error("Error updating status: ", error);
+      }
+    } else {
+      console.log("User is not verified.");
+    }
+  }
+});
+
+
+
+
+
+
 
 
 // Edit Account Form Popup
@@ -97,28 +176,32 @@ const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
 
+
 // For EDIT FORM POPUP
 oPop.addEventListener('click', () => {
   editAcc.style.display = 'block';
   toggleBlur(true); // Apply blur effect
 });
 
+
 cPop.addEventListener('click', () => {
   editAcc.style.display = 'none';
   toggleBlur(false); // Remove blur effect
 });
 
+
 // Edit Form - Update to Firebase
 const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
 const email1 = document.getElementById('email1');
-const positionEdit = document.getElementById('positionEdit'); 
+const positionEdit = document.getElementById('positionEdit');
 const btnSaveEdit = document.getElementById('btnSaveEdit');
+
 
 btnSaveEdit.addEventListener('click', async (e) => {
   e.preventDefault();
-  if (name1.value === '' || email1.value === '' || positionEdit.value === '') { 
-  
+  if (name1.value === '' || email1.value === '' || positionEdit.value === '') {
+ 
   } else {
     const userId = localStorage.getItem('ID');
     if (userId) {
@@ -126,7 +209,7 @@ btnSaveEdit.addEventListener('click', async (e) => {
       updateDoc(userRef, {
         name: name1.value,
         email: email1.value,
-        position: positionEdit.value 
+        position: positionEdit.value
       })
         .then(() => {
           console.log("Document successfully updated!");
@@ -141,55 +224,69 @@ btnSaveEdit.addEventListener('click', async (e) => {
 });
 
 
+
+
 // Populating table and setting up row click event
 const tbody = document.getElementById('tbody1');
 
+
 const querySnapshot = await getDocs(collection(db, "users", "admin", "admin_account"));
 querySnapshot.forEach((doc) => {
-  if (doc.data().status === "Active") {
+  if (doc.data().status === "Active" || doc.data().status === "Pending") {
+    // Code to add row
     const trow = document.createElement('tr');
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
     const td3 = document.createElement('td');
-    
+    const td4 = document.createElement('td');
+   
+
 
     td1.textContent = doc.data().name;
     td2.textContent = doc.data().email;
     td3.textContent = doc.data().position;
+    td4.textContent = doc.data().status;
 
-  
+
+ 
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
-  
+    trow.appendChild(td4);
+ 
+
 
     tbody.appendChild(trow);
+
 
     trow.addEventListener('click', () => {
       localStorage.setItem('ID', doc.id);
       console.log(doc.id);
-  
+ 
       document.querySelectorAll('tr').forEach(row => row.classList.remove('selected-row'));
       trow.classList.add('selected-row');
-  
+ 
       document.getElementById("edit_acc").disabled = false;
       document.getElementById("edit_acc").classList.remove("disabled-button");
       document.getElementById("edit_acc").classList.add("enabled-button");
-  
+ 
       document.getElementById("delete_acc").disabled = false;
       document.getElementById("delete_acc").classList.remove("disabled-button");
       document.getElementById("delete_acc").classList.add("enabled-button");
-  
+ 
       document.getElementById('name1').value = doc.data().name;
       document.getElementById('email1').value = doc.data().email;
       document.getElementById('position').value = doc.data().position;
   });
-  
+ 
   }
 });
 
 
+
+
 const currentDateTime = new Date().toLocaleString();
+
 
 // Event Listener for delete account button
 const btnDelete = document.getElementById('delete_acc');
@@ -212,11 +309,13 @@ btnDelete.addEventListener('click', async () => {
   }
 });
 
+
 // Cancel delete account
 const cnl2 = document.getElementById('cancel_delete');
 cnl2.addEventListener('click', () => {
   document.getElementById('delete_acc_modal').style.display = "none";
 });
+
 
 //Button to see archived accounts
 const archived_acc = document.getElementById('archived_acc');
@@ -224,9 +323,11 @@ archived_acc.addEventListener('click', (e) => {
   window.location = "prArchives.html";
 });
 
+
 // Initial disabling of buttons
 document.getElementById("edit_acc").disabled = true;
 document.getElementById("delete_acc").disabled = true;
+
 
 // Deselect rows when clicking outside the table
 document.addEventListener('click', (event) => {
@@ -236,10 +337,12 @@ document.addEventListener('click', (event) => {
     // Deselect all rows
     document.querySelectorAll('tr').forEach(row => row.classList.remove('selected-row'));
 
+
     // Disable buttons
     document.getElementById("edit_acc").disabled = true;
     document.getElementById("edit_acc").classList.remove("enabled-button");
     document.getElementById("edit_acc").classList.add("disabled-button");
+
 
     document.getElementById("delete_acc").disabled = true;
     document.getElementById("delete_acc").classList.remove("enabled-button");
@@ -255,10 +358,12 @@ function toggleBlur(shouldBlur) {
   }
 }
 
+
 //Button to see archived accounts
 archived_acc.addEventListener('click', (e) => {
   window.location = "prArchives.html"
 })
+
 
 
 let logoutModal = document.getElementById("logout");
@@ -290,4 +395,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
- 
