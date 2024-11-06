@@ -40,11 +40,6 @@ localindustries.addEventListener("click", () => window.location = "industries.ht
 
 
 
-Object.keys(navButtons).forEach(button => {
-  document.getElementById(button).addEventListener('click', () => {
-    window.location = navButtons[button];
-  });
-});
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
@@ -64,54 +59,52 @@ closePop.addEventListener('click', () => {
 
 
 // FOR REGISTER FORM - ADD TO FIREBASE
+
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
-const date = document.getElementById('date');
+const date = document.getElementById('caldate');
 const description = document.getElementById('description');
 const photos = document.getElementById('photos');
 
+
 formCreate.addEventListener('submit', async (e) => {
-  e.preventDefault(); // Prevent form from submitting the default way
-
-  // Check if inputs are valid
-  if (validateInputs([name, date, description, photos])) {
+  e.preventDefault();
+  if (validateInputs([ name,date,description, photos])) {
     try {
-      const photoFile = photos.files[0]; // Get the file from the input
-        const photoRef = ref(storage, `photos/${photoFile.name}`);
-        await uploadBytes(photoRef, photoFile); // Upload the file
-        const photoURL = await getDownloadURL(photoRef); // Get the uploaded photo's URL
+      const photoFile = photos.files[0];
+      const photoRef = ref(storage, `photos/${photoFile.name}`);
+      await uploadBytes(photoRef, photoFile);
+      const photoURL = await getDownloadURL(photoRef);
 
-        // Add the event to Firestore
-        await addDoc(collection(db, "festivals"), {
-          Name: name.value,
-          Date: date.value,
-          Description: description.value.trim(),
-          PhotoURL: photoURL, // Add the photo URL
-          Status: "not done" // Mark the event as not done
-        });
-        toggleDisplay(createAcc, 'none');
-        localStorage.setItem('lastEventUpdate', Date.now());
-        window.location.reload();
-      } catch (error) {
-        console.error("Error adding document: ", error);
-      }
+      await addDoc(collection(db, "festivals"), {
+        Name: name.value,
+        Date: date.value,
+        Description: description.value,
+        PhotoURL: photoURL,
+        Status: "not done"
+      });
+      createAcc.style.display = 'none';
+      window.location.reload(); // Reload to refresh the table
+    } catch (error) {
+      console.error("Error adding document: ", error);
     }
-  });
+  }
+});
 
 
 function validateInputs(inputs) {
-  let isValid = true;
-  inputs.forEach((input) => {
-    if (!input || input.value.trim() === "") {
-      input?.classList.add("invalid-input");
-      isValid = false;
+  return inputs.every(input => {
+    if (input.value.trim() === "") {
+      input.classList.add("invalid-input");
+      return false;
     } else {
       input.classList.remove("invalid-input");
-      input.classList.add("valid-input");
+      return true;
     }
   });
-  return isValid;
 }
+
+
 
 
 
@@ -138,15 +131,13 @@ const date1 = document.getElementById('date1');
 const description1 = document.getElementById('description1');
 const photos1 = document.getElementById('photos1');
 
-// FOR EDIT FORM - UPDATE TO FIREBASE
-formEdit.addEventListener('submit', async (e) => {
+formEdit.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, date1, description1, photos1])) {
+  if (validateInputs([name1, date1,description1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
-      let photoURL = null;
-
+      let photoURL;
       if (photoFile) {
         const photoRef = ref(storage, `photos/${photoFile.name}`);
         await uploadBytes(photoRef, photoFile);
@@ -154,23 +145,25 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       const updateData = {
+       
         Name: name1.value,
         Date: date1.value,
-        Description: description1.value
+        Description: description1.value,
+        
       };
 
-      if (photoURL) {
+      if (photoFile) {
         updateData.PhotoURL = photoURL;
       }
 
       await updateDoc(doc(db, "festivals", userID), updateData);
-
-      localStorage.setItem('lastEventUpdate', Date.now());
+      editAcc.style.display = "none"; // Close the edit form
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error updating document: ", error);
     }
   }
+  
 });
 
 // Function to limit the description to 1000 words

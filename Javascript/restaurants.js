@@ -62,13 +62,7 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
+
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById("user-create");
@@ -89,14 +83,13 @@ closePop.addEventListener('click', () => {
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById("create-form");
 const name = document.getElementById("name");
-const type = document.getElementById('type');
 const number = document.getElementById("number");
 const location = document.getElementById("location");
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([ name,type,number,location, photos])) {
+  if (validateInputs([ name,number,location, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `restaurant/${photoFile.name}`);
@@ -106,7 +99,7 @@ formCreate.addEventListener('submit', async (e) => {
       await addDoc(collection(db, "vigan_establishments"), {
         Category: "Restaurant",
         Name: name.value,
-        Type: type.value,
+
         Number: number.value,
         Location: location.value,
         PhotoURL: photoURL,
@@ -119,19 +112,22 @@ formCreate.addEventListener('submit', async (e) => {
     }
   }
 });
+
+
 function validateInputs(inputs) {
   let isValid = true;
-  inputs.forEach(input => {
-    if (input.value.trim() === '') {
-      input.classList.add('invalid-input');
-      isValid = false;
-    } else {
-      input.classList.remove('invalid-input');
-      input.classList.add('valid-input');
-    }
+  inputs.forEach((input) => {
+      if (input && input.value.trim() === "") {
+          input.classList.add("invalid-input");
+          isValid = false;
+      } else if (input) {
+          input.classList.remove("invalid-input");
+          input.classList.add("valid-input");
+      }
   });
   return isValid;
 }
+
 
 // FOR EDIT MODAL CONFIRMATION
 const confirmation = document.getElementById("cnfrm_edit");
@@ -162,14 +158,14 @@ cPop.addEventListener('click', () => {
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById("edit-form");
 const name1 = document.getElementById("name1");
-const type1 = document.getElementById("type1");
+
 const number1 = document.getElementById("number1");
 const location1 = document.getElementById("location1");
 const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1,type1, number1,location1, photos1])) {
+  if (validateInputs([name1, number1,location1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -184,7 +180,7 @@ formEdit.addEventListener('submit', async (e) => {
         Category: "Restaurant",
         Name: name1.value,
 
-        Type: type1.value,
+    
         Number: number1.value,
         Location: location1.value,
         PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
@@ -223,7 +219,7 @@ async function fetchEstablishments() {
         trow.addEventListener('click', (e) => {
           localStorage.setItem('ID', doc.id);
           document.getElementById('name1').value = doc.data().Name;
-          document.getElementById("type1").value = doc.data().Type;
+      
           document.getElementById("number1").value = doc.data().Number;
           document.getElementById("location1").value = doc.data().Location;
           highlightRow(trow);
@@ -238,7 +234,6 @@ async function fetchEstablishments() {
 
         function showDetailsModal(data) {
           document.getElementById("details-name").textContent = data.Name;
-          document.getElementById("details-type").textContent = data.Type;
           document.getElementById("details-number").textContent = data.Number;
           document.getElementById("details-location").textContent = data.Location;
           document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available

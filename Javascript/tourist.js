@@ -232,6 +232,8 @@ function toggleBlur(shouldBlur) {
     container.classList.remove('blur-background');
   }
 }
+
+
   
 // Additional event listeners and modal setups
   // Make sure these are correctly added and closed.
@@ -250,7 +252,8 @@ function toggleBlur(shouldBlur) {
          
          <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
-            <button id="rate_${doc.id}" class="rate-btn">Reviews</button> <!-- Rating button -->
+             <td><button id="reviews_${doc.id}" class="reviews-btn">See Reviews</button></td> <!-- See Reviews Button -->
+           
           </td>
           `;
           tbody.appendChild(trow);
@@ -264,6 +267,7 @@ function toggleBlur(shouldBlur) {
             highlightRow(trow);
           });
         
+          
           const detailsBtn = document.getElementById(`details_${doc.id}`);
           detailsBtn.addEventListener('click', (e) => {
               e.stopPropagation();
@@ -293,6 +297,8 @@ function toggleBlur(shouldBlur) {
         }
         
         
+        
+        
           // QR Code generation and display
           const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
           let qrCodeData;
@@ -312,13 +318,7 @@ function toggleBlur(shouldBlur) {
             }
           });
 
-          // Review Button Event Listener
-          const reviewBtn = document.getElementById(`rate_${doc.id}`);
-          reviewBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const establishmentID = doc.id;
-            window.location.href = `review_page.html?id=${establishmentID}`; // Redirect to review page with establishment ID
-          });
+        
         }
       });
     } catch (error) {
@@ -327,6 +327,8 @@ function toggleBlur(shouldBlur) {
   }
 
   fetchEstablishments();
+
+  
 
   // Other event listeners and functions...
 
@@ -408,59 +410,6 @@ function toggleBlur(shouldBlur) {
 `;
   document.head.appendChild(style);
 
-
-// document.addEventListener('DOMContentLoaded', async () => {
-//   const tbody = document.getElementById('tbody1');
-//   const reviewsCollectionRef = collection(db, "ratings/Souvenir Shop/Souvenir Shop_reviews");
-//   const scansCollectionRef = collection(db, "total_scans/touristScans/souvenirshop_scans");
-
-//   try {
-//     const querySnapshot = await getDocs(reviewsCollectionRef);
-
-//     for (const reviewDoc of querySnapshot.docs) {
-//       const reviewData = reviewDoc.data();
-//       const reviewDocId = reviewDoc.id;
-
-//       // Fetch the corresponding totalScans document
-//       const scanDocRef = doc(scansCollectionRef, reviewDocId);
-//       const scanDoc = await getDoc(scanDocRef);
-
-//       const totalScans = scanDoc.exists() ? scanDoc.data().totalScans : 0;
-
-//       // Round the average rating to the nearest tenth
-//       const roundedAverageRating = (Math.round(reviewData.average_rating * 10) / 10).toFixed(1);
-
-//       // Create table row with review and scan data
-//       const trow = document.createElement('tr');
-//       trow.innerHTML = `
-//         <td>${reviewData.name}</td>
-//         <td>${reviewData.total_reviews}</td>
-//         <td>${totalScans}</td>
-//         <td>
-//           <button class="details-btn" data-id="${reviewDocId}">Show Details</button>
-//           <button class="reveal-rating-btn" data-rating="${roundedAverageRating}">Reveal Rating</button> <!-- Rating button -->
-//         </td>
-//       `;
-//       tbody.appendChild(trow);
-
-//       // Add event listener for the "Show Details" button
-//       const detailsBtn = trow.querySelector('.details-btn');
-//       detailsBtn.addEventListener('click', () => {
-//         const reviewDocId = detailsBtn.getAttribute('data-id');
-//         window.location.href = `rev_tourist_details.html?id=${reviewDocId}`;
-//       });
-
-//       // Add event listener for the "Reveal Rating" button to show rating in a popup
-//       const revealRatingBtn = trow.querySelector('.reveal-rating-btn');
-//       revealRatingBtn.addEventListener('click', () => {
-//         const rating = revealRatingBtn.getAttribute('data-rating');
-//         alert(`Average Rating: ${rating}`); // Popup showing the rating
-//       });
-//     }
-//   } catch (error) {
-//     console.error("Error retrieving review or scan data:", error);
-//   }
-// });
 
 function highlightRow(row) {
   const rows = document.querySelectorAll("#tbody1 tr");
