@@ -71,7 +71,7 @@
             <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
             <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
             <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-            <li class="active"><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Accomodations</a></li>
+            <li class="active"><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
             <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
             <!-- <li class="sidebar-list-item1">
@@ -142,14 +142,7 @@
                   <div class="table-wrapper">
                    
                     <th>Name</th>
-                  
-                    <th>Contact Number</th>
-                    <th>Email</th>
-                 
-                    <th>Address</th>
-                   
-                   
-                   <th>Poster</th>
+                    <th>Details</th>
                    <th>QR Code</th>   
                     
                    
@@ -295,6 +288,20 @@
             </div>
       </div>
     </div>
+
+
+    
+    <div id="details-modal" class="details-modal">
+      <div class="details-modal-content">
+          <span class="details-close">&times;</span>
+          <h3 id="details-title">Tourist Spot Details</h3>
+          <p><strong>Name:</strong> <span id="details-name"></span></p>
+          <p><strong>Number:</strong> <span id="details-number"></span></p>
+          <p><strong>Email:</strong> <span id="details-email"></span></p>
+          <p><strong>Address:</strong> <span id="details-address"></span></p>
+          <img id="details-photo" src="" alt="Establishment Photo" style="width: 250PX; height: 250PX;">
+      </div>
+  </div>
 
       <script>
         const searchAppID = () => {

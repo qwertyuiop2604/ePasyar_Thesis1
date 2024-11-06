@@ -10,10 +10,12 @@
       height: 4000px;
     }
 
+
     .sidenav {
       background-color: white;
       height: 100%;
     }
+
 
     @media screen and (max-width: 1000px) {
       .row.content {
@@ -22,12 +24,14 @@
     }
 </style>
 
+
 <body>
+
 
   <div class="login-container">
     <img src="/image/456694310_1626575664570417_5117239041912524083_n.png" alt="index" width="130" height="100" class="center-image">
     <h1>ePasyar</h1>
-    
+   
     <form id="login-form">
         <div id="vigan">Welcome, KaiVigan!</div>
         <!-- <label for="position">Position</label>
@@ -50,9 +54,26 @@
            
         <!-- </div> <p>Not registered? <a id="register-button" href="registration.html">Create an Account</a></p> -->
     </form>
+   
+
+
+      <!-- Password Change Dialog -->
+  <div id="password_dialog" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Change Password</h3>
+      <input type="password" id="new-password" placeholder="New Password">
+      <input type="password" id="confirm-password" placeholder="Confirm Password">
+      <button id="update-password-btn">Update Password</button>
+    </div>
+  </div>
        
+
 
         <script type="module" src="/Javascript/index.js"></script>
     </div>
 </body>
 </html>
+
+
+

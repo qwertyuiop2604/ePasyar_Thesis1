@@ -211,10 +211,7 @@ formEdit.addEventListener('submit', async (e) => {
           const trow = document.createElement('tr');
           trow.innerHTML = `
             <td>${doc.data().Name}</td>
-         <td>${doc.data().Number}</td>
-            
-              <td>${doc.data().Location}</td>
-          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
+         <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
           `;
           tbody.appendChild(trow);
@@ -228,6 +225,35 @@ formEdit.addEventListener('submit', async (e) => {
             highlightRow(trow);
             
           });
+
+          const detailsBtn = document.getElementById(`details_${doc.id}`);
+          detailsBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              showDetailsModal(doc.data());
+          });
+
+          function showDetailsModal(data) {
+            document.getElementById("details-name").textContent = data.Name;
+            document.getElementById("details-number").textContent = data.Number;
+            document.getElementById("details-location").textContent = data.Location;
+            document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+        
+            const modal = document.getElementById("details-modal");
+            modal.style.display = "block";
+        
+            const closeBtn = modal.querySelector(".details-close");
+            closeBtn.onclick = () => {
+                modal.style.display = "none";
+            };
+        
+            // Close modal when clicking outside of it
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+        }
+        
           
 
           // QR Code generation and display

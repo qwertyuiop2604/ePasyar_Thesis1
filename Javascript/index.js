@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, updatePassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -12,55 +13,128 @@ const firebaseConfig = {
   appId: "1:1004550371893:web:692e667675470640980f7c"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Ensure input fields are empty upon loading
-  document.getElementById('email').value = '';
-  document.getElementById('password').value = '';
 
+document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('login-form');
+  const passwordDialog = document.getElementById('password_dialog');
+  const updatePasswordBtn = document.getElementById('update-password-btn');
+  const newPasswordField = document.getElementById('new-password');
+  const confirmPasswordField = document.getElementById('confirm-password');
   const togglePassword = document.getElementById('togglePassword');
   const passwordField = document.getElementById('password');
 
-  form.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
 
-    if (email === '') {
-      console.log("Email is empty");
-      return;
-    } else if (password === '') {
-      console.log("Password is empty");
-      return;
+  // Clear input fields on load
+  document.getElementById('email').value = '';
+  passwordField.value = '';
+
+
+// Handle login submission
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = passwordField.value;
+
+
+  if (!email || !password) {
+    console.log("Email or Password is empty");
+    return;
+  }
+
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+
+    if (user.emailVerified) {
+      // Check if it's the user's first login
+      const userRef = doc(db, "users", "admin", "admin_account", user.uid);
+      const userDoc = await getDoc(userRef);
+
+
+      if (userDoc.exists()) {
+        const firstLogin = userDoc.data().firstLogin;
+
+
+        if (firstLogin) {
+          // Show the password change dialog
+          passwordDialog.style.display = 'block';
+        } else {
+          // Clear inputs upon successful login
+          document.getElementById('email').value = '';
+          passwordField.value = '';
+          window.location = "dash.html";
+        }
+      } else {
+        console.error("User document not found in Firestore.");
+      }
+    } else {
+      alert("Email not verified. Please check your email.");
     }
+  } catch (error) {
+    if (error.code === 'auth/user-not-found') {
+      alert("No user found with this email.");
+    } else if (error.code === 'auth/wrong-password') {
+      alert("Incorrect password. Please try again.");
+    
+    }
+  }
+});
 
+
+// Handle password update
+updatePasswordBtn.addEventListener('click', async function() {
+  const newPassword = newPasswordField.value;
+  const confirmPassword = confirmPasswordField.value;
+
+
+  // Check if new password field is empty
+  if (!newPassword) {
+    alert("New password cannot be empty.");
+    return;
+  }
+
+
+  // Check if passwords match
+  if (newPassword === confirmPassword) {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      await updatePassword(auth.currentUser, newPassword);
+      const userRef = doc(db, "users", "admin", "admin_account", auth.currentUser.uid);
 
-      if (user.emailVerified) {
-        // Clear inputs upon successful login
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        window.location = "dash.html";
-      } else {
-        console.log("Email not verified. Please check your email for verification.");
-        alert("Email not verified. Please check your email for verification.");
-      }
+
+      // Update Firestore `firstLogin` field
+      await updateDoc(userRef, { firstLogin: false });
+
+
+      alert("Password updated successfully. You will now be redirected to the dashboard.");
+      passwordDialog.style.display = 'none';
+      window.location = "dash.html";
     } catch (error) {
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-        console.error("Invalid email or password.");
-        alert("Invalid email or password.");
-      } else {
-        console.error("Error signing in:", error);
-      }
+      console.error("Error updating password:", error);
+      alert("Error updating password. Please try again.");
     }
-  });
+  } else {
+    alert("Passwords do not match.");
+  }
+});
+
+
+
+
+
+
+  // Close the password dialog
+  document.querySelector('.close').onclick = function() {
+    passwordDialog.style.display = 'none';
+  };
+
 
   // Toggle password visibility
   togglePassword.addEventListener('click', function () {
@@ -69,3 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
     this.classList.toggle('fa-eye-slash');
   });
 });
+
+
+

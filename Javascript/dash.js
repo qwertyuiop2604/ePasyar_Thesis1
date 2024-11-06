@@ -395,18 +395,10 @@ const handleSouvenirSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
 };
 
-
-
-
-
 const handleEventsSnapshot = (snapshot) => {
   eventsCount = snapshot.docs.length;
   updateEventsCountElement(eventsCount);
 };
-
-
-
-
 
 onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
   console.error("Error fetching events:", error);

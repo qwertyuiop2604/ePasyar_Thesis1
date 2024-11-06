@@ -72,7 +72,7 @@
             <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
             <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
             <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-            <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Accomodations</a></li>
+            <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
             <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
             <li class="active"><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
             <!-- <li class="sidebar-list-item1">
@@ -144,10 +144,8 @@
                     
                     <th>Name</th>  
               
-                    <th>Type</th> 
-                    <th>Contact Number</th>                    
-                    <th>Location</th>                 
-                    <th>Poster</th>
+                    <th>Details</th> 
+              
                     <th>QR Code</th> 
                   </tr>
                   <tbody id="tbody1"></tbody>
@@ -272,6 +270,21 @@
             </div>
       </div>
     </div>
+
+    <div id="details-modal" class="details-modal">
+      <div class="details-modal-content">
+          <span class="details-close">&times;</span>
+          <h3 id="details-title">Tourist Spot Details</h3>
+          <p><strong>Name:</strong> <span id="details-name"></span></p>
+          <p><strong>Type:</strong> <span id="details-type"></span></p>
+          <p><strong>Number:</strong> <span id="details-number"></span></p> 
+          <p><strong>Location:</strong> <span id="details-location"></span></p>
+          
+        
+        
+          <img id="details-photo" src="" alt="Establishment Photo" style="width: 250PX; height: 250PX;">
+      </div>
+  </div>
 
       <script>
         const searchAppID = () => {

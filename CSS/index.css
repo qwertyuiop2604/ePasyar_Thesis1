@@ -157,3 +157,65 @@ h1 {
     transform: translateY(-50%);
     cursor: pointer;
 }
+
+
+  /* Modal Styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+  }
+  .modal-content {
+    background-color: #5e8db6;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal-content h3 {
+    margin-top: 0;
+  }
+  .modal-content input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  #update-password-btn {
+    width: 150px;
+    height: 30px;
+    background-color: white;
+    color: #000000;
+    border: none;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+  }
+  #update-password-btn:hover {
+    background-color: #337ab7;
+  }
+
