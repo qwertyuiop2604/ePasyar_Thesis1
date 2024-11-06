@@ -17,7 +17,7 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
-  databaseURL: "https://epasyar-aa569-default-rtdb.firebaseio.com",
+  databaseURL: "https://epasyar-aa569-default-rtdb.firebasFeio.com",
   projectId: "epasyar-aa569",
   storageBucket: "epasyar-aa569.appspot.com",
   messagingSenderId: "1004550371893",
@@ -166,7 +166,7 @@ auth.onAuthStateChanged(async (user) => {
       }
     } else {
       console.log("User is not verified.");
-      window.location.reload();
+    
     }
   }
 });

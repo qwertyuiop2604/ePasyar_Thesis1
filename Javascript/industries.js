@@ -164,21 +164,59 @@ querySnapshot.forEach(doc => {
     const trow = document.createElement('tr');
     trow.innerHTML = `
       <td>${doc.data().Name}</td>
-      
-      <td>${doc.data().Description}</td>
-        <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
+      <td><button class="see-details-btn" id="details_${doc.id}">See Details</button></td>
     `;
+    
     tbody.appendChild(trow);
 
-    trow.addEventListener('click', (e) => {
+    // Now, add the event listener to the button
+    const detailsBtn = document.getElementById(`details_${doc.id}`);
+    if (detailsBtn) {
+      detailsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showDetailsModal(doc.data());
+      });
+    }
+
+    trow.addEventListener('click', () => {
       localStorage.setItem('ID', doc.id);
       document.getElementById('name1').value = doc.data().Name;
- 
       document.getElementById('description1').value = doc.data().Description;
       highlightRow(trow);
     });
   }
 });
+
+const detailsBtn = document.getElementById(`details_${doc.id}`);
+if (detailsBtn) {
+    detailsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showDetailsModal(doc.data());
+    });
+}
+
+
+function showDetailsModal(data) {
+  document.getElementById("details-name").textContent = data.Name; 
+   document.getElementById("details-description").textContent = data.Description;
+
+  document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+
+  const modal = document.getElementById("details-modal");
+  modal.style.display = "block";
+
+  const closeBtn = modal.querySelector(".details-close");
+  closeBtn.onclick = () => {
+      modal.style.display = "none";
+  };
+
+  // Close modal when clicking outside of it
+  window.onclick = function (event) {
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+  };
+}
 function toggleBlur(shouldBlur) {
   const container = document.querySelector('.main-container'); // Select the common container
   if (shouldBlur) {

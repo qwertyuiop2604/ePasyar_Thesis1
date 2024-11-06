@@ -18,26 +18,50 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Event listeners for navigation buttons
-const navButtons = {
-  dash: 'dash.html',
-  profile: 'profile.html',
-  promotion: 'promotion.html',
-  tourist: 'tourist.html',
-  souvenir: 'souvenir.html',
-  restaurant: 'restaurants.html',
-  localdishes: 'dishes.html'
-};
+document.addEventListener("DOMContentLoaded", async () => {
+  let dash = document.getElementById("dash");
+  let profile = document.getElementById("profile");
+  let promotion = document.getElementById("promotion");
+  let tourist = document.getElementById("tourist");
+  let souvenir = document.getElementById("souvenir");
+  let restaurant = document.getElementById("restaurant");
 
-let otop = document.getElementById("otop");
-otop.addEventListener("click", () => window.location = "otop.html");
 
-let localdishes = document.getElementById("localdishes");
-localdishes.addEventListener("click", () => window.location = "dishes.html");
-
-let localindustries = document.getElementById("localindustries");
-localindustries.addEventListener("click", () => window.location = "industries.html");
-
+  if (dash)
+    dash.addEventListener("click", () => (window.location = "dash.html"));
+  if (profile)
+    profile.addEventListener("click", () => (window.location = "profile.html"));
+  if (promotion)
+    promotion.addEventListener(
+      "click",
+      () => (window.location = "promotion.html")
+    );
+  if (events)
+    tourist.addEventListener("click", () => (window.location = "tourist.html"));
+  if (souvenir)
+    souvenir.addEventListener(
+      "click",
+      () => (window.location = "souvenir.html")
+    );
+  if (restaurant)
+    restaurant.addEventListener(
+      "click",
+      () => (window.location = "restaurants.html")
+    );
+ 
+  let otop = document.getElementById("otop");
+  otop.addEventListener("click", () => {
+    window.location = "otop.html";
+  });
+  let localdishes = document.getElementById("localdishes");
+  localdishes.addEventListener("click", () => {
+    window.location = "dishes.html";
+  });
+  let localindustries = document.getElementById("localindustries");
+  localindustries.addEventListener("click", () => {
+    window.location = "industries.html";
+  });
+});
 
 
 
@@ -270,10 +294,8 @@ async function populateTable(events) {
       const trow = document.createElement('tr');
       trow.innerHTML = `
         <td>${event.Name}</td>
-        <td>${formattedDate}</td>
-        <td>${event.Description}</td>
-        <td><img src="${event.PhotoURL}" alt="Event Photo" width="150" height="150"></td>
-      `;
+       
+<td><button class="see-details-btn" id="details_${event.id}">See Details</button></td>      `;
       tbody.appendChild(trow);
 
       trow.addEventListener('click', () => {
@@ -282,9 +304,46 @@ async function populateTable(events) {
         document.getElementById('date1').value = event.Date;
         document.getElementById('description1').value = event.Description;
         highlightRow(trow);
+        
+        // Add event listener for "See Details" button
+document.getElementById(`details_${event.id}`).addEventListener('click', (e) => {
+  e.stopPropagation();  // Prevent row click from triggering
+  showDetailsModal(event);  // Pass event data to the modal function
+});
       });
     }
   });
+}
+const detailsBtn = document.getElementById(`details_${doc.id}`);
+if (detailsBtn) {
+    detailsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showDetailsModal(doc.data());
+    });
+}
+
+
+function showDetailsModal(data) {
+  document.getElementById("details-name").textContent = data.Name; 
+   document.getElementById("details-date").textContent = data.Date;
+  document.getElementById("details-description").textContent = data.Description;
+
+  document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+
+  const modal = document.getElementById("details-modal");
+  modal.style.display = "block";
+
+  const closeBtn = modal.querySelector(".details-close");
+  closeBtn.onclick = () => {
+      modal.style.display = "none";
+  };
+
+  // Close modal when clicking outside of it
+  window.onclick = function (event) {
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+  };
 }
 
 
@@ -309,14 +368,17 @@ calDate.addEventListener('change', async () => {
 });
 
 
-// Auto-archive past events
-async function autoArchivePastEvents() {
+// Auto-archive past and future events
+async function autoArchivePastAndFutureEvents() {
   const querySnapshot = await getDocs(collection(db, "festivals"));
   const currentDate = new Date();
 
   querySnapshot.forEach(async (doc) => {
     const eventDate = new Date(doc.data().Date);
-    if (eventDate < currentDate && doc.data().Status === "not done") {
+    const status = doc.data().Status;
+    
+    // Archive past events (eventDate < currentDate) or future events (eventDate > currentDate)
+    if ((eventDate < currentDate && status === "not done") || eventDate.getFullYear() > currentDate.getFullYear()) {
       await updateDoc(doc.ref, {
         Status: "archived",
         ArchivedBy: "AUTO_ARCHIVE",
@@ -326,7 +388,8 @@ async function autoArchivePastEvents() {
   });
 }
 
-autoArchivePastEvents();
+autoArchivePastAndFutureEvents();
+
 
 // Archive event
 document.getElementById('delete_acc').addEventListener('click', async () => {

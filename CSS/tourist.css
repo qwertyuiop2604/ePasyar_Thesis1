@@ -951,6 +951,10 @@ input[type="text"], input[type="date"], textarea {
   font-family: 'Poppins', sans-serif;
   
 }
+#details-name, #details-description, #details-location {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
 
 .details-close {
   color: #F4D160;
@@ -967,7 +971,7 @@ input[type="text"], input[type="date"], textarea {
 }
 
 /* Add some basic CSS for the reviews modal */
-.modal {
+.modalRev {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -979,7 +983,7 @@ input[type="text"], input[type="date"], textarea {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal-contentRev {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;

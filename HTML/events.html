@@ -145,9 +145,10 @@
               <table id="table" class="table" style="width:100%">
                 <tr>
                   <th>Event Name</th>
-                  <th>Event Date</th>
+                  <!-- <th>Event Date</th>
                   <th>Event Description</th>
-                  <th>Event Poster</th>
+                  <th>Event Poster</th> -->
+                  <th>Details</th>
 
                 </tr>
                 <tbody id="tbody1"></tbody>
@@ -235,6 +236,19 @@
     </div>
 
   </div>
+  <div id="details-modal" class="details-modal">
+    <div class="details-modal-content">
+        <span class="details-close">&times;</span>
+        <h3 id="details-title">Events Details</h3>
+        <p><strong style="color: white;">Name:</strong> <span id="details-name" style="color: white;"></span></p>
+         <p><strong style="color: white;">Date:</strong> <span id="details-date" style="color: white;"></span></p>
+        <p><strong style="color: white;">Description:</strong> <span id="details-description" style="color: white;"></span></p>
+       
+        
+        <img id="details-photo" src="" alt="Establishment Photo" style="width: 250PX; height: 250PX;">
+    </div>
+</div>
+
 
   <script>
     const searchAppID = () => {

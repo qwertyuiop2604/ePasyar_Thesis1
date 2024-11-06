@@ -220,8 +220,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
           trow.innerHTML = `
             <td>${doc.data().Name}</td>
                   <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
+                  
 
             <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
+                 <td><button id="reviews_${doc.id}" class="reviews-btn">See Reviews</button></td> <!-- See Reviews Button -->
           `;
           tbody.appendChild(trow);
 

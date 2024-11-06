@@ -213,6 +213,7 @@ async function fetchEstablishments() {
 
           
           <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
+               <td><button id="reviews_${doc.id}" class="reviews-btn">See Reviews</button></td> <!-- See Reviews Button -->
         `;
         tbody.appendChild(trow);
 
