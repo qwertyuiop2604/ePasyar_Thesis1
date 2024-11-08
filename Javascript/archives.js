@@ -23,8 +23,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let bck = document.getElementById("bck");
-bck.addEventListener("click", () => {
+let bckbtn = document.getElementById("bckbtn");
+bckbtn.addEventListener("click", () => {
   window.location = "events.html";
 });
 let events = document.getElementById("events");
@@ -97,12 +97,12 @@ for (let i = 1; i < rows.length; i++) {
     // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
     this.classList.add("selected-row");
 
-    document.getElementById("enabled").disabled = false;
+    document.getElementById("enabledTourist").disabled = false;
   };
 }
 // window.onload = GetAllDataOnce;
 
-document.getElementById('enabled').addEventListener('click', () => {
+document.getElementById('enabledTourist').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_enable').style.display = "block";
 });
 
