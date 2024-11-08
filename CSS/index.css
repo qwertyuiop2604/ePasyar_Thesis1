@@ -8,15 +8,21 @@ body {
     justify-content: center;
     align-items: center;
     height: 80vh;
+    background-image: url('/image/vigan-bg.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background fixed on scroll */
+    background-position: center; /* Centers the background image */
+
 }
 
 .login-container {
-    width: 400px;
+    width: 430px;
     border-radius: 10px;
     padding: 15px;
     margin: 15px;
     margin-top: 115px;
-    height: 400px;
+    height: 450px;
     background-color: #337ab7; 
     text-align: center;
 }
@@ -78,7 +84,7 @@ button, #btnLogin, #logout-btn {
     width: 100px;
     height: 30px;
     background-color: white;
-   
+  margin: 15px;
     color: #000000;
     border: none;
     border-radius: 15px;

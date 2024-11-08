@@ -240,20 +240,35 @@ async function fetchEstablishments() {
           document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
       
           const modal = document.getElementById("details-modal");
-          modal.style.display = "block";
-      
-          const closeBtn = modal.querySelector(".details-close");
-          closeBtn.onclick = () => {
-              modal.style.display = "none";
-          };
-      
-          // Close modal when clicking outside of it
-          window.onclick = function (event) {
-              if (event.target === modal) {
-                  modal.style.display = "none";
-              }
-          };
-      }
+  modal.style.display = "block";
+
+  // Add blur effect to .main-container
+  toggledBlur(true);
+
+  const closeBtn = modal.querySelector(".details-close");
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+    toggledBlur(false); // Remove blur effect when closing modal
+  };
+
+  // Close modal when clicking outside of it
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+      toggledBlur(false); // Remove blur effect when clicking outside of the modal
+    }
+  };
+}
+
+function toggledBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the container that holds your page content
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
+
         // QR Code generation and display
         const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
         let qrCodeData; // Variable to store QR code data URL
@@ -313,7 +328,12 @@ function showQRCodeModal(qrCodeData, establishmentName) {
       <span class="qr-close">&times;</span>
       <h3>QR Code for ${establishmentName}</h3>
       <img src="${qrCodeData}" alt="QR Code for ${establishmentName}">
-    </div>
+    <br>
+      <a id="download-qr-btn" href="${qrCodeData}" download="${establishmentName}_QRCode.png">
+        <button class="download-btn"> Download QR Code</button>
+      </a>
+      </div>
+    
   `;
 
   // Append modal to the document body
@@ -331,45 +351,7 @@ function showQRCodeModal(qrCodeData, establishmentName) {
 
 fetchEstablishments();
 
-// Add some CSS for the modal (you can adjust as needed)
-const style = document.createElement('style');
-style.innerHTML = `
-  .qr-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  .qr-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    text-align: center;
-  }
-  .qr-modal-content img {
-    width: 200px;
-    height: 200px;
-  }
-  .qr-close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  .qr-close:hover,
-  .qr-close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-`;
+
 document.head.appendChild(style);
 
 

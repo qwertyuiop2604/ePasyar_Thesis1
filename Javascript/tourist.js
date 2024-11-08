@@ -297,35 +297,35 @@ function toggleBlur(shouldBlur) {
           showReviewsModal(doc.id); // Ensure correct doc.id is being passed
         });
         
-
 // Function to show the modal and fetch reviews
 function showReviewsModal(documentId) {
   const reviewsModal = document.getElementById("reviews-modal");
   reviewsModal.style.display = "block";
-  fetchReviews(documentId);
+  fetchReviews(documentId); // Fetch reviews for the specific establishment
 }
 
-// Function to close the modal
+// Event listener to close the modal
 document.getElementById("close-modal").addEventListener("click", () => {
   document.getElementById("reviews-modal").style.display = "none";
 });
 
+// Function to fetch and display reviews
 async function fetchReviews(documentId) {
   const reviewsContainer = document.getElementById("reviews-container");
-  reviewsContainer.innerHTML = "<p>Loading reviews...</p>"; // Show loading text
+  reviewsContainer.innerHTML = "<p>Loading reviews...</p>"; // Loading state message
 
+  // Define the path to the reviews collection for the specific establishment
   const reviewsCollectionRef = collection(db, `/ratings/Tourist Spot/Tourist Spot_reviews/${documentId}/reviews`);
 
   try {
     const snapshot = await getDocs(reviewsCollectionRef);
-    console.log(snapshot);  // Add this to check the snapshot
+
     if (snapshot.empty) {
       reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
     } else {
-      reviewsContainer.innerHTML = "";
+      reviewsContainer.innerHTML = ""; // Clear the loading message
       snapshot.forEach((doc) => {
         const reviewData = doc.data();
-        console.log(reviewData); // Log review data to check if it's being fetched correctly
         const reviewElement = document.createElement("div");
         reviewElement.className = "review-item";
         reviewElement.innerHTML = `
@@ -335,13 +335,14 @@ async function fetchReviews(documentId) {
           <h4>Name: ${reviewData.name}</h4>
           <h4>Total Reviews: ${reviewData.total_reviews}</h4>
         `;
-        reviewsContainer.appendChild(reviewElement);
+        reviewsContainer.appendChild(reviewElement); // Append each review to the container
       });
     }
   } catch (error) {
     console.error("Error fetching reviews:", error);
     reviewsContainer.innerHTML = "<p>Error fetching reviews.</p>";
   }
+
 }
 
           // QR Code generation and display
@@ -404,6 +405,10 @@ async function fetchReviews(documentId) {
         <span class="qr-close">&times;</span>
         <h3>QR Code for ${establishmentName}</h3>
         <img src="${qrCodeData}" alt="QR Code for ${establishmentName}">
+        <br>
+ <a id="download-qr-btn" href="${qrCodeData}" download="${establishmentName}_QRCode.png">
+        <button class="download-btn"> Download QR Code</button>
+      </a>
       </div>
     `;
     document.body.appendChild(modal);

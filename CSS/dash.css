@@ -81,10 +81,7 @@
   display: block;
 }
 
-#dash-logo img {
-  width: 60px;
-  height: 50px;
-}
+
 
 #dash_label {
   color: #337ab7;
@@ -175,7 +172,7 @@
 }
 .container-fluid{
   font-size: 14px;
-  padding: 0; /* Remove padding */
+ 
   font-family: 'Poppins', sans-serif;
   
 }
@@ -285,8 +282,8 @@ th, tr, td {
 
 body{
   font-family: 'Poppins', sans-serif;
-    margin: 1.5%;
-    padding: 5px;
+    
+    
     
 }
 body{
@@ -322,14 +319,18 @@ p{
 #dash-logo{
   font-family: 'Poppins', sans-serif;
     font-size: 35px;
-    font-weight: bolder;
+    font-weight: bold;
     color: #337ab7;  
 }
-.sidenav{
-    color: black;
-    position: fixed;
-    font-size: 14px;
-    
+ 
+
+.sidenav {
+  position: fixed;
+  height: 100vh;
+  width: 200px; /* Adjust width as necessary */
+  height: 160%;
+  color: black;
+  font-size: 14px;
 }
 
 h1{
@@ -438,18 +439,7 @@ button{
   
   
  /* ---------- SIDEBAR ---------- */
-  
- #sidenav {
-  grid-area: sidebar;
-  height: 100%;
-  background-color: gainsboro;
-  color: white;
-  
-  height: 160%;
-
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-}
+ 
 
 .sidebar-title {
   display: flex;
@@ -497,7 +487,7 @@ display: none;
 /* Main content */
 .main {
 margin-left: 200px; /* Same as the width of the sidenav */
-font-size: 15px; /* Increased text to enable scrolling */
+font-size: 16px; /* Increased text to enable scrolling */
 /* padding: 0px 10px; */
 }
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */

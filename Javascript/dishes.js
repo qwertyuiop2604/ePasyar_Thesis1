@@ -228,18 +228,33 @@ function showDetailsModal(data) {
   const modal = document.getElementById("details-modal");
   modal.style.display = "block";
 
+  // Add blur effect to .main-container
+  toggledBlur(true);
+
   const closeBtn = modal.querySelector(".details-close");
   closeBtn.onclick = () => {
-      modal.style.display = "none";
+    modal.style.display = "none";
+    toggledBlur(false); // Remove blur effect when closing modal
   };
 
   // Close modal when clicking outside of it
   window.onclick = function (event) {
-      if (event.target === modal) {
-          modal.style.display = "none";
-      }
+    if (event.target === modal) {
+      modal.style.display = "none";
+      toggledBlur(false); // Remove blur effect when clicking outside of the modal
+    }
   };
 }
+
+function toggledBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the container that holds your page content
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
+
 
 function highlightRow(row) {
   const rows = document.querySelectorAll('#tbody1 tr');
