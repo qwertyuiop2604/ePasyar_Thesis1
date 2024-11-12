@@ -13,6 +13,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
@@ -171,11 +175,20 @@
               <p class="fas fa-check-circle" id="visited"> NUMBER OF TOURISTS </p>
 
             </a>
+
+            <button id="generatePDF" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Generate PDF Report
+            </button>
+            <button id="generateExcel" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Generate Excel Report
+            </button>
+            
+
             
             
         
 <!-- Bootstrap Dropdown --> 
-  <button class="btn btn-primary" id="generateReport"> Generate Report</button>
+  
 <div class="dropdown" style="position: relative; display: inline-block;">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <i class="fa fa-bars"></i> 

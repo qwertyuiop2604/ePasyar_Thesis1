@@ -315,7 +315,7 @@ async function fetchReviews(documentId) {
   reviewsContainer.innerHTML = "<p>Loading reviews...</p>"; // Loading state message
 
   // Define the path to the reviews collection for the specific establishment
-  const reviewsCollectionRef = collection(db, `/ratings/Tourist Spot/Tourist Spot_reviews/${documentId}/reviews`);
+  const reviewsCollectionRef = collection(db, `/ratings/Tourist Spot/Tourist Spot_reviews/${documentId}/reviews`); // Fetch from subcollection
 
   try {
     const snapshot = await getDocs(reviewsCollectionRef);
@@ -342,8 +342,8 @@ async function fetchReviews(documentId) {
     console.error("Error fetching reviews:", error);
     reviewsContainer.innerHTML = "<p>Error fetching reviews.</p>";
   }
-
 }
+
 
           // QR Code generation and display
           const qrBtn = document.getElementById(`gen_qr_${doc.id}`);

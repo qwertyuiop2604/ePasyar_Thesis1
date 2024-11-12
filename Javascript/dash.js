@@ -241,77 +241,120 @@ document.getElementById('menuContent').addEventListener('click', function(event)
 // Fetch initial chart data for monthly reports by default
 updateChartData("Monthly");
 
+// Importing libraries
+const { jsPDF } = window.jspdf;
+const XLSX = window.XLSX;
 
-async function generateReport() {
-  const { jsPDF } = window.jspdf;
-
-  try {
-    // Create a new jsPDF instance
-    const doc = new jsPDF();
-
-    // Fetch data for reports
-    const dailyData = await getData("Daily");
-    const weeklyData = await getData("Weekly");
-    const monthlyData = await getData("Monthly");
-    const yearlyData = await getData("Yearly");
-
-    // Add content to the PDF
+// Function to capture chart as an image and generate PDF
+async function generatePDFReport() {
+  const doc = new jsPDF();
+  
+  // Capture the chart as an image
+  const chartCanvas = document.getElementById("mostVisitedChart");
+  if (chartCanvas) {
+    const chartImage = chartCanvas.toDataURL("image/png", 1.0);
     doc.text("Tourist Report", 20, 10);
-    doc.text("Daily Report:", 20, 20);
-    doc.text(dailyData, 20, 30);
-
-    doc.text("Weekly Report:", 20, 50);
-    doc.text(weeklyData, 20, 60);
-
-    doc.text("Monthly Report:", 20, 80);
-    doc.text(monthlyData, 20, 90);
-
-    doc.text("Yearly Report:", 20, 110);
-    doc.text(yearlyData, 20, 120);
-
-    // Save the PDF
-    doc.save("TouristReport.pdf");
-  } catch (error) {
-    console.error("Error generating report:", error);
+    doc.addImage(chartImage, "PNG", 15, 20, 180, 80); // Adjust positioning and size
   }
+
+  // Fetch all data in parallel
+  const [dailyData, weeklyData, monthlyData, yearlyData] = await Promise.all([
+    getDataArray("Daily"),
+    getDataArray("Weekly"),
+    getDataArray("Monthly"),
+    getDataArray("Yearly")
+  ]);
+
+  // Formatting and adding fetched data to PDF
+  let yOffset = 110;
+  const addDataToPDF = (title, data) => {
+    doc.text(`${title} Report:`, 20, yOffset);
+    yOffset += 10;
+    data.forEach(([date, count]) => {
+      doc.text(`${date}: ${count}`, 20, yOffset);
+      yOffset += 8;
+    });
+    yOffset += 10;
+  };
+
+  addDataToPDF("Daily", dailyData);
+  addDataToPDF("Weekly", weeklyData);
+  addDataToPDF("Monthly", monthlyData);
+  addDataToPDF("Yearly", yearlyData);
+
+  // Save the PDF
+  doc.save("TouristReport.pdf");
 }
 
-async function getData(type) {
-  let reportsRef;
-  let dataKey;
+// Function to export data to Excel
+async function generateExcelReport() {
+  const workbook = XLSX.utils.book_new();
 
-  if (type === "Daily") {
-    reportsRef = collection(db, "tourist_arrival_reports", "daily", "daily_reports");
-    dataKey = "total_tourist_per_daily";
-  } else if (type === "Weekly") {
-    reportsRef = collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
-    dataKey = "total_tourist_per_weekly";
-  } else if (type === "Monthly") {
-    reportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
-    dataKey = "total_tourist_per_monthly";
-  } else if (type === "Yearly") {
-    reportsRef = collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
-    dataKey = "total_tourist_per_yearly";
-  } else {
-    console.error("Invalid report type");
-    return "";
-  }
+  // Fetch all data in parallel
+  const [dailyData, weeklyData, monthlyData, yearlyData] = await Promise.all([
+    getDataArray("Daily"),
+    getDataArray("Weekly"),
+    getDataArray("Monthly"),
+    getDataArray("Yearly")
+  ]);
 
+  // Create worksheets for each report type
+  const createSheet = (title, data) => {
+    const sheet = XLSX.utils.aoa_to_sheet([["Date", "Count"], ...data]);
+    XLSX.utils.book_append_sheet(workbook, sheet, title);
+  };
+
+  createSheet("Daily Report", dailyData);
+  createSheet("Weekly Report", weeklyData);
+  createSheet("Monthly Report", monthlyData);
+  createSheet("Yearly Report", yearlyData);
+
+  // Save the workbook
+  XLSX.writeFile(workbook, "TouristReport.xlsx");
+}
+
+// Helper function to fetch data in array format
+async function getDataArray(type) {
+  const dataArray = [];
+  const reportsRef = getReportsRef(type);
   const querySnapshot = await getDocs(reportsRef);
-  let reportData = "";
 
   querySnapshot.forEach((doc) => {
     const data = doc.data();
-    const value = data[dataKey] || 0;
-    reportData += `Date/Period: ${doc.id}, Count: ${value}\n`;
+    const value = data[getDataKey(type)] || 0;
+    dataArray.push([doc.id, value]);
   });
 
-  return reportData;
+  return dataArray;
 }
 
+// Function to get Firestore reference based on report type
+function getReportsRef(type) {
+  if (type === "Daily") return collection(db, "tourist_arrival_reports", "daily", "daily_reports");
+  if (type === "Weekly") return collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
+  if (type === "Monthly") return collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
+  if (type === "Yearly") return collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
+}
 
-// Event listener for "Generate Report" button
-document.getElementById("generateReport").addEventListener("click", generateReport);
+// Helper function to map report type to specific data key
+function getDataKey(type) {
+  switch (type) {
+    case "Daily":
+      return "dailyCount";
+    case "Weekly":
+      return "weeklyCount";
+    case "Monthly":
+      return "monthlyCount";
+    case "Yearly":
+      return "yearlyCount";
+    default:
+      return "count";
+  }
+}
+
+// Event listeners for report generation buttons
+document.getElementById("generatePDF").addEventListener("click", generatePDFReport);
+document.getElementById("generateExcel").addEventListener("click", generateExcelReport);
 
 
 
