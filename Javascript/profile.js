@@ -79,7 +79,8 @@ closePop.addEventListener("click", () => {
 
 // Register Form - Add to Firebase
 const formCreate = document.getElementById("create-form");
-const name = document.getElementById("name");
+const fname = document.getElementById("fname");
+const lname = document.getElementById("lname");
 const email = document.getElementById("email");
 const position = document.getElementById("position");
 const em_no = document.getElementById("em_no");
@@ -89,7 +90,8 @@ const btnRegister = document.getElementById("btnRegister"); // Add this line to 
 btnRegister.addEventListener("click", async (e) => {
   e.preventDefault();
   if (
-    name.value === "" ||
+    fname.value === "" ||
+    lname.value === "" ||
     email.value === "" ||
     position.value === "" ||
     em_no.value === ""
@@ -121,7 +123,8 @@ btnRegister.addEventListener("click", async (e) => {
 
     // Set initial status to "Pending" and firstLogin to true
     await setDoc(doc(db, "users", "admin", "admin_account", user.uid), {
-      name: name.value,
+      fname: fname.value,
+      lname: fname.value,
       email: email.value,
       position: position.value,
       status: "Pending",
@@ -189,20 +192,22 @@ cPop.addEventListener("click", () => {
 
 // Edit Form - Update to Firebase
 const formEdit = document.getElementById("edit-form");
-const name1 = document.getElementById("name1");
+const fname1 = document.getElementById("fname1");
+const lname1 = document.getElementById("lname1");
 const email1 = document.getElementById("email1");
 const positionEdit = document.getElementById("positionEdit");
 const btnSaveEdit = document.getElementById("btnSaveEdit");
 
 btnSaveEdit.addEventListener("click", async (e) => {
   e.preventDefault();
-  if (name1.value === "" || email1.value === "" || positionEdit.value === "") {
+  if (fname1.value === "" || lname1.value === "" || email1.value === "" || positionEdit.value === "") {
   } else {
     const userId = localStorage.getItem("ID");
     if (userId) {
       const userRef = doc(db, "users", "admin", "admin_account", userId);
       updateDoc(userRef, {
-        name: name1.value,
+        fname: fname1.value,
+        lname: lname1.value,
         email: email1.value,
         position: positionEdit.value,
       })
@@ -231,17 +236,21 @@ querySnapshot.forEach((doc) => {
     const td1 = document.createElement("td");
     const td2 = document.createElement("td");
     const td3 = document.createElement("td");
-    const td4 = document.createElement("td");
+    const td4 = document.createElement("td"); 
+    const td5 = document.createElement("td");
 
-    td1.textContent = doc.data().name;
-    td2.textContent = doc.data().email;
-    td3.textContent = doc.data().position;
-    td4.textContent = doc.data().status;
+
+    td1.textContent = doc.data().fname;
+    td2.textContent = doc.data().lname;
+    td3.textContent = doc.data().email;
+    td4.textContent = doc.data().position;
+    td5.textContent = doc.data().status;
 
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
     trow.appendChild(td4);
+    trow.appendChild(td5);
 
     tbody.appendChild(trow);
 
@@ -262,7 +271,8 @@ querySnapshot.forEach((doc) => {
       document.getElementById("delete_acc").classList.remove("disabled-button");
       document.getElementById("delete_acc").classList.add("enabled-button");
 
-      document.getElementById("name1").value = doc.data().name;
+      document.getElementById("fname1").value = doc.data().fname;
+      document.getElementById("lname1").value = doc.data().lname;
       document.getElementById("email1").value = doc.data().email;
       document.getElementById("position").value = doc.data().position;
     });

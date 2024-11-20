@@ -22,7 +22,7 @@ body {
     padding: 15px;
     margin: 15px;
     margin-top: 115px;
-    height: 480px;
+    height: 490px;
     background-color: #337ab7; 
     text-align: center;
 }
@@ -52,6 +52,9 @@ img.center-image {
     box-sizing: border-box;
     border-radius: 10px;
     font-size: 14px;
+}
+#password-hint{
+    font-size: 10px;
 }
 input {
     padding: 10px;
@@ -117,6 +120,7 @@ label {
     text-align: start;
     margin-bottom: 5px;
 }
+
 
 h1 {
     text-align: center;

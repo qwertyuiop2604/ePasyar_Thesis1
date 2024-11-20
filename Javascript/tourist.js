@@ -296,7 +296,6 @@ function toggleBlur(shouldBlur) {
           e.stopPropagation();
           showReviewsModal(doc.id); // Ensure correct doc.id is being passed
         });
-        
 // Function to show the modal and fetch reviews
 function showReviewsModal(documentId) {
   const reviewsModal = document.getElementById("reviews-modal");
