@@ -2,11 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: black;
+
   font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
+.see-details-btn{
+  background-color: whitesmoke;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  border-color: #337ab7;
+  width: 100px;
+  font-size: 16px;
 
+}
 .row.content {
   height: 400px;
 }

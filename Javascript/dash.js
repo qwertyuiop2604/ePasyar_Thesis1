@@ -28,15 +28,18 @@ profile.addEventListener("click", () => {
   window.location = "profile.html";
 });
 
-let hotels = document.getElementById("hOtels");
-hotels.addEventListener("click", () => {
-  window.location = "promotion.html";
+
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
 });
 
-let resto = document.getElementById("resto");
-resto.addEventListener("click", () => {
-  window.location = "restaurants.html";
-});
 
 let events = document.getElementById("events");
 
@@ -58,10 +61,7 @@ let tourist = document.getElementById("tourist");
 tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
-let tourists = document.getElementById("tourists");
-tourists.addEventListener("click", () => {
-  window.location = "tourist.html";
-});
+
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {
   window.location = "souvenir.html";
@@ -72,10 +72,6 @@ souvenirs.addEventListener("click", () => {
 });
 
 
-let event = document.getElementById("eventS");
-event.addEventListener("click", () => {
-  window.location = "events.html";
-});
 
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener("click", () => {
@@ -112,10 +108,40 @@ const mostVisitedChart = new Chart(ctx, {
     datasets: [
       {
         label: "Number of Visitors",
-        data: [1,1], // Initial empty data
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
+        data: [1, 1], // Initial data
+        backgroundColor: [
+       
+          "#337ab7",
+          "yellow",
+          "green",
+          "blue",
+          "violet",
+          "red",
+          "pink",
+          "red",
+          "orange",
+          "yellow",
+          "green",
+          "blue",
+          "violet",
+          "red",
+          "pink",
+        ],
+        borderColor: [
+          "#337ab7",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 2,
       },
     ],
   },
@@ -127,6 +153,7 @@ const mostVisitedChart = new Chart(ctx, {
     },
   },
 });
+
 
 async function updateChartData(type) {
   try {
@@ -140,11 +167,8 @@ async function updateChartData(type) {
       dataKey = "total_tourist_per_daily";
       label = "Number of Visitors (Daily)";
       for (let i = 1; i <= 31; i++) xLabels.push(i); // Days of the month
-    } else if (type === "Weekly") {
-      reportsRef = collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
-      dataKey = "total_tourist_per_weekly";
-      label = "Number of Visitors (Weekly)";
-    } else if (type === "Monthly") {
+    }  else
+     if (type === "Monthly") {
       reportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
       dataKey = "total_tourist_per_monthly";
       label = "Number of Visitors (Monthly)";
@@ -162,13 +186,15 @@ async function updateChartData(type) {
       return;
     }
 
+
+
     const querySnapshot = await getDocs(reportsRef);
     const visitorData = [];
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       const value = data[dataKey] || 0;
-      visitorData.push(value);
+      visitorData.push(value); 
 
       if (type === "Weekly") {
         xLabels.push(doc.id); // Use document IDs as labels for weekly reports

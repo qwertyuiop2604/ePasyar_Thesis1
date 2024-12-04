@@ -28,6 +28,17 @@ let dash = document.getElementById("dash");
 dash.addEventListener("click", () => {
   window.location = "dash.html";
 });
+
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
   window.location = "profile.html";

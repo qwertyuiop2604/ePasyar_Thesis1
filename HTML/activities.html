@@ -5,23 +5,22 @@
   <title>Dashboard Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/dishes.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/activities.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
 
+  
 
   <style>
     .row.content {
       height: 400px
     }
-  /* Container and sidebar styling */
-  .container-fluid {
+ /* Container and sidebar styling */
+ .container-fluid {
     display: flex;
   }
 
@@ -51,6 +50,7 @@
     width: 100%;
     table-layout: fixed;
   }
+
     @media screen and (max-width: 100px) {
       .row.content {
         height: auto;
@@ -70,76 +70,83 @@
 
           <li><a href="#section1" id="dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
-          <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+          <li ><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
           <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
           <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
           <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
           <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
           <!-- <li class="sidebar-list-item1">
-            <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
+            <button class="dropdown-btn">
+            <i class="fas fa-star"></i> Reviews
+              <i class="fa fa-caret-down" id="icon"></i>
+            </button>
             <div class="dropdown-container">
               <a href="rev_tourist.html">
                 <div class="con-lic">
-                  <i class="fas fa-map-marker-alt"> </i> Tourist Spots
+                  <i class="fas fa-map-marker-alt icon-spacing" id="tour"></i> Tourist Spots
                 </div>
               </a>
               <a href="rev_hotel.html">
                 <div class="con-lic">
-                  <i class="fas fa-hotel"> </i> Hotels
+                  <i class="fas fa-hotel icon-spacing"></i> Hotels
                 </div>
               </a>
               <a href="rev_souvenir.html">
                 <div class="con-lic">
-                  <i class="fas fa-shopping-bag" > </i> Souvenir Shops
+                  <i class="fas fa-shopping-bag icon-spacing"></i> Souvenir Shops
                 </div>
               </a>
               <a href="rev_restaurant.html">
                 <div class="con-lic">
-                  <i class="fas fa-utensils"></i> Restaurant
+                  <i class="fas fa-utensils icon-spacing"></i> Restaurant
                 </div>
               </a>
             </div>
           </li> -->
-          <li class="active"><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
+          
+          <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-          <li><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
+          <li class="active"><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
           <li><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>  
           <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul><br>
       </div>
-
-     
       <div>
         <div id="logoutModal" class="modal">
           <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Are you sure you want to log out?</h2>
-           
+          
             <button id="confirmLogout">Yes, log out</button>
             <button id="cancelLogout">Cancel</button>
           </div>
         </div>
-
       <main class="main-container">
         <div class="main2">
           <div class="btn_useracc">
-            <button class="add_acc" id="add_acc"><i class="fas fa-plus"></i> Add </button>
-            <button class="edit_acc" id="edit_acc"><i class="fas fa-edit"></i> Edit </button>
-            <button id="delete_acc"><i class="fas fa-archive"></i> Archive </button>
+            <button class="add_acc" id="add_acc" ><i class="fas fa-plus"></i> ADD</button>
+            <button class="edit_acc" id="edit_acc"><i class="fas fa-edit"></i> EDIT </button>
+            <button id="delete_acc"><i class="fas fa-archive"></i> ARCHIVE </button>
             <div>
-              <button id="archived_acc"><i class="fas fa-box-open"></i> See Archive</button>
-                </div>   
+              <button id="archived_acc"><i class="fas fa-box-open"></i> SEE ARCHIVE </button>
+            </div>
+            
+                
+                <input type="date" id="cal-date">
+
 
     
-          
+            <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
           </div>
           <div class="outer-wrapper">
             <div class="table-wrapper">
               <table id="table" class="table" style="width:100%">
                 <tr>
-                  <th>Name</th>
-               
+                  <th> Name</th>
+                  <!-- <th>Event Date</th>
+                  <th>Event Description</th>
+                  <th>Event Poster</th> -->
                   <th>Details</th>
 
                 </tr>
@@ -156,18 +163,21 @@
     <div class="reg-container" id="user-create">
       <div class="container-modal">
         <span class="close-modal">&times;</span>
-        <h1 id="create-txt">Create an Local Dishes</h1>
+        <h1 id="create-txt">Create an Event</h1>
         <form id="create-form">
-          <label for="name"> Name</label>
+          <label for="name">Event Name</label>
           <input type="text" id="name" name="name">
 
-          <label for="reg-event"> Description</label>
+          <label for="reg-date">Event Date</label>
+          <input type="date" id="caldate" name="caldate">
+
+          <label for="reg-event">Event Description</label>
           <textarea id="description" name="description"></textarea>
 
-          <label for="photos"> Photos</label>
-          <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
+          <label for="photos">Event Photos</label>
+          <input type="file" id="photos" name="photos" accept="image/png, image/jpeg" >
 
-          <input type="submit" id="btnRegister" value="Add Local Dishes" />
+          <input type="submit" id="btnRegister" value="Add Event" />
         </form>
         
       </div>
@@ -178,17 +188,19 @@
       <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
       <div class="container-modal-edit" id="edit-modal">
         <span class="close-modal-edit">&times;</span>
-        <h1 id="edit-txt">Edit an Local Dishes</h1>
+        <h1 id="edit-txt">Edit an Event</h1>
         <form id="edit-form">
-          <label for="name1"> Name</label>
+          <label for="name1">Event Name</label>
           <input type="text" id="name1" name="name1">
 
+          <label for="date1">Event Date</label>
+          <input type="date" id="date1" name="date1">
 
-          <label for="description1"> Description</label>
+          <label for="description1">Event Description</label>
           <textarea id="description1" name="description1"></textarea>
 
-          <label for="photos1"> Photos</label>
-          <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
+          <label for="photos1">Event Photos</label>
+          <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg" >
 
           <input type="submit" id="btnEdit" value="Save" />
         </form>
@@ -197,7 +209,7 @@
 
     <!-- confirmation modal for add account -->
     <div class="cnfrm_modal_add" id="cnfrm_add">
-      <h1>Add Local Dishes Information?</h1>
+      <h1>Add Event Information?</h1>
       <div class="btn1">
         <button id="cnl3" class="cnl">Cancel</button>
         <button id="cnfrm3">Confirm</button>
@@ -206,7 +218,7 @@
 
     <!-- confirmation modal for edit account -->
     <div class="cnfrm_modal" id="cnfrm_edit">
-      <h1>Are you sure you want to Update Local Dishes Information?</h1>
+      <h1>Are you sure you want to update event information?</h1>
       <div class="btn1">
         <button id="cnl" class="cnl">Cancel</button>
         <button id="cnfrm">Confirm</button>
@@ -215,7 +227,7 @@
 
     <!-- confirmation modal for delete account -->
     <div class="cnfrm_modal_delete" id="delete_acc_modal">
-      <h1>Are you sure you want to archive this Local Dishes?</h1>
+      <h1>Are you sure you want to archive this Event?</h1>
       <div class="btn1">
         <button id="cnl2">Cancel</button>
         <button id="cnfrm2">Confirm</button>
@@ -226,19 +238,46 @@
   <div id="details-modal" class="details-modal">
     <div class="details-modal-content">
         <span class="details-close">&times;</span>
-        <h3 id="details-title">Local Dishes Details</h3>
+        <h3 id="details-title">Events Details</h3>
         <p><strong style="color: white;">Name:</strong> <span id="details-name" style="color: white;"></span></p>
-               <p><strong style="color: white;">Description:</strong> <span id="details-description" style="color: white;"></span></p>
+         <p><strong style="color: white;">Date:</strong> <span id="details-date" style="color: white;"></span></p>
+        <p><strong style="color: white;">Description:</strong> <span id="details-description" style="color: white;"></span></p>
        
         
         <img id="details-photo" src="" alt="Establishment Photo" style="width: 250PX; height: 250PX;">
     </div>
 </div>
 
-  
+
+  <script>
+    const searchAppID = () => {
+      let filter = document.getElementById('srchText').value.toUpperCase();
+      let mytable = document.getElementById('tbody1');
+      let tr = mytable.getElementsByTagName('tr');
+
+      for (let i = 0; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[0];
+        let td2 = tr[i].getElementsByTagName('td')[1];
+        let td3 = tr[i].getElementsByTagName('td')[2];
+
+        if (td && td2 && td3) {
+          let textvalue = td.textContent.toUpperCase() || td.innerHTML;
+          let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
+          let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
+
+          if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
+            tr[i].style.display = '';
+          } else {
+            tr[i].style.display = 'none';
+          }
+        }
+      }
+    }
+
+  </script>
 
 
-  <script type="module" src="/Javascript/dishes.js"></script>
+  <script type="module" src="/Javascript/activities.js"></script>
 </body>
 
 </html>

@@ -32,6 +32,16 @@ const navButtons = {
   events: 'events.html'
 };
 
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 
 Object.keys(navButtons).forEach(button => {
   document.getElementById(button).addEventListener('click', () => {

@@ -61,6 +61,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   localindustries.addEventListener("click", () => {
     window.location = "industries.html";
   });
+  
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 });
 
 
@@ -295,7 +306,7 @@ async function populateTable(events) {
       trow.innerHTML = `
         <td>${event.Name}</td>
        
-<td><button class="see-details-btn" id="details_${event.id}">See Details</button></td>      `;
+<td><button class="see-details-btn" id="details_${event.id}" >  Show Details </button></td>      `;
       tbody.appendChild(trow);
 
       trow.addEventListener('click', () => {

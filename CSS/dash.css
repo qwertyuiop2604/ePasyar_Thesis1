@@ -43,6 +43,11 @@
   font-size: 16px;
   color: black;
 }
+#visited1{
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 16px;
+  color: black;
+}
 
 /* Continue updating the rest */
 .card {
@@ -89,8 +94,8 @@
   font-size: 40px;
   padding: 5px;
   background-color: whitesmoke;
-
-  margin: 20px 0;
+  text-align: center;
+  margin: 10px ;
 }
 
 .chart-container {

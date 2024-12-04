@@ -49,6 +49,13 @@ restaurant.addEventListener(
 );
 
 
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+
+
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";
@@ -61,6 +68,7 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
+
 
 // Create Account Form Popup
 const createAcc = document.getElementById("user-create");
@@ -124,7 +132,7 @@ btnRegister.addEventListener("click", async (e) => {
     // Set initial status to "Pending" and firstLogin to true
     await setDoc(doc(db, "users", "admin", "admin_account", user.uid), {
       fname: fname.value,
-      lname: fname.value,
+      lname: lname.value,
       email: email.value,
       position: position.value,
       status: "Pending",

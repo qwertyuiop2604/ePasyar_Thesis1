@@ -53,6 +53,18 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   setNavEventListener("otop", 'otop.html');
   setNavEventListener("localdishes", 'dishes.html');
   setNavEventListener("localindustries", 'industries.html');
+
+  
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
   
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');

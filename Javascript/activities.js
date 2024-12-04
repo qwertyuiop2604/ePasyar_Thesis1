@@ -1,9 +1,9 @@
-// Import Firebase modules
+// Initialize Firebase and Firestore
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-// Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
@@ -14,25 +14,50 @@ const firebaseConfig = {
   appId: "1:1004550371893:web:692e667675470640980f7c"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Event listeners for navigation buttons
-const navButtons = {
-  dash: 'dash.html',
-  profile: 'profile.html',
-  promotion: 'promotion.html',
-  tourist: 'tourist.html',
-  souvenir: 'souvenir.html',
-  restaurant: 'restaurants.html',
-  localindustries: 'industries.html',
-  localdishes: 'dishes.html',
-  events: 'events.html'
+document.addEventListener("DOMContentLoaded", async () => {
+  let dash = document.getElementById("dash");
+  let profile = document.getElementById("profile");
+  let promotion = document.getElementById("promotion");
+  let tourist = document.getElementById("tourist");
+  let souvenir = document.getElementById("souvenir");
+  let restaurant = document.getElementById("restaurant");
 
-};
 
+  if (dash)
+    dash.addEventListener("click", () => (window.location = "dash.html"));
+  if (profile)
+    profile.addEventListener("click", () => (window.location = "profile.html"));
+  if (promotion)
+    promotion.addEventListener(
+      "click",
+      () => (window.location = "promotion.html")
+    );
+  if (events)
+    tourist.addEventListener("click", () => (window.location = "tourist.html"));
+  if (souvenir)
+    souvenir.addEventListener(
+      "click",
+      () => (window.location = "souvenir.html")
+    );
+  if (restaurant)
+    restaurant.addEventListener(
+      "click",
+      () => (window.location = "restaurants.html")
+    );
+ 
+  let otop = document.getElementById("otop");
+  otop.addEventListener("click", () => {
+    window.location = "otop.html";
+  });
+  let localdishes = document.getElementById("localdishes");
+  localdishes.addEventListener("click", () => {
+    window.location = "dishes.html";
+  });
+  
 let activities = document.getElementById("activities");
 
 activities.addEventListener("click", () => {
@@ -43,12 +68,13 @@ let user = document.getElementById("user");
 user.addEventListener("click", () => {
   window.location = "user.html";
 });
-
-Object.keys(navButtons).forEach(button => {
-  document.getElementById(button).addEventListener('click', () => {
-    window.location = navButtons[button];
+  let localindustries = document.getElementById("localindustries");
+  localindustries.addEventListener("click", () => {
+    window.location = "industries.html";
   });
 });
+
+
 
 // CREATE FORM POPUP
 const createAcc = document.getElementById('user-create');
@@ -68,56 +94,56 @@ closePop.addEventListener('click', () => {
 
 
 // FOR REGISTER FORM - ADD TO FIREBASE
+
 const formCreate = document.getElementById('create-form');
 const name = document.getElementById('name');
-const description = document.getElementById('description');
-const place = document.getElementById('place');
 const photos = document.getElementById('photos');
+
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name, description, place, photos])) {
+  if (validateInputs([ name,date,description, photos])) {
     try {
       const photoFile = photos.files[0];
-      const photoRef = ref(storage, `otop/${photoFile.name}`);
+      const photoRef = ref(storage, `photos/${photoFile.name}`);
       await uploadBytes(photoRef, photoFile);
       const photoURL = await getDownloadURL(photoRef);
 
-      await addDoc(collection(db, "otop"), {
+      await addDoc(collection(db, "activities"), {
         Name: name.value,
-        Description: description.value.trim(),
-        Place: place.value,
+  
         PhotoURL: photoURL,
-       
+        Status: "not done"
       });
-      toggleDisplay(createAcc, 'none');
-      localStorage.setItem('lastEventUpdate', Date.now());
-      window.location.reload();
+      createAcc.style.display = 'none';
+      window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   }
 });
 
+
 function validateInputs(inputs) {
-  let isValid = true;
-  inputs.forEach(input => {
-    if (input.value.trim() === '') {
-      input.classList.add('invalid-input');
-      isValid = false;
+  return inputs.every(input => {
+    if (input.value.trim() === "") {
+      input.classList.add("invalid-input");
+      return false;
     } else {
-      input.classList.remove('invalid-input');
-      input.classList.add('valid-input');
+      input.classList.remove("invalid-input");
+      return true;
     }
   });
-  return isValid;
 }
+
+
+
+
 
 // EDIT FORM POPUP
 const editAcc = document.getElementById('user-edit');
 const oPop = document.querySelector('.edit_acc');
 const cPop = document.querySelector('.close-modal-edit');
-
 
 // For EDIT FORM POPUP
 oPop.addEventListener('click', () => {
@@ -133,41 +159,40 @@ cPop.addEventListener('click', () => {
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById('edit-form');
 const name1 = document.getElementById('name1');
-const description1 = document.getElementById('description1');
-const place1 = document.getElementById('place1');
 const photos1 = document.getElementById('photos1');
 
-formEdit.addEventListener('submit', async (e) => {
+formEdit.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, description1, place1])) {
+  if (validateInputs([name1, date1,description1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
       let photoURL;
       if (photoFile) {
-        const photoRef = ref(storage, `otop/${photoFile.name}`);
+        const photoRef = ref(storage, `photos/${photoFile.name}`);
         await uploadBytes(photoRef, photoFile);
         photoURL = await getDownloadURL(photoRef);
       }
 
       const updateData = {
+       
         Name: name1.value,
-        Description: description1.value,
-        Place: place1.value
+   
+        
       };
 
       if (photoFile) {
         updateData.PhotoURL = photoURL;
       }
 
-      await updateDoc(doc(db, "otop", userID), updateData);
-      toggleDisplay(editAcc, 'none');
-      localStorage.setItem('lastEventUpdate', Date.now());
+      await updateDoc(doc(db, "activities", userID), updateData);
+      editAcc.style.display = "none"; // Close the edit form
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error updating document: ", error);
     }
   }
+  
 });
 
 // Function to limit the description to 1000 words
@@ -191,38 +216,106 @@ function limitWords(textareaId, maxWords) {
 limitWords('description', 100);
 limitWords('description1', 100);
 
-// Populate table with data
-const tbody = document.getElementById('tbody1');
-const querySnapshot = await getDocs(collection(db, "otop"));
-querySnapshot.forEach(doc => {
-  if (doc.data()) {
-    const trow = document.createElement('tr');
-    trow.innerHTML = `
-      <td>${doc.data().Name}</td>
-      <td><button class="see-details-btn" id="details_${doc.id}">See Details</button></td>
-    `;
-    
-    tbody.appendChild(trow);
+// Function to display events with a single photo in the table
+async function displayEvents() {
+  const querySnapshot = await getDocs(collection(db, "activities"));
+  const tbody = document.getElementById('tbody1');
+  tbody.innerHTML = '';
+  querySnapshot.forEach(doc => {
+    if (doc.data().Status === "not done") {
+      const trow = document.createElement('tr');
+      trow.innerHTML = `
+        <td>${doc.data().Name}</td>
+      
+        <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
+      `;
+      tbody.appendChild(trow);
 
-    // Now, add the event listener to the button
-    const detailsBtn = document.getElementById(`details_${doc.id}`);
-    if (detailsBtn) {
-      detailsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showDetailsModal(doc.data());
+      // Add event listener for each row to edit event data
+      trow.addEventListener('click', () => {
+        localStorage.setItem('ID', doc.id);
+        document.getElementById('name1').value = doc.data().Name;
+
+        
+        // Optionally highlight the selected row
+        highlightRow(trow);
       });
     }
+  });
+}
 
-    trow.addEventListener('click', () => {
-      localStorage.setItem('ID', doc.id);
-      document.getElementById('name1').value = doc.data().Name;
-      document.getElementById('description1').value = doc.data().Description;
-      document.getElementById('place1').value = doc.data().Place;
-      highlightRow(trow);
+
+// Function to fetch and sort events
+async function fetchAndSortEvents() {
+  const querySnapshot = await getDocs(collection(db, "activities"));
+  const events = [];
+
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+    events.push({
+      id: doc.id,
+      ...data
     });
-  }
-});
+  });
 
+  // Sort events by date in ascending order
+  events.sort((a, b) => new Date(a.Date) - new Date(b.Date));
+
+  return events;
+}
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container'); // Select the common container
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
+
+
+
+
+// Function to populate table with sorted events
+const tbody = document.getElementById('tbody1');
+  const monthNames = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY",
+    "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+async function populateTable(events) {
+  if (!events) {
+    events = await fetchAndSortEvents();
+  }
+
+  tbody.innerHTML = ''; // Clear existing table rows
+
+  events.forEach(event => {
+    if (event.Status === "not done") {
+      const dateParts = event.Date.split("-");
+      const monthWord = monthNames[parseInt(dateParts[1], 10) - 1]; // Convert month number to word
+      const formattedDate = `${monthWord} ${dateParts[2]}, ${dateParts[0]}`;
+
+      const trow = document.createElement('tr');
+      trow.innerHTML = `
+        <td>${event.name}</td>
+       
+<td><button class="see-details-btn" id="details_${event.id}">See Details</button></td>      `;
+      tbody.appendChild(trow);
+
+      trow.addEventListener('click', () => {
+        localStorage.setItem('ID', event.id);
+        document.getElementById('name1').value = event.Name;
+
+        highlightRow(trow);
+        
+        // Add event listener for "See Details" button
+document.getElementById(`details_${event.id}`).addEventListener('click', (e) => {
+  e.stopPropagation();  // Prevent row click from triggering
+  showDetailsModal(event);  // Pass event data to the modal function
+});
+      });
+    }
+  });
+}
 const detailsBtn = document.getElementById(`details_${doc.id}`);
 if (detailsBtn) {
     detailsBtn.addEventListener('click', (e) => {
@@ -234,8 +327,7 @@ if (detailsBtn) {
 
 function showDetailsModal(data) {
   document.getElementById("details-name").textContent = data.Name; 
-   document.getElementById("details-description").textContent = data.Description;
-  document.getElementById("details-place").textContent = data.Place;
+
 
   document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
 
@@ -271,30 +363,38 @@ function toggledBlur(shouldBlur) {
 
 
 
-function highlightRow(row) {
-  const rows = document.querySelectorAll('#tbody1 tr');
-  rows.forEach(r => r.classList.remove('selected-row'));
-  row.classList.add('selected-row');
-  document.getElementById("edit_acc").disabled = false;
-  document.getElementById("delete_acc").disabled = false;
-}
+// Calendar functionality
+const calDate = document.getElementById('cal-date');
 
-function toggleBlur(shouldBlur) {
-  const container = document.querySelector('.main-container'); // Select the common container
-  if (shouldBlur) {
-    container.classList.add('blur-background');
-  } else {
-    container.classList.remove('blur-background');
-  }
-}
-// Auto-archive past events
-async function autoArchivePastEvents() {
-  const querySnapshot = await getDocs(collection(db, "otop"));
+calDate.addEventListener('change', async () => {
+  const selectedDate = calDate.value;
+  const querySnapshot = await getDocs(collection(db, "activities"));
+  const filteredEvents = [];
+
+  querySnapshot.forEach(doc => {
+    if (doc.data().Date === selectedDate && doc.data().Status === "not done") {
+      filteredEvents.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    }
+  });
+
+  populateTable(filteredEvents);
+});
+
+
+// Auto-archive past and future events
+async function autoArchivePastAndFutureEvents() {
+  const querySnapshot = await getDocs(collection(db, "activities"));
   const currentDate = new Date();
 
   querySnapshot.forEach(async (doc) => {
     const eventDate = new Date(doc.data().Date);
-    if (eventDate < currentDate && doc.data()) {
+    const status = doc.data().Status;
+    
+    // Archive past events (eventDate < currentDate) or future events (eventDate > currentDate)
+    if ((eventDate < currentDate && status === "not done") || eventDate.getFullYear() > currentDate.getFullYear()) {
       await updateDoc(doc.ref, {
         Status: "archived",
         ArchivedBy: "AUTO_ARCHIVE",
@@ -304,13 +404,14 @@ async function autoArchivePastEvents() {
   });
 }
 
-autoArchivePastEvents();
+autoArchivePastAndFutureEvents();
+
 
 // Archive event
 document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
-    await updateDoc(doc(db, "otop", userID), {
+    await updateDoc(doc(db, "activities", userID), {
       Status: "archived",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
       ArchivedDate: new Date().toLocaleString()
@@ -322,23 +423,29 @@ document.getElementById('delete_acc').addEventListener('click', async () => {
   }
 });
 
-// Button to see archived accounts
-document.getElementById('archived_acc').addEventListener('click', () => {
-  window.location = "oArchives.html";
-});
+// Initial call to populate table
+populateTable();
 
-// 
-// Storage event listener
-window.addEventListener('storage', (event) => {
-  if (event.key === 'lastEventUpdate') {
-    window.location.reload();
-  }
-});
-
-function toggleDisplay(element, displayStyle) {
-  element.style.display = displayStyle;
+// Function to highlight the selected row
+function highlightRow(row) {
+  const rows = document.querySelectorAll('#tbody1 tr');
+  rows.forEach(r => r.classList.remove('selected-row'));
+  row.classList.add('selected-row');
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
 }
 
+// Set interval to reload events every minute (60000 ms)
+setInterval(() => {
+  populateTable();
+}, 60000);
+
+
+// Button to see archived accounts
+document.getElementById('archived_acc').addEventListener('click', () => {
+  window.location = "archives.html";
+});
+    
 
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");

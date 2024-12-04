@@ -43,6 +43,17 @@ document.getElementById("localindustries").addEventListener("click", () => {
   window.location = "industries.html";
 });
 
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
+
 const archivedTbody = document.getElementById("archived-tbody");
 
 const querySnap = await getDocs(collection(db, "users", "admin", "admin_account"));

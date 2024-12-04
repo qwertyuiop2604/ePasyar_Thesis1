@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, updatePassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, updatePassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -19,40 +19,22 @@ const auth = getAuth(app);
 
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('login-form');
-  const passwordDialog = document.getElementById('password_dialog');
+  const passwordField = document.getElementById('password');
   const updatePasswordBtn = document.getElementById('update-password-btn');
   const newPasswordField = document.getElementById('new-password');
   const confirmPasswordField = document.getElementById('confirm-password');
   const togglePassword = document.getElementById('togglePassword');
-  const passwordField = document.getElementById('password');
-  const forgotPasswordLink = document.getElementById('forgotPass');
-  const closeModal = document.querySelector(".modal .close");
+  const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+  const emailField = document.getElementById('email');
 
   // Clear input fields on load
-  document.getElementById('email').value = '';
+  emailField.value = '';
   passwordField.value = '';
-
-  // Handle "Forgot Password" link to open the modal
-  forgotPasswordLink.addEventListener("click", function() {
-    passwordDialog.style.display = "block";
-  });
-
-  // Close the modal when the "X" is clicked
-  closeModal.addEventListener("click", function() {
-    passwordDialog.style.display = "none";
-  });
-
-  // Close the modal if clicking outside of the modal content
-  window.addEventListener("click", function(event) {
-    if (event.target === passwordDialog) {
-      passwordDialog.style.display = "none";
-    }
-  });
 
   // Handle login form submission
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
-    const email = document.getElementById('email').value;
+    const email = emailField.value;
     const password = passwordField.value;
 
     if (!email || !password) {
@@ -72,12 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
           const firstLogin = userDoc.data().firstLogin;
 
           if (firstLogin) {
-            passwordDialog.style.display = 'block';
+            // Redirect to a page for password update if it's the first login
+            window.location = "dash.html"; // Assuming you have a separate page for password update
           } else {
-            document.getElementById('email').value = '';
+            emailField.value = '';
             passwordField.value = '';
             window.location = "dash.html";
           }
+          
         } else {
           console.error("User document not found in Firestore.");
         }
@@ -90,6 +74,26 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (error.code === 'auth/wrong-password') {
         alert("Incorrect password. Please try again.");
       }
+    }
+  });
+
+  
+
+  // Handle password reset via email
+  forgotPasswordBtn.addEventListener('click', async function() {
+    const email = emailField.value;
+
+    if (!email) {
+      alert("Please enter your email address.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Password reset email sent. Please check your inbox.");
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      alert("Error sending password reset email. Please try again.");
     }
   });
 
@@ -110,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
         await updateDoc(userRef, { firstLogin: false });
 
         alert("Password updated successfully. You will now be redirected to the dashboard.");
-        passwordDialog.style.display = 'none';
         window.location = "dash.html";
       } catch (error) {
         console.error("Error updating password:", error);
@@ -121,11 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Close the password dialog
-  document.querySelector('.close').onclick = function() {
-    passwordDialog.style.display = 'none';
-  };
-
   // Toggle password visibility
   togglePassword.addEventListener('click', function () {
     const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -133,5 +131,3 @@ document.addEventListener('DOMContentLoaded', function() {
     this.classList.toggle('fa-eye-slash');
   });
 });
-
-

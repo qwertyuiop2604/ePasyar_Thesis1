@@ -21,6 +21,17 @@ let bckbtn = document.getElementById("bckbtn");
 bckbtn.addEventListener('click', () => {
     window.location = 'promotion.html'
 })
+
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'

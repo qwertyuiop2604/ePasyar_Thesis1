@@ -47,6 +47,16 @@ tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
 
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener('click', () =>{
   window.location = 'restaurants.html'

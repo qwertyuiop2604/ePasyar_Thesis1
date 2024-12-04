@@ -38,6 +38,17 @@ souvenir.addEventListener("click", () => {
   window.location = "souvenir.html";
 });
 
+
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 let promotion = document.getElementById("promotion");
 promotion.addEventListener("click", () => {
   window.location = "promotion.html";

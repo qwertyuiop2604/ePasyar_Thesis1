@@ -80,6 +80,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   localindustries.addEventListener("click", () => {
     window.location = "industries.html";
   });
+  
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 });
 
 

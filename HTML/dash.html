@@ -29,7 +29,7 @@
       background-color: gainsboro;
       border-color: black;
       border-radius: 3px;
-      height: 100vh; /* Full height of viewport */
+      height: 115vh; /* Full height of viewport */
       width: 260px;
     }
 
@@ -41,17 +41,19 @@
     }
     #mostVisitedChart {
       width: 100%;
-      max-width: 400px; /* Adjusted to a more reasonable max-width */
+      max-width: 400px; /* Adjusted to a reasonable max-width */
       height: 200px;
-      margin-top: 20px; /* Ensure there's space for the button and dropdown */
-    }
-    /* Set color for all Font Awesome icons */
-#touristSpotsChart{
-  width: 100%;
-      max-width: 400px; /* Adjusted to a more reasonable max-width */
-      height: 200px;
-      margin-top: 20px; /* Ensure there's space for the button and dropdown */
-}
+      margin-top: 10px; /* Ensure there's space for the button and dropdown */
+  }
+
+  #touristSpotsChart {
+    width: 100%;
+    max-width: 7000px;
+    height: 400px;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    margin-left: 10px; /* Set margin-left */
+  }
 
 button#generatePDF, button#generateExcel {
     background-color: #337ab7;
@@ -128,6 +130,8 @@ button#dropdownMenu{
           <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+          <li><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
+          <li><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>          
           <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul><br>
       </div>
@@ -151,52 +155,43 @@ button#dropdownMenu{
         <div class="row">
           <div class="column">
             <div class="card">
-              <a href="#sec3">
-                <h4 id="eventS"><i class="fas fa-calendar"></i> Events</h4>
-                <p id="eventsCount">0</p>
-              </a>
+              <h4 id="eventS"><i class="fas fa-calendar"></i> Events</h4>
+              <p id="eventsCount">0</p>
             </div>
           </div>
 
           <div class="column">
             <div class="card">
-              <a href="#sec4">
-                <h4 id="hOtels"><i class="fas fa-bed"></i> Hotels</h4>
-                <p id="hotelCount">0</p>
-              </a>
+              <h4 id="hOtels"><i class="fas fa-bed"></i> Hotels</h4>
+              <p id="hotelCount">0</p>
             </div>
           </div>
+        
           <div class="column">
             <div class="card">
-              <a href="#sec5">
-                <h4 id="tourists"><i class="fas fa-map-marker-alt"></i> Tourist Spots</h4>
-                <p id="touristCount">0</p>
-              </a>
+              <h4 id="tourists"><i class="fas fa-map-marker-alt"></i> Tourist Spots</h4>
+              <p id="touristCount">0</p>
             </div>
           </div>
-
+        
           <div class="column">
             <div class="card">
-              <a href="#sec6">
-                <h4 id="resto"><i class="fas fa-utensils"></i> Restaurants</h4>
-                <p id="restoCount">0</p>
-              </a>
+              <h4 id="resto"><i class="fas fa-utensils"></i> Restaurants</h4>
+              <p id="restoCount">0</p>
             </div>
           </div>
-
+        
           <div class="column">
             <div class="card">
-              <a href="#sec7">
-                <h4 id="souvenirs"><i class="fas fa-gift"></i> Souvenir Shops</h4>
-                <p id="souvenirCount">0</p>
-              </a>
+              <h4 id="souvenirs"><i class="fas fa-gift"></i> Souvenir Shops</h4>
+              <p id="souvenirCount">0</p>
             </div>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="well" style="position: relative;">
             <a href="#sec1">
-              <p class="fas fa-check-circle" id="visited"> NUMBER OF TOURISTS </p>
+              <p class="fas fa-check-circle" id="visited"> TOURIST ARRIVAL REPORT </p>
 
             </a>
 
@@ -206,11 +201,7 @@ button#dropdownMenu{
             <button id="generateExcel" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
               Generate Excel Report
             </button>
-            
-
-            
-            
-        
+  
 <!-- Bootstrap Dropdown --> 
   
 <div class="dropdown" style="position: relative; display: inline-block;">
@@ -220,7 +211,7 @@ button#dropdownMenu{
   </button>
   <ul class="dropdown-menu" id="menuContent">
     <li><a href="#section1" data-type="Daily">Daily</a></li>
-    <li><a href="#section2" data-type="Weekly">Weekly</a></li>
+  
     <li><a href="#section3" data-type="Monthly">Monthly</a></li>
     <li><a href="#section4" data-type="Yearly">Yearly</a></li>
   </ul>
@@ -230,23 +221,38 @@ button#dropdownMenu{
 
 <canvas id="mostVisitedChart" style="width:100%; max-width:7000px; height:400px;"></canvas>
 
-<!-- 
-<button class="btn btn-primary" id="generateReport2"> Generate Report</button>
+
+        <div class="col-sm-4">
+          <div class="well" style="position: relative;  margin-top:60px; margin-bottom:10px; margin-left: -32px;">
+            <a href="#sec1">
+              <p class="fas fa-check-circle" id="visited1"> NUMBER OF TOURISTS SPOT VISITORS </p>
+
+            </a>
+
+            <button id="generatePDF" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Generate PDF Report
+            </button>
+            <button id="generateExcel" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Generate Excel Report
+            </button>
+  
+<!-- Bootstrap Dropdown --> 
+  
 <div class="dropdown" style="position: relative; display: inline-block;">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    <i class="fa fa-bars"></i> Monthly
+    <i class="fa fa-bars"></i> 
     <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" id="menuContentTouristSpots">
+  <ul class="dropdown-menu" id="menuContent">
     <li><a href="#section1" data-type="Daily">Daily</a></li>
-    <li><a href="#section2" data-type="Weekly">Weekly</a></li>
+ 
     <li><a href="#section3" data-type="Monthly">Monthly</a></li>
     <li><a href="#section4" data-type="Yearly">Yearly</a></li>
   </ul>
 
-</div> -->
+</div>
 
-<canvas id="touristSpotsChart" style="width:100%; max-width:7000px; height:400px; margin-top:80px;"></canvas>
+<canvas id="touristSpotsChart" style="width:100%; max-width:7000px; height:400px; margin-top:10px;"></canvas>
 
 
 

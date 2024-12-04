@@ -26,6 +26,17 @@ events.addEventListener('click', () => {
     window.location = 'events.html'
 })
 
+
+let activities = document.getElementById("activities");
+
+activities.addEventListener("click", () => {
+  window.location = "activities.html";
+});
+let user = document.getElementById("user");
+
+user.addEventListener("click", () => {
+  window.location = "user.html";
+});
 let reviews = document.getElementById("reviews");
 reviews.addEventListener("click", () => {
   window.location = "reviews.html";
