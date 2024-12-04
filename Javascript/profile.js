@@ -90,7 +90,7 @@ const formCreate = document.getElementById("create-form");
 const fname = document.getElementById("fname");
 const lname = document.getElementById("lname");
 const email = document.getElementById("email");
-const position = document.getElementById("position");
+// const position = document.getElementById("position");
 const em_no = document.getElementById("em_no");
 const btnRegister = document.getElementById("btnRegister"); // Add this line to get the register button
 
@@ -101,7 +101,7 @@ btnRegister.addEventListener("click", async (e) => {
     fname.value === "" ||
     lname.value === "" ||
     email.value === "" ||
-    position.value === "" ||
+    // position.value === "" ||
     em_no.value === ""
   ) {
     alert("All fields are required.");
@@ -134,7 +134,7 @@ btnRegister.addEventListener("click", async (e) => {
       fname: fname.value,
       lname: lname.value,
       email: email.value,
-      position: position.value,
+      // position: position.value,
       status: "Pending",
       firstLogin: true,
     });
@@ -203,12 +203,12 @@ const formEdit = document.getElementById("edit-form");
 const fname1 = document.getElementById("fname1");
 const lname1 = document.getElementById("lname1");
 const email1 = document.getElementById("email1");
-const positionEdit = document.getElementById("positionEdit");
+// const positionEdit = document.getElementById("positionEdit");
 const btnSaveEdit = document.getElementById("btnSaveEdit");
 
 btnSaveEdit.addEventListener("click", async (e) => {
   e.preventDefault();
-  if (fname1.value === "" || lname1.value === "" || email1.value === "" || positionEdit.value === "") {
+  if (fname1.value === "" || lname1.value === "" || email1.value === "" ) {
   } else {
     const userId = localStorage.getItem("ID");
     if (userId) {
@@ -217,7 +217,7 @@ btnSaveEdit.addEventListener("click", async (e) => {
         fname: fname1.value,
         lname: lname1.value,
         email: email1.value,
-        position: positionEdit.value,
+        // position: positionEdit.value,
       })
         .then(() => {
           console.log("Document successfully updated!");
@@ -245,20 +245,20 @@ querySnapshot.forEach((doc) => {
     const td2 = document.createElement("td");
     const td3 = document.createElement("td");
     const td4 = document.createElement("td"); 
-    const td5 = document.createElement("td");
+
 
 
     td1.textContent = doc.data().fname;
     td2.textContent = doc.data().lname;
     td3.textContent = doc.data().email;
-    td4.textContent = doc.data().position;
-    td5.textContent = doc.data().status;
+    // td4.textContent = doc.data().position;
+    td4.textContent = doc.data().status;
 
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
     trow.appendChild(td4);
-    trow.appendChild(td5);
+
 
     tbody.appendChild(trow);
 
@@ -282,7 +282,7 @@ querySnapshot.forEach((doc) => {
       document.getElementById("fname1").value = doc.data().fname;
       document.getElementById("lname1").value = doc.data().lname;
       document.getElementById("email1").value = doc.data().email;
-      document.getElementById("position").value = doc.data().position;
+      // document.getElementById("position").value = doc.data().position;
     });
   }
 });

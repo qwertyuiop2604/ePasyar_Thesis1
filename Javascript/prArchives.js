@@ -62,7 +62,8 @@ querySnap.forEach((doc) => {
     const trow = document.createElement("tr");
     trow.innerHTML = `
       <td>${doc.data().deletedBy}</td>
-      <td>${doc.data().name}</td>
+      <td>${doc.data().fname}</td>
+       <td>${doc.data().lname}</td>
       <td>${doc.data().email}</td>
       <td>${doc.data().deletedDate}</td>
     `;

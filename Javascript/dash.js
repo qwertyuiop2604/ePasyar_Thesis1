@@ -196,9 +196,7 @@ async function updateChartData(type) {
       const value = data[dataKey] || 0;
       visitorData.push(value); 
 
-      if (type === "Weekly") {
-        xLabels.push(doc.id); // Use document IDs as labels for weekly reports
-      }
+     
     });
 
     // Update chart data
@@ -230,15 +228,6 @@ document.getElementById('menuContent').addEventListener('click', function(event)
   }
 });
 
-// Sample HTML for menu
-/*
-<div class="menu-content" id="menuContent">
-  <a href="#section1">Daily</a>
-  <a href="#section2">Weekly</a>
-  <a href="#section3">Monthly</a>
-  <a href="#section4">Yearly</a>
-</div>
-*/
 
 // Fetch initial chart data for monthly reports by default
 updateChartData("Monthly");
@@ -254,15 +243,7 @@ document.getElementById('menuContent').addEventListener('click', function(event)
   }
 });
 
-// Sample HTML for menu
-/*
-<div class="menu-content" id="menuContent">
-  <a href="#section1">Daily</a>
-  <a href="#section2">Weekly</a>
-  <a href="#section3">Monthly</a>
-  <a href="#section4">Yearly</a>
-</div>
-*/
+
 
 // Fetch initial chart data for monthly reports by default
 updateChartData("Monthly");
@@ -271,73 +252,109 @@ updateChartData("Monthly");
 const { jsPDF } = window.jspdf;
 const XLSX = window.XLSX;
 
-// Function to capture chart as an image and generate PDF
 async function generatePDFReport() {
   const doc = new jsPDF();
-  
-  // Capture the chart as an image
-  const chartCanvas = document.getElementById("mostVisitedChart");
-  if (chartCanvas) {
-    const chartImage = chartCanvas.toDataURL("image/png", 1.0);
-    doc.text("Tourist Report", 20, 10);
-    doc.addImage(chartImage, "PNG", 15, 20, 180, 80); // Adjust positioning and size
-  }
 
-  // Fetch all data in parallel
-  const [dailyData, weeklyData, monthlyData, yearlyData] = await Promise.all([
-    getDataArray("Daily"),
-    getDataArray("Weekly"),
-    getDataArray("Monthly"),
-    getDataArray("Yearly")
-  ]);
+  // Header Section
+  doc.setFont("times", "bold");
+  doc.setFontSize(12);
+  doc.text("Republic of the Philippines", 105, 10, { align: "center" });
+  doc.text("Province of Ilocos Sur", 105, 16, { align: "center" });
+  doc.text("City of Vigan", 105, 22, { align: "center" });
+  doc.text("OFFICE OF THE CITY CULTURAL AFFAIRS AND TOURISM", 105, 28, {
+    align: "center",
+  });
 
-  // Formatting and adding fetched data to PDF
-  let yOffset = 110;
-  const addDataToPDF = (title, data) => {
-    doc.text(`${title} Report:`, 20, yOffset);
-    yOffset += 10;
-    data.forEach(([date, count]) => {
-      doc.text(`${date}: ${count}`, 20, yOffset);
-      yOffset += 8;
-    });
-    yOffset += 10;
-  };
+  // Title Section
+  doc.setFontSize(16);
+  doc.text("2023 VIGAN CITY TOURIST ARRIVALS", 105, 40, { align: "center" });
 
-  addDataToPDF("Daily", dailyData);
-  addDataToPDF("Weekly", weeklyData);
-  addDataToPDF("Monthly", monthlyData);
-  addDataToPDF("Yearly", yearlyData);
+  // Data Section
+  const accommodationHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
+  const dayVisitorHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
 
-  // Save the PDF
+  const accommodationData = [
+    ["January", "5,638", "271", "5,909"],
+    ["February", "7,348", "971", "8,319"],
+    ["March", "3,220", "326", "3,546"],
+    ["April", "7,054", "1,414", "8,468"],
+    ["May", "6,166", "907", "7,073"],
+    ["June", "6,880", "687", "7,567"],
+    ["July", "4,106", "193", "4,299"],
+    ["August", "2,805", "213", "3,018"],
+    ["September", "1,952", "98", "2,050"],
+    ["October", "2,681", "191", "2,872"],
+    ["November", "4,004", "397", "4,401"],
+    ["December", "4,175", "528", "4,703"],
+    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
+  ];
+
+  const dayVisitorData = [
+    ["January", "41,303", "1,024", "42,327"],
+    ["February", "43,150", "1,063", "44,213"],
+    ["March", "45,343", "915", "46,258"],
+    ["April", "54,623", "639", "55,262"],
+    ["May", "57,094", "622", "57,716"],
+    ["June", "79,097", "1,107", "80,204"],
+    ["July", "68,718", "961", "69,679"],
+    ["August", "49,862", "796", "50,658"],
+    ["September", "31,260", "630", "31,890"],
+    ["October", "46,288", "793", "47,081"],
+    ["November", "51,728", "929", "52,657"],
+    ["December", "79,497", "1,227", "80,724"],
+    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
+  ];
+
+  // Accommodation Table
+  doc.autoTable({
+    head: accommodationHeaders,
+    body: accommodationData,
+    startY: 50,
+    theme: "grid",
+    headStyles: { fillColor: [211, 211, 211] },
+    columnStyles: {
+      0: { halign: "left" }, // Align "MONTH" column to the left
+      1: { halign: "right" },
+      2: { halign: "right" },
+      3: { halign: "right" },
+    },
+  });
+
+  // Day Visitor Table
+  doc.autoTable({
+    head: dayVisitorHeaders,
+    body: dayVisitorData,
+    startY: doc.lastAutoTable.finalY + 10,
+    theme: "grid",
+    headStyles: { fillColor: [211, 211, 211] },
+    columnStyles: {
+      0: { halign: "left" }, // Align "MONTH" column to the left
+      1: { halign: "right" },
+      2: { halign: "right" },
+      3: { halign: "right" },
+    },
+  });
+
+  // Footer Section
+  const footerY = doc.lastAutoTable.finalY + 20;
+  doc.setFontSize(12);
+  doc.text("Accommodation – 62,225", 20, footerY);
+  doc.text("Day Visitor – 658,669", 20, footerY + 6);
+  doc.text("Grand Total = 720,894", 20, footerY + 12);
+
+  // Signatures
+  const signatureY = footerY + 30;
+  doc.text("Prepared by:", 20, signatureY);
+  doc.text("Certified Correct by:", 140, signatureY);
+  doc.text("CYRILLE PRECIOUS MAE R. CACHOLA", 20, signatureY + 10);
+  doc.text("MuTech II", 20, signatureY + 16);
+  doc.text("JO-ANNE MARGARITA R. GUTIERREZ", 140, signatureY + 10);
+  doc.text("STOO I", 140, signatureY + 16);
+
+  // Save PDF
   doc.save("TouristReport.pdf");
 }
 
-// Function to export data to Excel
-async function generateExcelReport() {
-  const workbook = XLSX.utils.book_new();
-
-  // Fetch all data in parallel
-  const [dailyData, weeklyData, monthlyData, yearlyData] = await Promise.all([
-    getDataArray("Daily"),
-    getDataArray("Weekly"),
-    getDataArray("Monthly"),
-    getDataArray("Yearly")
-  ]);
-
-  // Create worksheets for each report type
-  const createSheet = (title, data) => {
-    const sheet = XLSX.utils.aoa_to_sheet([["Date", "Count"], ...data]);
-    XLSX.utils.book_append_sheet(workbook, sheet, title);
-  };
-
-  createSheet("Daily Report", dailyData);
-  createSheet("Weekly Report", weeklyData);
-  createSheet("Monthly Report", monthlyData);
-  createSheet("Yearly Report", yearlyData);
-
-  // Save the workbook
-  XLSX.writeFile(workbook, "TouristReport.xlsx");
-}
 
 // Helper function to fetch data in array format
 async function getDataArray(type) {
@@ -357,7 +374,6 @@ async function getDataArray(type) {
 // Function to get Firestore reference based on report type
 function getReportsRef(type) {
   if (type === "Daily") return collection(db, "tourist_arrival_reports", "daily", "daily_reports");
-  if (type === "Weekly") return collection(db, "tourist_arrival_reports", "weekly", "weekly_reports");
   if (type === "Monthly") return collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
   if (type === "Yearly") return collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
 }
@@ -367,8 +383,6 @@ function getDataKey(type) {
   switch (type) {
     case "Daily":
       return "dailyCount";
-    case "Weekly":
-      return "weeklyCount";
     case "Monthly":
       return "monthlyCount";
     case "Yearly":
@@ -380,6 +394,68 @@ function getDataKey(type) {
 
 // Event listeners for report generation buttons
 document.getElementById("generatePDF").addEventListener("click", generatePDFReport);
+
+async function generateExcelReport() {
+  const workbook = XLSX.utils.book_new();
+
+  // Data for Accommodation
+  const accommodationData = [
+    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
+    ["January", "5,638", "271", "5,909"],
+    ["February", "7,348", "971", "8,319"],
+    ["March", "3,220", "326", "3,546"],
+    ["April", "7,054", "1,414", "8,468"],
+    ["May", "6,166", "907", "7,073"],
+    ["June", "6,880", "687", "7,567"],
+    ["July", "4,106", "193", "4,299"],
+    ["August", "2,805", "213", "3,018"],
+    ["September", "1,952", "98", "2,050"],
+    ["October", "2,681", "191", "2,872"],
+    ["November", "4,004", "397", "4,401"],
+    ["December", "4,175", "528", "4,703"],
+    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
+  ];
+
+  // Data for Day Visitors
+  const dayVisitorData = [
+    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
+    ["January", "41,303", "1,024", "42,327"],
+    ["February", "43,150", "1,063", "44,213"],
+    ["March", "45,343", "915", "46,258"],
+    ["April", "54,623", "639", "55,262"],
+    ["May", "57,094", "622", "57,716"],
+    ["June", "79,097", "1,107", "80,204"],
+    ["July", "68,718", "961", "69,679"],
+    ["August", "49,862", "796", "50,658"],
+    ["September", "31,260", "630", "31,890"],
+    ["October", "46,288", "793", "47,081"],
+    ["November", "51,728", "929", "52,657"],
+    ["December", "79,497", "1,227", "80,724"],
+    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
+  ];
+
+  // Add Accommodation Data Sheet
+  const accommodationSheet = XLSX.utils.aoa_to_sheet(accommodationData);
+  XLSX.utils.book_append_sheet(workbook, accommodationSheet, "Accommodation");
+
+  // Add Day Visitor Data Sheet
+  const dayVisitorSheet = XLSX.utils.aoa_to_sheet(dayVisitorData);
+  XLSX.utils.book_append_sheet(workbook, dayVisitorSheet, "Day Visitors");
+
+  // Add Summary Sheet
+  const summaryData = [
+    ["Category", "Total"],
+    ["Accommodation", "62,225"],
+    ["Day Visitor", "658,669"],
+    ["Grand Total", "720,894"],
+  ];
+  const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+  XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
+
+  // Save the workbook
+  XLSX.writeFile(workbook, "TouristReport.xlsx");
+}
+
 document.getElementById("generateExcel").addEventListener("click", generateExcelReport);
 
 
@@ -439,6 +515,166 @@ const updateSouvenirCountElement = (count) => {
 };
 
 
+// Event Listeners for Buttons
+document.getElementById("generatePDFScan").addEventListener("click", createPDFReport);
+document.getElementById("generateExcelScan").addEventListener("click", createExcelReport);
+
+// Function to Generate PDF Report
+async function createPDFReport() {
+  const doc = new jsPDF();
+
+  // Header Section
+  doc.setFont("times", "bold");
+  doc.setFontSize(12);
+  doc.text("Republic of the Philippines", 105, 10, { align: "center" });
+  doc.text("Province of Ilocos Sur", 105, 16, { align: "center" });
+  doc.text("City of Vigan", 105, 22, { align: "center" });
+  doc.text("OFFICE OF THE CITY CULTURAL AFFAIRS AND TOURISM", 105, 28, {
+    align: "center",
+  });
+
+  // Title Section
+  doc.setFontSize(16);
+  doc.text("2023 VIGAN CITY TOURIST ARRIVALS", 105, 40, { align: "center" });
+
+  // Data Section for Accommodation
+  const accommodationHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
+  const accommodationData = [
+    ["January", "5,638", "271", "5,909"],
+    ["February", "7,348", "971", "8,319"],
+    ["March", "3,220", "326", "3,546"],
+    ["April", "7,054", "1,414", "8,468"],
+    ["May", "6,166", "907", "7,073"],
+    ["June", "6,880", "687", "7,567"],
+    ["July", "4,106", "193", "4,299"],
+    ["August", "2,805", "213", "3,018"],
+    ["September", "1,952", "98", "2,050"],
+    ["October", "2,681", "191", "2,872"],
+    ["November", "4,004", "397", "4,401"],
+    ["December", "4,175", "528", "4,703"],
+    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
+  ];
+
+  // Data Section for Day Visitors
+  const dayVisitorHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
+  const dayVisitorData = [
+    ["January", "41,303", "1,024", "42,327"],
+    ["February", "43,150", "1,063", "44,213"],
+    ["March", "45,343", "915", "46,258"],
+    ["April", "54,623", "639", "55,262"],
+    ["May", "57,094", "622", "57,716"],
+    ["June", "79,097", "1,107", "80,204"],
+    ["July", "68,718", "961", "69,679"],
+    ["August", "49,862", "796", "50,658"],
+    ["September", "31,260", "630", "31,890"],
+    ["October", "46,288", "793", "47,081"],
+    ["November", "51,728", "929", "52,657"],
+    ["December", "79,497", "1,227", "80,724"],
+    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
+  ];
+
+  // Generate Accommodation Table
+  doc.autoTable({
+    head: accommodationHeaders,
+    body: accommodationData,
+    startY: 50,
+    theme: "grid",
+    headStyles: { fillColor: [211, 211, 211] },
+    columnStyles: {
+      0: { halign: "left" },
+      1: { halign: "right" },
+      2: { halign: "right" },
+      3: { halign: "right" },
+    },
+  });
+
+  // Generate Day Visitors Table
+  doc.autoTable({
+    head: dayVisitorHeaders,
+    body: dayVisitorData,
+    startY: doc.lastAutoTable.finalY + 10,
+    theme: "grid",
+    headStyles: { fillColor: [211, 211, 211] },
+    columnStyles: {
+      0: { halign: "left" },
+      1: { halign: "right" },
+      2: { halign: "right" },
+      3: { halign: "right" },
+    },
+  });
+
+  // Footer Section
+  const footerY = doc.lastAutoTable.finalY + 20;
+  doc.setFontSize(12);
+  doc.text("Accommodation – 62,225", 20, footerY);
+  doc.text("Day Visitor – 658,669", 20, footerY + 6);
+  doc.text("Grand Total = 720,894", 20, footerY + 12);
+
+  // Save the PDF
+  doc.save("TouristReport.pdf");
+}
+
+// Function to Generate Excel Report
+async function createExcelReport() {
+  const workbook = XLSX.utils.book_new();
+
+  // Data for Accommodation
+  const accommodationData = [
+    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
+    ["January", "5,638", "271", "5,909"],
+    ["February", "7,348", "971", "8,319"],
+    ["March", "3,220", "326", "3,546"],
+    ["April", "7,054", "1,414", "8,468"],
+    ["May", "6,166", "907", "7,073"],
+    ["June", "6,880", "687", "7,567"],
+    ["July", "4,106", "193", "4,299"],
+    ["August", "2,805", "213", "3,018"],
+    ["September", "1,952", "98", "2,050"],
+    ["October", "2,681", "191", "2,872"],
+    ["November", "4,004", "397", "4,401"],
+    ["December", "4,175", "528", "4,703"],
+    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
+  ];
+
+  // Data for Day Visitors
+  const dayVisitorData = [
+    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
+    ["January", "41,303", "1,024", "42,327"],
+    ["February", "43,150", "1,063", "44,213"],
+    ["March", "45,343", "915", "46,258"],
+    ["April", "54,623", "639", "55,262"],
+    ["May", "57,094", "622", "57,716"],
+    ["June", "79,097", "1,107", "80,204"],
+    ["July", "68,718", "961", "69,679"],
+    ["August", "49,862", "796", "50,658"],
+    ["September", "31,260", "630", "31,890"],
+    ["October", "46,288", "793", "47,081"],
+    ["November", "51,728", "929", "52,657"],
+    ["December", "79,497", "1,227", "80,724"],
+    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
+  ];
+
+  // Create Sheets
+  const accommodationSheet = XLSX.utils.aoa_to_sheet(accommodationData);
+  const dayVisitorSheet = XLSX.utils.aoa_to_sheet(dayVisitorData);
+
+  // Add Sheets to Workbook
+  XLSX.utils.book_append_sheet(workbook, accommodationSheet, "Accommodation");
+  XLSX.utils.book_append_sheet(workbook, dayVisitorSheet, "Day Visitors");
+
+  // Add Summary Sheet
+  const summaryData = [
+    ["Category", "Total"],
+    ["Accommodation", "62,225"],
+    ["Day Visitor", "658,669"],
+    ["Grand Total", "720,894"],
+  ];
+  const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+  XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
+
+  // Save Workbook
+  XLSX.writeFile(workbook, "TouristReport.xlsx");
+}
 
 // Snapshot handlers
 const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
