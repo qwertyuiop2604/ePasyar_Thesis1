@@ -107,8 +107,8 @@
           <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-          <li class="active"><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
-          <li><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>  
+          <li ><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
+          <li class="active"><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>  
           <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul><br>
       </div>
@@ -122,31 +122,22 @@
             <button id="cancelLogout">Cancel</button>
           </div>
         </div>
-      <main class="main-container">
-        <div class="main2">
-          <div class="btn_useracc">
-            <button class="add_acc" id="add_acc" ><i class="fas fa-plus"></i> ADD</button>
-            <button class="edit_acc" id="edit_acc"><i class="fas fa-edit"></i> EDIT </button>
-            <button id="delete_acc"><i class="fas fa-archive"></i> ARCHIVE </button>
-            <div>
-              <button id="archived_acc"><i class="fas fa-box-open"></i> SEE ARCHIVE </button>
-            </div>
+      
             
                 
                 <!-- <input type="date" id="cal-date"> -->
 
 
     
-            <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
-          </div>
+          
           <div class="outer-wrapper">
             <div class="table-wrapper">
               <table id="table" class="table" style="width:100%">
                 <tr>
-                  <th> Name</th>
-              
+                  <th> First Name</th>
+                  <th> Last Name</th>
                  
-                  <th>Details</th>
+                  <th>Activity</th>
 
                 </tr>
                 <tbody id="tbody1"></tbody>
@@ -158,94 +149,8 @@
     </div>
     
 
-    <!--Create Account-->
-    <div class="reg-container" id="user-create">
-      <div class="container-modal">
-        <span class="close-modal">&times;</span>
-        <h1 id="create-txt">Create an Activities</h1>
-        <form id="create-form">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name">
+  
 
-          <label for="reg-date">Description</label>
-          <input type="text" id="description" name="description">
-
-          <label for="reg-event">Location</label>
-          <textarea id="location" name="location"></textarea>
-
-          <label for="photos">Photos</label>
-          <input type="file" id="photos" name="photos" accept="image/png, image/jpeg" >
-
-          <input type="submit" id="btnRegister" value="Add Event" />
-        </form>
-        
-      </div>
-    </div>
-
-    <!--Edit Account-->
-    <div class="edit-container" id="user-edit">
-      <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
-      <div class="container-modal-edit" id="edit-modal">
-        <span class="close-modal-edit">&times;</span>
-        <h1 id="edit-txt">Edit an Activities</h1>
-        <form id="edit-form">
-          <label for="name1">Name</label>
-          <input type="text" id="name1" name="name1">
-
-          <label for="reg-date">Description</label>
-          <input type="text" id="description1" name="description1">
-
-          <label for="reg-event">Location</label>
-          <textarea id="location1" name="location1"></textarea>
-
-          <label for="photos1"> Photos</label>
-          <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg" >
-
-          <input type="submit" id="btnEdit" value="Save" />
-        </form>
-      </div>
-    </div>
-
-    <!-- confirmation modal for add account -->
-    <div class="cnfrm_modal_add" id="cnfrm_add">
-      <h1>Are you sure you want to Add Activities Information?</h1>
-      <div class="btn1">
-        <button id="cnl3" class="cnl">Cancel</button>
-        <button id="cnfrm3">Confirm</button>
-      </div>
-    </div>
-
-    <!-- confirmation modal for edit account -->
-    <div class="cnfrm_modal" id="cnfrm_edit">
-      <h1>Are you sure you want to update event information?</h1>
-      <div class="btn1">
-        <button id="cnl" class="cnl">Cancel</button>
-        <button id="cnfrm">Confirm</button>
-      </div>
-    </div>
-
-    <!-- confirmation modal for delete account -->
-    <div class="cnfrm_modal_delete" id="delete_acc_modal">
-      <h1>Are you sure you want to archive this Event?</h1>
-      <div class="btn1">
-        <button id="cnl2">Cancel</button>
-        <button id="cnfrm2">Confirm</button>
-      </div>
-    </div>
-
-  </div>
-  <div id="details-modal" class="details-modal">
-    <div class="details-modal-content">
-        <span class="details-close">&times;</span>
-        <h3 id="details-title">Activities Details</h3>
-        <p><strong style="color: white;">Name:</strong> <span id="details-name" style="color: white;"></span></p>
-         <p><strong style="color: white;">Description:</strong> <span id="details-description" style="color: white;"></span></p>
-        <p><strong style="color: white;">Location:</strong> <span id="details-location" style="color: white;"></span></p>
-       
-        
-        <img id="details-photo" src="" alt="Establishment Photo" style="width: 250PX; height: 250PX;">
-    </div>
-</div>
 
 
   <script>
@@ -276,7 +181,7 @@
   </script>
 
 
-  <script type="module" src="/Javascript/activities.js"></script>
+  <script type="module" src="/Javascript/userLog.js"></script>
 </body>
 
 </html>

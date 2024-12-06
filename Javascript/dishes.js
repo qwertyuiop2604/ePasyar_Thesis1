@@ -1,9 +1,14 @@
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, addDoc, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
   authDomain: "epasyar-aa569.firebaseapp.com",
@@ -11,7 +16,7 @@ const firebaseConfig = {
   projectId: "epasyar-aa569",
   storageBucket: "epasyar-aa569.appspot.com",
   messagingSenderId: "1004550371893",
-  appId: "1:1004550371893:web:692e667675470640980f7c"
+  appId: "1:1004550371893:web:692e667675470640980f7c",
 };
 
 // Initialize Firebase
@@ -19,40 +24,57 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Event listeners for navigation buttons
-const navButtons = {
-  dash: 'dash.html',
-  profile: 'profile.html',
-  promotion: 'promotion.html',
-  tourist: 'tourist.html',
-  souvenir: 'souvenir.html', 
-  restaurant: 'restaurants.html',
-  localindustries: 'industries.html',
-  otop: 'otop.html',
-  events: 'events.html'
-};
+let dash = document.getElementById("dash");
+dash.addEventListener("click", () => {
+  window.location = "dash.html";
+});
+let profile = document.getElementById("profile");
+profile.addEventListener("click", () => {
+  window.location = "profile.html";
+});
+let promotion = document.getElementById("promotion");
+promotion.addEventListener("click", () => {
+  window.location = "promotion.html";
+});
+let events = document.getElementById("events");
+events.addEventListener("click", () => {
+  window.location = "events.html";
+});
+let tourist = document.getElementById("tourist");
+tourist.addEventListener("click", () => {
+  window.location = "tourist.html";
+});
 
 let activities = document.getElementById("activities");
-
 activities.addEventListener("click", () => {
   window.location = "activities.html";
 });
 let user = document.getElementById("user");
-
 user.addEventListener("click", () => {
   window.location = "user.html";
 });
+let restaurant = document.getElementById("restaurant");
+restaurant.addEventListener("click", () => {
+  window.location = "restaurants.html";
+});
 
-Object.keys(navButtons).forEach(button => {
-  document.getElementById(button).addEventListener('click', () => {
-    window.location = navButtons[button];
-  });
+let otop = document.getElementById("otop");
+otop.addEventListener("click", () => {
+  window.location = "otop.html";
+});
+let localdishes = document.getElementById("localdishes");
+localdishes.addEventListener("click", () => {
+  window.location = "dishes.html";
+});
+let localindustries = document.getElementById("localindustries");
+localindustries.addEventListener("click", () => {
+  window.location = "industries.html";
 });
 
 // CREATE FORM POPUP
-const createAcc = document.getElementById('user-create');
-const openPop = document.querySelector('.add_acc');
-const closePop = document.querySelector('.close-modal');
+const createAcc = document.getElementById("user-create");
+const openPop = document.querySelector(".add_acc");
+const closePop = document.querySelector(".close-modal");
 
 // For CREATE FORM POPUP
 openPop.addEventListener('click', () => {
@@ -66,15 +88,15 @@ closePop.addEventListener('click', () => {
 });
 
 // FOR REGISTER FORM - ADD TO FIREBASE
-const formCreate = document.getElementById('create-form');
-const name = document.getElementById('name');
+const formCreate = document.getElementById("create-form");
 
-const description = document.getElementById('description');
+const name = document.getElementById("name");
+const description = document.getElementById("description");
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name, description, photos])) {
+  if (validateInputs([ name, description, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `local_dishes/${photoFile.name}`);
@@ -83,13 +105,12 @@ formCreate.addEventListener('submit', async (e) => {
 
       await addDoc(collection(db, "local_dishes"), {
         Name: name.value,
-        Description: description.value.trim(),
+        Description: description.value,
         PhotoURL: photoURL,
-       
+        Status: "not done"
       });
-      toggleDisplay(createAcc, 'none');
-      localStorage.setItem('lastEventUpdate', Date.now());
-      window.location.reload();
+      createAcc.style.display = 'none';
+      window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -110,10 +131,21 @@ function validateInputs(inputs) {
   return isValid;
 }
 
-// EDIT FORM POPUP
-const editAcc = document.getElementById('user-edit');
-const oPop = document.querySelector('.edit_acc');
-const cPop = document.querySelector('.close-modal-edit');
+// FOR EDIT MODAL CONFIRMATION
+const confirmation = document.getElementById("cnfrm_edit");
+const cancel = document.querySelector(".cnl");
+const confirm = document.querySelector(".cnfrm");
+
+cancel.addEventListener("click", () => {
+  confirmation.style.display = "none";
+  editAcc.style.display = "block";
+});
+
+// Edit FORM POPUP
+const editAcc = document.getElementById("user-edit");
+const oPop = document.querySelector(".edit_acc");
+const cPop = document.querySelector(".close-modal-edit");
+
 // For EDIT FORM POPUP
 oPop.addEventListener('click', () => {
   editAcc.style.display = 'block';
@@ -125,19 +157,15 @@ cPop.addEventListener('click', () => {
   toggleBlur(false); // Remove blur effect
 });
 
-
 // FOR EDIT FORM - UPDATE TO FIREBASE
-const formEdit = document.getElementById('edit-form');
-const name1 = document.getElementById('name1');
-
-const description1 = document.getElementById('description1');
+const formEdit = document.getElementById("edit-form");
+const name1 = document.getElementById("name1");
+const description1 = document.getElementById("description1");
 const photos1 = document.getElementById('photos1');
-
-
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, description1])) {
+  if (validateInputs([name1, description1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -150,8 +178,8 @@ formEdit.addEventListener('submit', async (e) => {
 
       const updateData = {
         Name: name1.value,
-    
-        Description: description1.value
+        Description: description1.value,
+        PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
       };
 
       if (photoFile) {
@@ -159,8 +187,7 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       await updateDoc(doc(db, "local_dishes", userID), updateData);
-      toggleDisplay(editAcc, 'none');
-      localStorage.setItem('lastEventUpdate', Date.now());
+      editAcc.style.display = 'none'; // Close the edit form
       window.location.reload(); // Reload to refresh the table
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -168,172 +195,116 @@ formEdit.addEventListener('submit', async (e) => {
   }
 });
 
-// Function to limit the description to 1000 words
-function limitWords(textareaId, maxWords) {
-  const textarea = document.getElementById(textareaId);
-  const wordCountMessage = document.createElement('div');
-  wordCountMessage.style.color = 'yellow';
-  textarea.parentNode.insertBefore(wordCountMessage, textarea.nextSibling);
+// Fetch documents from Firestore and assign to querySnapshot
+async function fetchEstablishments() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "local_dishes"));
+    const tbody = document.getElementById('tbody1');
 
-  textarea.addEventListener('input', function () {
-    let words = textarea.value.split(/\s+/).filter(word => word.length > 0);
-    if (words.length > maxWords) {
-      textarea.value = words.slice(0, maxWords).join(' ');
-      words = words.slice(0, maxWords);
-    }
-    wordCountMessage.textContent = `Word Count: ${words.length}/${maxWords}`;
-  });
-}
+    querySnapshot.forEach(doc => {
+      if (doc.data().Status === "not done") {
+        const trow = document.createElement('tr');
+        trow.innerHTML = `
+          <td>${doc.data().Name}</td>
+          <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
+        `;
+        tbody.appendChild(trow);
 
-// Apply the word limit to both add and edit forms
-limitWords('description', 100);
-limitWords('description1', 100);
+        trow.addEventListener('click', (e) => {
+          localStorage.setItem('ID', doc.id);
+          document.getElementById('name1').value = doc.data().Name;
+          document.getElementById("description1").value = doc.data().Description;
 
-// Populate table with data
-const tbody = document.getElementById('tbody1');
-const querySnapshot = await getDocs(collection(db, "local_dishes"));
-querySnapshot.forEach(doc => {
-  if (doc.data()) {
-    const trow = document.createElement('tr');
-    trow.innerHTML = `
-      <td>${doc.data().Name}</td>
-      <td><button class="see-details-btn" id="details_${doc.id}">See Details</button></td>
-    `;
-    
-    tbody.appendChild(trow);
+          highlightRow(trow);
 
-    // Now, add the event listener to the button
-    const detailsBtn = document.getElementById(`details_${doc.id}`);
-    if (detailsBtn) {
-      detailsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showDetailsModal(doc.data());
-      });
-    }
+        });
 
-    trow.addEventListener('click', () => {
-      localStorage.setItem('ID', doc.id);
-      document.getElementById('name1').value = doc.data().Name;
-      document.getElementById('description1').value = doc.data().Description;
-      highlightRow(trow);
+        const detailsBtn = document.getElementById(`details_${doc.id}`);
+        detailsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showDetailsModal(doc.data());
+        });
+
+        function showDetailsModal(data) {
+          document.getElementById("details-name").textContent = data.Name;
+          document.getElementById("details-description").textContent = data.Description;
+          document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+
+          const modal = document.getElementById("details-modal");
+          modal.style.display = "block";
+
+          // Add blur effect to .main-container
+          toggledBlur(true);
+
+          const closeBtn = modal.querySelector(".details-close");
+          closeBtn.onclick = () => {
+            modal.style.display = "none";
+            toggledBlur(false); // Remove blur effect when closing modal
+          };
+
+          // Close modal when clicking outside of it
+          window.onclick = function (event) {
+            if (event.target === modal) {
+              modal.style.display = "none";
+              toggledBlur(false); // Remove blur effect when clicking outside of the modal
+            }
+          };
+        }
+
+        function toggledBlur(shouldBlur) {
+          const container = document.querySelector('.main-container');
+          if (shouldBlur) {
+            container.classList.add('blur-background');
+          } else {
+            container.classList.remove('blur-background');
+          }
+        }
+      }
     });
-  }
-});
-
-const detailsBtn = document.getElementById(`details_${doc.id}`);
-if (detailsBtn) {
-    detailsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showDetailsModal(doc.data());
-    });
-}
-
-
-function showDetailsModal(data) {
-  document.getElementById("details-name").textContent = data.Name; 
-   document.getElementById("details-description").textContent = data.Description;
-
-  document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
-
-  const modal = document.getElementById("details-modal");
-  modal.style.display = "block";
-
-  // Add blur effect to .main-container
-  toggledBlur(true);
-
-  const closeBtn = modal.querySelector(".details-close");
-  closeBtn.onclick = () => {
-    modal.style.display = "none";
-    toggledBlur(false); // Remove blur effect when closing modal
-  };
-
-  // Close modal when clicking outside of it
-  window.onclick = function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-      toggledBlur(false); // Remove blur effect when clicking outside of the modal
-    }
-  };
-}
-
-function toggledBlur(shouldBlur) {
-  const container = document.querySelector('.main-container'); // Select the container that holds your page content
-  if (shouldBlur) {
-    container.classList.add('blur-background');
-  } else {
-    container.classList.remove('blur-background');
+  } catch (error) {
+    console.error("Error fetching documents: ", error);
   }
 }
 
+fetchEstablishments();
 
-function highlightRow(row) {
-  const rows = document.querySelectorAll('#tbody1 tr');
-  rows.forEach(r => r.classList.remove('selected-row'));
-  row.classList.add('selected-row');
-  document.getElementById("edit_acc").disabled = false;
-  document.getElementById("delete_acc").disabled = false;
-}
-
-function toggleBlur(shouldBlur) {
-  const container = document.querySelector('.main-container'); // Select the common container
-  if (shouldBlur) {
-    container.classList.add('blur-background');
-  } else {
-    container.classList.remove('blur-background');
-  }
-}
-// Auto-archive past events
-async function autoArchivePastEvents() {
-  const querySnapshot = await getDocs(collection(db, "local_dishes"));
-  const currentDate = new Date();
-
-  querySnapshot.forEach(async (doc) => {
-    const eventDate = new Date(doc.data().Date);
-    if (eventDate < currentDate && doc.data()) {
-      await updateDoc(doc.ref, {
-        Status: "archived",
-        ArchivedBy: "AUTO_ARCHIVE",
-        ArchivedDate: currentDate.toLocaleString()
-      });
-    }
-  });
-}
-
-autoArchivePastEvents();
-
-// Archive event
+// Archive event instead of deleting
+const currentDateTime = new Date().toLocaleString();
 document.getElementById('delete_acc').addEventListener('click', async () => {
   const userID = localStorage.getItem("ID");
   try {
     await updateDoc(doc(db, "local_dishes", userID), {
-      Status: "archived",
+      Status: "done",
       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: new Date().toLocaleString()
+      ArchivedDate: currentDateTime
     });
-    localStorage.setItem('lastEventUpdate', Date.now());
     window.location.reload(); // Reload to refresh the table
   } catch (error) {
     console.error("Error updating document: ", error);
   }
 });
 
-// Button to see archived accounts
-document.getElementById('archived_acc').addEventListener('click', () => {
-  window.location = "dArchives.html";
-});
-
-// 
-// Storage event listener
-window.addEventListener('storage', (event) => {
-  if (event.key === 'lastEventUpdate') {
-    window.location.reload();
-  }
-});
-
-function toggleDisplay(element, displayStyle) {
-  element.style.display = displayStyle;
+function highlightRow(row) {
+  const rows = document.querySelectorAll("#tbody1 tr");
+  rows.forEach((r) => r.classList.remove("selected-row"));
+  row.classList.add("selected-row");
+  document.getElementById("edit_acc").disabled = false;
+  document.getElementById("delete_acc").disabled = false;
 }
 
+function toggleBlur(shouldBlur) {
+  const container = document.querySelector('.main-container');
+  if (shouldBlur) {
+    container.classList.add('blur-background');
+  } else {
+    container.classList.remove('blur-background');
+  }
+}
+
+// Button to see archived accounts
+archived_acc.addEventListener("click", (e) => {
+  window.location = "dArchives.html";
+});
 
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");
@@ -364,4 +335,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
- 
