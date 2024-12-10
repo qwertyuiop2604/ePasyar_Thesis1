@@ -29,16 +29,6 @@ dash.addEventListener("click", () => {
   window.location = "dash.html";
 });
 
-let activities = document.getElementById("activities");
-
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
 let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
   window.location = "profile.html";
@@ -279,6 +269,13 @@ function toggledBlur(shouldBlur) {
     container.classList.remove('blur-background');
   }
 }
+ // See Reviews button - Redirect to rev_tourist.html
+ const reviewsBtn = document.getElementById(`reviews_${doc.id}`);
+ reviewsBtn.addEventListener('click', (e) => {
+     e.stopPropagation();
+     // Redirect to rev_tourist.html and pass the doc.id as a URL parameter
+     window.location.href = `rev_restaurant.html?docId=${doc.id}`;
+ });
 
         // QR Code generation and display
         const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
@@ -363,7 +360,7 @@ function showQRCodeModal(qrCodeData, establishmentName) {
 fetchEstablishments();
 
 
-document.head.appendChild(style);
+
 
 
  function highlightRow(row) {
@@ -373,21 +370,7 @@ document.head.appendChild(style);
    document.getElementById("edit_acc").disabled = false;
    document.getElementById("delete_acc").disabled = false;
  }
- // Archive event instead of deleting
-const currentDateTime = new Date().toLocaleString();
-document.getElementById('delete_acc').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "vigan_establishments", userID), {
-      Status: "R Shop Closed",
-      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: currentDateTime
-    });
-    window.location.reload(); // Reload to refresh the table
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
+ 
 
 function toggleBlur(shouldBlur) {
   const container = document.querySelector('.main-container'); // Select the common container
@@ -402,6 +385,49 @@ function toggleBlur(shouldBlur) {
 archived_acc.addEventListener("click", (e) => {
   window.location = "rArchives.html";
 });
+
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
+    });
+
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
+
+    document.getElementById("delete_acc").disabled = false;
+  };
+}
+// window.onload = GetAllDataOnce;
+
+document.getElementById('delete_acc').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "block";
+});
+
+document.getElementById('delete_cancel').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "none";
+});
+
+const querySnap2 = await getDocs(collection(db, "vigan_establishments"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('delete_confirm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "R Shop Closed",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+ ArchivedDate: new Date().toLocaleString()
+    }).then(() => {
+      window.location = "sArchives.html";
+      window.location.reload();
+    });
+  });
+});
+
 
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");

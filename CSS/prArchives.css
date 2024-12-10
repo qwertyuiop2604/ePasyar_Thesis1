@@ -3,7 +3,7 @@ Stephanie Bragas
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: black;
+
   font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
@@ -183,21 +183,6 @@ th, tr, td {
   }
   
   
-.enable_acc{
-    border: none;
-    padding: 8px;
-    margin: 5px;
-    width: 120px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  
-    color: black;
-    cursor: pointer;
-}
- /* ---------- SIDEBAR ---------- */
-  
  #sidebar {
   grid-area: sidebar;
   height: 100%;
@@ -321,7 +306,7 @@ h4{
 }
 .selected-row{
   background-color: #337ab7 !important;
-  color: white;
+  color: white !important;
 }
 
 .btn1 button{
@@ -507,6 +492,8 @@ label{
 .container-modal-edit{
   background-color: #337ab7;
 }
+
+
 
 textarea {
   padding: 10px;
@@ -700,34 +687,8 @@ input {
   transform: translate(-50%, -50%);
   transition: transform 0.4s, top 0.4s;
 }
-.cnfrm_modal{
-  background-color: white;
-  user-select: none;
-  border: 1px solid #b3b3b3;
-  box-shadow: 5px 5px 5px rgb(70, 69, 69);
-  color: black;
-  padding: 20px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.4s, top 0.4s;
-  display: none;
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
 
-}
-.cnfrm_modal h1, #delete_acc_modal h1{
-  letter-spacing: 3px;
-  text-align: center;
-}
+
 #cnl2{
   margin-left: 300px;
 }

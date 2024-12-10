@@ -34,16 +34,6 @@ events.addEventListener("click", () => {
 });
 
 
-let activities = document.getElementById("activities");
-
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {
   window.location = "souvenir.html";
@@ -70,23 +60,16 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
 
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");
 
-const querySnap = await getDocs(collection(db, "localdishes"));
+const querySnap = await getDocs(collection(db, "local_dishes"));
 querySnap.forEach((doc) => {
   if (doc.data().Status === "archived") {
     const trow = document.createElement("tr");
     trow.innerHTML = `
-     
+      <td>${doc.data().ArchivedBy}</td>
       <td>${doc.data().Name}</td>
       <td>${doc.data().Description}</td>
       <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
@@ -144,27 +127,6 @@ querySnap2.forEach((doc2) => {
   });
 });
 
-// Event listener for permanently deleting an event
-document.getElementById('permanentlyDelete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "block";
-});
-
-// Event listener for cancel button in delete confirmation modal
-document.getElementById('cnl_delete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "none";
-});
-
-// Event listener for confirm button in delete confirmation modal
-document.getElementById('cnfrm_delete').addEventListener('click', async () => {
-  try {
-    const docRef = doc(db, "local_dishes", localStorage.getItem("ID"));
-    await deleteDoc(docRef);
-    window.location = "dArchives.html";
-    window.location.reload();
-  } catch (error) {
-    console.error("Error deleting document: ", error);
-  }
-});
 
 
 let logoutModal = document.getElementById("logout");

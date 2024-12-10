@@ -6,6 +6,16 @@
   font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
+.details-btn{
+  background-color: whitesmoke;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  border-color: #337ab7;
+  width: 100px;
+  font-size: 16px;
+
+}
 .see-details-btn{
   background-color: whitesmoke;
   color: black;
@@ -376,8 +386,9 @@ h4{
   height: 30px;
   font-size: 15px;
   align-items: end;
-  margin-left: auto;
+
   margin-top: 10px;
+  margin-left: 250px;
   border-radius: 5px;
   padding-left: 5px;
   text-transform: uppercase;
@@ -767,23 +778,7 @@ label{
 } */
 
 
-#delete_acc_modal{
-  width: 550px;
-  /* height: 200px; */
-  background-color: white;
-  user-select: none;
-  border: 1px solid #b3b3b3;
-  box-shadow: 5px 5px 5px rgb(70, 69, 69);
-  color: black;
-  padding: 20px;
-   visibility: hidden; 
 
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.4s, top 0.4s;
-}
 .cnfrm_modal{
   width: 550px;
   /* height: 200px; */
@@ -1042,8 +1037,9 @@ input[type="text"], input[type="date"], textarea {
 
 .details-modal-content {
   background-color: #337ab7;
-  margin: 15% auto;
-  padding: 20px;
+  margin: 10% auto;
+  margin-top: 1%;
+  padding: 15px;
   border: 5px  ;
   border-radius: 15px;
   color: white;

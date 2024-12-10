@@ -17,13 +17,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const storage = getStorage(app);
-  document.addEventListener('DOMContentLoaded', function () {
-    var dropdown = document.querySelector('.dropdown-btn');
-    var dropdownContent = document.querySelector('.dropdown-container');
-    dropdown.addEventListener('click', function () {
-      dropdownContent.classList.toggle('show');
-    });
-  });
+
 
   document.addEventListener('DOMContentLoaded', () => {
     function setNavEventListener(id, target) {
@@ -54,17 +48,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   setNavEventListener("localdishes", 'dishes.html');
   setNavEventListener("localindustries", 'industries.html');
 
-  
-let activities = document.getElementById("activities");
 
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
   
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');
@@ -292,6 +276,16 @@ user.addEventListener("click", () => {
             }
           }
           
+  // See Reviews button - Redirect to rev_tourist.html
+
+  const reviewsBtn = document.getElementById(`reviews_${doc.id}`);
+reviewsBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  // Redirect to rev_tourist.html and pass the doc.id as a URL parameter
+  window.location.href = `rev_hotel.html?docId=${doc.id}`;
+});
+
+  
 
           // QR Code generation and display
           const qrBtn = document.getElementById(`gen_qr_${doc.id}`);
@@ -363,7 +357,7 @@ user.addEventListener("click", () => {
   }
 
   
-  document.head.appendChild(style);
+
 });
 
 
@@ -375,33 +369,9 @@ function highlightRow(row) {
   document.getElementById("delete_acc").disabled = false;
 } 
 
-// Update event
-document.getElementById('cnfrm_promo2').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "vigan_establishments", userID), {
-      // Update fields here
-    });
-    // Confirmation handling...
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
 
-// Archive event instead of deleting
-document.getElementById('delete_acc').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "vigan_establishments", userID), {
-      Status: "H Shop Closed",
-      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: new Date().toISOString()
-    });
-    window.location.reload(); // Reload to refresh the table
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
+
+
 
 function toggleBlur(shouldBlur) {
   const container = document.querySelector('.main-container'); // Select the common container
@@ -414,6 +384,47 @@ function toggleBlur(shouldBlur) {
 // Button to see archived accounts
 document.getElementById('promoArchive').addEventListener('click', () => {
   window.location = "pArchives.html";
+});
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
+    });
+
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
+
+    document.getElementById("delete_acc").disabled = false;
+  };
+}
+// window.onload = GetAllDataOnce;
+
+document.getElementById('delete_acc').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "block";
+});
+
+document.getElementById('delete_cancel').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "none";
+});
+
+const querySnap2 = await getDocs(collection(db, "vigan_establishments"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('delete_confirm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "vigan_establishments", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "H Shop Closed",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+ ArchivedDate: new Date().toLocaleString()
+    }).then(() => {
+      window.location = "archives.html";
+      window.location.reload();
+    });
+  });
 });
 
 

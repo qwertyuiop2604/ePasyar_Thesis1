@@ -61,17 +61,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   localindustries.addEventListener("click", () => {
     window.location = "industries.html";
   });
-  
-let activities = document.getElementById("activities");
 
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
 
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
 });
 
 
@@ -185,6 +176,7 @@ formEdit.addEventListener("submit", async (e) => {
         Date: date1.value,
         Description: description1.value,
         
+        
       };
 
       if (photoFile) {
@@ -289,32 +281,33 @@ const tbody = document.getElementById('tbody1');
     "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY",
     "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
   ];
-async function populateTable(events) {
-  if (!events) {
-    events = await fetchAndSortEvents();
-  }
-
-  tbody.innerHTML = ''; // Clear existing table rows
-
-  events.forEach(event => {
-    if (event.Status === "not done") {
-      const dateParts = event.Date.split("-");
-      const monthWord = monthNames[parseInt(dateParts[1], 10) - 1]; // Convert month number to word
-      const formattedDate = `${monthWord} ${dateParts[2]}, ${dateParts[0]}`;
-
-      const trow = document.createElement('tr');
-      trow.innerHTML = `
-        <td>${event.Name}</td>
-       
-<td><button class="see-details-btn" id="details_${event.id}" >  Show Details </button></td>      `;
-      tbody.appendChild(trow);
-
-      trow.addEventListener('click', () => {
-        localStorage.setItem('ID', event.id);
-        document.getElementById('name1').value = event.Name;
-        document.getElementById('date1').value = event.Date;
-        document.getElementById('description1').value = event.Description;
-        highlightRow(trow);
+  async function populateTable(events) {
+    if (!events) {
+      events = await fetchAndSortEvents();
+    }
+  
+    tbody.innerHTML = ''; // Clear existing table rows
+  
+    events.forEach(event => {
+      if (event.Status === "not done" && event.Date) {  // Check if Date is defined
+        const dateParts = event.Date.split("-");
+        const monthWord = monthNames[parseInt(dateParts[1], 10) - 1]; // Convert month number to word
+        const formattedDate = `${monthWord} ${dateParts[2]}, ${dateParts[0]}`;
+  
+        const trow = document.createElement('tr');
+        trow.innerHTML = `
+          <td>${event.Name}</td>
+         
+          <td><button class="see-details-btn" id="details_${event.id}">Show Details</button></td>
+        `;
+        tbody.appendChild(trow);
+  
+        trow.addEventListener('click', () => {
+          localStorage.setItem('ID', event.id);
+          document.getElementById('name1').value = event.Name;
+          document.getElementById('date1').value = event.Date;
+          document.getElementById('description1').value = event.Description;
+          highlightRow(trow);
         
         // Add event listener for "See Details" button
 document.getElementById(`details_${event.id}`).addEventListener('click', (e) => {
@@ -417,21 +410,21 @@ async function autoArchivePastAndFutureEvents() {
 autoArchivePastAndFutureEvents();
 
 
-// Archive event
-document.getElementById('delete_acc').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "festivals", userID), {
-      Status: "archived",
-      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: new Date().toLocaleString()
-    });
-    localStorage.setItem('lastEventUpdate', Date.now());
-    window.location.reload(); // Reload to refresh the table
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
+// // Archive event
+// document.getElementById('delete_acc').addEventListener('click', async () => {
+//   const userID = localStorage.getItem("ID");
+//   try {
+//     await updateDoc(doc(db, "festivals", userID), {
+//       Status: "archived",
+//       ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+//       ArchivedDate: new Date().toLocaleString()
+//     });
+//     localStorage.setItem('lastEventUpdate', Date.now());
+//     window.location.reload(); // Reload to refresh the table
+//   } catch (error) {
+//     console.error("Error updating document: ", error);
+//   }
+// });
 
 // Initial call to populate table
 populateTable();
@@ -456,6 +449,53 @@ document.getElementById('archived_acc').addEventListener('click', () => {
   window.location = "archives.html";
 });
     
+
+
+
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
+    });
+
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
+
+    document.getElementById("delete_acc").disabled = false;
+  };
+}
+// window.onload = GetAllDataOnce;
+
+document.getElementById('delete_acc').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "block";
+});
+
+document.getElementById('delete_cancel').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "none";
+});
+
+const querySnap2 = await getDocs(collection(db, "festivals"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('delete_confirm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "festivals", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "archived",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+ ArchivedDate: new Date().toLocaleString()
+    }).then(() => {
+      window.location = "archives.html";
+      window.location.reload();
+    });
+  });
+  
+});
+
+
 
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");

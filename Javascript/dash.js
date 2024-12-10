@@ -1,13 +1,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import {
+  doc,
   getFirestore,
   collection,
   getDocs,
+  getDoc,
+  updateDoc,
   query,
   where,
   onSnapshot,
+ 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-// import { jsPDF } from "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA6U1In2wlItYioP3yl43C3hCgiXUZ4oKI",
@@ -19,9 +25,11 @@ const firebaseConfig = {
   appId: "1:1004550371893:web:692e667675470640980f7c",
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 
 let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
@@ -29,29 +37,25 @@ profile.addEventListener("click", () => {
 });
 
 
-let activities = document.getElementById("activities");
 
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
 
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
 
 
 let events = document.getElementById("events");
+
 
 events.addEventListener("click", () => {
   window.location = "events.html";
 });
 
+
 let dashboard = document.getElementById("dashboard");
+
 
 dashboard.addEventListener("click", () => {
   window.location = "dash.html";
 });
+
 
 let promotion = document.getElementById("promotion");
 promotion.addEventListener("click", () => {
@@ -61,6 +65,7 @@ let tourist = document.getElementById("tourist");
 tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
+
 
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {
@@ -73,10 +78,16 @@ souvenirs.addEventListener("click", () => {
 
 
 
+
+
+
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
 });
+
+
+
 
 
 
@@ -94,8 +105,22 @@ localindustries.addEventListener("click", () => {
 });
 
 
+
+
+// Set the default selection to "Monthly" on page load
+document.addEventListener("DOMContentLoaded", () => {
+  // Set the initial chart type to "Monthly" and update the chart
+  updateChartData("Monthly");
+  const selectedOption = document.getElementById("selectedOption");
+  selectedOption.textContent = "";  // Ensure the span shows "Monthly" initially
+});
+
+
+
+
 // Get the canvas element
 const ctx = document.getElementById("mostVisitedChart").getContext("2d");
+
 
 // Create the chart with initial data
 const mostVisitedChart = new Chart(ctx, {
@@ -107,40 +132,17 @@ const mostVisitedChart = new Chart(ctx, {
     ],
     datasets: [
       {
-        label: "Number of Visitors",
-        data: [1, 1], // Initial data
-        backgroundColor: [
-       
-          "#337ab7",
-          "yellow",
-          "green",
-          "blue",
-          "violet",
-          "red",
-          "pink",
-          "red",
-          "orange",
-          "yellow",
-          "green",
-          "blue",
-          "violet",
-          "red",
-          "pink",
-        ],
-        borderColor: [
-          "#337ab7",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        label: "Local Tourists",
+        data: [], // Data for local tourists
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderWidth: 2,
+      },
+      {
+        label: "Foreign Tourists",
+        data: [], // Data for foreign tourists
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderWidth: 2,
       },
     ],
@@ -155,59 +157,123 @@ const mostVisitedChart = new Chart(ctx, {
 });
 
 
+// Function to update the chart based on the selected type
 async function updateChartData(type) {
   try {
     let reportsRef;
-    let dataKey;
-    let label;
-    let xLabels = [];
+    const localData = [];
+    const foreignData = [];
+    const labels = [];
 
+
+    // Set the reports reference and labels depending on the type
     if (type === "Daily") {
       reportsRef = collection(db, "tourist_arrival_reports", "daily", "daily_reports");
-      dataKey = "total_tourist_per_daily";
-      label = "Number of Visitors (Daily)";
-      for (let i = 1; i <= 31; i++) xLabels.push(i); // Days of the month
-    }  else
-     if (type === "Monthly") {
+      for (let day = 1; day <= 31; day++) {
+        labels.push(day.toString());
+        localData.push(0);
+        foreignData.push(0);
+      }
+    } else if (type === "Monthly") {
       reportsRef = collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
-      dataKey = "total_tourist_per_monthly";
-      label = "Number of Visitors (Monthly)";
-      xLabels = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
+      labels.push("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+      for (let i = 0; i < 12; i++) {
+        localData.push(0);
+        foreignData.push(0);
+      }
     } else if (type === "Yearly") {
       reportsRef = collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
-      dataKey = "total_tourist_per_yearly";
-      label = "Number of Visitors (Yearly)";
-      for (let i = new Date().getFullYear() - 10; i <= new Date().getFullYear(); i++) xLabels.push(i); // Last 10 years
+      const currentYear = new Date().getFullYear();
+      for (let year = currentYear - 4; year <= currentYear; year++) {
+        labels.push(year.toString());
+        localData.push(0);
+        foreignData.push(0);
+      }
     } else {
       console.error("Invalid report type");
       return;
     }
 
 
-
+    // Fetch data from Firestore
     const querySnapshot = await getDocs(reportsRef);
-    const visitorData = [];
+
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const value = data[dataKey] || 0;
-      visitorData.push(value); 
+      const id = doc.id;
 
-     
+
+      if (type === "Daily") {
+        const day = parseInt(id.split("-")[2], 10);
+        if (day >= 1 && day <= 31) {
+          localData[day - 1] = data.localTourists || 0;
+          foreignData[day - 1] = data.foreignTourists || 0;
+        }
+      } else if (type === "Monthly") {
+        const month = parseInt(id.split("-")[1], 10) - 1;
+        if (month >= 0 && month <= 11) {
+          localData[month] = data.localTourists || 0;
+          foreignData[month] = data.foreignTourists || 0;
+        }
+      } else if (type === "Yearly") {
+        const yearIndex = labels.indexOf(id);
+        if (yearIndex !== -1) {
+          localData[yearIndex] = data.localTourists || 0;
+          foreignData[yearIndex] = data.foreignTourists || 0;
+        }
+      }
     });
 
-    // Update chart data
-    mostVisitedChart.data.labels = xLabels;
-    mostVisitedChart.data.datasets[0].data = visitorData;
-    mostVisitedChart.data.datasets[0].label = label;
+
+    // Update chart data and labels
+    mostVisitedChart.data.labels = labels;
+    mostVisitedChart.data.datasets[0].data = localData;
+    mostVisitedChart.data.datasets[1].data = foreignData;
     mostVisitedChart.update();
   } catch (error) {
     console.error("Error fetching visitor data:", error);
   }
 }
+
+
+window.onload = function() {
+  const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
+ 
+  dropdownLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default link behavior
+      const selectedType = this.getAttribute('data-type'); // Get the data-type attribute
+      handleDropdownClick(event, selectedType); // Call your function
+    });
+  });
+};
+
+
+
+
+function handleDropdownClick(event, selectedType) {
+  event.preventDefault(); // Prevent default link behavior
+
+  // Get the span where the selected option will be updated
+  const selectedOption = document.getElementById("selectedOption");
+
+  if (selectedOption) {
+      // Update the span text to reflect the selected option
+      selectedOption.textContent = selectedType;
+
+      // Debugging log to check if the text content is correctly updated
+      console.log("Updated Span Text:", selectedOption.textContent);
+
+      // Call the chart update function with the selected type
+      updateChartData(selectedType);
+  } else {
+      console.error("The 'selectedOption' element was not found.");
+  }
+}
+
+
+
 
 
 // Toggle hamburger menu
@@ -220,20 +286,6 @@ function toggleMenu() {
   }
 }
 
-// Event listeners for menu options
-document.getElementById('menuContent').addEventListener('click', function(event) {
-  if (event.target.tagName === 'A') {
-    const type = event.target.textContent.trim();
-    updateChartData(type);
-  }
-});
-
-
-// Fetch initial chart data for monthly reports by default
-updateChartData("Monthly");
-
-
-
 
 // Event listeners for menu options
 document.getElementById('menuContent').addEventListener('click', function(event) {
@@ -245,115 +297,41 @@ document.getElementById('menuContent').addEventListener('click', function(event)
 
 
 
+
 // Fetch initial chart data for monthly reports by default
 updateChartData("Monthly");
+
+
+
+
+
+
+
+
+// Event listeners for menu options
+document.getElementById('menuContent').addEventListener('click', function(event) {
+  if (event.target.tagName === 'A') {
+    const type = event.target.textContent.trim();
+    updateChartData(type);
+  }
+});
+
+
+
+
+
+
+// Fetch initial chart data for monthly reports by default
+updateChartData("Monthly");
+
 
 // Importing libraries
 const { jsPDF } = window.jspdf;
 const XLSX = window.XLSX;
 
-async function generatePDFReport() {
-  const doc = new jsPDF();
 
-  // Header Section
-  doc.setFont("times", "bold");
-  doc.setFontSize(12);
-  doc.text("Republic of the Philippines", 105, 10, { align: "center" });
-  doc.text("Province of Ilocos Sur", 105, 16, { align: "center" });
-  doc.text("City of Vigan", 105, 22, { align: "center" });
-  doc.text("OFFICE OF THE CITY CULTURAL AFFAIRS AND TOURISM", 105, 28, {
-    align: "center",
-  });
 
-  // Title Section
-  doc.setFontSize(16);
-  doc.text("2023 VIGAN CITY TOURIST ARRIVALS", 105, 40, { align: "center" });
 
-  // Data Section
-  const accommodationHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
-  const dayVisitorHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
-
-  const accommodationData = [
-    ["January", "5,638", "271", "5,909"],
-    ["February", "7,348", "971", "8,319"],
-    ["March", "3,220", "326", "3,546"],
-    ["April", "7,054", "1,414", "8,468"],
-    ["May", "6,166", "907", "7,073"],
-    ["June", "6,880", "687", "7,567"],
-    ["July", "4,106", "193", "4,299"],
-    ["August", "2,805", "213", "3,018"],
-    ["September", "1,952", "98", "2,050"],
-    ["October", "2,681", "191", "2,872"],
-    ["November", "4,004", "397", "4,401"],
-    ["December", "4,175", "528", "4,703"],
-    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
-  ];
-
-  const dayVisitorData = [
-    ["January", "41,303", "1,024", "42,327"],
-    ["February", "43,150", "1,063", "44,213"],
-    ["March", "45,343", "915", "46,258"],
-    ["April", "54,623", "639", "55,262"],
-    ["May", "57,094", "622", "57,716"],
-    ["June", "79,097", "1,107", "80,204"],
-    ["July", "68,718", "961", "69,679"],
-    ["August", "49,862", "796", "50,658"],
-    ["September", "31,260", "630", "31,890"],
-    ["October", "46,288", "793", "47,081"],
-    ["November", "51,728", "929", "52,657"],
-    ["December", "79,497", "1,227", "80,724"],
-    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
-  ];
-
-  // Accommodation Table
-  doc.autoTable({
-    head: accommodationHeaders,
-    body: accommodationData,
-    startY: 50,
-    theme: "grid",
-    headStyles: { fillColor: [211, 211, 211] },
-    columnStyles: {
-      0: { halign: "left" }, // Align "MONTH" column to the left
-      1: { halign: "right" },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  // Day Visitor Table
-  doc.autoTable({
-    head: dayVisitorHeaders,
-    body: dayVisitorData,
-    startY: doc.lastAutoTable.finalY + 10,
-    theme: "grid",
-    headStyles: { fillColor: [211, 211, 211] },
-    columnStyles: {
-      0: { halign: "left" }, // Align "MONTH" column to the left
-      1: { halign: "right" },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  // Footer Section
-  const footerY = doc.lastAutoTable.finalY + 20;
-  doc.setFontSize(12);
-  doc.text("Accommodation – 62,225", 20, footerY);
-  doc.text("Day Visitor – 658,669", 20, footerY + 6);
-  doc.text("Grand Total = 720,894", 20, footerY + 12);
-
-  // Signatures
-  const signatureY = footerY + 30;
-  doc.text("Prepared by:", 20, signatureY);
-  doc.text("Certified Correct by:", 140, signatureY);
-  doc.text("CYRILLE PRECIOUS MAE R. CACHOLA", 20, signatureY + 10);
-  doc.text("MuTech II", 20, signatureY + 16);
-  doc.text("JO-ANNE MARGARITA R. GUTIERREZ", 140, signatureY + 10);
-  doc.text("STOO I", 140, signatureY + 16);
-
-  // Save PDF
-  doc.save("TouristReport.pdf");
-}
 
 
 // Helper function to fetch data in array format
@@ -362,14 +340,17 @@ async function getDataArray(type) {
   const reportsRef = getReportsRef(type);
   const querySnapshot = await getDocs(reportsRef);
 
+
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     const value = data[getDataKey(type)] || 0;
     dataArray.push([doc.id, value]);
   });
 
+
   return dataArray;
 }
+
 
 // Function to get Firestore reference based on report type
 function getReportsRef(type) {
@@ -377,6 +358,7 @@ function getReportsRef(type) {
   if (type === "Monthly") return collection(db, "tourist_arrival_reports", "monthly", "monthly_reports");
   if (type === "Yearly") return collection(db, "tourist_arrival_reports", "yearly", "yearly_reports");
 }
+
 
 // Helper function to map report type to specific data key
 function getDataKey(type) {
@@ -392,75 +374,195 @@ function getDataKey(type) {
   }
 }
 
-// Event listeners for report generation buttons
-document.getElementById("generatePDF").addEventListener("click", generatePDFReport);
+document.getElementById("generatePDF").addEventListener("click", async function () {
+  const { jsPDF } = window.jspdf;
 
-async function generateExcelReport() {
-  const workbook = XLSX.utils.book_new();
+  const loadingModal = document.getElementById("loadingModalPdf");
+  loadingModal.style.display = "flex"; // Show the modal
 
-  // Data for Accommodation
-  const accommodationData = [
-    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
-    ["January", "5,638", "271", "5,909"],
-    ["February", "7,348", "971", "8,319"],
-    ["March", "3,220", "326", "3,546"],
-    ["April", "7,054", "1,414", "8,468"],
-    ["May", "6,166", "907", "7,073"],
-    ["June", "6,880", "687", "7,567"],
-    ["July", "4,106", "193", "4,299"],
-    ["August", "2,805", "213", "3,018"],
-    ["September", "1,952", "98", "2,050"],
-    ["October", "2,681", "191", "2,872"],
-    ["November", "4,004", "397", "4,401"],
-    ["December", "4,175", "528", "4,703"],
-    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
+  const currentYear = new Date().getFullYear();
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
 
-  // Data for Day Visitors
-  const dayVisitorData = [
-    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
-    ["January", "41,303", "1,024", "42,327"],
-    ["February", "43,150", "1,063", "44,213"],
-    ["March", "45,343", "915", "46,258"],
-    ["April", "54,623", "639", "55,262"],
-    ["May", "57,094", "622", "57,716"],
-    ["June", "79,097", "1,107", "80,204"],
-    ["July", "68,718", "961", "69,679"],
-    ["August", "49,862", "796", "50,658"],
-    ["September", "31,260", "630", "31,890"],
-    ["October", "46,288", "793", "47,081"],
-    ["November", "51,728", "929", "52,657"],
-    ["December", "79,497", "1,227", "80,724"],
-    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
-  ];
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const month = String(i + 1).padStart(2, "0");
+    return { formatted: `${currentYear}-${month}`, name: monthNames[i] };
+  });
 
-  // Add Accommodation Data Sheet
-  const accommodationSheet = XLSX.utils.aoa_to_sheet(accommodationData);
-  XLSX.utils.book_append_sheet(workbook, accommodationSheet, "Accommodation");
+  const rows = [];
+  let totalLocal = 0, totalForeign = 0, totalOverall = 0;
 
-  // Add Day Visitor Data Sheet
-  const dayVisitorSheet = XLSX.utils.aoa_to_sheet(dayVisitorData);
-  XLSX.utils.book_append_sheet(workbook, dayVisitorSheet, "Day Visitors");
+  for (const { formatted, name } of months) {
+    try {
+      const monthDocRef = doc(
+        db,
+        "tourist_arrival_reports",
+        "monthly",
+        "monthly_reports",
+        formatted
+      );
+      const docSnap = await getDoc(monthDocRef);
 
-  // Add Summary Sheet
-  const summaryData = [
-    ["Category", "Total"],
-    ["Accommodation", "62,225"],
-    ["Day Visitor", "658,669"],
-    ["Grand Total", "720,894"],
-  ];
-  const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
-  XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const local = data.localTourists || 0;
+        const foreign = data.foreignTourists || 0;
+        const total = data.totalTourists || 0;
 
-  // Save the workbook
-  XLSX.writeFile(workbook, "TouristReport.xlsx");
-}
+        rows.push([name, local, foreign, total]);
+        totalLocal += local;
+        totalForeign += foreign;
+        totalOverall += total;
+      } else {
+        rows.push([name, 0, 0, 0]);
+      }
+    } catch (error) {
+      rows.push([name, 0, 0, 0]);
+    }
+  }
 
-document.getElementById("generateExcel").addEventListener("click", generateExcelReport);
+  // Add the Grand Total row with computed values
+  rows.push(["Grand Total", totalLocal, totalForeign, totalOverall]);
+
+  const pdfDoc = new jsPDF();
+
+  // Add header images
+  const logoPath = "/image/logo-vigan-removebg-preview.png";
+  const logoWidth = 30;
+  const logoHeight = 30;
+  pdfDoc.addImage(logoPath, "PNG", 10, 10, logoWidth, logoHeight);
+
+  const pabLogoPath = "/image/pab_logo.png";
+  const pabLogoWidth = 30;
+  const pabLogoHeight = 30;
+  pdfDoc.addImage(pabLogoPath, "PNG", pdfDoc.internal.pageSize.width - pabLogoWidth - 10, 10, pabLogoWidth, pabLogoHeight);
+
+  // Add header text
+  pdfDoc.setFontSize(12);
+  pdfDoc.setFont("helvetica", "normal");
+  pdfDoc.text("Republic of the Philippines", 45, 15);
+  pdfDoc.text("Province of Ilocos Sur", 45, 20);
+  pdfDoc.text("City of Vigan", 45, 25);
+
+  pdfDoc.setFont("helvetica", "bold");
+  const officeText = "OFFICE OF THE CITY CULTURAL AFFAIRS AND TOURISM";
+  const officeTextWidth = pdfDoc.getTextWidth(officeText);
+  const officeTextX = (pdfDoc.internal.pageSize.width - officeTextWidth) / 2;
+  pdfDoc.text(officeText, officeTextX, 35);
+
+  // Add title with underline
+  const pageWidth = pdfDoc.internal.pageSize.width;
+  const title = `${currentYear} VIGAN CITY TOURIST ARRIVALS`;
+  const titleX = (pageWidth - pdfDoc.getTextWidth(title)) / 2;
+  pdfDoc.text(title, titleX, 40);
+  pdfDoc.line(titleX, 42, titleX + pdfDoc.getTextWidth(title), 42);
+
+  // Add table with custom styles
+  pdfDoc.autoTable({
+    head: [["Month", "Local Tourists", "Foreign Tourists", "Total"]],
+    body: rows,
+    startY: 50,
+    theme: "striped",
+    styles: { 
+      font: "helvetica", 
+      fontSize: 10, 
+      halign: "center", // Horizontal alignment
+      valign: "middle", // Vertical alignment
+    },
+    headStyles: { 
+      fillColor: [100, 149, 237], 
+      textColor: 255,
+      halign: "center", // Center header text
+      valign: "middle", // Center vertically
+    },
+    bodyStyles: {
+      halign: "center", // Center body text
+      valign: "middle", // Center vertically
+      cellPadding: 3,
+    },
+    columnStyles: {
+      0: { cellWidth: 50, halign: "center", valign: "middle" }, // Month column
+      1: { cellWidth: 45, halign: "center", valign: "middle" }, // Local Tourists column
+      2: { cellWidth: 45, halign: "center", valign: "middle" }, // Foreign Tourists column
+      3: { cellWidth: 45, halign: "center", valign: "middle" }  // Total column
+    },
+    willDrawCell: function (data) {
+      if (data.row.index === rows.length - 1) { // Grand Total row
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.setFillColor(255, 255, 0); // Yellow background
+        pdfDoc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
+      }
+    }
+  });
+  
+  
+
+  // Add footer logo and text
+  const footerLogoPath = "/image/footerlogo.png";
+  const footerLogoWidth = 150;
+  const footerLogoHeight = 30;
+
+
+  const footerLogoX = (pdfDoc.internal.pageSize.width - footerLogoWidth) / 2;
+  const footerLogoY = pdfDoc.internal.pageSize.height - footerLogoHeight - 20;
+
+
+  pdfDoc.addImage(footerLogoPath, "PNG", footerLogoX, footerLogoY, footerLogoWidth, footerLogoHeight);
+
+
+  const footerText = "Vigan City Hall, Burgos St. corner Quezon Avenue, Vigan City 2700, Philippines • Telephone No. (077) 722-2466 • Fax No. (077) 722-3838 • admin@vigancity.gov.ph";
+  const footerText2 = "Fax No. (077) 722-3838 • admin@vigancity.gov.ph";
+
+
+  pdfDoc.setFontSize(9);
+  pdfDoc.setFont("arial");
+
+
+  const footerTextX = footerLogoX;
+  const footerTextMaxWidth = footerLogoWidth;
+
+
+  const splitText1 = pdfDoc.splitTextToSize(footerText, footerTextMaxWidth);
+  const footerTextHeight1 = splitText1.length * 8;
+  const footerTextY1 = footerLogoY + footerLogoHeight + 5;
+
+
+  splitText1.forEach((line, index) => {
+    const textWidth = pdfDoc.getTextWidth(line);
+    const lineX = footerTextX + (footerTextMaxWidth - textWidth) / 2;
+    pdfDoc.text(line, lineX, footerTextY1 + index * 8);
+  });
+
+
+  const splitText2 = pdfDoc.splitTextToSize(footerText2, footerTextMaxWidth);
+  const footerTextY2 = footerTextY1 + footerTextHeight1 + 3;
+
+
+  splitText2.forEach((line, index) => {
+    const textWidth = pdfDoc.getTextWidth(line);
+    const lineX = footerTextX + (footerTextMaxWidth - textWidth) / 2;
+    pdfDoc.text(line, lineX, footerTextY2 + index * 8);
+  });
+
+
+  pdfDoc.save("Tourist_Arrival_Report.pdf");
+  loadingModal.style.display = "none";
+});
+
+
+
+
+
+
+
+
 
 
 
 // Firestore references
+
 
 const eventsRef = collection(db, "festivals");
 const establishmentsRef = collection(db, "vigan_establishments");
@@ -476,6 +578,8 @@ let restoCount = 0;
 let souvenirCount = 0;
 
 
+
+
 // Update functions
 
 
@@ -486,12 +590,14 @@ const updateEventsCountElement = (count) => {
   }
 };
 
+
 const updateHotelCountElement = (count) => {
   const hotelCountElement = document.getElementById("hotelCount");
   if (hotelCountElement) {
     hotelCountElement.textContent = `${count}`;
   }
 };
+
 
 const updateTouristCountElement = (count) => {
   const touristCountElement = document.getElementById("touristCount");
@@ -500,12 +606,14 @@ const updateTouristCountElement = (count) => {
   }
 };
 
+
 const updateRestoCountElement = (count) => {
   const restoCountElement = document.getElementById("restoCount");
   if (restoCountElement) {
     restoCountElement.textContent = `${count}`;
   }
 };
+
 
 const updateSouvenirCountElement = (count) => {
   const souvenirCountElement = document.getElementById("souvenirCount");
@@ -515,166 +623,9 @@ const updateSouvenirCountElement = (count) => {
 };
 
 
-// Event Listeners for Buttons
-document.getElementById("generatePDFScan").addEventListener("click", createPDFReport);
-document.getElementById("generateExcelScan").addEventListener("click", createExcelReport);
 
-// Function to Generate PDF Report
-async function createPDFReport() {
-  const doc = new jsPDF();
 
-  // Header Section
-  doc.setFont("times", "bold");
-  doc.setFontSize(12);
-  doc.text("Republic of the Philippines", 105, 10, { align: "center" });
-  doc.text("Province of Ilocos Sur", 105, 16, { align: "center" });
-  doc.text("City of Vigan", 105, 22, { align: "center" });
-  doc.text("OFFICE OF THE CITY CULTURAL AFFAIRS AND TOURISM", 105, 28, {
-    align: "center",
-  });
 
-  // Title Section
-  doc.setFontSize(16);
-  doc.text("2023 VIGAN CITY TOURIST ARRIVALS", 105, 40, { align: "center" });
-
-  // Data Section for Accommodation
-  const accommodationHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
-  const accommodationData = [
-    ["January", "5,638", "271", "5,909"],
-    ["February", "7,348", "971", "8,319"],
-    ["March", "3,220", "326", "3,546"],
-    ["April", "7,054", "1,414", "8,468"],
-    ["May", "6,166", "907", "7,073"],
-    ["June", "6,880", "687", "7,567"],
-    ["July", "4,106", "193", "4,299"],
-    ["August", "2,805", "213", "3,018"],
-    ["September", "1,952", "98", "2,050"],
-    ["October", "2,681", "191", "2,872"],
-    ["November", "4,004", "397", "4,401"],
-    ["December", "4,175", "528", "4,703"],
-    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
-  ];
-
-  // Data Section for Day Visitors
-  const dayVisitorHeaders = [["MONTH", "LOCAL", "FOREIGN", "TOTAL"]];
-  const dayVisitorData = [
-    ["January", "41,303", "1,024", "42,327"],
-    ["February", "43,150", "1,063", "44,213"],
-    ["March", "45,343", "915", "46,258"],
-    ["April", "54,623", "639", "55,262"],
-    ["May", "57,094", "622", "57,716"],
-    ["June", "79,097", "1,107", "80,204"],
-    ["July", "68,718", "961", "69,679"],
-    ["August", "49,862", "796", "50,658"],
-    ["September", "31,260", "630", "31,890"],
-    ["October", "46,288", "793", "47,081"],
-    ["November", "51,728", "929", "52,657"],
-    ["December", "79,497", "1,227", "80,724"],
-    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
-  ];
-
-  // Generate Accommodation Table
-  doc.autoTable({
-    head: accommodationHeaders,
-    body: accommodationData,
-    startY: 50,
-    theme: "grid",
-    headStyles: { fillColor: [211, 211, 211] },
-    columnStyles: {
-      0: { halign: "left" },
-      1: { halign: "right" },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  // Generate Day Visitors Table
-  doc.autoTable({
-    head: dayVisitorHeaders,
-    body: dayVisitorData,
-    startY: doc.lastAutoTable.finalY + 10,
-    theme: "grid",
-    headStyles: { fillColor: [211, 211, 211] },
-    columnStyles: {
-      0: { halign: "left" },
-      1: { halign: "right" },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  // Footer Section
-  const footerY = doc.lastAutoTable.finalY + 20;
-  doc.setFontSize(12);
-  doc.text("Accommodation – 62,225", 20, footerY);
-  doc.text("Day Visitor – 658,669", 20, footerY + 6);
-  doc.text("Grand Total = 720,894", 20, footerY + 12);
-
-  // Save the PDF
-  doc.save("TouristReport.pdf");
-}
-
-// Function to Generate Excel Report
-async function createExcelReport() {
-  const workbook = XLSX.utils.book_new();
-
-  // Data for Accommodation
-  const accommodationData = [
-    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
-    ["January", "5,638", "271", "5,909"],
-    ["February", "7,348", "971", "8,319"],
-    ["March", "3,220", "326", "3,546"],
-    ["April", "7,054", "1,414", "8,468"],
-    ["May", "6,166", "907", "7,073"],
-    ["June", "6,880", "687", "7,567"],
-    ["July", "4,106", "193", "4,299"],
-    ["August", "2,805", "213", "3,018"],
-    ["September", "1,952", "98", "2,050"],
-    ["October", "2,681", "191", "2,872"],
-    ["November", "4,004", "397", "4,401"],
-    ["December", "4,175", "528", "4,703"],
-    ["GRAND TOTAL:", "56,029", "6,196", "62,225"],
-  ];
-
-  // Data for Day Visitors
-  const dayVisitorData = [
-    ["MONTH", "LOCAL", "FOREIGN", "TOTAL"],
-    ["January", "41,303", "1,024", "42,327"],
-    ["February", "43,150", "1,063", "44,213"],
-    ["March", "45,343", "915", "46,258"],
-    ["April", "54,623", "639", "55,262"],
-    ["May", "57,094", "622", "57,716"],
-    ["June", "79,097", "1,107", "80,204"],
-    ["July", "68,718", "961", "69,679"],
-    ["August", "49,862", "796", "50,658"],
-    ["September", "31,260", "630", "31,890"],
-    ["October", "46,288", "793", "47,081"],
-    ["November", "51,728", "929", "52,657"],
-    ["December", "79,497", "1,227", "80,724"],
-    ["GRAND TOTAL:", "647,963", "10,706", "658,669"],
-  ];
-
-  // Create Sheets
-  const accommodationSheet = XLSX.utils.aoa_to_sheet(accommodationData);
-  const dayVisitorSheet = XLSX.utils.aoa_to_sheet(dayVisitorData);
-
-  // Add Sheets to Workbook
-  XLSX.utils.book_append_sheet(workbook, accommodationSheet, "Accommodation");
-  XLSX.utils.book_append_sheet(workbook, dayVisitorSheet, "Day Visitors");
-
-  // Add Summary Sheet
-  const summaryData = [
-    ["Category", "Total"],
-    ["Accommodation", "62,225"],
-    ["Day Visitor", "658,669"],
-    ["Grand Total", "720,894"],
-  ];
-  const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
-  XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
-
-  // Save Workbook
-  XLSX.writeFile(workbook, "TouristReport.xlsx");
-}
 
 // Snapshot handlers
 const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
@@ -683,31 +634,38 @@ const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
   updateFunction(count);
 };
 
+
 // Specific handlers for each category
 const handleHotelsSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Hotel", updateHotelCountElement);
 };
 
+
 const handleTouristSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Tourist Spot", updateTouristCountElement);
 };
+
 
 const handleRestoSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Restaurant", updateRestoCountElement);
 };
 
+
 const handleSouvenirSnapshot = (snapshot) => {
   handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
 };
+
 
 const handleEventsSnapshot = (snapshot) => {
   eventsCount = snapshot.docs.length;
   updateEventsCountElement(eventsCount);
 };
 
+
 onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
   console.error("Error fetching events:", error);
 });
+
 
 onSnapshot(establishmentsRef, (snapshot) => {
   handleHotelsSnapshot(snapshot);
@@ -718,109 +676,401 @@ onSnapshot(establishmentsRef, (snapshot) => {
   console.error("Error fetching establishments:", error);
 });
 
-// Get the canvas element for the tourist spots chart
-const touristCtx = document.getElementById("touristSpotsChart").getContext("2d");
 
-// Create the bar chart for tourist spots
-const touristSpotsChart = new Chart(touristCtx, {
-  type: "bar",
-  data: {
-    labels: [], // Initially empty, will be populated from Firebase
-    datasets: [{
-      label: "Number of Tourist Spot Visitors",
-      data: [], // Initially empty, will be populated from Firebase
-      backgroundColor: [
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(201, 203, 207, 0.2)",
-        "rgba(255, 99, 132, 0.2)"
+
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  // Now the DOM is fully loaded and we can safely access the canvas
+  const touristSpotsChartCanvas = document.getElementById("touristSpotsChart");
+  const chartContainer = document.getElementById("chart-container");
+  const touristCtx = touristSpotsChartCanvas.getContext("2d");
+
+
+  // Create the bar chart for tourist spots
+  const touristSpotsChart = new Chart(touristCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: "Local Tourists",
+          data: [],
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 2,
+        },
+        {
+          label: "Foreign Tourists",
+          data: [],
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 2,
+        },
       ],
-      borderColor: [
-        "rgba(75, 192, 192, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(201, 203, 207, 1)",
-        "rgba(255, 99, 132, 1)"
-      ],
-      borderWidth: 2  
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-// Function to fetch tourist spot data from Firestore
-async function fetchTouristSpotData() {
-  try {
-    const touristScansRef = collection(db, "total_scans/touristScans/touristspot_scans");
-    const querySnapshot = await getDocs(touristScansRef);
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
 
 
-    const labels = [];
-    const data = [];
+  // Month mapping to Firestore format
+  const monthMap = {
+    January: "01",
+    February: "02",
+    March: "03",
+    April: "04",
+    May: "05",
+    June: "06",
+    July: "07",
+    August: "08",
+    September: "09",
+    October: "10",
+    November: "11",
+    December: "12",
+  };
 
 
-    querySnapshot.forEach((doc) => {
-      const establishment = doc.data().establishmentName || "Unknown";
-      labels.push(establishment);
-      const totalScans = doc.data().totalScans || 0; // Retrieve totalScans field
-      data.push(totalScans); // Add the totalScans to data array
+  // Automatically fetch data for the current month
+  (async function fetchCurrentMonthData() {
+    const currentDate = new Date();
+    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0"); // Current month in "MM" format
+    await fetchTouristSpotData(currentMonth); // Fetch data for the current month
+  })();
+
+
+  // Add click event listener to dropdown items
+  document.querySelectorAll("#menuContent a").forEach((item) => {
+    item.addEventListener("click", async (event) => {
+      event.preventDefault(); // Prevent default link behavior
+      const selectedMonth = event.target.getAttribute("data-type"); // Get the month from data-type
+      const monthNumber = monthMap[selectedMonth]; // Map to Firestore format
+      await fetchTouristSpotData(monthNumber); // Fetch and update chart data
+    });
+  });
+
+
+  // Function to fetch tourist spot data from Firestore
+  async function fetchTouristSpotData(month) {
+    try {
+      // Reference the tourist spots collection
+      const monthlyRef = collection(db, `total_scans/touristScans/touristspot_scans`);
+      const querySnapshot = await getDocs(monthlyRef);
+
+
+       // Log the number of documents retrieved
+    console.log(`Number of document IDs retrieved: ${querySnapshot.size}`);
+
+
+    // Debug: Log the IDs of all documents retrieved in the querySnapshot
+    querySnapshot.docs.forEach(doc => {
+      console.log(`Document ID: ${doc.id}`);
     });
 
 
-    // Update the chart with the fetched data
-    touristSpotsChart.data.labels = labels;
-    touristSpotsChart.data.datasets[0].data = data;
-    touristSpotsChart.update(); // Refresh the chart
-  } catch (error) {
-    console.error("Error fetching tourist spot data:", error);
+      // Initialize arrays to hold chart data
+      const labels = [];
+      const localData = [];
+      const foreignData = [];
+
+
+      const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+
+      const promises = querySnapshot.docs.map(async (docSnapshot, index) => {
+        try {
+          await delay(index * 100); // Delay between requests to avoid overloading
+          const monthlyCollectionRef = collection(docSnapshot.ref, "monthly");
+          const monthlyDocRef = doc(monthlyCollectionRef, `2024-${month}`);
+         
+          console.log(`Fetching data for ${docSnapshot.id} from ${monthlyDocRef.path}`); // Log the path of the document being fetched
+         
+          const timeDoc = await getDoc(monthlyDocRef);
+          if (timeDoc.exists()) {
+            const data = timeDoc.data();
+            const establishment = data.establishmentName || "Unknown";
+            console.log(`Document: ${docSnapshot.id}, Establishment: ${establishment}, Local Tourists: ${data.localTourists}, Foreign Tourists: ${data.foreignTourists}`);
+            labels.push(establishment);
+            localData.push(data.localTourists || 0);
+            foreignData.push(data.foreignTourists || 0);
+          } else {
+            console.log(`No data found for ${docSnapshot.id}`);
+          }
+        } catch (error) {
+          console.error(`Error fetching data for document ${docSnapshot.id}:`, error);
+        }
+      });
+
+
+      // Wait for all data to be fetched
+      await Promise.all(promises);
+      console.log(`Number of labels added to chart: ${labels.length}`);
+     
+      // Update chart data
+      touristSpotsChart.data.labels = labels;
+      touristSpotsChart.data.datasets[0].data = localData;
+      touristSpotsChart.data.datasets[1].data = foreignData;
+      touristSpotsChart.update();
+     
+    } catch (error) {
+      console.error("Error fetching tourist spot data:", error);
+    }
+  }
+});
+
+
+
+
+window.onload = function () {
+  const monthDropdownLinks = document.querySelectorAll('.dropdown-menu a');
+ 
+  // Set default selected option to the current month
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleString('default', { month: 'long' }); // Get current month name
+  updateSelectedMonthText(currentMonth); // Update the dropdown button text to the current month
+ 
+  monthDropdownLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior
+      const selectedMonth = this.getAttribute('data-type'); // Get the data-type attribute
+      handleMonthDropdownClick(event, selectedMonth); // Call your function for months
+    });
+  });
+};
+
+
+function handleMonthDropdownClick(event, selectedMonth) {
+  console.log("Handling month selection for: " + selectedMonth); // Debug log
+  // Fetch data for the selected month
+  const monthNumber = monthMap[selectedMonth]; // Map to Firestore format
+  fetchTouristSpotData(monthNumber); // Fetch and update chart data
+  updateSelectedMonthText(selectedMonth); // Update the displayed selected month in the button
+}
+
+
+function updateSelectedMonthText(selectedMonth) {
+  const selectedMonthSpan = document.getElementById('selectedMonth'); // Get the span element
+  if (selectedMonthSpan) {
+    selectedMonthSpan.textContent = selectedMonth; // Update the text content with the selected month
   }
 }
 
 
+document.getElementById("generatePDFScan").addEventListener("click", async function () {
+  const { jsPDF } = window.jspdf; // Load jsPDF
+  const doc = new jsPDF();
 
-// Fetch the tourist spot data when the page loads
-fetchTouristSpotData();
+
+  const loadingModal = document.getElementById("loadingModalPdf");
+  loadingModal.style.display = "flex"; // Show the modal
+
+
+  // Title
+  doc.text("Tourist Arrivals Report", 105, 10, { align: "center" });
+
+
+  // Table headers (Dynamic Months from January to December)
+  const months = [
+      "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+  ];
+
+
+  // Fetch all tourist spots from 'total_scans' -> 'touristScans' -> 'touristspot_scans'
+  const totalScansRef = collection(db, "total_scans", "touristScans", "touristspot_scans");
+
+
+  try {
+    // Get all spot documents in parallel
+    const spotSnapshot = await getDocs(totalScansRef);
+
+
+    let startY = 20; // Start Y position for the first table
+
+
+    // Create an array of promises to fetch the monthly data for each tourist spot
+    const spotPromises = spotSnapshot.docs.map(async (spotDoc) => {
+        const spotId = spotDoc.id; // Get the spot ID dynamically
+        const monthlyRef = collection(db, "total_scans", "touristScans", "touristspot_scans", spotId, "monthly");
+
+
+        // Fetch the monthly data for this spot in parallel
+        const querySnapshot = await getDocs(monthlyRef);
+        const establishmentName = querySnapshot.empty ? "Unknown" : querySnapshot.docs[0].data().establishmentName;
+
+
+        // Dynamically set the header to include the establishment name
+        const headers = [
+            [
+                { content: "Month", rowSpan: 2 },
+                { content: establishmentName, colSpan: 3 }
+            ],
+            ["Domestic", "Foreign", "Total"]
+        ];
+
+
+        // Initialize the data array for this spot
+        const data = [];
+        let grandTotalDomestic = 0; // To track the total of domestic tourists
+        let grandTotalForeign = 0;  // To track the total of foreign tourists
+        let grandTotal = 0;         // To track the total of all tourists
+
+
+        // For each month document (YYYY-MM format)
+        months.forEach((month, index) => {
+            const yearMonth = `2024-${(index + 1).toString().padStart(2, '0')}`; // Format to "2024-01", "2024-02", ...
+            const monthData = querySnapshot.docs.find(doc => doc.id === yearMonth);
+            let localTourists = 0;
+            let foreignTourists = 0;
+            if (monthData) {
+                localTourists = monthData.data().localTourists || 0;
+                foreignTourists = monthData.data().foreignTourists || 0;
+            }
+            const totalTourists = localTourists + foreignTourists;
+
+
+            // Add the data for this month
+            data.push([month, localTourists, foreignTourists, totalTourists]);
+
+
+            // Update the grand totals
+            grandTotalDomestic += localTourists;
+            grandTotalForeign += foreignTourists;
+            grandTotal += totalTourists;
+        });
+
+
+        // Add the GRAND TOTAL row
+        data.push(["GRAND TOTAL", grandTotalDomestic, grandTotalForeign, grandTotal]);
+
+
+        // Generate the table for the current spot
+        doc.autoTable({
+            head: headers,
+            body: data,
+            startY: startY,
+            theme: "grid",
+            styles: { halign: "center" },
+            headStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0] }
+        });
+
+
+        // Update startY for the next table
+        startY = doc.lastAutoTable.finalY + 10; // Add space between tables
+    });
+
+
+    // Wait for all spot data to be fetched before saving the PDF
+    await Promise.all(spotPromises);
+
+
+    // Save the PDF
+    doc.save("TouristArrivalsReport.pdf");
+    loadingModal.style.display = "none";
+  } catch (error) {
+    console.error("Error generating the PDF: ", error);
+    loadingModal.style.display = "none";
+  }
+});
+
+async function loadTableData() {
+  const tableBody = document.getElementById("tbody1");
+
+  try {
+    const querySnapshot = await getDocs(collection(db, "users")); 
+    tableBody.innerHTML = ""; 
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const fName = data.fName || "Unknown"; 
+      const totalPoints = data.points?.totalPoints || 0; 
+      const Status = data.pointsRedeemed ? "Redeemed" : "Not Redeemed";  // Check the pointRedeemed field
+
+      const row = `
+        <tr>
+          <td>${fName}</td>
+          <td>${totalPoints}</td>
+          <td>${Status}</td>  
+        </tr>`;
+      tableBody.innerHTML += row;
+    });
+
+    // Add event listeners to dynamically created buttons
+    const redeemButtons = document.querySelectorAll('.redeem-btn');
+    redeemButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const docId = event.target.getAttribute('data-doc-id');
+        redeemPoints(docId); // Call redeemPoints when button is clicked
+      });
+    });
+
+    if (querySnapshot.empty) {
+      tableBody.innerHTML = "<tr><td colspan='3'>No data available</td></tr>";
+    }
+  } catch (error) {
+    console.error("Error loading table data:", error);
+    tableBody.innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
+  }
+}
+
+  // Call the function when the page loads
+ document.addEventListener("DOMContentLoaded", loadTableData);
 
 
 
-let logoutModal = document.getElementById("logout");
+// Get elements
+
+let logout = document.getElementById("logout");  // Make sure this is the correct element
 let modal = document.getElementById("logoutModal");
 let closeBtn = document.getElementsByClassName("close")[0];
 let confirmBtn = document.getElementById("confirmLogout");
 let cancelBtn = document.getElementById("cancelLogout");
 
+
+// Open the modal when the logout link is clicked
 logout.addEventListener("click", (event) => {
-  event.preventDefault(); // Prevent default link behavior
-  modal.style.display = "block"; // Show the modal
+  event.preventDefault();  // Prevent default behavior of the link
+  modal.style.display = "block";  // Show the modal
 });
 
+
+// Close the modal when the close button is clicked
 closeBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when the close button is clicked
+  modal.style.display = "none";  // Hide the modal
 };
 
+
+// Close the modal when the cancel button is clicked
 cancelBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+  modal.style.display = "none";  // Hide the modal
 };
 
+
+// Redirect to "index.html" when the user confirms the logout
 confirmBtn.onclick = function() {
-  window.location = "index.html"; // Redirect to index.html on confirmation
+  window.location = "index.html";  // Redirect to index.html on confirmation
 };
 
-// Close the modal when clicking outside of it
+
+// Close the modal if the user clicks outside of it
 window.onclick = function(event) {
   if (event.target === modal) {
-    modal.style.display = "none";
+    modal.style.display = "none";  // Hide the modal when clicking outside
   }
 };
+
+
+
+
+
+
+
+
+
+
+
 
 

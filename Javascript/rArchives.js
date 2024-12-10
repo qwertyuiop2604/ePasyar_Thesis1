@@ -27,20 +27,6 @@ events.addEventListener('click', () => {
 })
 
 
-let activities = document.getElementById("activities");
-
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
-let reviews = document.getElementById("reviews");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
-});
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";
@@ -122,27 +108,6 @@ querySnap2.forEach((doc2) => {
   });
 });
 
-// Event listener for permanently deleting an event
-document.getElementById('permanentlyDelete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "block";
-});
-
-// Event listener for cancel button in delete confirmation modal
-document.getElementById('cnl_delete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "none";
-});
-
-// Event listener for confirm button in delete confirmation modal
-document.getElementById('cnfrm_delete').addEventListener('click', async () => {
-  try {
-    const docRef = doc(db, "vigan_establishments", localStorage.getItem("ID"));
-    await deleteDoc(docRef);
-    window.location = "rArchives.html";
-    window.location.reload();
-  } catch (error) {
-    console.error("Error deleting document: ", error);
-  }
-});
 
 
 let logoutModal = document.getElementById("logout");

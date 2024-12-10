@@ -24,11 +24,64 @@
     display: flex;
   }
 
+  .main-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+     
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 5px;
+            
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1.5px solid #ddd;
+        }
+
+        .table th {
+            background-color: #337ab7;
+            color: white;
+            font-size: 18px;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        
+
+        #cal-date {
+            margin-right: 10px;
+        }
   .sidenav {
     background-color: gainsboro;
-    border-color: black;
-    border-radius: 3px;
-    height: 115vh;    width: 260px;
+      border-color: black;
+      border-radius: 3px;
+      height: 100vh;
+      /* Full viewport height */
+      width: auto;
+      position: fixed;
+      /* Keep the sidenav fixed on the left */
+      top: 0;
+      left: 0;
+      
+      /* Allow scrolling within the sidenav */
   }
 
   .main-container {
@@ -102,23 +155,37 @@
           <li ><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li class="active"><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li ><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-          <li><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
-          <li><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>  
+
+
           <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul><br>
       </div>
 
 
-      <div>
-        <div id="logoutModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Are you sure you want to log out?</h2>
-           
-            <button id="confirmLogout">Yes, log out</button>
-            <button id="cancelLogout">Cancel</button>
-          </div>
+      <div id="logoutModal" class="modal" style="margin-left: 350px; top: -25%; ">
+        <div class="modal-content" style="background-color: #337ab7; 
+        color: white; border-radius: 16px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+        width: 90%; max-width: 400px; text-align: center; position: relative; transform: scale(0.95); ">
+          
+          <span class="close" style="color: white; font-size: 28px; font-weight: bold; position: absolute; top: 16px; right: 20px; cursor: pointer;">&times;</span>
+          <div style="margin-bottom: 20px;">
+            <i class="fas fa-sign-out-alt" style="font-size: 60px; color: white;"></i>
         </div>
+        <h2 style="margin-bottom: 16px; font-family: 'Arial', sans-serif; font-size: 20px;">Are you sure you want to log out?</h2>
+      
+        
+ 
+          <button id="confirmLogout" 
+                  style="background-color: white; color: #337ab7; border: none; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+              Yes, log out
+          </button>
+          
+          <button id="cancelLogout" 
+                  style="background-color: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; margin-left: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+              Cancel
+          </button>
+        </div>
+      </div>
     
       <main class="main-container">
         <div class="main2">
@@ -129,7 +196,7 @@
             <div>
               <button id="archived_acc"><i class="fas fa-box-open"></i> See Archive </button>
                 </div>   
-
+                <input type="text" id="srchText" placeholder="Search" onkeyup="searchAppID()">
     
           </div>
           <div class="outer-wrapper">
@@ -150,48 +217,47 @@
     </div>
     
 
-    <!--Create Account-->
-    <div class="reg-container" id="user-create">
-      <div class="container-modal">
-        <span class="close-modal">&times;</span>
-        <h1 id="create-txt">Create an Local Industries</h1>
-        <form id="create-form">
-          <label for="name"> Name</label>
-          <input type="text" id="name" name="name">
+    <!-- Create Local Industries -->
+<div class="reg-container" id="user-create">
+  <div class="container-modal">
+    <span class="close-modal">&times;</span>
+    <h1 id="create-txt">Create a Local Industry</h1>
+    <form id="create-form">
+      <label for="name"> Name</label>
+      <input type="text" id="name" name="name" style="text-transform: lowercase;">
 
-          <label for="reg-event"> Description</label>
-          <textarea id="description" name="description"></textarea>
+      <label for="reg-event"> Description</label>
+      <textarea id="description" name="description" style="text-transform: lowercase;"></textarea>
 
-          <label for="photos"> Photos</label>
-          <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
+      <label for="photos"> Photos</label>
+      <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
 
-          <input type="submit" id="btnRegister" value="Add Local Industries" />
-        </form>
-        
-      </div>
-    </div>
+      <input type="submit" id="btnRegister" value="Add Local Industry" />
+    </form>
+  </div>
+</div>
 
-    <!--Edit Account-->
-    <div class="edit-container" id="user-edit">
-      <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
-      <div class="container-modal-edit" id="edit-modal">
-        <span class="close-modal-edit">&times;</span>
-        <h1 id="edit-txt">Edit an Local Industries</h1>
-        <form id="edit-form">
-          <label for="name1"> Name</label>
-          <input type="text" id="name1" name="name1">
+<!-- Edit Local Industries -->
+<div class="edit-container" id="user-edit">
+  <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
+  <div class="container-modal-edit" id="edit-modal">
+    <span class="close-modal-edit">&times;</span>
+    <h1 id="edit-txt">Edit a Local Industry</h1>
+    <form id="edit-form">
+      <label for="name1"> Name</label>
+      <input type="text" id="name1" name="name1" style="text-transform: lowercase;">
 
+      <label for="description1"> Description</label>
+      <textarea id="description1" name="description1" style="text-transform: lowercase;"></textarea>
 
-          <label for="description1"> Description</label>
-          <textarea id="description1" name="description1"></textarea>
+      <label for="photos1"> Photos</label>
+      <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
 
-          <label for="photos1"> Photos</label>
-          <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
+      <input type="submit" id="btnEdit" value="Save" />
+    </form>
+  </div>
+</div>
 
-          <input type="submit" id="btnEdit" value="Save" />
-        </form>
-      </div>
-    </div>
 
     <!-- confirmation modal for add account -->
     <div class="cnfrm_modal_add" id="cnfrm_add">
@@ -210,17 +276,31 @@
         <button id="cnfrm">Confirm</button>
       </div>
     </div>
-
-    <!-- confirmation modal for delete account -->
-    <div class="cnfrm_modal_delete" id="delete_acc_modal">
-      <h1>Are you sure you want to archive this Local Industries?</h1>
-      <div class="btn1">
-        <button id="cnl2">Cancel</button>
-        <button id="cnfrm2">Confirm</button>
+    <!-- Delete Account Modal -->
+    <div id="delete_acc_modal" class="modal" style="display: none; margin-left: 350px; top: -25%; ">
+      <div class="modal-content" style="background-color: #337ab7; 
+          color: white; border-radius: 16px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+          width: 90%; max-width: 400px; text-align: center; position: relative; transform: scale(0.95); ">
+    
+        <span id="delete_close" class="close" style="color: white; font-size: 28px; font-weight: bold; position: absolute; top: 16px; right: 20px; cursor: pointer;">&times;</span>
+    
+        <div style="margin-bottom: 20px;">
+          <i class="fas fa-trash-alt" style="font-size: 60px; color: white;"></i>
+        </div>
+    
+        <h2 style="margin-bottom: 16px; font-family: 'Arial', sans-serif; font-size: 24px;">Are you sure you want to archive this Local Industries?</h2>
+    
+        <button id="delete_confirm" 
+                style="background-color: white; color: #337ab7; border: none; padding: 12px 24px; border-radius: 24px;  font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+            Confirm
+        </button>
+    
+        <button id="delete_cancel" 
+                style="background-color: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; margin-left: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+            Cancel
+        </button>
       </div>
     </div>
-
-  </div>
 
 
   <div id="details-modal" class="details-modal">
@@ -235,7 +315,28 @@
     </div>
 </div>
  
+<script>
+  const searchAppID = () => {
+    let filter = document.getElementById('srchText').value.toUpperCase(); // convert to uppercase for case-insensitive search
+    let mytable = document.getElementById('tbody1');
+    let tr = mytable.getElementsByTagName('tr');
 
+    for (var i = 0; i < tr.length; i++) {
+      let tdName = tr[i].getElementsByTagName('td')[0];
+     
+      if (tdName || tdDescription || tdLocation) {
+        let txtValueName = tdName.textContent || tdName.innerText;
+       
+
+        if (txtValueName.toUpperCase().indexOf(filter) > -1 ) {
+          tr[i].style.display = '';
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  }
+</script>
   <script type="module" src="/Javascript/industries.js"></script>
 </body>
 

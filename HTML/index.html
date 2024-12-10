@@ -11,10 +11,14 @@
     }
 
 
+
+
     .sidenav {
       background-color: white;
       height: 100%;
     }
+
+
 
 
     @media screen and (max-width: 1000px) {
@@ -22,6 +26,7 @@
         height: 1000px;
       }
     }
+
 
     /* Modal styling */
     .modal {
@@ -35,6 +40,7 @@
         background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
     }
 
+
     .modal-content {
         background-color: #fefefe;
         margin: 10% auto;
@@ -45,6 +51,7 @@
         border-radius: 8px;
     }
 
+
     .close {
         color: #aaa;
         float: right;
@@ -52,6 +59,7 @@
         font-weight: bold;
         cursor: pointer;
     }
+
 
     .close:hover,
     .close:focus {
@@ -62,36 +70,45 @@
 </style>
 
 
-<body>
 
+
+<body>
 
   <div class="login-container">
     <img src="/image/logo-vigan-removebg-preview.png" alt="index" width="150" height="150" class="center-image">
     <h1>ePasyar</h1>
    
-    <form id="login-form">
+    <form id="login-form" autocomplete="off">
         <div id="vigan">Welcome, KaiVigan!</div>
-    
+   
         <label for="email">Email</label>
-        <input type="text" id="email" name="email" required>
-        <label for="password">Password</label
-          >
-          
+        <input type="text" id="email" name="email"   placeholder="Enter your email"  required>
+        <label for="password">Password</label>
         <div class="password-container">
-            <input type="password" id="password" name="password" required>
-            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="lastname_employeeNumber" 
+            required>
+          <i class="fas fa-eye toggle-password" id="togglePassword"></i>
         </div>
+        
+        
         <!-- <label for="password-hint" style="color: yellow; font-size: 12px;">Password Hint: ADMIN_EMPLOYEE NUMBER(6 CHARACTERS)</label> -->
+
 
         <div id="forgot-password-btn" style="cursor: pointer;">
           <p>Forgot Password</p>
       </div>
-      
+     
         <button id="btnLogin">Login</button> <div id="register">
            
         <!-- </div> <p>Not registered? <a id="register-button" href="registration.html">Create an Account</a></p> -->
     </form>
    
+
+
 
 
       <!-- Password Change Dialog -->
@@ -106,13 +123,22 @@
   </div>
        
 
-  
+
+ 
+
+
 
 
         <script type="module" src="/Javascript/index.js"></script>
     </div>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

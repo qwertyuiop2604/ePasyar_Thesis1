@@ -24,9 +24,7 @@ document.getElementById("events").addEventListener('click', () => {
   window.location = 'events.html';
 });
 
-document.getElementById("reviews").addEventListener("click", () => {
-  window.location = "reviews.html";
-});
+
 
 document.getElementById("otop").addEventListener("click", () => {
   window.location = "otop.html";
@@ -38,17 +36,6 @@ document.getElementById("localdishes").addEventListener("click", () => {
 
 document.getElementById("localindustries").addEventListener("click", () => {
   window.location = "industries.html";
-});
-
-let activities = document.getElementById("activities");
-
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
 });
 
 // Fetch archived data and populate the table

@@ -45,14 +45,7 @@ tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
 
-let activities = document.getElementById("activities");
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
+
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
@@ -274,21 +267,7 @@ async function fetchEstablishments() {
 
 fetchEstablishments();
 
-// Archive event instead of deleting
-const currentDateTime = new Date().toLocaleString();
-document.getElementById('delete_acc').addEventListener('click', async () => {
-  const userID = localStorage.getItem("ID");
-  try {
-    await updateDoc(doc(db, "otop", userID), {
-      Status: "archived",
-      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
-      ArchivedDate: currentDateTime
-    });
-    window.location.reload(); // Reload to refresh the table
-  } catch (error) {
-    console.error("Error updating document: ", error);
-  }
-});
+
 
 function highlightRow(row) {
   const rows = document.querySelectorAll("#tbody1 tr");
@@ -310,6 +289,49 @@ function toggleBlur(shouldBlur) {
 // Button to see archived accounts
 archived_acc.addEventListener("click", (e) => {
   window.location = "oArchives.html";
+});
+
+
+//HIGHLIGHT TABLE ROW WHEN CLICKED - FINAL
+var table = document.getElementById("table");
+var rows = document.getElementsByTagName("tr");
+for (let i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+  currentRow.onclick = function () {
+    Array.from(this.parentElement.children).forEach(function (el) {
+      el.classList.remove("selected-row");
+    });
+
+    // [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+    this.classList.add("selected-row");
+
+    document.getElementById("delete_acc").disabled = false;
+  };
+}
+// window.onload = GetAllDataOnce;
+
+document.getElementById('delete_acc').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "block";
+});
+
+document.getElementById('delete_cancel').addEventListener('click', () => {
+  document.getElementById('delete_acc_modal').style.display = "none";
+});
+
+const querySnap2 = await getDocs(collection(db, "otop"));
+querySnap2.forEach((doc2) => {
+  document.getElementById('delete_confirm').addEventListener('click', (e) => {
+    const updateStats = doc(db, "otop", localStorage.getItem("ID"));
+  
+    updateDoc(updateStats, {
+      Status: "archived",
+      ArchivedBy: "ADMIN", // Replace with the actual admin's name if needed
+ ArchivedDate: new Date().toLocaleString()
+    }).then(() => {
+      window.location = "sArchives.html";
+      window.location.reload();
+    });
+  });
 });
 
 let logoutModal = document.getElementById("logout");

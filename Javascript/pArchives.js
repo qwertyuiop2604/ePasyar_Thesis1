@@ -22,16 +22,7 @@ bckbtn.addEventListener('click', () => {
     window.location = 'promotion.html'
 })
 
-let activities = document.getElementById("activities");
 
-activities.addEventListener("click", () => {
-  window.location = "activities.html";
-});
-let user = document.getElementById("user");
-
-user.addEventListener("click", () => {
-  window.location = "user.html";
-});
 let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'
@@ -41,10 +32,7 @@ souvenir.addEventListener('click', () =>{
   window.location = 'souvenir.html'
 })
 
-let reviews = document.getElementById("reviews");
-reviews.addEventListener("click", () => {
-  window.location = "reviews.html";
-});
+
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";
@@ -57,13 +45,7 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var dropdown = document.querySelector('.dropdown-btn');
-  var dropdownContent = document.querySelector('.dropdown-container');
-  dropdown.addEventListener('click', function () {
-    dropdownContent.classList.toggle('show');
-  });
-});
+
 
 // FINAL
 const archivedTbody = document.getElementById("archived-tbody");
@@ -75,13 +57,11 @@ querySnap.forEach((doc) => {
     trow.innerHTML = `
       <td>${doc.data().ArchivedBy}</td>
       <td>${doc.data().Name}</td>
-      <td>${doc.data().Owner}</td>
+
       <td>${doc.data().Number}</td>
       <td>${doc.data().Email}</td>
       <td>${doc.data().Address}</td>
-      <td>${doc.data().Rooms}</td>
-      <td>${doc.data().Capacity}</td>
-      <td>${doc.data().Rates}</td>
+   
          <td><img src="${doc.data().PhotoURL}" alt="Event Photo" width="150" height="150"></td>   
       <td>${doc.data().ArchivedDate}</td>
     `;
@@ -139,27 +119,6 @@ querySnap2.forEach((doc2) => {
   });
 });
 
-// Event listener for permanently deleting an event
-document.getElementById('permanentlyDelete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "block";
-});
-
-// Event listener for cancel button in delete confirmation modal
-document.getElementById('cnl_delete').addEventListener('click', () => {
-  document.getElementById('cnfrm_modal_delete').style.display = "none";
-});
-
-// Event listener for confirm button in delete confirmation modal
-document.getElementById('cnfrm_delete').addEventListener('click', async () => {
-  try {
-    const docRef = doc(db, "vigan_establishments", localStorage.getItem("ID"));
-    await deleteDoc(docRef);
-    window.location = "pArchives.html";
-    window.location.reload();
-  } catch (error) {
-    console.error("Error deleting document: ", error);
-  }
-});
 
 
 let logoutModal = document.getElementById("logout");

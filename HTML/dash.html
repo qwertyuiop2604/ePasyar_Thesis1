@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+
+
+
+
+
 <head>
   <title>Dashboard Panel</title>
   <meta charset="utf-8">
@@ -8,16 +15,20 @@
   <link rel="stylesheet" type="text/css" href="/CSS/dash.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
+ 
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,55 +43,112 @@
       background-color: gainsboro;
       border-color: black;
       border-radius: 3px;
-      height: 115vh; /* Full height of viewport */
-      width: 260px;
+      height: 100vh;
+      /* Full viewport height */
+      width: auto;
+      position: fixed;
+      /* Keep the sidenav fixed on the left */
+      top: 0;
+      left: 0;
+   
+      /* Allow scrolling within the sidenav */
     }
+
+
+
+    .col-sm-9 {
+      margin-left: 260px;
+      /* Give space for the sidenav */
+      height: auto;
+      /* Full viewport height */
+
+    }
+
+
+
+    .row.content {
+      height: 100%;
+      /* Ensure the content takes up the full available height */
+    }
+
+
+
+
+
 
     .btn-primary {
-      margin-left: 60px; /* Adjust spacing between the dropdown and the button */
+      margin-left: 60px;
+      /* Adjust spacing between the dropdown and the button */
     }
+
     #generateReport {
-      margin-left: 10px; /* Adjust spacing between the dropdown and the button */
+      margin-left: 10px;
+      /* Adjust spacing between the dropdown and the button */
     }
+
     #mostVisitedChart {
       width: 100%;
-      max-width: 400px; /* Adjusted to a reasonable max-width */
+      max-width: 400px;
+      /* Adjusted to a reasonable max-width */
       height: 200px;
-      margin-top: 10px; /* Ensure there's space for the button and dropdown */
-  }
+      margin-top: 10px;
+      /* Ensure there's space for the button and dropdown */
+    }
 
-  #touristSpotsChart {
-    width: 100%;
-    max-width: 7000px;
-    height: 400px;
-    margin-top: 60px;
-    margin-bottom: 10px;
-    margin-left: 10px; /* Set margin-left */
-  }
 
-button#generatePDF, button#generateExcel {
-    background-color: #337ab7;
-    color: white;
-    border: none;
-    font-size: 12px;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-button#dropdownMenu{
-  background-color: white;
-    color: white;
-    border: none;
-    font-size: 12px;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-  button#generatePDF:hover, button#generateExcel:hover {
-    background-color: #286090; /* Darker shade on hover */
-  }
+
+    #touristSpotsChart {
+      width: 100%;
+      max-width: 7000px;
+      height: 400px;
+      margin-top: 60px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      /* Set margin-left */
+    }
+
+
+
+
+
+
+
+
+    button#generatePDF,
+    button#generateExcel {
+      background-color: #337ab7;
+      color: white;
+      border: none;
+      font-size: 12px;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button#dropdownMenu {
+      background-color: white;
+      color: white;
+      border: none;
+      font-size: 12px;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button#generatePDF:hover,
+    button#generateExcel:hover {
+      background-color: #286090;
+      /* Darker shade on hover */
+    }
+
+
+
+
+
+
+
 
     @media screen and (max-width: 1000px) {
       .row.content {
@@ -90,12 +158,20 @@ button#dropdownMenu{
   </style>
 </head>
 
+
+
+
+
 <body>
+
+
+
 
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav hidden-xs">
-        <h2 id="dash-logo"><img src="/image/logo-vigan-removebg-preview.png" alt="index" width="55" height="55" class="center-image">
+        <h2 id="dash-logo"><img src="/image/logo-vigan-removebg-preview.png" alt="index" width="55" height="55"
+            class="center-image">
           ePasyar</h2>
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="#section1" id="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -133,137 +209,317 @@ button#dropdownMenu{
           <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
           <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
           <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
-          <li><a href="#section45" id="activities"><i class="fas fa-tasks"></i> Activities</a></li>
-          <li><a href="#section45" id="user"><i class="fas fa-user-clock"></i> User Log</a></li>          
+
+
+
+
+
           <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul><br>
       </div>
 
-      <div>
-        <div id="logoutModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Are you sure you want to log out?</h2>
-           
-            <button id="confirmLogout">Yes, log out</button>
-            <button id="cancelLogout">Cancel</button>
-          </div>
-        </div>
 
-        
-        <p class="font-weight-bold" id="dash_label"> DASHBOARD</p>
+
+
+
+      <div id="logoutModal" class="modal" style="margin-left: 350px; top: -25%; ">
+        <div class="modal-content" style="background-color: #337ab7;
+        color: white; border-radius: 16px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        width: 90%; max-width: 400px; text-align: center; position: relative; transform: scale(0.95); ">
+
+          <span class="close"
+            style="color: white; font-size: 28px; font-weight: bold; position: absolute; top: 16px; right: 20px; cursor: pointer;">&times;</span>
+          <div style="margin-bottom: 20px;">
+            <i class="fas fa-sign-out-alt" style="font-size: 60px; color: white;"></i>
+          </div>
+          <h2 style="margin-bottom: 16px; font-family: 'Arial', sans-serif; font-size: 20px; color: white;">Are you sure
+            you want to log out?</h2>
+
+
+
+
+
+
+
+          <button id="confirmLogout"
+            style="background-color: white; color: #337ab7; border: none; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+            Yes, log out
+          </button>
+
+          <button id="cancelLogout"
+            style="background-color: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; margin-left: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+            Cancel
+          </button>
+        </div>
       </div>
 
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="column">
-            <div class="card">
-              <h4 id="eventS"><i class="fas fa-calendar"></i> Events</h4>
-              <p id="eventsCount">0</p>
-            </div>
-          </div>
 
-          <div class="column">
-            <div class="card">
-              <h4 id="hOtels"><i class="fas fa-bed"></i> Hotels</h4>
-              <p id="hotelCount">0</p>
-            </div>
-          </div>
-        
-          <div class="column">
-            <div class="card">
-              <h4 id="tourists"><i class="fas fa-map-marker-alt"></i> Tourist Spots</h4>
-              <p id="touristCount">0</p>
-            </div>
-          </div>
-        
-          <div class="column">
-            <div class="card">
-              <h4 id="resto"><i class="fas fa-utensils"></i> Restaurants</h4>
-              <p id="restoCount">0</p>
-            </div>
-          </div>
-        
-          <div class="column">
-            <div class="card">
-              <h4 id="souvenirs"><i class="fas fa-gift"></i> Souvenir Shops</h4>
-              <p id="souvenirCount">0</p>
-            </div>
+
+
+<div>
+
+      <p class="font-weight-bold" id="dash_label" style="margin-left: 21.5%;"> DASHBOARD</p>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="col-sm-9">
+      <div class="row">
+
+        <div class="column">
+          <div class="card">
+            <h4 id="eventS"><i class="fas fa-calendar"></i> Events</h4>
+            <p id="eventsCount">0</p>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="well" style="position: relative;">
-            <a href="#sec1">
-              <p class="fas fa-check-circle" id="visited"> TOURIST ARRIVAL REPORT </p>
 
-            </a>
 
-            <button id="generatePDF" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-              Generate PDF Report
-            </button>
+
+
+        <div class="column">
+          <div class="card">
+            <h4 id="hOtels"><i class="fas fa-bed"></i> Hotels</h4>
+            <p id="hotelCount">0</p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card">
+            <h4 id="tourists"><i class="fas fa-map-marker-alt"></i> Tourist Spots</h4>
+            <p id="touristCount">0</p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card">
+            <h4 id="resto"><i class="fas fa-utensils"></i> Restaurants</h4>
+            <p id="restoCount">0</p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card">
+            <h4 id="souvenirs"><i class="fas fa-gift"></i> Souvenir Shops</h4>
+            <p id="souvenirCount">0</p>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+      <div class="col-sm-4">
+        <div class="well" style="position: relative;">
+          <a href="#sec1">
+            <p class="fas fa-globe" id="visited"> TOURIST ARRIVAL REPORT </p>
+
+          </a>
+
+          <button id="generatePDF"
+            style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 40%;">
+            Generate PDF Report
+          </button>
+
+
+
+
+
+
+
+
+          <!-- Loading Modal -->
+          <div id="loadingModalPdf"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+            <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center;">
+              <p>Generating PDF file, please wait...</p>
+              <div class="spinner"
+                style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; margin: 0 auto; animation: spin 1s linear infinite;">
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+          <!-- Spinner animation -->
+          <style>
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+          </style>
+
+
+
+
+
+
+          <!--
             <button id="generateExcel" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
               Generate Excel Report
             </button>
-  
-<!-- Bootstrap Dropdown --> 
-  
-<div class="dropdown" style="position: relative; display: inline-block;">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    <i class="fa fa-bars"></i> 
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" id="menuContent">
-    <li><a href="#section1" data-type="Daily">Daily</a></li>
-  
-    <li><a href="#section3" data-type="Monthly">Monthly</a></li>
-    <li><a href="#section4" data-type="Yearly">Yearly</a></li>
-  </ul>
-
-</div>
-
-
-<canvas id="mostVisitedChart" style="width:100%; max-width:7000px; height:400px;"></canvas>
-
-
-        <div class="col-sm-4">
-          <div class="well" style="position: relative;  margin-top:60px; margin-bottom:10px; margin-left: -32px;">
-            <a href="#sec1">
-              <p class="fas fa-check-circle" id="visited1"> NUMBER OF TOURISTS SPOT VISITORS </p>
-
-            </a>
-
-            <button id="generatePDFScan" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px;  cursor: pointer;">
-              Generate PDF Report
-            </button>
-            <button id="generateExcelScan" style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer;">
-              Generate Excel Report
-            </button>
-  
-<!-- Bootstrap Dropdown --> 
-  
-<div class="dropdown" style="position: relative; display: inline-block;">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    <i class="fa fa-bars"></i> 
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" id="menuContent">
-    <li><a href="#section1" data-type="Daily">Daily</a></li>
- 
-    <li><a href="#section3" data-type="Monthly">Monthly</a></li>
-    <li><a href="#section4" data-type="Yearly">Yearly</a></li>
-  </ul>
-
-</div>
-
-<canvas id="touristSpotsChart" style="width:100%; max-width:7000px; height:400px; margin-top:10px;"></canvas>
 
 
 
 
-        <script type="module" src="/Javascript/dash.js"></script>
-      </div>
-    </div>
+
+
+          Loading Modal
+<div id="loadingModalExcel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+  <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center;">
+    <p>Generating Excel file, please wait...</p>
+    <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; margin: 0 auto; animation: spin 1s linear infinite;"></div>
   </div>
+</div>
+
+
+
+
+
+
+
+
+ Spinner animation
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+
+-->
+
+
+
+<div class="dropdown" style="position: relative; display: inline-block;">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="true">
+    <span id="selectedOption">Monthly</span> <!-- Default is set to "Monthly" -->
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" id="menuContent">
+    <li><a href="#" data-type="Daily">Daily</a></li>
+    <li><a href="#" data-type="Monthly">Monthly</a></li>
+    <li><a href="#" data-type="Yearly">Yearly</a></li>
+  </ul>
+</div>
+
+
+
+
+
+          <canvas id="mostVisitedChart" style="width:100%; max-width:7000px; height:400px;"></canvas>
+
+
+
+
+          <div class="col-sm-4">
+            <div class="well" style="position: relative;  margin-top:60px; margin-bottom:10px; margin-left: -32px;">
+              <a href="#sec1">
+                <p class="fas fa-map-marker-alt" id="visited1"> NUMBER OF TOURISTS SPOT VISITORS </p>
+
+
+
+              </a>
+
+
+              <button id="generatePDFScan"
+                style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px;  cursor: pointer;  margin-left: 30%;">
+                Generate PDF Report
+              </button>
+
+
+              <div class="dropdown" style="position: relative; display: inline-block;">
+                <button class="btn btn-default dropdown-toggle1" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true">
+                  <span id="selectedMonth"> </span> <!-- Initially empty, will be updated with selected month -->
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="menuContent">
+                  <li><a href="#" data-type="January" onclick="handleMonthDropdownClick(event, 'January')">January</a>
+                  </li>
+                  <li><a href="#" data-type="February"
+                      onclick="handleMonthDropdownClick(event, 'February')">February</a></li>
+                  <li><a href="#" data-type="March" onclick="handleMonthDropdownClick(event, 'March')">March</a></li>
+                  <li><a href="#" data-type="April" onclick="handleMonthDropdownClick(event, 'April')">April</a></li>
+                  <li><a href="#" data-type="May" onclick="handleMonthDropdownClick(event, 'May')">May</a></li>
+                  <li><a href="#" data-type="June" onclick="handleMonthDropdownClick(event, 'June')">June</a></li>
+                  <li><a href="#" data-type="July" onclick="handleMonthDropdownClick(event, 'July')">July</a></li>
+                  <li><a href="#" data-type="August" onclick="handleMonthDropdownClick(event, 'August')">August</a></li>
+                  <li><a href="#" data-type="September"
+                      onclick="handleMonthDropdownClick(event, 'September')">September</a></li>
+                  <li><a href="#" data-type="October" onclick="handleMonthDropdownClick(event, 'October')">October</a>
+                  </li>
+                  <li><a href="#" data-type="November"
+                      onclick="handleMonthDropdownClick(event, 'November')">November</a></li>
+                  <li><a href="#" data-type="December"
+                      onclick="handleMonthDropdownClick(event, 'December')">December</a></li>
+                </ul>
+              </div>
+
+
+
+
+
+              <div id="chart-container" style="width: 100%; overflow-x: auto;">
+                <canvas id="touristSpotsChart"
+                  style="width:100%; max-width:7000px; height:400px; margin-top:10px;"></canvas>
+              </div>
+
+<div class="table-wrapper" style="margin-top: 50px; margin-right: -20px; margin-left: -20px; border: 1px solid black;  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); width: 924px;">
+  <table id="table" class="table" style="width: 990px; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Name</th>
+        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Points</th>
+        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Redeem Status</th>
+      </tr>
+    </thead>
+    <tbody id="tbody1"></tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <script type="module" src="/Javascript/dash.js"></script>
+            </div>
+          </div>
+        </div>
 </body>
+
+
+
+
+
+
+
 
 </html>
