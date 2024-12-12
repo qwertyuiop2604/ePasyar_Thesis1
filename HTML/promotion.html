@@ -237,72 +237,71 @@
         </main>
       </div>
 
-      <!--Create Promotion-->
-      <div class="reg-container" id="user-create">
-        
+     <!-- Create Promotion -->
+<div class="reg-container" id="user-create">
+  <div class="container-modal">
+    <span class="close-modal">&times;</span>
+    <h1 id="create-txt">Create a Hotel</h1>
+    <form id="create-form">
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="" disabled selected>Select a category</option>
+        <option value="Hotel">Hotel</option>
+        <option value="Apartelle">Apartelle</option>
+        <option value="Inn">Inn</option>
+        <option value="Transient">Transient</option>
+        <option value="Room for Rent">Room for Rent</option>
+        <option value="Lodging">Lodging</option>
+      </select>
 
-        <div class="container-modal">
-          <span class="close-modal">&times;</span>
-          <h1 id="create-txt">Create an Hotel</h1>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" style="text-transform: lowercase;" required>
 
-                   
-                <div class="info">
-                  <!-- <label class="category">Category </label>
-                  <div class="category-info">
-                    <select class="modal-input-category" id="category" name="category">
-                   
-                  
-                      <option value="Hotel">Hotel</option>
-                      
-                    </select>
-                    
-                  </div> -->
-                </div>        
-        </div>
-       <!-- Create Hotel Form -->
-<form id="create-form">
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" style="text-transform: lowercase;">
+      <label for="number">Contact Number</label>
+      <input type="tel" id="number" name="number" style="text-transform: lowercase;" required>
 
-  <label for="number">Contact Number</label>
-  <input type="tel" id="number" name="number" style="text-transform: lowercase;">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" style="text-transform: lowercase;" required>
 
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email" style="text-transform: lowercase;">
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" style="text-transform: lowercase;" required>
 
-  <label for="address">Address</label>
-  <input type="text" id="address" name="address" style="text-transform: lowercase;">
+      <label for="photos">Photos</label>
+      <input type="file" id="photos" name="photos" accept="image/png, image/jpeg" required>
 
-  <label for="photos">Photos</label>
-  <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
-
-  <input type="submit" id="btnRegister" value="Add Hotel" />
-</form>
+      <input type="submit" id="btnRegister" value="Add Hotel" />
+    </form>
+  </div>
+</div>
 
 <!-- Edit Hotel Form -->
 <div class="edit-container" id="user-edit">
-  <form action="/" class="modal-form-edit" id="form-edit" autocomplete="off"></form>
-
   <div class="container-modal-edit" id="edit-modal">
     <span class="close-modal-edit">&times;</span>
     <h1 id="edit-txt">Edit a Hotel</h1>
-    
-    <div class="info">
-      <!-- Hotel information goes here -->
-    </div>
-
     <form id="edit-form">
+      <label for="category1">Category</label>
+      <select id="category1" name="category1">
+        <option value="" disabled selected>Select a category</option>
+        <option value="Hotel">Hotel</option>
+        <option value="Apartelle">Apartelle</option>
+        <option value="Inn">Inn</option>
+        <option value="Transient">Transient</option>
+        <option value="Room for Rent">Room for Rent</option>
+        <option value="Lodging">Lodging</option>
+      </select>
+
       <label for="name1">Name</label>
-      <input type="text" id="name1" name="name1" style="text-transform: lowercase;">
+      <input type="text" id="name1" name="name1" style="text-transform: lowercase;" required>
 
       <label for="number1">Contact Number</label>
-      <input type="tel" id="number1" name="number1" style="text-transform: lowercase;">
+      <input type="tel" id="number1" name="number1" style="text-transform: lowercase;" required>
 
       <label for="email1">Email</label>
-      <input type="text" id="email1" name="email1" style="text-transform: lowercase;">
+      <input type="email" id="email1" name="email1" style="text-transform: lowercase;" required>
 
       <label for="address1">Address</label>
-      <input type="text" id="address1" name="address1" style="text-transform: lowercase;">
+      <input type="text" id="address1" name="address1" style="text-transform: lowercase;" required>
 
       <label for="photos1">Photos</label>
       <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
@@ -311,6 +310,7 @@
     </form>
   </div>
 </div>
+
 
 
        <!-- confirmation modal for add promotion -->
@@ -363,7 +363,8 @@
     <div id="details-modal" class="details-modal">
       <div class="details-modal-content">
           <span class="details-close">&times;</span>
-          <h3 id="details-title">Tourist Spot Details</h3>
+          <h3 id="details-title">Hotel Details</h3>
+          <p><strong style="color: white;">Category:</strong> <span id="details-category"  style="color: white;"></span></p>
           <p><strong style="color: white;">Name:</strong> <span id="details-name"  style="color: white;"></span></p>
           <p><strong style="color: white;">Number:</strong> <span id="details-number"  style="color: white;"></span></p>
           <p><strong style="color: white;">Email:</strong> <span id="details-email"  style="color: white;"></span></p>

@@ -13,6 +13,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+
+
 
 
 const firebaseConfig = {
@@ -29,15 +36,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
 let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
   window.location = "profile.html";
 });
-
-
-
 
 
 
@@ -98,6 +103,34 @@ localindustries.addEventListener("click", () => {
 });
 
 
+// Fetch and display admin name
+async function fetchAdminName(uid) {
+  try {
+    const adminDocRef = doc(db, "admin", uid); // Reference to admin document
+    const adminSnap = await getDoc(adminDocRef); // Fetch the document snapshot
+
+    if (adminSnap.exists()) {
+      const adminData = adminSnap.data();
+      const fullName = `${adminData.fname} ${adminData.lname}`;
+      document.getElementById("admin_name").textContent = fullName; // Update the DOM
+    } else {
+      console.error("No such document in the admin collection!");
+    }
+  } catch (error) {
+    console.error("Error fetching admin data:", error);
+  }
+}
+
+// Listen for authentication state changes
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // If the user is logged in, fetch their admin data
+    fetchAdminName(user.uid);
+  } else {
+    console.log("No user is signed in.");
+    document.getElementById("admin_name").textContent = "Guest"; // Optional default value
+  }
+});
 
 
 // Set the default selection to "Monthly" on page load
@@ -561,16 +594,51 @@ const eventsRef = collection(db, "festivals");
 const establishmentsRef = collection(db, "vigan_establishments");
 
 
-// // Counters
 
 
-// let localTourist = 0;
-// let foreignTourist = 0;
-// let totalTourist = 0;
-// let userCount = 0;
+// Function to update the dashboard
+async function updateDashboard() {
+  const currentDate = new Date().toISOString().split('T')[0]; // Get current date in yyyy-mm-dd format
+  const documentPath = `tourist_arrival_reports/daily/daily_reports/2024-12-10`; // Firestore document path ${currentDate}
 
+  console.log('Fetching data for date:', currentDate);
 
+  try {
+    // Fetch tourist data from Firestore
+    const touristDocRef = doc(db, documentPath);
+    const touristDoc = await getDoc(touristDocRef);
 
+    if (touristDoc.exists()) {
+      const data = touristDoc.data();
+      console.log('Tourist data:', data);
+
+      // Update the tourist statistics
+      document.getElementById('localTourist').textContent = data.localTourists || 0;
+      document.getElementById('foreignTourist').textContent = data.foreignTourists || 0;
+      document.getElementById('totalTourist').textContent = data.totalTourists || 0;
+    } else {
+      console.log('No data found for date:', currentDate);
+      // Default values if the document doesn't exist
+      document.getElementById('localTourist').textContent = 0;
+      document.getElementById('foreignTourist').textContent = 0;
+      document.getElementById('totalTourist').textContent = 0;
+    }
+
+    // Fetch user count from Firestore
+    const usersCollectionRef = collection(db, 'users');
+    const usersSnapshot = await getDocs(usersCollectionRef);
+    const userCount = usersSnapshot.size;
+    console.log('User count:', userCount);
+
+    document.getElementById('userCount').textContent = userCount || 0;
+
+  } catch (error) {
+    console.error('Error occurred while updating dashboard:', error);
+  }
+}
+
+// Call the function on page load
+updateDashboard();
 
 
 // // Update functions
@@ -991,38 +1059,69 @@ showSlides();
 setInterval(showSlides, 5000);
 
 
-// Get elements
-
-let logout = document.getElementById("logout");  // Make sure this is the correct element
+// Get the modal elements
+let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");
 let closeBtn = document.getElementsByClassName("close")[0];
 let confirmBtn = document.getElementById("confirmLogout");
 let cancelBtn = document.getElementById("cancelLogout");
+let logout = document.getElementById("logout");
 
-
-// Open the modal when the logout link is clicked
+// Show the logout modal when the logout button is clicked
 logout.addEventListener("click", (event) => {
-  event.preventDefault();  // Prevent default behavior of the link
-  modal.style.display = "block";  // Show the modal
+  event.preventDefault(); // Prevent default link behavior
+  modal.style.display = "block"; // Show the logout modal
 });
 
-
-// Close the modal when the close button is clicked
+// Close the modal when the "x" button is clicked
 closeBtn.onclick = function() {
-  modal.style.display = "none";  // Hide the modal
+  modal.style.display = "none"; // Hide the modal
 };
-
 
 // Close the modal when the cancel button is clicked
 cancelBtn.onclick = function() {
-  modal.style.display = "none";  // Hide the modal
+  modal.style.display = "none"; // Hide the modal
 };
 
-
-// Redirect to "index.html" when the user confirms the logout
+// Confirm logout when the user clicks "Yes, Log Out"
 confirmBtn.onclick = function() {
-  window.location = "index.html";  // Redirect to index.html on confirmation
+  // Clear session and localStorage data
+  localStorage.removeItem("ID");  // Remove user session data from localStorage
+  sessionStorage.clear();         // Clear all session data
+
+  // Redirect to the login page and prevent back navigation
+  window.location.href = "index.html";
+  history.pushState(null, null, window.location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
 };
+
+// Check if the user is logged out (by checking sessionStorage or localStorage)
+if (!sessionStorage.getItem("ID") && !localStorage.getItem("ID")) {
+  // Ensure user cannot navigate back to the page after logout
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+}
+
+// Prevent back navigation after logout
+window.addEventListener("load", function() {
+  window.history.forward();
+});
+
+// Prevent back navigation after logout
+window.onunload = function() {
+  null;
+};
+
+// Define the preventBack function
+function preventBack() {
+  window.history.forward();
+}
+
+// Call the preventBack function
+setTimeout(preventBack, 0);
 
 
 // Close the modal if the user clicks outside of it

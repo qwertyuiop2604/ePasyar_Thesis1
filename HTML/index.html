@@ -123,19 +123,25 @@
   </div>
        
 <!-- Error Modal -->
-<div id="errorModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 10px; color: white; max-width: 400px; width: 100%;">
-  <div style="padding: 20px; background-color: #333; border-radius: 10px;">
-    <p id="errorMessage" style="font-size: 16px; margin: 0;"></p>
-    <button id="closeBtn" style="margin-top: 20px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px;">Close</button>
+<div id="errorModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(51, 122, 183, 0.9); padding: 20px; border-radius: 10px; color: white; max-width: 400px; width: 100%; z-index: 1000;">
+  <div style="padding: 20px; background-color: #fff; border-radius: 10px; color: #333;">
+    <p id="errorMessage" style="font-size: 16px; margin: 0; color: #337ab7; font-weight: bold; text-align: center;"></p>
+    <button id="closeBtn" style="margin-top: 20px; padding: 10px 20px; background-color: #337ab7; color: white; border: none; border-radius: 5px; cursor: pointer; display: block; margin-left: auto; margin-right: auto;">Close</button>
   </div>
 </div>
 
-<div id="errorModal1" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 10px; color: white; max-width: 400px; width: 100%;">
-  <div style="padding: 20px; background-color: #333; border-radius: 10px;">
-    <p id="errorMessage1" style="font-size: 16px; margin: 0;"></p>
-    <button id="closeBtn1" style="margin-top: 20px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px;">Close</button>
+<!-- Error Modal 1 -->
+<div id="errorModal1" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(51, 122, 183, 0.9); padding: 20px; border-radius: 10px; color: white; max-width: 400px; width: 100%; z-index: 1100;">
+  <div style="padding: 20px; background-color: #fff; border-radius: 10px; color: #333;">
+    <!-- Updated message -->
+    <p id="errorMessage1" style="font-size: 16px; margin: 0; color: #337ab7; font-weight: bold; text-align: center;">
+      You cannot use the default password, use another password.
+    </p>
+    <button id="closeBtn1" style="margin-top: 20px; padding: 10px 20px; background-color: #337ab7; color: white; border: none; border-radius: 5px; cursor: pointer; display: block; margin-left: auto; margin-right: auto;">Close</button>
   </div>
 </div>
+
+
 
 
 

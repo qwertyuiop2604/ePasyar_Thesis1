@@ -69,39 +69,36 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
     });
   }
 
-  // FOR REGISTER FORM - ADD TO FIREBASE
   const formCreate = document.getElementById('create-form');
   const Name = document.getElementById('name');
-
   const Number = document.getElementById('number');
   const Email = document.getElementById('email');
-
   const Address = document.getElementById('address');
-
   const photos = document.getElementById('photos');
-
+  const category = document.getElementById('category');  // Category reference
+  
   if (formCreate) {
     formCreate.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (validateInputs([ Name, Number, Email, Address,  photos])) {
+  
+      // Ensure all fields are filled in, including category
+      if (validateInputs([Name, Number, Email, Address, photos, category])) {
         try {
           const photoFile = photos.files[0];
           const photoRef = ref(storage, `hotels/${photoFile.name}`);
           await uploadBytes(photoRef, photoFile);
           const photoURL = await getDownloadURL(photoRef);
-
+  
           await addDoc(collection(db, "vigan_establishments"), {
-            Category: "Hotel",
+            Category: category.value,  // Save selected category
             Name: Name.value,
-           
             Number: Number.value,
             Email: Email.value,
-          
             Address: Address.value,
-           
             PhotoURL: photoURL,
             Status: "H Shop Open"
           });
+  
           createPromotion.style.display = 'none';
           window.location.reload(); // Reload to refresh the table
         } catch (error) {
@@ -110,6 +107,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
       }
     });
   }
+  
 
   function validateInputs(inputs) {
     let isValid = true;
@@ -154,118 +152,118 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
     });
   }
 
-  // FOR EDIT FORM - UPDATE TO FIREBASE
   const formEdit = document.getElementById('edit-form');
-  const Name1 = document.getElementById('name1');
+const Name1 = document.getElementById('name1');
+const Number1 = document.getElementById('number1');
+const Email1 = document.getElementById('email1');
+const Address1 = document.getElementById('address1');
+const photos1 = document.getElementById('photos1');
+const category1 = document.getElementById('category1');  // Add category1 reference
 
-  const Number1 = document.getElementById('number1');
-  const Email1 = document.getElementById('email1');
+if (formEdit) {
+  formEdit.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  const Address1 = document.getElementById('address1');
+    // Ensure all fields are filled in, including category
+    if (validateInputs([Name1, Number1, Email1, Address1, photos1, category1])) {
+      try {
+        const userID = localStorage.getItem("ID");
+        const photoFile = photos1.files[0];
+        let photoURL;
 
-  const photos1 = document.getElementById('photos1');
-
-  if (formEdit) {
-    formEdit.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (validateInputs([ Name1, , Number1, Email1, Address1, photos1])) {
-        try {
-          const userID = localStorage.getItem("ID");
-          const photoFile = photos1.files[0];
-          let photoURL;
-          if (photoFile) {
-            const photoRef = ref(storage, `hotels/${photoFile.name}`);
-            await uploadBytes(photoRef, photoFile);
-            photoURL = await getDownloadURL(photoRef);
-          }
-
-          const updateData = {
-            Category: "Hotel",
-            Name: Name1.value,
-           
-            Number: Number1.value,
-            Email: Email1.value,
-            Address: Address1.value,
-        
-          };
-
-          if (photoFile) {
-            updateData.PhotoURL = photoURL;
-          }
-
-          await updateDoc(doc(db, "vigan_establishments", userID), updateData);
-          editPromotion.style.display = 'none'; // Close the edit form
-          window.location.reload(); // Reload to refresh the table
-        } catch (error) {
-          console.error("Error updating document: ", error);
+        if (photoFile) {
+          const photoRef = ref(storage, `hotels/${photoFile.name}`);
+          await uploadBytes(photoRef, photoFile);
+          photoURL = await getDownloadURL(photoRef);
         }
+
+        // Prepare data for updating, including the selected category
+        const updateData = {
+          Category: category1.value,  // Add the selected category here
+          Name: Name1.value,
+          Number: Number1.value,
+          Email: Email1.value,
+          Address: Address1.value,
+        };
+
+        // If there's a photo, add its URL to the update data
+        if (photoFile) {
+          updateData.PhotoURL = photoURL;
+        }
+
+        // Update the document in Firestore
+        await updateDoc(doc(db, "vigan_establishments", userID), updateData);
+
+        editPromotion.style.display = 'none'; // Close the edit form
+        window.location.reload(); // Reload to refresh the table
+      } catch (error) {
+        console.error("Error updating document: ", error);
       }
-      
-    });
-    
-  }
-// Additional event listeners and modal setups
-  // Make sure these are correctly added and closed.
+    }
+  });
+}
+
   
-  // Fetch documents from Firestore and assign to querySnapshot
-  async function fetchEstablishments() {
-    try {
-      const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
-      const tbody = document.getElementById('tbody1');
-  
-      querySnapshot.forEach(doc => {
-        if (doc.data().Status === "H Shop Open") {
-          const trow = document.createElement('tr');
-          trow.innerHTML = `
-            <td>${doc.data().Name}</td>
-                  <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
-                  
+// Fetch documents from Firestore and assign to querySnapshot
+async function fetchEstablishments() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "vigan_establishments"));
+    const tbody = document.getElementById('tbody1');
 
-            <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
-                 <td><button id="reviews_${doc.id}" class="reviews-btn">See Reviews</button></td> <!-- See Reviews Button -->
-          `;
-          tbody.appendChild(trow);
+    querySnapshot.forEach(doc => {
+      if (doc.data().Status === "H Shop Open") {
+        const trow = document.createElement('tr');
+        trow.innerHTML = `
+          <td>${doc.data().Name}</td>
 
-          trow.addEventListener('click', (e) => {
-            localStorage.setItem('ID', doc.id);
-            document.getElementById('name1').value = doc.data().Name;
-           
-            document.getElementById("email1").value = doc.data().Email;
-            document.getElementById("number1").value = doc.data().Number;
-            document.getElementById("address1").value = doc.data().Address;
-            highlightRow(trow);
-          });
+          <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
+          <td><button id="gen_qr_${doc.id}" class="gen-qr-btn">Generate QR</button></td>
+          <td><button id="reviews_${doc.id}" class="reviews-btn">See Reviews</button></td> <!-- See Reviews Button -->
+        `;
+        tbody.appendChild(trow);
 
-          const detailsBtn = document.getElementById(`details_${doc.id}`);
-          detailsBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              showDetailsModal(doc.data());
-          });
+        trow.addEventListener('click', (e) => {
+          localStorage.setItem('ID', doc.id);
+          document.getElementById("category1").value = doc.data().Category; 
+          document.getElementById('name1').value = doc.data().Name;
+          document.getElementById("email1").value = doc.data().Email;
+          document.getElementById("number1").value = doc.data().Number;
+          document.getElementById("address1").value = doc.data().Address;
+          // Set the category in the edit form
+          highlightRow(trow);
+        });
 
-          function showDetailsModal(data) {
-            document.getElementById("details-name").textContent = data.Name;
-            document.getElementById("details-number").textContent = data.Number;
-            document.getElementById("details-email").textContent = data.Email;
-            document.getElementById("details-address").textContent = data.Address;
-            document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+        const detailsBtn = document.getElementById(`details_${doc.id}`);
+        detailsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showDetailsModal(doc.data());
+        });
+
+        function showDetailsModal(data) {
+          document.getElementById("details-category").textContent = data.Category; // Add Category to modal
+          document.getElementById("details-name").textContent = data.Name;
+          document.getElementById("details-number").textContent = data.Number;
+          document.getElementById("details-email").textContent = data.Email;
+          document.getElementById("details-address").textContent = data.Address;
+          document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
+
+          const modal = document.getElementById("details-modal");
+          modal.style.display = "block";
         
-            const modal = document.getElementById("details-modal");
-            modal.style.display = "block";
-          
-            // Add blur effect to .main-container
-            toggledBlur(true);
-          
-            const closeBtn = modal.querySelector(".details-close");
-            closeBtn.onclick = () => {
+          // Add blur effect to .main-container
+          toggledBlur(true);
+        
+          const closeBtn = modal.querySelector(".details-close");
+          closeBtn.onclick = () => {
+            modal.style.display = "none";
+            toggledBlur(false); // Remove blur effect when closing modal
+          };
+        
+          // Close modal when clicking outside of it
+          window.onclick = function (event) {
+            if (event.target === modal) {
               modal.style.display = "none";
-              toggledBlur(false); // Remove blur effect when closing modal
-            };
-          
-            // Close modal when clicking outside of it
-            window.onclick = function (event) {
-              if (event.target === modal) {
-                modal.style.display = "none";
-                toggledBlur(false); // Remove blur effect when clicking outside of the modal
+              toggledBlur(false);   // Remove blur effect when clicking outside of the modal
               }
             };
           }
@@ -431,28 +429,69 @@ querySnap2.forEach((doc2) => {
 });
 
 
+// Get the modal elements
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");
 let closeBtn = document.getElementsByClassName("close")[0];
 let confirmBtn = document.getElementById("confirmLogout");
 let cancelBtn = document.getElementById("cancelLogout");
+let logout = document.getElementById("logout");
 
+// Show the logout modal when the logout button is clicked
 logout.addEventListener("click", (event) => {
   event.preventDefault(); // Prevent default link behavior
-  modal.style.display = "block"; // Show the modal
+  modal.style.display = "block"; // Show the logout modal
 });
 
+// Close the modal when the "x" button is clicked
 closeBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when the close button is clicked
+  modal.style.display = "none"; // Hide the modal
 };
 
+// Close the modal when the cancel button is clicked
 cancelBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+  modal.style.display = "none"; // Hide the modal
 };
 
+// Confirm logout when the user clicks "Yes, Log Out"
 confirmBtn.onclick = function() {
-  window.location = "index.html"; // Redirect to index.html on confirmation
+  // Clear session and localStorage data
+  localStorage.removeItem("ID");  // Remove user session data from localStorage
+  sessionStorage.clear();         // Clear all session data
+
+  // Redirect to the login page and prevent back navigation
+  window.location.href = "index.html";
+  history.pushState(null, null, window.location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
 };
+
+// Check if the user is logged out (by checking sessionStorage or localStorage)
+if (!sessionStorage.getItem("ID") && !localStorage.getItem("ID")) {
+  // Ensure user cannot navigate back to the page after logout
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+}
+
+// Prevent back navigation after logout
+window.addEventListener("load", function() {
+  window.history.forward();
+});
+
+// Prevent back navigation after logout
+window.onunload = function() {
+  null;
+};
+
+// Define the preventBack function
+function preventBack() {
+  window.history.forward();
+}
+
+// Call the preventBack function
+setTimeout(preventBack, 0);
 
 // Close the modal when clicking outside of it
 window.onclick = function(event) {

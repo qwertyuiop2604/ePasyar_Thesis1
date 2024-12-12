@@ -238,6 +238,19 @@
     <span class="close-modal">&times;</span>
     <h1 id="create-txt">Create a Local Dish</h1>
     <form id="create-form">
+      <label for="category"> Category</label>
+      <select id="category" name="category">
+        <option value="" disabled selected>Select a category</option>
+        <option value="crafts">Crafts</option>
+        <option value="sweets">Sweets</option>
+        <option value="vegetable">Vegetable</option>
+        <option value="meat">Meat</option>
+        <option value="drinks">Drinks</option>
+        <option value="condiments">Condiments</option>
+
+
+      </select>
+
       <label for="name"> Name</label>
       <input type="text" id="name" name="name" style="text-transform: lowercase;">
 
@@ -245,7 +258,7 @@
       <textarea id="description" name="description" style="text-transform: lowercase;"></textarea>
 
       <label for="place"> Place</label>
-      <textarea id="place" name="place" style="text-transform: lowercase;"></textarea>
+      <input id="place" name="place" style="text-transform: lowercase;"></input>
 
       <label for="photos"> Photos</label>
       <input type="file" id="photos" name="photos" accept="image/png, image/jpeg">
@@ -262,6 +275,18 @@
     <span class="close-modal-edit">&times;</span>
     <h1 id="edit-txt">Edit a Local Dish</h1>
     <form id="edit-form">
+      <label for="category1"> Category</label>
+      <select id="category1" name="category1">
+        <option value="" disabled selected>Select a category</option>
+        <option value="crafts">Crafts</option>
+        <option value="sweets">Sweets</option>
+        <option value="vegetable">Vegetable</option>
+        <option value="meat">Meat</option>
+        <option value="drinks">Drinks</option>
+        <option value="condiments">Condiments</option>
+
+      </select>
+
       <label for="name1"> Name</label>
       <input type="text" id="name1" name="name1" style="text-transform: lowercase;">
 
@@ -269,7 +294,7 @@
       <textarea id="description1" name="description1" style="text-transform: lowercase;"></textarea>
 
       <label for="place1"> Place</label>
-      <textarea id="place1" name="place1" style="text-transform: lowercase;"></textarea>
+      <input id="place1" name="place1" style="text-transform: lowercase;"></input>
 
       <label for="photos1"> Photos</label>
       <input type="file" id="photos1" name="photos1" accept="image/png, image/jpeg">
@@ -278,6 +303,7 @@
     </form>
   </div>
 </div>
+
 
 
     <!-- confirmation modal for add account -->
@@ -325,9 +351,10 @@
 </div>
 
   <div id="details-modal" class="details-modal">
-    <div class="details-modal-content">
+    <div class="details-modal-content"> 
         <span class="details-close">&times;</span>
         <h3 id="details-title">OTOP Details</h3>
+        <p><strong style="color: white;">Category:</strong> <span id="details-category" style="color: white;"></span></p>
         <p><strong style="color: white;">Name:</strong> <span id="details-name" style="color: white;"></span></p>
                <p><strong style="color: white;">Description:</strong> <span id="details-description" style="color: white;"></span></p>
   <p><strong style="color: white;">Place:</strong> <span id="details-place" style="color: white;"></span></p>

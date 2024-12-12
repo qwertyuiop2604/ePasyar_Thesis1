@@ -63,12 +63,14 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
+// JavaScript Section
+// Function to load table data
 async function loadTableData() {
   const tableBody = document.getElementById("tbody1");
 
   try {
     const querySnapshot = await getDocs(collection(db, "users")); 
-    tableBody.innerHTML = ""; 
+    tableBody.innerHTML = ""; // Clear previous rows
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -80,7 +82,7 @@ async function loadTableData() {
         <tr>
           <td>${fName}</td>
           <td>${totalPoints}</td>
-          <td>${Status}</td>  
+          <td><button id="gen_qr_${doc.id}" class="redeem-btn" data-doc-id="${doc.id}">Redeem Points</button></td>
         </tr>`;
       tableBody.innerHTML += row;
     });
@@ -103,11 +105,27 @@ async function loadTableData() {
   }
 }
 
-  // Call the function when the page loads
- document.addEventListener("DOMContentLoaded", loadTableData);
+// Function to redeem points and update the database
+async function redeemPoints(docId) {
+  try {
+    // Get the reference to the user's document in the Firestore collection
+    const userRef = doc(db, "users", docId);
 
+    // Update the points field to zero
+    await updateDoc(userRef, {
+      "points.totalPoints": 0, // Set points to zero
+      "pointsRedeemed": true    // Mark points as redeemed
+    });
 
- async function fetchAdminName() {
+    // Reload table data to reflect the updated points
+    loadTableData();
+  } catch (error) {
+    console.error("Error redeeming points:", error);
+  }
+}
+
+// Function to fetch admin name
+async function fetchAdminName() {
   try {
     const response = await fetch('admin');
     if (!response.ok) {
@@ -122,29 +140,75 @@ async function loadTableData() {
   }
 }
 
+// Call the function to load table data when the page loads
+document.addEventListener("DOMContentLoaded", loadTableData);
+
+// To fetch and display the admin name, if required
+fetchAdminName();
+
+// Get the modal elements
 let logoutModal = document.getElementById("logout");
 let modal = document.getElementById("logoutModal");
 let closeBtn = document.getElementsByClassName("close")[0];
 let confirmBtn = document.getElementById("confirmLogout");
 let cancelBtn = document.getElementById("cancelLogout");
+let logout = document.getElementById("logout");
 
+// Show the logout modal when the logout button is clicked
 logout.addEventListener("click", (event) => {
   event.preventDefault(); // Prevent default link behavior
-  modal.style.display = "block"; // Show the modal
+  modal.style.display = "block"; // Show the logout modal
 });
 
+// Close the modal when the "x" button is clicked
 closeBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when the close button is clicked
+  modal.style.display = "none"; // Hide the modal
 };
 
+// Close the modal when the cancel button is clicked
 cancelBtn.onclick = function() {
-  modal.style.display = "none"; // Hide the modal when cancel button is clicked
+  modal.style.display = "none"; // Hide the modal
 };
 
+// Confirm logout when the user clicks "Yes, Log Out"
 confirmBtn.onclick = function() {
-  window.location = "index.html"; // Redirect to index.html on confirmation
+  // Clear session and localStorage data
+  localStorage.removeItem("ID");  // Remove user session data from localStorage
+  sessionStorage.clear();         // Clear all session data
+
+  // Redirect to the login page and prevent back navigation
+  window.location.href = "index.html";
+  history.pushState(null, null, window.location.href);
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
 };
 
+// Check if the user is logged out (by checking sessionStorage or localStorage)
+if (!sessionStorage.getItem("ID") && !localStorage.getItem("ID")) {
+  // Ensure user cannot navigate back to the page after logout
+  window.onpopstate = function(event) {
+    history.go(1);
+  };
+}
+
+// Prevent back navigation after logout
+window.addEventListener("load", function() {
+  window.history.forward();
+});
+
+// Prevent back navigation after logout
+window.onunload = function() {
+  null;
+};
+
+// Define the preventBack function
+function preventBack() {
+  window.history.forward();
+}
+
+// Call the preventBack function
+setTimeout(preventBack, 0);
 // Close the modal when clicking outside of it
 window.onclick = function(event) {
   if (event.target === modal) {
