@@ -22,7 +22,10 @@ bckbtn.addEventListener('click', () => {
     window.location = 'promotion.html'
 })
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'

@@ -26,7 +26,10 @@ events.addEventListener('click', () => {
     window.location = 'events.html'
 })
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";

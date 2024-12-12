@@ -34,7 +34,10 @@ events.addEventListener("click", () => {
 
 
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {

@@ -80,7 +80,10 @@
     localindustries.addEventListener("click", () => {
       window.location = "industries.html";
     });
-    
+    let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
   });
 

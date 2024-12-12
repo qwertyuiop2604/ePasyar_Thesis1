@@ -493,6 +493,42 @@ label{
   background-color: #337ab7;
 }
 
+/* Modal Styles */
+.modal2 {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 40%;
+  top: 1%;
+  border-radius: 10px;
+  text-align: center;
+
+  padding-top: 60px;
+}
+
+.modal-content2 {
+  background-color: #337ab7;
+  color: white;
+  border-radius: 5px;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 
 textarea {

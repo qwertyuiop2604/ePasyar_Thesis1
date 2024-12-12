@@ -48,7 +48,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   setNavEventListener("localdishes", 'dishes.html');
   setNavEventListener("localindustries", 'industries.html');
 
-
+  let rewards = document.getElementById("reward");
+  rewards.addEventListener("click", () => {
+    window.location = "redeem.html";
+  });
   
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');

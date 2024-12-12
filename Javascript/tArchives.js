@@ -24,7 +24,10 @@ document.getElementById("events").addEventListener('click', () => {
   window.location = 'events.html';
 });
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 document.getElementById("otop").addEventListener("click", () => {
   window.location = "otop.html";

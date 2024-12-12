@@ -898,6 +898,46 @@ label{
   color: black;
   cursor: pointer;
 }
+/* Modal Styles */
+.modal1 {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 40%;
+  top: 15%;
+  width: 250px;
+  height: 330px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #337ab7;
+  padding-top: 60px;
+}
+
+.modal-content1 {
+  background-color: #fefefe;
+  border-radius: 5px;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modal-footer {
+  text-align: center;
+}
+
+.btn {
+  background-color: #F4D160;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+ 
+}
+
+.btn:hover {
+  background-color: #F4D160;
+}
 
 .modal {
   display: none; /* Hidden by default */

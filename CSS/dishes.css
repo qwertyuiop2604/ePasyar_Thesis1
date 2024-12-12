@@ -540,6 +540,24 @@ input {
   font-size: 14px;
   
 }
+#category{
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 16px;
+}
+#category1{
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 16px;
+}
 
 #input{
   display: block;

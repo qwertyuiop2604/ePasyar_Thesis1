@@ -61,7 +61,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   localindustries.addEventListener("click", () => {
     window.location = "industries.html";
   });
-
+  let rewards = document.getElementById("reward");
+  rewards.addEventListener("click", () => {
+    window.location = "redeem.html";
+  });
 
 });
 
@@ -526,4 +529,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
- 

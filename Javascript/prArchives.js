@@ -19,7 +19,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 
 document.getElementById("bckbtn").addEventListener('click', () => {
@@ -62,11 +65,11 @@ querySnap.forEach((doc) => {
   if (doc.data().status === "Deleted") {
     const trow = document.createElement("tr");
     trow.innerHTML = `
-      <td>${doc.data().deletedBy}</td>
+      <td>${doc.data().ArchivedBy}</td>
       <td>${doc.data().fname}</td>
        <td>${doc.data().lname}</td>
       <td>${doc.data().email}</td>
-      <td>${doc.data().deletedDate}</td>
+      <td>${doc.data().ArchivedDate}</td>
     `;
     archivedTbody.appendChild(trow);
     trow.addEventListener('click', () => {
@@ -125,58 +128,82 @@ querySnap2.forEach((doc2) => {
   });
 });
 
-
-// Event listener for permanently deleting an user
+// Event listener for permanently deleting a user
 document.getElementById('permanentlyDelete').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_delete').style.display = "block";
 });
-
 
 // Event listener for cancel button in delete confirmation modal
 document.getElementById('cnl_delete').addEventListener('click', () => {
   document.getElementById('cnfrm_modal_delete').style.display = "none";
 });
 
-
 // Event listener for confirm button in delete confirmation modal
 document.getElementById('cnfrm_delete').addEventListener('click', async () => {
-  const userId = localStorage.getItem("ID"); // Assume you store the user ID here
+  const userId = localStorage.getItem("ID"); // Ensure the user ID is stored in localStorage
 
+  if (!userId) {
+    showErrorModal("User ID not found. Please log in again.");
+    return;
+  }
 
   try {
     const docRef = doc(db, 'admin', userId);
-   
+
     // Fetch user data to get the UID before deleting
     const userDoc = await getDoc(docRef);
     if (!userDoc.exists()) {
       throw new Error("User does not exist in Firestore.");
     }
 
-
-    const userUID = userDoc.data().uid; // Adjust this according to your Firestore structure
-
+    const userUID = userDoc.data().uid; // Adjust according to your Firestore structure
 
     // Delete user from Firestore
     await deleteDoc(docRef);
-   
-    // Delete user from Firebase Authentication using UID
-    await deleteUser(auth.getUser(userUID))
-      .then(() => {
-        console.log("User deleted from Authentication");
-      })
-      .catch((error) => {
-        console.error("Error deleting user from Authentication: ", error);
-        alert("Error deleting user from Authentication: " + error.message);
-      });
 
+    // Get the current user from Firebase Authentication and delete them
+    const currentUser = auth.currentUser; // Get the current authenticated user
 
-    document.getElementById('cnfrm_modal_delete').style.display = "none"; // Close the modal on success
-    window.location = "prArchives.html"; // Redirect after deletion
+    if (currentUser && currentUser.uid === userUID) {
+      await deleteUser(currentUser);
+      console.log("User deleted from Authentication");
+    } else {
+      throw new Error("Authenticated user does not match the target user.");
+      
+    }    
+
+    // Close the modal on success
+    document.getElementById('cnfrm_modal_delete').style.display = "none";
+
+    // Redirect after deletion
+    window.location = "prArchives.html";
+    
   } catch (error) {
-    console.error("Error deleting document: ", error);
-    alert("Error deleting document: " + error.message); // Provide feedback to the user
+    console.error("Error deleting user:", error);
+    showErrorModal("Failed to delete user: " + error.message);
   }
+      window.location.reload();
 });
+
+// Function to show error modal with a message
+function showErrorModal(message) {
+  document.getElementById('errorMessage').textContent = message; // Set the error message
+  document.getElementById('errorModal').style.display = "block"; // Show the modal
+}
+
+// Close the error modal when the user clicks on <span> (x)
+document.getElementById('closeErrorModal').addEventListener('click', () => {
+  document.getElementById('errorModal').style.display = "none";
+});
+
+// Close the error modal if the user clicks outside the modal content
+window.addEventListener('click', (event) => {
+  if (event.target === document.getElementById('errorModal')) {
+    document.getElementById('errorModal').style.display = "none";
+  }
+ 
+});
+
 
 
 let logoutModal = document.getElementById("logout");

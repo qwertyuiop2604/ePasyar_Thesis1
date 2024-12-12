@@ -119,48 +119,27 @@
   /* Space between icon and text */
   font-size: 16px;
   color: black;
- 
+
 
 
 }
 
 
 
-
-
-
-
-
-/* Continue updating the rest */
 .card {
   background-color: aliceblue;
   border: 2px solid #337ab7;
   border-radius: 10px;
-  box-shadow: 5 85px 5px gainsboro;
-  margin: 5px;
-  font-size: 12px;
-  margin-left: 20px;
+  box-shadow: 5px 5px 5px gainsboro;
+  height: 90px;
+  font-size: 18px;
+  width: 210px;
   text-align: center;
+  margin-left: 1%;
   font-family: 'Poppins', sans-serif;
+
+
 }
-
-
-
-
-
-
-
-
-/* Similarly, update other font-family properties */
-
-
-
-
-
-
-
-
-
 
 .card h4,
 .card p {
@@ -170,17 +149,7 @@
   font-weight: 600;
 
 
-
-
-
-
-
-
 }
-
-
-
-
 
 
 
@@ -192,13 +161,8 @@
   margin-left: -10px;
   margin-top: 15px;
   font-family: 'Poppins', sans-serif;
-  color: white;
+
 }
-
-
-
-
-
 
 
 
@@ -208,32 +172,14 @@
 
 
 
-
-
-
-
-
-
-
-
-
 #dash_label {
   color: #337ab7;
   font-weight: bolder;
   font-size: 40px;
   padding: 5px;
 
-  background-color: whitesmoke;
-
-
-
-
 
 }
-
-
-
-
 
 
 
@@ -248,12 +194,6 @@
 }
 
 
-
-
-
-
-
-
 .dropdown-container {
   position: absolute;
   top: -60px;
@@ -265,33 +205,15 @@
 
 
 
-
-
-
-
-
 #dropdownMenu {
   margin-right: 65px;
 
 }
 
-
-
-
-
-
-
-
 #generateReport {
   margin-left: 80px;
 
 }
-
-
-
-
-
-
 
 
 #mostVisitedChart {
@@ -303,12 +225,6 @@
 }
 
 
-
-
-
-
-
-
 #touristSpotsChart {
   width: auto;
   height: 400px;
@@ -316,11 +232,6 @@
   background-color: #f9f9f9;
   /* Light background for better chart visibility */
 }
-
-
-
-
-
 
 
 
@@ -334,23 +245,12 @@
 }
 
 
-
-
-
-
-
-
 .btn-primary:hover {
   background-color: #337ab7;
   /* Darker blue on hover */
   border-color: #004085;
   /* Darker border on hover */
 }
-
-
-
-
-
 
 
 
@@ -361,12 +261,6 @@
 }
 
 
-
-
-
-
-
-
 .dropdown-container {
   color: #337ab7;
 
@@ -374,22 +268,10 @@
 }
 
 
-
-
-
-
-
-
 .dropdown-container a {
   text-decoration: none;
   color: #337ab7;
 }
-
-
-
-
-
-
 
 
 .sidebar-list-item1 button {
@@ -429,28 +311,9 @@ a {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .dropdown-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-
-
-
-
-
-
 
 
 .con-lic:hover {
@@ -458,33 +321,14 @@ a {
 }
 
 
-
-
-
-
-
-
 .main {
   margin-left: 200px;
   font-size: 20px;
 }
 
-
-
-
-
-
-
-
 .dropdown-container {
   padding-left: 8px;
 }
-
-
-
-
-
-
 
 
 .sidebar-responsive {
@@ -499,22 +343,10 @@ a {
 }
 
 
-
-
-
-
-
-
 .dropdown-btn {
   display: flex;
   align-items: center;
 }
-
-
-
-
-
-
 
 
 .dropdown-btn i {
@@ -523,22 +355,10 @@ a {
 }
 
 
-
-
-
-
-
-
 .con-lic {
   display: flex;
   align-items: center;
 }
-
-
-
-
-
-
 
 
 .con-lic i {
@@ -547,42 +367,14 @@ a {
 }
 
 
-
-
-
-
-
-
 .main-container {
 
   padding: 20px 20px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 table tr {
   padding: 4px;
 }
-
-
-
-
-
-
-
 
 th,
 tr,
@@ -590,13 +382,6 @@ td {
   padding: 7px;
   text-align: left;
 }
-
-
-
-
-
-
-
 
 .btn_useracc button {
   border: none;
@@ -612,22 +397,9 @@ td {
 }
 
 
-
-
-
-
-
-
 .btn_useracc {
   display: flex;
 }
-
-
-
-
-
-
-
 
 .con-lic,
 .con-mv {
@@ -638,41 +410,19 @@ td {
 
 }
 
-
-
-
-
-
-
-
 .con-lic:hover,
 .con-mv:hover {
   background-color: gainsboro;
   color: #337ab7;
 }
 
-
-
-
-
-
-
-
 .dropdown-container.show {
   display: block;
 }
 
 
-
-
-
-
-
-
 body {
   font-family: 'Poppins', sans-serif;
-
-
 
 }
 
@@ -685,26 +435,7 @@ body {
   font-family: 'Poppins', sans-serif;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
 
 
 
@@ -719,11 +450,6 @@ h4 {
 
 
 
-
-
-
-
-
   font-size: 14px;
   font-weight: bold;
 
@@ -731,19 +457,7 @@ h4 {
 
 
 
-
-
-
-
-
 p {
-
-
-
-
-
-
-
 
   font-size: 16px;
 
@@ -759,13 +473,6 @@ p {
 }
 
 
-
-
-
-
-
-
-
 .sidenav {
   position: fixed;
   height: 100vh;
@@ -775,12 +482,6 @@ p {
   color: black;
   font-size: 14px;
 }
-
-
-
-
-
-
 
 
 h1 {
@@ -796,21 +497,6 @@ h1 {
 #search-btn {
   text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #search-bar {
   text-align: center;
@@ -835,32 +521,15 @@ button {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media screen and (max-width: 1000px) {
   .column {
     width: 1000px;
     border: #337ab7;
     display: block;
+    
 
   }
 }
-
-
-
-
 
 
 .row:after {
@@ -875,30 +544,16 @@ button {
   /* Ensure wrapping on smaller screens */
 }
 
-
-
-
-
-
-
-
 .column {
   float: left;
   width: 20%;
   padding: 0;
+  margin-left: 4%;
   flex: 1 1 calc(25% - 16px);
   /* Adjust to 4 columns, including gap */
   max-width: calc(25% - 16px);
 
-
 }
-
-
-
-
-
-
-
 
 .div {
   font-size: 14px;
@@ -916,24 +571,9 @@ tr th {
 }
 
 
-
-
-
-
-
-
-
-
 .icon-heading {
   font-size: 14px;
 }
-
-
-
-
-
-
-
 
 .count {
   font-size: 14px;
@@ -944,37 +584,15 @@ tr th {
 }
 
 
-
-
-
-
-
-
 #mostVisitedChart {
   width: 1500px;
 
 }
 
-
-
-
 #chart-container {
   width: 100%;
   overflow-x: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .header {
   grid-area: header;
@@ -995,13 +613,6 @@ tr th {
 /* ---------- SIDEBAR ---------- */
 
 
-
-
-
-
-
-
-
 .sidebar-title {
   display: flex;
   justify-content: space-between;
@@ -1011,20 +622,9 @@ tr th {
 }
 
 
-
-
-
-
-
-
 .sidebar-title>span {
   display: none;
 }
-
-
-
-
-
 
 
 
@@ -1036,11 +636,6 @@ tr th {
 
 
 
-
-
-
-
-
 .sidebar-list {
   padding: 0;
   margin-top: 15px;
@@ -1049,32 +644,15 @@ tr th {
 
 
 
-
-
-
-
-
 .sidebar-list-item {
   padding: 20px 15px 20px 20px;
 }
-
-
-
-
-
-
 
 
 .sidebar-list-item:hover {
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
-
-
-
-
-
-
 
 
 .sidebar-list>a {
@@ -1087,12 +665,6 @@ tr th {
   padding: 10px 20px 10px 10px;
   display: none;
 }
-
-
-
-
-
-
 
 
 /* Main content */
@@ -1112,19 +684,6 @@ tr th {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .sidebar-responsive {
   display: inline !important;
   position: absolute;
@@ -1135,7 +694,7 @@ tr th {
 
 /* ---------- MAIN ---------- */
 .col-sm-9 {
-  background-color: white;
+
   height: 100%;
   position: fixed;
 
@@ -1144,7 +703,7 @@ tr th {
 
 .main-container {
   grid-area: main;
-  background-color: white;
+
   height: 100%;
   position: fixed;
   grid-area: main;
@@ -1191,12 +750,6 @@ td {
 }
 
 
-
-
-
-
-
-
 tr th,
 tr th {
   background-color: gainsboro;
@@ -1211,11 +764,6 @@ tr th {
 .table tr:hover {
   background: gainsboro;
 }
-
-
-
-
-
 
 
 
@@ -1244,27 +792,9 @@ tr th {
 }
 
 
-
-
-
-
-
-
 .valid-input {
   border: 3px solid green;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1313,13 +843,6 @@ tr th {
     display: inline;
   }
 }
-
-
-
-
-
-
-
 
 
 @media only screen and (max-width: 1200px) {
@@ -1439,21 +962,6 @@ label {
   display: flex;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .modal {
   display: none;
   /* Hidden by default */
@@ -1524,3 +1032,76 @@ label {
   font-size: 16px;
   margin-top: 0;
 }
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  width: 1000px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.slide {
+  display: none;
+  position: relative;
+
+}
+
+.slide img {
+  width: 900px;
+  
+  margin-top: 10px;
+  height: 400px;
+  margin-left: 2%;
+ 
+}
+
+
+.event-details {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 900px;
+  color: #ffffff;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.event-title {
+  font-size: 1.8em;
+  margin: 0;
+}
+
+.event-description {
+  font-size: 1.2em;
+}
+
+.event-date {
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+/* Navigation buttons */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.prev {
+  left: 0;
+
+}
+
+.next {
+  right: 0;
+  margin-right: 5%;
+}
+

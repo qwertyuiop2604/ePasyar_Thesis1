@@ -59,7 +59,10 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 
 // FINAL

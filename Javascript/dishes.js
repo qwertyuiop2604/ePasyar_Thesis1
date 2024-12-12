@@ -45,7 +45,10 @@ tourist.addEventListener("click", () => {
   window.location = "tourist.html";
 });
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
@@ -83,13 +86,14 @@ closePop.addEventListener('click', () => {
 // FOR REGISTER FORM - ADD TO FIREBASE
 const formCreate = document.getElementById("create-form");
 
+const category = document.getElementById("category");
 const name = document.getElementById("name");
 const description = document.getElementById("description");
 const photos = document.getElementById('photos');
 
 formCreate.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([ name, description, photos])) {
+  if (validateInputs([category, name, description, photos])) {
     try {
       const photoFile = photos.files[0];
       const photoRef = ref(storage, `local_dishes/${photoFile.name}`);
@@ -97,6 +101,7 @@ formCreate.addEventListener('submit', async (e) => {
       const photoURL = await getDownloadURL(photoRef);
 
       await addDoc(collection(db, "local_dishes"), {
+        Category: category.value, // Add category field
         Name: name.value,
         Description: description.value,
         PhotoURL: photoURL,
@@ -109,6 +114,7 @@ formCreate.addEventListener('submit', async (e) => {
     }
   }
 });
+
 
 function validateInputs(inputs) {
   let isValid = true;
@@ -152,13 +158,14 @@ cPop.addEventListener('click', () => {
 
 // FOR EDIT FORM - UPDATE TO FIREBASE
 const formEdit = document.getElementById("edit-form");
+const category1 = document.getElementById("category1"); // Reference to category dropdown in edit form
 const name1 = document.getElementById("name1");
 const description1 = document.getElementById("description1");
 const photos1 = document.getElementById('photos1');
 
 formEdit.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (validateInputs([name1, description1, photos1])) {
+  if (validateInputs([category1, name1, description1, photos1])) {
     try {
       const userID = localStorage.getItem("ID");
       const photoFile = photos1.files[0];
@@ -170,13 +177,13 @@ formEdit.addEventListener('submit', async (e) => {
       }
 
       const updateData = {
+        Category: category1.value, // Include the updated category
         Name: name1.value,
         Description: description1.value,
-        PhotoURL: photoURL // Update the PhotoURL if a new photo is uploaded
       };
 
       if (photoFile) {
-        updateData.PhotoURL = photoURL;
+        updateData.PhotoURL = photoURL; // Update the PhotoURL if a new photo is uploaded
       }
 
       await updateDoc(doc(db, "local_dishes", userID), updateData);
@@ -196,29 +203,32 @@ async function fetchEstablishments() {
 
     querySnapshot.forEach(doc => {
       if (doc.data().Status === "not done") {
+        const data = doc.data();
         const trow = document.createElement('tr');
         trow.innerHTML = `
-          <td>${doc.data().Name}</td>
+         
+          <td>${data.Name}</td>
           <td><button id="details_${doc.id}" class="details-btn">Show Details</button></td> <!-- Show Details Button -->
         `;
         tbody.appendChild(trow);
 
         trow.addEventListener('click', (e) => {
           localStorage.setItem('ID', doc.id);
-          document.getElementById('name1').value = doc.data().Name;
-          document.getElementById("description1").value = doc.data().Description;
+          document.getElementById('category1').value = data.Category || ''; // Populate Category field in edit form
+          document.getElementById('name1').value = data.Name;
+          document.getElementById("description1").value = data.Description;
 
           highlightRow(trow);
-
         });
 
         const detailsBtn = document.getElementById(`details_${doc.id}`);
         detailsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          showDetailsModal(doc.data());
+          showDetailsModal(data);
         });
 
         function showDetailsModal(data) {
+          document.getElementById("details-category").textContent = data.Category;
           document.getElementById("details-name").textContent = data.Name;
           document.getElementById("details-description").textContent = data.Description;
           document.getElementById("details-photo").src = data.PhotoURL || "default_image_url_here"; // Add a default image URL if PhotoURL is not available
@@ -258,6 +268,7 @@ async function fetchEstablishments() {
     console.error("Error fetching documents: ", error);
   }
 }
+
 
 fetchEstablishments();
 

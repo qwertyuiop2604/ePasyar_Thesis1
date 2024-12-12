@@ -32,7 +32,10 @@ let events = document.getElementById("events");
 events.addEventListener("click", () => {
   window.location = "events.html";
 });
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {

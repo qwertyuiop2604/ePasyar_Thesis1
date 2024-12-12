@@ -65,7 +65,10 @@ localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
 
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 
 
 // Create Account Form Popup
@@ -85,17 +88,17 @@ closePop.addEventListener("click", () => {
 });
 
 
-// Register Form - Add to Firebase
 const formCreate = document.getElementById("create-form");
 const fname = document.getElementById("fname");
 const lname = document.getElementById("lname");
 const email = document.getElementById("email");
-// const position = document.getElementById("position");
 const em_no = document.getElementById("em_no");
-const btnRegister = document.getElementById("btnRegister"); // Add this line to get the register button
+const btnRegister = document.getElementById("btnRegister");
 
+const modal1 = document.getElementById("verification-modal");
+const modalMessage = document.getElementById("modal-message");
+const closeModalBtn = document.getElementById("close-modal");
 
-// Register Form - Add to Firebase
 btnRegister.addEventListener("click", async (e) => {
   e.preventDefault();
   if (
@@ -104,23 +107,19 @@ btnRegister.addEventListener("click", async (e) => {
     email.value === "" ||
     em_no.value === ""
   ) {
-    alert("All fields are required.");
+    showModal("All fields are required.");
     return;
   }
 
-
-  // Create the initial password using last name and employee number
   let password;
   if (lname.value && em_no.value) {
     password = `${lname.value.toLowerCase()}_${em_no.value}`;
   } else {
-    alert("Last name and employee number are required to generate a password.");
+    showModal("Last name and employee number are required to generate a password.");
     return;
   }
 
-
   try {
-    // Create the user with the generated password
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email.value,
@@ -128,9 +127,7 @@ btnRegister.addEventListener("click", async (e) => {
     );
     const user = userCredential.user;
 
-
-    // Set initial status to "Pending" and firstLogin to true
-    await setDoc(doc(db,"admin", user.uid), {
+    await setDoc(doc(db, "admin", user.uid), {
       fname: fname.value,
       lname: lname.value,
       email: email.value,
@@ -139,21 +136,28 @@ btnRegister.addEventListener("click", async (e) => {
       firstLogin: true,
     });
 
-
-    // Send email verification
     await sendEmailVerification(user);
-    alert(
+    showModal(
       "Account created. Verification email sent. Please verify your email to activate your account."
     );
-
 
     createAcc.style.display = "none";
     window.location.reload();
   } catch (error) {
     console.error("Error during registration:", error.message);
-    alert(error.message);
+    showModal(error.message);
   }
 });
+
+function showModal(message) {
+  modalMessage.textContent = message;
+  modal1.style.display = "block";
+}
+
+closeModalBtn.addEventListener("click", () => {
+  modal1.style.display = "none";
+});
+
 
 
 

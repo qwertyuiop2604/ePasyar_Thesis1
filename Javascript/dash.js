@@ -71,24 +71,17 @@ let souvenir = document.getElementById("souvenir");
 souvenir.addEventListener("click", () => {
   window.location = "souvenir.html";
 });
-let souvenirs = document.getElementById("souvenirs");
-souvenirs.addEventListener("click", () => {
-  window.location = "souvenir.html";
+
+
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
 });
-
-
-
-
-
 
 let restaurant = document.getElementById("restaurant");
 restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
 });
-
-
-
-
 
 
 let otop = document.getElementById("otop");
@@ -568,113 +561,101 @@ const eventsRef = collection(db, "festivals");
 const establishmentsRef = collection(db, "vigan_establishments");
 
 
-// Counters
+// // Counters
 
 
-let eventsCount = 0;
-let hotelCount = 0;
-let touristCount = 0;
-let restoCount = 0;
-let souvenirCount = 0;
-
-
-
-
-// Update functions
-
-
-const updateEventsCountElement = (count) => {
-  const eventsCountElement = document.getElementById("eventsCount");
-  if (eventsCountElement) {
-    eventsCountElement.textContent = `${count}`;
-  }
-};
-
-
-const updateHotelCountElement = (count) => {
-  const hotelCountElement = document.getElementById("hotelCount");
-  if (hotelCountElement) {
-    hotelCountElement.textContent = `${count}`;
-  }
-};
-
-
-const updateTouristCountElement = (count) => {
-  const touristCountElement = document.getElementById("touristCount");
-  if (touristCountElement) {
-    touristCountElement.textContent = `${count}`;
-  }
-};
-
-
-const updateRestoCountElement = (count) => {
-  const restoCountElement = document.getElementById("restoCount");
-  if (restoCountElement) {
-    restoCountElement.textContent = `${count}`;
-  }
-};
-
-
-const updateSouvenirCountElement = (count) => {
-  const souvenirCountElement = document.getElementById("souvenirCount");
-  if (souvenirCountElement) {
-    souvenirCountElement.textContent = `${count}`;
-  }
-};
+// let localTourist = 0;
+// let foreignTourist = 0;
+// let totalTourist = 0;
+// let userCount = 0;
 
 
 
 
 
-
-// Snapshot handlers
-const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
-  const filteredDocs = snapshot.docs.filter(doc => doc.data().Category === Category);
-  const count = filteredDocs.length;
-  updateFunction(count);
-};
+// // Update functions
 
 
-// Specific handlers for each category
-const handleHotelsSnapshot = (snapshot) => {
-  handleEstablishmentsSnapshot(snapshot, "Hotel", updateHotelCountElement);
-};
+// const updatelocalTouristtElement = (count) => {
+//   const localTouristElement = document.getElementById("localTourist");
+//   if (localTouristtElement) {
+//     localTouristCountElement.textContent = `${count}`;
+//   }
+// };
 
 
-const handleTouristSnapshot = (snapshot) => {
-  handleEstablishmentsSnapshot(snapshot, "Tourist Spot", updateTouristCountElement);
-};
+// const updateforeignTouristElement = (count) => {
+//   const foreignTouristElement = document.getElementById("foreignTourist");
+//   if (foreignTouristElement) {
+//     foreignTouristElement.textContent = `${count}`;
+//   }
+// };
 
 
-const handleRestoSnapshot = (snapshot) => {
-  handleEstablishmentsSnapshot(snapshot, "Restaurant", updateRestoCountElement);
-};
+// const updatetotalTouristElement = (count) => {
+//   const totalTouristtElement = document.getElementById("totalTourist");
+//   if (totalTouristElement) {
+//     totalTouristElement.textContent = `${count}`;
+//   }
+// };
 
 
-const handleSouvenirSnapshot = (snapshot) => {
-  handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
-};
+// const updateuserCountElement = (count) => {
+//   const userCountElement = document.getElementById("userCount");
+//   if (userCountElement) {
+//     userCountElement.textContent = `${count}`;
+//   }
+// };
 
 
-const handleEventsSnapshot = (snapshot) => {
-  eventsCount = snapshot.docs.length;
-  updateEventsCountElement(eventsCount);
-};
+// // Snapshot handlers
+// const handleEstablishmentsSnapshot = (snapshot, Category, updateFunction) => {
+//   const filteredDocs = snapshot.docs.filter(doc => doc.data().Category === Category);
+//   const count = filteredDocs.length;
+//   updateFunction(count);
+// };
 
 
-onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
-  console.error("Error fetching events:", error);
-});
+// // Specific handlers for each category
+// const handleHotelsSnapshot = (snapshot) => {
+//   handleEstablishmentsSnapshot(snapshot, "Hotel", updateHotelCountElement);
+// };
 
 
-onSnapshot(establishmentsRef, (snapshot) => {
-  handleHotelsSnapshot(snapshot);
-  handleTouristSnapshot(snapshot);
-  handleRestoSnapshot(snapshot);
-  handleSouvenirSnapshot(snapshot);
-}, (error) => {
-  console.error("Error fetching establishments:", error);
-});
+// const handleTouristSnapshot = (snapshot) => {
+//   handleEstablishmentsSnapshot(snapshot, "Tourist Spot", updateTouristCountElement);
+// };
+
+
+// const handleRestoSnapshot = (snapshot) => {
+//   handleEstablishmentsSnapshot(snapshot, "Restaurant", updateRestoCountElement);
+// };
+
+
+// const handleSouvenirSnapshot = (snapshot) => {
+//   handleEstablishmentsSnapshot(snapshot, "Souvenir Shop", updateSouvenirCountElement);
+// };
+
+
+// const handleEventsSnapshot = (snapshot) => {
+//   eventsCount = snapshot.docs.length;
+//   updateEventsCountElement(eventsCount);
+// };
+
+
+// onSnapshot(eventsRef, handleEventsSnapshot, (error) => {
+//   console.error("Error fetching events:", error);
+// });
+
+
+// onSnapshot(establishmentsRef, (snapshot) => {
+//   handleHotelsSnapshot(snapshot);
+//   handleTouristSnapshot(snapshot);
+//   handleRestoSnapshot(snapshot);
+//   handleSouvenirSnapshot(snapshot);
+// }, (error) => {
+//   console.error("Error fetching establishments:", error);
+// });
 
 
 
@@ -976,49 +957,38 @@ document.getElementById("generatePDFScan").addEventListener("click", async funct
   }
 });
 
-async function loadTableData() {
-  const tableBody = document.getElementById("tbody1");
+let slideIndex = 0;
 
-  try {
-    const querySnapshot = await getDocs(collection(db, "users")); 
-    tableBody.innerHTML = ""; 
-
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const fName = data.fName || "Unknown"; 
-      const totalPoints = data.points?.totalPoints || 0; 
-      const Status = data.pointsRedeemed ? "Redeemed" : "Not Redeemed";  // Check the pointRedeemed field
-
-      const row = `
-        <tr>
-          <td>${fName}</td>
-          <td>${totalPoints}</td>
-          <td>${Status}</td>  
-        </tr>`;
-      tableBody.innerHTML += row;
-    });
-
-    // Add event listeners to dynamically created buttons
-    const redeemButtons = document.querySelectorAll('.redeem-btn');
-    redeemButtons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        const docId = event.target.getAttribute('data-doc-id');
-        redeemPoints(docId); // Call redeemPoints when button is clicked
-      });
-    });
-
-    if (querySnapshot.empty) {
-      tableBody.innerHTML = "<tr><td colspan='3'>No data available</td></tr>";
-    }
-  } catch (error) {
-    console.error("Error loading table data:", error);
-    tableBody.innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
+// Function to show the slides
+function showSlides() {
+  const slides = document.getElementsByClassName("slide");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none"; // Hide all slides
   }
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1; // Reset to the first slide
+  }
+  slides[slideIndex - 1].style.display = "block"; // Show the current slide
 }
 
-  // Call the function when the page loads
- document.addEventListener("DOMContentLoaded", loadTableData);
+// Function to control the next and previous slides
+function plusSlides(n) {
+  slideIndex += n;
+  const slides = document.getElementsByClassName("slide");
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  } else if (slideIndex < 1) {
+    slideIndex = slides.length;
+  }
+  showSlides();
+}
 
+// Initial call to show the first slide
+showSlides();
+
+// Set interval to automatically change the slide every 5 seconds
+setInterval(showSlides, 5000);
 
 
 // Get elements

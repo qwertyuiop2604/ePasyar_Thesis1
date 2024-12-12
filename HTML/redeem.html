@@ -5,11 +5,16 @@
   <title>Dashboard Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/rArchives.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/redeem.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
+
+  
+
   <style>
     .row.content {
       height: 400px
@@ -55,22 +60,20 @@
             font-size: 18px;
         }
 
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        
+
         #cal-date {
             margin-right: 10px;
         }
   .sidenav {
     background-color: gainsboro;
-      border-color: black;
-      border-radius: 3px;
-      height: 100vh;
-      /* Full viewport height */
-      width: auto;
-      position: fixed;
-      /* Keep the sidenav fixed on the left */
-      top: 0;
-      left: 0;
-     
-      /* Allow scrolling within the sidenav */
+    border-color: black;
+    border-radius: 3px;
+    height: 115vh;    width: 260px;
   }
 
   .main-container {
@@ -92,12 +95,14 @@
     width: 100%;
     table-layout: fixed;
   }
+
     @media screen and (max-width: 100px) {
       .row.content {
         height: auto;
       }
     }
-    </style>
+  </style>
+
 </head>
 
 <body>
@@ -131,10 +136,10 @@
 
             </a>
             <ul class="dropdown-menu">
-              <li ><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-              <li  ><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-              <li ><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-              <li class="active"><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+              <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+              <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+              <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+              <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
             </ul>
           </li>
           <!-- Local Features Dropdown -->
@@ -149,7 +154,7 @@
               <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
             </ul>
           </li>
-          <li>
+          <li  class="active">
             <a href="#section12" id="reward">
               <i class="fas fa-gift"></i> Rewards
             </a>
@@ -161,11 +166,9 @@
           </li>
         </ul>
         <br>
-      </div>
+
     
     </div>
-
-
         <div id="logoutModal" class="modal" style="margin-left: 350px; top: -25%; ">
           <div class="modal-content" style="background-color: #337ab7; 
           color: white; border-radius: 16px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
@@ -190,119 +193,56 @@
             </button>
           </div>
         </div>
-       
-  
-        <main class="main-container"  id="blur">
-
-          <div class="main2">
-            <div class="btn_useracc">
-              <button id="bckbtn"><i class="fas fa-arrow-left"></i> BACK </button>
-              <button class="enable_acc" id="enabled"><i class="fas fa-undo"></i> RETRIEVE </button>
-              <!-- <button class="enable_acc" id="permanentlyDelete"><i class="fas fa-trash-alt"></i> DELETE </button> -->
-              
-              
-            </div>
-
-                <div class="outer-wrapper">
-                <div class="table-wrapper">
-                <table id="table" class="table" style="width:100%; margin-left: 1%;">
-                    <tr>
-                        
-                      <th>Archived By</th>
-                       
-                      <th>Name</th>  
-                      <th>Owner</th> 
-                      <th>Contact Number</th> 
-                      <th>Location</th>   
-                      <th>Poster</th>              
-                      <th>Archived On</th>
-                    </tr>
-                <tbody id="archived-tbody"></tbody>                                                       
-                </table>
-            </div>
-            </div>
-            </div>
-            
-          </main>
-        </div>
-          <!-- End Main --> 
-
-          <div id="cnfrm_modal_enable" class="modal" style="margin-left: 350px; top: -25%; ">
-            <div class="modal-content" style="background-color: #337ab7; 
-                color: white; border-radius: 16px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
-                width: 90%; max-width: 400px; text-align: center; position: relative; transform: scale(0.95); ">
+     
+          <div class="outer-wrapper">
+            <div class="table-wrapper">
+              <table id="table" class="table" style="width:100%; margin-left: 1%;">
+                <tr>
+                  <th>Name</th>
+                  <th>Redeem Points</th>
+                  <th>Status</th>
+                </tr>
+                <tbody id="tbody1"></tbody>
                 
-              <span class="close" style="color: white; font-size: 28px; font-weight: bold; position: absolute; top: 16px; right: 20px; cursor: pointer;">&times;</span>
-              
-              <div style="margin-bottom: 20px;">
-                <i class="fas fa-check-circle" style="font-size: 60px; color: white;"></i>
-              </div>
-              
-              <h2 style="margin-bottom: 16px; font-family: 'Arial', sans-serif; font-size: 20px;">Are you sure you want to enable this event?</h2>
-              
-              <button id="cnfrm" 
-                      style="background-color: white; color: #337ab7; border: none; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
-                  Confirm
-              </button>
-              
-              <button id="cnl" 
-                      style="background-color: transparent; color: white; border: 2px solid white; padding: 12px 24px; border-radius: 24px; cursor: pointer; font-size: 16px; font-weight: bold; margin-left: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
-                  Cancel
-              </button>
-            </div>
-          </div>
-          
-
-<div class="cnfrm_modal" id="cnfrm_modal_delete">
-  <h1>Are you sure you want to Permanently Delete Restaurant?</h1>
-  <div class="btn">
-    <button id="cnl_delete">Cancel</button>
-    <button id="cnfrm_delete">Confirm</button>
-  </div>
-</div>
-
-    
-    <script type="text/javascript">   
-  
-  
-              var popup = document.getElementById('cnfrm_modal_enable');
-              popup.classList;
+              </table>
+             
         
+      </main>
+    </div>
+    
+    
 
-        const searchAppID = () => {
-            let filter =  document.getElementById('srchText').value.toUpperCase();
-            let mytable = document.getElementById('tbody1');
-            let tr = mytable.getElementsByTagName('tr');
-  
-            for(var i=0; i<tr.length; i++){
-                let td = tr[i].getElementsByTagName('td')[0];
-                let td2 = tr[i].getElementsByTagName('td')[1]; 
-                let td3 = tr[i].getElementsByTagName('td')[2]; 
-                let td4 = tr[i].getElementsByTagName('td')[3]; 
-                let td5 = tr[i].getElementsByTagName('td')[4]; 
-  
-                if (td || td2 || td3 || td4 || td5){  
-  
-                    let textvalue = td.textContent || td.innerHTML;
-                    let textvalue2 = td2.textContent || td2.innerHTML;
-                    let textvalue3 = td3.textContent || td3.innerHTML;
-                    let textvalue4 = td4.textContent || td4.innerHTML;
-                    let textvalue5 = td5.textContent || td5.innerHTML;
-  
-                    if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 || textvalue3.toUpperCase().indexOf(filter) > -1 || textvalue4.toUpperCase().indexOf(filter) > -1 || textvalue5.toUpperCase().indexOf(filter) > -1){
-                        tr[i].style.display = '';
-                    }
-                    else{
-                        tr[i].style.display = 'none';
-                    }
-                }
-            }
+
+
+  <script>
+    const searchAppID = () => {
+      let filter = document.getElementById('srchText').value.toUpperCase();
+      let mytable = document.getElementById('tbody1');
+      let tr = mytable.getElementsByTagName('tr');
+
+      for (let i = 0; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[0];
+        let td2 = tr[i].getElementsByTagName('td')[1];
+        let td3 = tr[i].getElementsByTagName('td')[2];
+
+        if (td && td2 && td3) {
+          let textvalue = td.textContent.toUpperCase() || td.innerHTML;
+          let textvalue2 = td2.textContent.toUpperCase() || td2.innerHTML;
+          let textvalue3 = td3.textContent.toUpperCase() || td3.innerHTML;
+
+          if (textvalue.indexOf(filter) > -1 || textvalue2.indexOf(filter) > -1 || textvalue3.indexOf(filter) > -1) {
+            tr[i].style.display = '';
+          } else {
+            tr[i].style.display = 'none';
+          }
         }
-  
-    </script>
+      }
+    }
+
+  </script>
 
 
-      <script type="module" src="/Javascript/rArchives.js"></script>
+  <script type="module" src="/Javascript/redeem.js"></script>
 </body>
 
 </html>

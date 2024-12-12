@@ -164,60 +164,74 @@
 
 <body>
 
-
-
-
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav hidden-xs">
-        <h2 id="dash-logo"><img src="/image/logo-vigan-removebg-preview.png" alt="index" width="55" height="55"
-            class="center-image">
-          ePasyar</h2>
+        <h2 id="dash-logo">
+          <img src="/image/logo-vigan-removebg-preview.png" alt="index" width="55" height="55" class="center-image">
+          ePasyar
+        </h2>
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#section1" id="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="#section2" id="profile"><i class="far fa-user"></i> Account Management</a></li>
-          <li><a href="#section12" id="events"><i class="fas fa-calendar-alt"></i> Events</a></li>
-          <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
-          <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
-          <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
-          <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
-          <!-- <li class="sidebar-list-item1">
-            <button class="dropdown-btn"> <i class="fas fa-star"></i> Reviews <i class="fa fa-caret-down"></i></button>
-            <div class="dropdown-container">
-              <a href="rev_tourist.html">
-                <div class="con-lic">
-                  <i class="fas fa-map-marker-alt"> </i> Tourist Spots
-                </div>
-              </a>
-              <a href="rev_hotel.html">
-                <div class="con-lic">
-                  <i class="fas fa-hotel"> </i> Hotels
-                </div>
-              </a>
-              <a href="rev_souvenir.html">
-                <div class="con-lic">
-                  <i class="fas fa-shopping-bag"> </i> Souvenir Shops
-                </div>
-              </a>
-              <a href="rev_restaurant.html">
-                <div class="con-lic">
-                  <i class="fas fa-utensils"></i> Restaurant
-                </div>
-              </a>
-            </div>
-          </li> -->
-          <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
-          <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
-          <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+          <li class="active">
+            <a href="#section1" id="dashboard">
+              <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#section2" id="profile">
+              <i class="far fa-user"></i> Account Management
+            </a>
+          </li>
+          <li>
+            <a href="#section12" id="events">
+              <i class="fas fa-calendar-alt"></i> Events
+            </a>
+          </li>
+          <!-- Explore Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-cogs"></i> Manage <span class="caret" style="margin-left: 47%;"></span>
 
 
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#section13" id="tourist"><i class="fas fa-map-marked"></i> Tourist Spots</a></li>
+              <li><a href="#section3" id="promotion"><i class="fas fa-hotel"></i> Hotels</a></li>
+              <li><a href="#section13" id="souvenir"><i class="fas fa-shopping-bag"></i> Souvenir Shops</a></li>
+              <li><a href="#section4" id="restaurant"><i class="fas fa-utensils"></i> Restaurant</a></li>
+            </ul>
+          </li>
+          <!-- Local Features Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-leaf"></i> Local Features <span class="caret" style="margin-left: 24%;"></span>
 
-
-
-          <li><a href="#section11" id="logout"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
-        </ul><br>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#section41" id="localdishes"><i class="fas fa-utensils"></i> Local Dishes</a></li>
+              <li><a href="#section44" id="localindustries"><i class="fas fa-industry"></i> Local Industries</a></li>
+              <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#section12" id="reward">
+              <i class="fas fa-gift"></i> Rewards
+            </a>
+          </li>
+          
+          <li>
+            
+            <a href="#section11" id="logout">
+              <i class="fas fa-sign-out-alt"></i> Log out
+            </a>
+          </li>
+          
+        </ul>
+        <br>
       </div>
-
+    </div>
+  </div>
+  
 
 
 
@@ -253,67 +267,98 @@
         </div>
       </div>
 
-
-
-
-<div>
-
-      <p class="font-weight-bold" id="dash_label" style="margin-left: 21.5%;"> DASHBOARD</p>
-    </div>
-
-
-
-
-
-
+      
+      <div style="display: flex; align-items: center; margin-left: 21.5%;">
+        <p class="font-weight-bold" id="dash_label" style="margin-right: auto;">DASHBOARD</p>
+        <span id="admin_name" style=" font-size: 18px; font-weight: bold;"></span>
+        <i class="fas fa-user-circle" style="font-size: 34px; margin-left: 5px; margin-right: 20px; cursor: pointer;" title="Profile"></i>
+      </div>
+      
 
 
     <div class="col-sm-9">
       <div class="row">
 
         <div class="column">
-          <div class="card">
-            <h4 id="eventS"><i class="fas fa-calendar"></i> Events</h4>
-            <p id="eventsCount">0</p>
+          <div class="card" style="gap:5%;">
+            <h4 id="local"><i class="fas fa-users" ></i> Local Tourist</h4>
+            <p id="localTourist">0</p>
           </div>
         </div>
+        
+        <div class="column">
+          <div class="card">
+            <h4 id="foreign"><i class="fas fa-plane"></i> Foreign Tourist</h4>
+            <p id="foreignTourist">0</p>
+          </div>
+        </div>
+        
+        <div class="column">
+          <div class="card">
+            <h4 id="total"><i class="fas fa-chart-line"></i> Total Tourist</h4>
+            <p id="totalTourist">0</p>
+          </div>
+        </div>
+        
 
-
-
+       
 
         <div class="column">
           <div class="card">
-            <h4 id="hOtels"><i class="fas fa-bed"></i> Hotels</h4>
-            <p id="hotelCount">0</p>
-          </div>
-        </div>
+            <h4 id="users"><i class="fas fa-users"></i> Total Users</h4>
 
-        <div class="column">
-          <div class="card">
-            <h4 id="tourists"><i class="fas fa-map-marker-alt"></i> Tourist Spots</h4>
-            <p id="touristCount">0</p>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <h4 id="resto"><i class="fas fa-utensils"></i> Restaurants</h4>
-            <p id="restoCount">0</p>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <h4 id="souvenirs"><i class="fas fa-gift"></i> Souvenir Shops</h4>
-            <p id="souvenirCount">0</p>
+            
+            <p id="userCount">0</p>
           </div>
         </div>
 
 
       </div>
 
-
-
+      <div class="slideshow-container">
+        <!-- Slide 1 -->
+      
+      
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img src="/image/Artes Ita Pascua, Lantern and Torch Parade.jpg" alt="Image 1"> <!-- The image path includes the folder name -->
+          <div class="event-details">
+            <h3 class="event-title">Artes Ita Pascua, Lantern and Torch Parade</h3>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="/image/Raniag, The Vigan City Twilight Festival.JPG" alt="Image 2"> <!-- The image path includes the folder name -->
+          <div class="event-details">
+            <h3 class="event-title">Raniag, The Vigan City Twilight Festival</h3>
+          </div>
+        </div>
+      
+      
+        <div class="slide">
+          <img src="/image/Unesco World Heritage Cities Solidarity Cultural Festival.JPG" alt="Image 3"> <!-- The image path includes the folder name -->
+          <div class="event-details">
+            <h3 class="event-title">Unesco World Heritage Cities Solidarity Cultural Festival</h3>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="/image/Vigan City Fiesta.jpg" alt="Image 4"> <!-- The image path includes the folder name -->
+          <div class="event-details">
+            <h3 class="event-title">Vigan City Fiesta</h3>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="/image/Viva Vigan Binatbatan Festival of The Arts.jpg" alt="Image 5"> <!-- The image path includes the folder name -->
+          <div class="event-details">
+            <h3 class="event-title">Viva Vigan Binatbatan Festival of The Arts</h3>
+          </div>
+        </div>
+      
+      
+        <!-- Navigation buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+      
 
       <div class="col-sm-4">
         <div class="well" style="position: relative;">
@@ -483,18 +528,7 @@
                   style="width:100%; max-width:7000px; height:400px; margin-top:10px;"></canvas>
               </div>
 
-<div class="table-wrapper" style="margin-top: 50px; margin-right: -20px; margin-left: -20px; border: 1px solid black;  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); width: 924px;">
-  <table id="table" class="table" style="width: 990px; border-collapse: collapse;">
-    <thead>
-      <tr>
-        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Name</th>
-        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Points</th>
-        <th style="background-color: #337ab7; color: white; padding: 12px; border: 2px solid #337ab7;">Redeem Status</th>
-      </tr>
-    </thead>
-    <tbody id="tbody1"></tbody>
-  </table>
-</div>
+
 
 
 

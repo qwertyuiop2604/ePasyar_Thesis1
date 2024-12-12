@@ -21,7 +21,10 @@ let bck = document.getElementById("bckbtn");
 bck.addEventListener('click', () => {
     window.location = 'souvenir.html'
 })
-
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'

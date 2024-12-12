@@ -51,6 +51,10 @@ restaurant.addEventListener("click", () => {
   window.location = "restaurants.html";
 });
 
+let rewards = document.getElementById("reward");
+rewards.addEventListener("click", () => {
+  window.location = "redeem.html";
+});
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {
   window.location = "otop.html";
@@ -98,6 +102,7 @@ formCreate.addEventListener('submit', async (e) => {
       const photoURL = await getDownloadURL(photoRef);
 
       await addDoc(collection(db, "otop"), {
+        
         Name: name.value,
         Description: description.value,
         Place: place.value,
