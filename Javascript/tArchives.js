@@ -40,7 +40,10 @@ document.getElementById("localdishes").addEventListener("click", () => {
 document.getElementById("localindustries").addEventListener("click", () => {
   window.location = "industries.html";
 });
-
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 // Fetch archived data and populate the table
 (async () => {
   const archivedTbody = document.getElementById("archived-tbody");

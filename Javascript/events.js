@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   rewards.addEventListener("click", () => {
     window.location = "redeem.html";
   });
+  let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 
 });
 

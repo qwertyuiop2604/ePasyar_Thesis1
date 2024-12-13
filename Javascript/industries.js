@@ -28,6 +28,10 @@ let dash = document.getElementById("dash");
 dash.addEventListener("click", () => {
   window.location = "dash.html";
 });
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 let profile = document.getElementById("profile");
 profile.addEventListener("click", () => {
   window.location = "profile.html";

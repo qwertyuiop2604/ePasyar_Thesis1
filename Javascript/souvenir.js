@@ -38,6 +38,10 @@ let promotion = document.getElementById("promotion");
 promotion.addEventListener("click", () => {
   window.location = "promotion.html";
 });
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 let events = document.getElementById("events");
 events.addEventListener("click", () => {
   window.location = "events.html";

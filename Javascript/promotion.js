@@ -52,7 +52,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
   rewards.addEventListener("click", () => {
     window.location = "redeem.html";
   });
-  
+  let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
   // CREATE FORM POPUP
   const createPromotion = document.getElementById('user-create');
   const openPop = document.querySelector('.add_acc');

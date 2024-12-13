@@ -62,6 +62,10 @@ let localindustries = document.getElementById("localindustries");
 localindustries.addEventListener("click", () => {
   window.location = "industries.html";
 });
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 
 // JavaScript Section
 // Function to load table data

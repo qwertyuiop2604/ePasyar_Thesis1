@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
-
-
-
-
-
 <head>
-  <title>Dashboard Panel</title>
+  <title>Statistics Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/CSS/dash.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/table.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -172,8 +165,8 @@
           ePasyar
         </h2>
         <ul class="nav nav-pills nav-stacked">
-          <li class="active">
-            <a href="#section1" id="dashboard">
+          <li >
+            <a href="#section1" id="dash">
               <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
           </li>
@@ -213,11 +206,12 @@
               <li><a href="#section42" id="otop"><i class="fas fa-store"></i> OTOP</a></li>
             </ul>
           </li>
-          <li >
+          <li class="active">
             <a href="#section12" id="graph">
               <i class="fas fa-chart-line"></i> Statistics
             </a>
           </li>
+          
           <li>
             <a href="#section12" id="reward">
               <i class="fas fa-gift"></i> Rewards
@@ -273,106 +267,116 @@
       </div>
 
       
-      <div style="display: flex; align-items: center; margin-left: 21.5%;">
-        <p class="font-weight-bold" id="dash_label" style="margin-right: auto;">DASHBOARD</p>
-
-        
-        <span id="admin_name" style=" font-size: 18px; font-weight: bold;"></span>
-        <i class="fas fa-user-circle" style="font-size: 34px; margin-left: 5px; margin-right: 20px; cursor: pointer;" title="Profile"></i>
-      </div>
-      
-
-
-    <div class="col-sm-9">
-      <div class="row">
-
-        <div class="column">
-          <div class="card" style="gap:5%;">
-            <h4 id="local"><i class="fas fa-users" ></i> Local Tourist</h4>
-            <p id="localTourist">0</p>
-          </div>
-        </div>
-        
-        <div class="column">
-          <div class="card">
-            <h4 id="foreign"><i class="fas fa-plane"></i> Foreign Tourist</h4>
-            <p id="foreignTourist">0</p>
-          </div>
-        </div>
-        
-        <div class="column">
-          <div class="card">
-            <h4 id="total"><i class="fas fa-chart-line"></i> Total Tourist</h4>
-            <p id="totalTourist">0</p>
-          </div>
-        </div>
-        
-
-       
-
-        <div class="column">
-          <div class="card">
-            <h4 id="users"><i class="fas fa-users"></i> Total Users</h4>
-
-            
-            <p id="userCount">0</p>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div class="slideshow-container">
-        <!-- Slide 1 -->
+   
       
       
-        <!-- Slide 2 -->
-        <div class="slide">
-          <img src="/image/Artes Ita Pascua, Lantern and Torch Parade.jpg" alt="Image 1"> <!-- The image path includes the folder name -->
-          <div class="event-details">
-            <h3 class="event-title">Artes Ita Pascua, Lantern and Torch Parade</h3>
+
+      <div class="col-sm-4">
+        <div class="well" style="position: relative;">
+          <a href="#sec1">
+            <p class="fas fa-globe" id="visited"> TOURIST ARRIVAL REPORT </p>
+
+          </a>
+
+          <button id="generatePDF"
+            style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 40%;">
+            Generate PDF Report
+          </button>
+
+
+
+
+          <!-- Loading Modal -->
+          <div id="loadingModalPdf"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+            <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center;">
+              <p>Generating PDF file, please wait...</p>
+              <div class="spinner"
+                style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; margin: 0 auto; animation: spin 1s linear infinite;">
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="slide">
-          <img src="/image/Raniag, The Vigan City Twilight Festival.JPG" alt="Image 2"> <!-- The image path includes the folder name -->
-          <div class="event-details">
-            <h3 class="event-title">Raniag, The Vigan City Twilight Festival</h3>
-          </div>
-        </div>
-      
-      
-        <div class="slide">
-          <img src="/image/Unesco World Heritage Cities Solidarity Cultural Festival.JPG" alt="Image 3"> <!-- The image path includes the folder name -->
-          <div class="event-details">
-            <h3 class="event-title">Unesco World Heritage Cities Solidarity Cultural Festival</h3>
-          </div>
-        </div>
-        <div class="slide">
-          <img src="/image/Vigan City Fiesta.jpg" alt="Image 4"> <!-- The image path includes the folder name -->
-          <div class="event-details">
-            <h3 class="event-title">Vigan City Fiesta</h3>
-          </div>
-        </div>
-        <div class="slide">
-          <img src="/image/Viva Vigan Binatbatan Festival of The Arts.jpg" alt="Image 5"> <!-- The image path includes the folder name -->
-          <div class="event-details">
-            <h3 class="event-title">Viva Vigan Binatbatan Festival of The Arts</h3>
-          </div>
-        </div>
-      
-      
-        <!-- Navigation buttons -->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-      </div>
-      
+
+    
+
+<div class="dropdown" style="position: relative; display: inline-block;">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="true">
+    <span id="selectedOption">Monthly</span> <!-- Default is set to "Monthly" -->
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" id="menuContent">
+    <li><a href="#" data-type="Daily">Daily</a></li>
+    <li><a href="#" data-type="Monthly">Monthly</a></li>
+    <li><a href="#" data-type="Yearly">Yearly</a></li>
+  </ul>
+</div>
 
 
 
 
 
+          <canvas id="mostVisitedChart" style="width:100%; max-width:7000px; height:400px;"></canvas>
 
-              <script type="module" src="/Javascript/dash.js"></script>
+
+
+
+          <div class="col-sm-4">
+            <div class="well" style="position: relative;  margin-top:60px; margin-bottom:10px; margin-left: -32px;">
+              <a href="#sec1">
+                <p class="fas fa-map-marker-alt" id="visited1"> NUMBER OF TOURISTS SPOT VISITORS </p>
+
+
+
+              </a>
+
+
+              <button id="generatePDFScan"
+                style="background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px;  cursor: pointer;  margin-left: 30%;">
+                Generate PDF Report
+              </button>
+
+
+              <div class="dropdown" style="position: relative; display: inline-block;">
+                <button class="btn btn-default dropdown-toggle1" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true">
+                  <span id="selectedMonth"> </span> <!-- Initially empty, will be updated with selected month -->
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="menuContent">
+                  <li><a href="#" data-type="January" onclick="handleMonthDropdownClick(event, 'January')">January</a>
+                  </li>
+                  <li><a href="#" data-type="February"
+                      onclick="handleMonthDropdownClick(event, 'February')">February</a></li>
+                  <li><a href="#" data-type="March" onclick="handleMonthDropdownClick(event, 'March')">March</a></li>
+                  <li><a href="#" data-type="April" onclick="handleMonthDropdownClick(event, 'April')">April</a></li>
+                  <li><a href="#" data-type="May" onclick="handleMonthDropdownClick(event, 'May')">May</a></li>
+                  <li><a href="#" data-type="June" onclick="handleMonthDropdownClick(event, 'June')">June</a></li>
+                  <li><a href="#" data-type="July" onclick="handleMonthDropdownClick(event, 'July')">July</a></li>
+                  <li><a href="#" data-type="August" onclick="handleMonthDropdownClick(event, 'August')">August</a></li>
+                  <li><a href="#" data-type="September"
+                      onclick="handleMonthDropdownClick(event, 'September')">September</a></li>
+                  <li><a href="#" data-type="October" onclick="handleMonthDropdownClick(event, 'October')">October</a>
+                  </li>
+                  <li><a href="#" data-type="November"
+                      onclick="handleMonthDropdownClick(event, 'November')">November</a></li>
+                  <li><a href="#" data-type="December"
+                      onclick="handleMonthDropdownClick(event, 'December')">December</a></li>
+                </ul>
+              </div>
+
+
+
+
+
+              <div id="chart-container" style="width: 100%; overflow-x: auto;">
+                <canvas id="touristSpotsChart"
+                  style="width:100%; max-width:7000px; height:400px; margin-top:10px;"></canvas>
+              </div>
+
+
+
+              <script type="module" src="/Javascript/table.js"></script>
             </div>
           </div>
         </div>

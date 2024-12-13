@@ -1,0 +1,1045 @@
+
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+  
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  
+  .well {
+    margin-left: 260px; /* Match the sidebar width */
+    margin-top: 20px; /* Add space at the top */
+   
+    border-radius: 4px; /* Optional rounded corners */
+    width: 920px;
+    height: 500px;
+  
+    font-family: 'Poppins', sans-serif;
+  }
+  .sidenav h2,
+  .sidenav a {
+    color: white;
+  }
+  
+  .nav-pills>li>a {
+    color: black;
+  }
+  
+
+  .nav-pills>li.active>a,
+  .nav-pills>li.active>a:focus {
+    background-color: #337ab7;
+    color: white;
+  }
+  
+  .nav-pills>li.active>a:hover {
+    background-color: #337ab7;
+    color: white;
+  }
+  
+  .fa,
+  .fas,
+  .far {
+    color: #337ab7;
+    font-size: 18px;
+  }
+  
+  
+  
+  #visited {
+    margin-right: 8px;
+    /* Space between icon and text */
+    font-size: 16px;
+    color: black;
+  
+  
+  
+  }
+  
+  #visited1 {
+    margin-right: 8px;
+    /* Space between icon and text */
+    font-size: 16px;
+    color: black;
+  
+  
+  
+  }
+  
+  
+  
+  .card {
+    background-color: aliceblue;
+    border: 2px solid #337ab7;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px gainsboro;
+    height: 90px;
+    font-size: 18px;
+    width: 210px;
+    text-align: center;
+    margin-left: 1%;
+    font-family: 'Poppins', sans-serif;
+  
+  
+  }
+  
+  .card h4,
+  .card p {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+  
+  
+  }
+  
+  
+  
+
+  
+  
+  .hamburger-menu {
+    display: block;
+  }
+  
+  
+  
+  #dash_label {
+    color: #337ab7;
+    font-weight: bolder;
+    font-size: 40px;
+    padding: 5px;
+  
+  
+  }
+  
+  
+  
+  
+  .chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    /* Adjust as needed */
+    margin-top: 20px;
+    /* Space above the chart */
+  }
+  
+  
+  .dropdown-container {
+    position: absolute;
+    top: -60px;
+    /* Adjust to position the dropdown and button above the chart */
+    left: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
+  #dropdownMenu {
+    margin-right: 65px;
+  
+  }
+  
+  #generateReport {
+    margin-left: 80px;
+  
+  }
+  
+  
+  #mostVisitedChart {
+    width: auto;
+    height: 400px;
+    /* Adjust height as needed */
+    background-color: #f9f9f9;
+    /* Light background for better chart visibility */
+  }
+  
+  
+  #touristSpotsChart {
+    width: auto;
+    height: 400px;
+    /* Adjust height as needed */
+    background-color: #f9f9f9;
+    /* Light background for better chart visibility */
+  }
+  
+  
+  
+  .btn-primary {
+    background-color: #337ab7;
+    /* Attractive blue color */
+    border-color: #337ab7;
+    /* Match button border with color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
+  }
+  
+  
+  .btn-primary:hover {
+    background-color: #337ab7;
+    /* Darker blue on hover */
+    border-color: #004085;
+    /* Darker border on hover */
+  }
+  
+  
+  
+  .btn-primary:focus,
+  .btn-primary:active {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    /* Focus shadow */
+  }
+  
+  
+  .dropdown-container {
+    color: #337ab7;
+  
+    display: none;
+  }
+  
+  
+  .dropdown-container a {
+    text-decoration: none;
+    color: #337ab7;
+  }
+  
+  
+  .sidebar-list-item1 button {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    color: #337ab7;
+    display: block;
+    border: 9px;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .container-fluid {
+    font-size: 14px;
+  
+    font-family: 'Poppins', sans-serif;
+  
+  }
+  
+  .container-fluid:hover {
+    font-size: 18px;
+  
+    font-family: 'Poppins', sans-serif;
+  
+  }
+  
+  ul,
+  li,
+  a {
+    color: #337ab7;
+  }
+  
+  
+  
+  .dropdown-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  
+  .con-lic:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  
+  .main {
+    margin-left: 200px;
+    font-size: 20px;
+  }
+  
+  .dropdown-container {
+    padding-left: 8px;
+  }
+  
+  
+  .sidebar-responsive {
+    display: inline !important;
+    position: absolute;
+    z-index: 12 !important;
+  }
+  
+  .icon-spacing {
+    margin-right: 10px;
+    /* Adjust the value as needed */
+  }
+  
+  
+  .dropdown-btn {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .dropdown-btn i {
+    margin-right: 5px;
+    /* Space between the star icon and the text */
+  }
+  
+  
+  .con-lic {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .con-lic i {
+    margin-right: 10px;
+    /* Space between the icons and the text */
+  }
+  
+  
+  .main-container {
+  
+    padding: 20px 20px;
+  }
+  
+  table tr {
+    padding: 4px;
+  }
+  
+  th,
+  tr,
+  td {
+    padding: 7px;
+    text-align: left;
+  }
+  
+  .btn_useracc button {
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 100px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(223, 217, 217);
+    cursor: pointer;
+  }
+  
+  
+  .btn_useracc {
+    display: flex;
+  }
+  
+  .con-lic,
+  .con-mv {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  
+  }
+  
+  .con-lic:hover,
+  .con-mv:hover {
+    background-color: gainsboro;
+    color: #337ab7;
+  }
+  
+  .dropdown-container.show {
+    display: block;
+  }
+  
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+  
+  }
+  
+  body {
+    display: block;
+  }
+  
+  #row-content {
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+  
+  
+  }
+  
+  
+  
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 50px;
+    font-weight: bolder;
+    color: #337ab7;
+  }
+  
+  h4 {
+  
+  
+  
+    font-size: 14px;
+    font-weight: bold;
+  
+  }
+  
+  
+  
+  p {
+  
+    font-size: 16px;
+  
+    font-family: 'Poppins', sans-serif;
+  
+  }
+  
+  #dash-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 37px;
+    font-weight: bold;
+    color: #337ab7;
+  }
+  
+  
+  .sidenav {
+    position: fixed;
+    height: 100vh;
+    width: 200px;
+    /* Adjust width as necessary */
+    height: auto;
+    color: black;
+    font-size: 14px;
+  }
+  
+  
+  h1 {
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .mybutton {
+    text-align: center;
+    margin: 1px;
+  }
+  
+  #search-btn {
+    text-align: center;
+  }
+  
+  #search-bar {
+    text-align: center;
+    width: 250px;
+  }
+  
+  #admin-name {
+    font-size: 15px;
+    padding: 4px 2px;
+  }
+  
+  .label {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .div {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  button {
+    text-align: center;
+  }
+  
+  
+  @media screen and (max-width: 1000px) {
+    .column {
+      width: 1000px;
+      border: #337ab7;
+      display: block;
+      
+  
+    }
+  }
+  
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    justify-content: space-between;
+    /* Space evenly */
+    gap: 16px;
+    /* Space between columns */
+    flex-wrap: wrap;
+    /* Ensure wrapping on smaller screens */
+  }
+  
+  .column {
+    float: left;
+    width: 20%;
+    padding: 0;
+    margin-left: 4%;
+    flex: 1 1 calc(25% - 16px);
+    /* Adjust to 4 columns, including gap */
+    max-width: calc(25% - 16px);
+  
+  }
+  
+  .div {
+    font-size: 14px;
+  }
+  
+  tr th,
+  tr th {
+    background-color: gainsboro;
+    size: 10px;
+  }
+  
+  .mybutton {
+    color: #F4D160;
+  
+  }
+  
+  
+  .icon-heading {
+    font-size: 14px;
+  }
+  
+  .count {
+    font-size: 14px;
+  }
+  
+  #touristSpotsChart {
+    width: auto;
+  }
+  
+  
+  #mostVisitedChart {
+    width: 1500px;
+  
+  }
+  
+  #chart-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .header {
+    grid-area: header;
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu-icon {
+    display: none;
+  }
+  
+  
+  /* ---------- SIDEBAR ---------- */
+  
+  
+  .sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px 0px 25px;
+    margin-bottom: 30px;
+  }
+  
+  
+  .sidebar-title>span {
+    display: none;
+  }
+  
+  
+  
+  .sidebar-brand {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  
+  
+  .sidebar-list {
+    padding: 0;
+    margin-top: 15px;
+    list-style-type: none;
+  }
+  
+  
+  
+  .sidebar-list-item {
+    padding: 20px 15px 20px 20px;
+  }
+  
+  
+  .sidebar-list-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+  
+  
+  .sidebar-list>a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  #sidebar ul ul li {
+    list-style: none;
+    padding: 10px 20px 10px 10px;
+    display: none;
+  }
+  
+  
+  /* Main content */
+  .main {
+    margin-left: 200px;
+    /* Same as the width of the sidenav */
+    font-size: 16px;
+    /* Increased text to enable scrolling */
+    /* padding: 0px 10px; */
+  }
+  
+  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+  .dropdown-container {
+    display: none;
+    padding-left: 8px;
+  }
+  
+  
+  
+  .sidebar-responsive {
+    display: inline !important;
+    position: absolute;
+  
+    z-index: 12 !important;
+  }
+  
+  
+  /* ---------- MAIN ---------- */
+  .col-sm-9 {
+  
+    height: 100%;
+    position: fixed;
+  
+    padding-top: 20px;
+  }
+  
+  .main-container {
+    grid-area: main;
+  
+    height: 100%;
+    position: fixed;
+    grid-area: main;
+  
+  
+  
+  }
+  
+  .main-title {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .main-title>p {
+    font-size: 20px;
+  }
+  
+  table tr {
+    padding: 4px;
+  }
+  
+  th,
+  tr,
+  td {
+    padding: 7px;
+    text-align: left;
+  }
+  
+  .btn_useracc button {
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 100px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(223, 217, 217);
+    cursor: pointer;
+  }
+  
+  .btn_useracc {
+    display: flex;
+  }
+  
+  
+  tr th,
+  tr th {
+    background-color: gainsboro;
+  
+  }
+  
+  .table tr:not(:first-child) {
+    cursor: pointer;
+    background-color: #f2f2f23b;
+  }
+  
+  .table tr:hover {
+    background: gainsboro;
+  }
+  
+  
+  
+  .selected-row {
+    background-color: #337ab7 !important;
+    color: white;
+  }
+  
+  #srchText {
+    outline: none;
+    border: 1px solid grey;
+    width: 350px;
+    height: 30px;
+    font-size: 15px;
+    align-items: end;
+    margin-left: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-left: 5px;
+    text-transform: uppercase;
+    /* margin-bottom: 10px; */
+  }
+  
+  .invalid-input {
+    border: 3px solid red;
+  }
+  
+  
+  .valid-input {
+    border: 3px solid green;
+  }
+  
+  
+  
+  
+  .btn1 button {
+    padding: 4px;
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    cursor: pointer;
+    border: 1px solid grey;
+    color: black;
+  }
+  
+  #cnl {
+    margin-left: 60%;
+  }
+  
+  .grid-container#blur.active {
+    filter: blur(10px);
+    pointer-events: none;
+    user-select: none;
+  }
+  
+  /* Medium <= 992px */
+  @media screen and (max-width: 992px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+      grid-template-rows: 0.2fr 3fr;
+      grid-template-areas:
+        "header"
+        "main";
+    }
+  
+    #sidebar {
+      display: none;
+    }
+  
+    .menu-icon {
+      display: inline;
+      cursor: pointer;
+    }
+  
+    .sidebar-title>span {
+      display: inline;
+    }
+  }
+  
+  
+  @media only screen and (max-width: 1200px) {
+    body {
+      overflow-y: hidden;
+      /* Hide vertical scrollbar */
+      overflow-x: hidden;
+      /* Hide horizontal scrollbar */
+    }
+  
+    .outer-wrapper {
+      margin: 10px;
+      margin-left: -1px;
+      width: 100%;
+      max-width: fit-content;
+      max-height: fit-content;
+  
+  
+    }
+  
+    .table-wrapper {
+  
+      overflow-y: scroll;
+      overflow-x: scroll;
+      height: fit-content;
+      max-height: 66.4vh;
+      margin-top: 22px;
+      margin: 15px;
+      padding-bottom: 20px;
+  
+    }
+  
+    .content-table {
+      max-width: 200%;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    }
+  }
+  
+  .fa,
+  .fas,
+  .far {
+    color: #184267;
+    font-size: 16px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .container-modal {
+    background-color: #337ab7;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  label {
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .btn button {
+    padding: 4px;
+    width: 100px;
+    outline: none;
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: var(--blueButton);
+    color: white;
+  }
+  
+  .btn {
+    display: flex;
+  }
+  
+  .modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 600px;
+    /* Full width */
+    height: 650px;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    font-family: 'Poppins', sans-serif;
+    color: #337ab7;
+    text-align: center;
+  }
+  
+  
+  
+  .modal-content {
+    background-color: #337ab7;
+    margin: 55% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #184267;
+    font-family: 'Poppins', sans-serif;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+  }
+  
+  
+  
+  .close {
+    color: #F4D160;
+    float: right;
+    font-size: 28px;
+  
+  
+  }
+  
+  
+  
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  
+  /* Heading Styling */
+  .modal-content h2 {
+    color: #337ab7;
+    /* Blue color for title */
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  
+  /* Paragraph Styling */
+  .modal-content p {
+    color: #555;
+    /* Dark gray color for paragraph */
+    font-size: 16px;
+    margin-top: 0;
+  }
+  /* Slideshow container */
+  .slideshow-container {
+    position: relative;
+    width: 1000px;
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  .slide {
+    display: none;
+    position: relative;
+  
+  }
+  
+  .slide img {
+    width: 900px;
+    
+    margin-top: 10px;
+    height: 400px;
+    margin-left: 2%;
+   
+  }
+  
+  
+  .event-details {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 900px;
+    color: #ffffff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .event-title {
+    font-size: 1.8em;
+    margin: 0;
+  }
+  
+  .event-description {
+    font-size: 1.2em;
+  }
+  
+  .event-date {
+    font-size: 1.1em;
+    margin-top: 10px;
+  }
+  
+  /* Navigation buttons */
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  .prev {
+    left: 0;
+  
+  }
+  
+  .next {
+    right: 0;
+    margin-right: 5%;
+  }
+  
+  

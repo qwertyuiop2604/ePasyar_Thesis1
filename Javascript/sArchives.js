@@ -29,7 +29,10 @@ let events = document.getElementById("events");
 events.addEventListener('click', () => {
     window.location = 'events.html'
 })
-
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 
 let otop = document.getElementById("otop");
 otop.addEventListener("click", () => {

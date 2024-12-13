@@ -23,7 +23,10 @@ let rewards = document.getElementById("reward");
 rewards.addEventListener("click", () => {
   window.location = "redeem.html";
 });
-
+let graph = document.getElementById("graph");
+graph.addEventListener("click", () => {
+  window.location = "table.html";
+});
 
 document.getElementById("bckbtn").addEventListener('click', () => {
   window.location = 'profile.html';
